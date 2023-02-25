@@ -1,6 +1,7 @@
 import {Component, Output, EventEmitter, ViewChild, ElementRef, Input, AfterViewInit} from "@angular/core";
 import * as _ from "lodash";
 import * as ace from "brace";
+import {Editor} from "brace";
 
 
  // @ts-ignore
@@ -20,7 +21,7 @@ export class AsmEditorComponent implements AfterViewInit
 
     // @ts-ignore
   @ViewChild("editor") private editor: ElementRef;
-    private aceEditor: any = null;
+    private aceEditor: Editor | null = null  ;
 
     private _breakpoints: number[] = [];
     // @ts-ignore
@@ -61,8 +62,10 @@ export class AsmEditorComponent implements AfterViewInit
     ngAfterViewInit()
     {
         const el = this.editor.nativeElement;
+
         this.aceEditor = ace.edit(el);
-          this.aceEditor.session.setMode("ace/mode/assembly_x86");
+
+      this.aceEditor.session.setMode("ace/mode/assembly_x86");
         this.aceEditor.on("guttermousedown", (e: any) =>
         {
             let target = e.domEvent.target;
@@ -81,12 +84,12 @@ export class AsmEditorComponent implements AfterViewInit
     {
         if (this.hasBreakpoint(row))
         {
-            this.aceEditor.session.clearBreakpoint(row);
+            this.aceEditor?.session.clearBreakpoint(row);
             _.remove(this._breakpoints, (value: number) => value === row);
         }
         else
         {
-            this.aceEditor.session.setBreakpoint(row);
+            this.aceEditor?.session.setBreakpoint(row,"");
             this._breakpoints.push(row);
         }
 
@@ -101,12 +104,12 @@ export class AsmEditorComponent implements AfterViewInit
     {
         if (this._activeLine !== -1)
         {
-            this.aceEditor.session.removeGutterDecoration(this._activeLine, AsmEditorComponent.ACTIVE_LINE_CLASS);
+            this.aceEditor?.session.removeGutterDecoration(this._activeLine, AsmEditorComponent.ACTIVE_LINE_CLASS);
         }
     }
 
     public emitCompile()
     {
-        this.compile.emit(this.aceEditor.getValue());
+        this.compile.emit(this.aceEditor?.getValue());
     }
 }
