@@ -31,7 +31,7 @@
                    [checked]="item === memory.wordSize"><span>{{item}}</span></label>
         </div>
         Ascii: <input type="checkbox" [checked]="memory.ascii" (change)="memoryChecked($event) " />
-        <memory #memory [memory]="runtime.process?.cpu?.memory"></memory>
+        <memory  #memory  [memory]="runtime.process.cpu.memory || undefined"></memory>
       </div>
     </div>
   </div>
