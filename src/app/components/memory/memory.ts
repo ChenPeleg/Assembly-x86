@@ -4,7 +4,8 @@ import * as _ from "lodash";
 
 @Component({
     selector: "memory",
-    templateUrl: "./memory.html"
+    templateUrl: "./memory.html",
+  styleUrls : ['./memory.scss']
 })
 export class MemoryComponent
 {

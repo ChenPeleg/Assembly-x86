@@ -1,0 +1,17 @@
+div.row {
+  display: flex;
+  margin: 0;
+}
+.cell {
+  display: inline-block;
+  min-width: 30px;
+  height: 17px;
+  margin: 2px;
+  padding: 2px;
+  font-size: 11px;
+  line-height: 1;
+  border: 1px solid #000;
+  color: #000;
+  border-radius: 5px;
+  text-align: center;
+}
