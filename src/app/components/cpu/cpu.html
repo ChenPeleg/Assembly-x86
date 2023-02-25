@@ -1,4 +1,5 @@
-<div class="cpu" *ngIf="cpu !== null">
+<div class="cpu" *ngIf="cpu !== null || true">
+  
   <label class="tick-rate">Tick rate: every {{ cpu.tickRate }} ms
     <input type="range" min="100" max="500" [(ngModel)]="cpu.tickRate" /></label>
 

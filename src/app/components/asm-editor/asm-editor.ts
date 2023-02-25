@@ -62,8 +62,8 @@ export class AsmEditorComponent implements AfterViewInit
     ngAfterViewInit()
     {
         const el = this.editor.nativeElement;
-
         this.aceEditor = ace.edit(el);
+
 
       this.aceEditor.session.setMode("ace/mode/assembly_x86");
         this.aceEditor.on("guttermousedown", (e: any) =>
