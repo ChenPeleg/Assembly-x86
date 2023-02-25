@@ -19,7 +19,7 @@
   <div class="column">
     <div class="cpu-wrapper">
       <h3>CPU</h3>
-<!--      <cpu [cpu]="runtime.process?.cpu"></cpu>-->
+      <cpu *ngIf="runtime.process?.cpu" [cpu]="runtime.process .cpu"></cpu>
     </div>
     <div class="memory-wrapper">
       <h3>Memory</h3>
