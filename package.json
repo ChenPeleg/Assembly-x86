@@ -9,6 +9,9 @@
     "test": "ng test",
     "test:ci": "ng test --no-watch --no-progress --browsers ChromeHeadlessCI"
   },
+  "engines": {
+    "node": "18"
+  },
   "private": true,
   "dependencies": {
     "@angular/animations": "^14.2.0",
