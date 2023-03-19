@@ -11,7 +11,7 @@ import {RuntimeException} from "../../emulation/runtime-exception";
 
 @Component({
     selector: "app-root",
-    templateUrl: "app.html"
+    templateUrl: "app.component.html"
 })
 export class AppComponent implements AfterViewInit
 {
