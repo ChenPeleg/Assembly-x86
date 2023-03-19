@@ -12,6 +12,9 @@ import {FormsModule} from "@angular/forms";
 import {AppRootComponent} from "./components/root/app-root.component";
 import {LayoutComponent} from "./components/layout/layout.component";
 import {MatToolbarModule} from "@angular/material/toolbar";
+import {MatCardModule} from "@angular/material/card";
+import {MatButtonToggleModule} from "@angular/material/button-toggle";
+import {MatButtonModule} from "@angular/material/button";
 
 @NgModule({
   declarations: [
@@ -28,7 +31,10 @@ import {MatToolbarModule} from "@angular/material/toolbar";
   imports: [
     BrowserModule,
     FormsModule,
-    MatToolbarModule
+    MatToolbarModule,
+    MatCardModule,
+    MatButtonToggleModule,
+    MatButtonModule
   ],
   providers: [],
   bootstrap: [AppRootComponent]
