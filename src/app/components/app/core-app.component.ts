@@ -10,10 +10,10 @@ import {ConsoleComponent} from "../console/console";
 import {RuntimeException} from "../../emulation/runtime-exception";
 
 @Component({
-    selector: "app-root",
-    templateUrl: "app.component.html"
+    selector: "core-app",
+    templateUrl: "./core-app.component.html"
 })
-export class AppComponent implements AfterViewInit
+export class CoreAppComponent implements AfterViewInit
 {
     @ViewChild(AsmEditorComponent) asmEditor: AsmEditorComponent | undefined;
     @ViewChild(ConsoleComponent) console: ConsoleComponent | undefined;
