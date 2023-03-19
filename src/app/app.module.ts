@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
-import { AppComponent } from './components/app/app.component';
+import { CoreAppComponent } from './components/app/core-app.component';
 import {CpuComponent} from "./components/cpu/cpu";
 import {RegisterComponent} from "./components/cpu/register";
 import {MemoryComponent} from "./components/memory/memory";
@@ -12,7 +12,7 @@ import {FormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
-      AppComponent,
+      CoreAppComponent,
       CpuComponent,
       RegisterComponent,
       MemoryComponent,
@@ -25,7 +25,7 @@ import {FormsModule} from "@angular/forms";
     FormsModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [CoreAppComponent]
 })
 export class AppModule
 {
