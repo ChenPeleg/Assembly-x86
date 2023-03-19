@@ -1,7 +1,7 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
 
-import { CoreAppComponent } from './components/core/core-app.component';
+import {CoreAppComponent} from './components/core/core-app.component';
 import {CpuComponent} from "./components/cpu/cpu";
 import {RegisterComponent} from "./components/cpu/register";
 import {MemoryComponent} from "./components/memory/memory";
@@ -16,13 +16,13 @@ import {LayoutComponent} from "./components/layout/layout.component";
   declarations: [
     LayoutComponent,
     AppRootComponent,
-      CoreAppComponent,
-      CpuComponent,
-      RegisterComponent,
-      MemoryComponent,
-      ExecutionComponent,
-      ConsoleComponent,
-      AsmEditorComponent
+    CoreAppComponent,
+    CpuComponent,
+    RegisterComponent,
+    MemoryComponent,
+    ExecutionComponent,
+    ConsoleComponent,
+    AsmEditorComponent
   ],
   imports: [
     BrowserModule,
@@ -31,7 +31,6 @@ import {LayoutComponent} from "./components/layout/layout.component";
   providers: [],
   bootstrap: [AppRootComponent]
 })
-export class AppModule
-{
+export class AppModule {
 
 }
