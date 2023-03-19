@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
-import { AppComponent } from './components/app/app';
+import { AppComponent } from './components/app/app.component';
 import {CpuComponent} from "./components/cpu/cpu";
 import {RegisterComponent} from "./components/cpu/register";
 import {MemoryComponent} from "./components/memory/memory";
