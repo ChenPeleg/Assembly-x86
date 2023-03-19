@@ -11,6 +11,7 @@ import {AsmEditorComponent} from "./components/asm-editor/asm-editor";
 import {FormsModule} from "@angular/forms";
 import {AppRootComponent} from "./components/root/app-root.component";
 import {LayoutComponent} from "./components/layout/layout.component";
+import {MatToolbarModule} from "@angular/material/toolbar";
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import {LayoutComponent} from "./components/layout/layout.component";
   ],
   imports: [
     BrowserModule,
-    FormsModule
+    FormsModule,
+    MatToolbarModule
   ],
   providers: [],
   bootstrap: [AppRootComponent]
