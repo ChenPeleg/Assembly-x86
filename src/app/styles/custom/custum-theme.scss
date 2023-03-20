@@ -1,19 +1,19 @@
 @use '@angular/material' as mat;
+
 @include mat.core();
 
 $error-color: #eeff00;
 $mat-light-blue: #ffaabb;
 $mat-yellow: #a5e555;
 
-// sets the default pallet
-//$my-palette: mat.$cyan-palette;
-$base-palette: mat.$cyan-palette;
-
+// sets the base pallet
+$base-palette: mat.$amber-palette;
+$secondary-palette: mat.$red-palette;
 
 // set the warn primary and accent palettes
-$my-warn: mat.define-palette($base-palette);
-$my-primary: mat.define-palette($base-palette, 500);
-$my-accent: mat.define-palette($base-palette, A200, A100, A400);
+$my-primary: mat.define-palette($base-palette, 300);
+$my-accent: mat.define-palette($secondary-palette, A200, A100, A400);
+$my-warn: mat.define-palette($secondary-palette);
 
 
 $my-theme: mat.define-light-theme((
@@ -30,5 +30,6 @@ $my-theme: mat.define-light-theme((
 .my-theme {
 
 }
+
 @include mat.core-theme($my-theme);
 @include mat.all-component-themes($my-theme);
