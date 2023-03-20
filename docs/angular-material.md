@@ -34,6 +34,9 @@ There are 25 palettes:
 
 ## Defining a color from a palette
 
+need to define it like this with the `define-palette` method.
+
+The numbers represent the Hue and the numbers with the A represnet the accesnted hues. 
 `
 $my-primary: mat.define-palette(mat.$amber-palette, 300);
 $my-accent: mat.define-palette(mat.$amber-palette, A200, A100, A400);
