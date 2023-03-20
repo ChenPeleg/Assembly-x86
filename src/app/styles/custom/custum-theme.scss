@@ -1,21 +1,9 @@
 @use '@angular/material' as mat;
-
-/* ======== Angular material custom themes ======== */
-
 @include mat.core();
 
-//@import '~@angular/material/theming';
 $error-color: #eeff00;
 $mat-light-blue: #ffaabb;
 $mat-yellow: #a5e555;
-
-.app-theme {
-  $app-primary: mat.define-palette($error-color);
-
-  $app-accent: mat.define-palette($mat-yellow, 400);
-  $app-theme: mat.define-palette($app-primary, $app-accent);
-  @include mat.angular-material-theme($app-theme);
-}
 
 
 $my-palette: mat.$indigo-palette;
@@ -49,6 +37,7 @@ $my-theme: mat.define-light-theme((
 );
 
 .my-theme {
-  @include mat.angular-material-theme($my-theme);
-  @include mat.core-theme($my-theme);
+
 }
+@include mat.core-theme($my-theme);
+@include mat.all-component-themes($my-theme);
