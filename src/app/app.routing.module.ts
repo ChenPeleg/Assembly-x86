@@ -1,12 +1,13 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import {AppRootComponent} from "./components/root/app-root.component";
-import {InstructionsComponent} from "./components/pages/instructions/instructions.component"; // CLI imports router
+import {InstructionsComponent} from "./components/pages/instructions/instructions.component";
+import {CoreAppComponent} from "./components/core/core-app.component"; // CLI imports router
 
 const routes: Routes = [
-  { path: 'second-component', component: AppRootComponent },
-  { path: '', component: InstructionsComponent },
-]; // sets up routes constant where you define your routes
+  { path:  '', component: CoreAppComponent },
+  { path: 'instructions', component: InstructionsComponent },
+];
 
 // configures NgModule imports and exports
 @NgModule({
