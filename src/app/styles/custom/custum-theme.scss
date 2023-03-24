@@ -11,7 +11,7 @@ $base-palette: mat.$cyan-palette;
 $secondary-palette: mat.$amber-palette;
 
 // set the warn primary and accent palettes
-$my-primary: mat.define-palette($base-palette,700 );
+$my-primary: mat.define-palette($base-palette,500 );
 
 $my-accent: mat.define-palette($secondary-palette, A200, A100, A400);
 $my-warn: mat.define-palette(mat.$red-palette);
