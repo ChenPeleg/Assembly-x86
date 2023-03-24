@@ -15,9 +15,12 @@ import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatCardModule} from "@angular/material/card";
 import {MatButtonToggleModule} from "@angular/material/button-toggle";
 import {MatButtonModule} from "@angular/material/button";
+import {AppRoutingModule} from "./app.routing.module";
+import {InstructionsComponent} from "./components/pages/instructions/instructions.component";
 
 @NgModule({
   declarations: [
+    InstructionsComponent,
     LayoutComponent,
     AppRootComponent,
     CoreAppComponent,
@@ -34,7 +37,8 @@ import {MatButtonModule} from "@angular/material/button";
     MatToolbarModule,
     MatCardModule,
     MatButtonToggleModule,
-    MatButtonModule
+    MatButtonModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppRootComponent]
