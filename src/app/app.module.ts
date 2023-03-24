@@ -18,10 +18,12 @@ import {MatButtonModule} from "@angular/material/button";
 import {AppRoutingModule} from "./app.routing.module";
 import {InstructionsComponent} from "./components/pages/instructions/instructions.component";
 import {MatIconModule} from "@angular/material/icon";
+import {NavBarComponent} from "./components/navbar/nav-bar.component";
 
 @NgModule({
   declarations: [
     InstructionsComponent,
+    NavBarComponent,
     LayoutComponent,
     AppRootComponent,
     CoreAppComponent,
