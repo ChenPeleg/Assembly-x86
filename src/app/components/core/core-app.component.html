@@ -1,12 +1,15 @@
 <div class="core-app-wrapper">
   <div class="column">
+    <mat-card class="editor-card">
+    <div mat-card-title> Code</div>
     <div class="editor-wrapper">
-      <h1>Code</h1>
+
       <asm-editor (compile)="compileSource($event)"
                   [activeLine]="getActiveLine()"
                   (breakpointChange)="onBreakpointChanged($event)"></asm-editor>
       <div class="errors">{{ compileErrors }}</div>
     </div>
+    </mat-card>
     <div class="execution-wrapper">
       <h2>Controls</h2>
       <execution-controls [process]="runtime.process"></execution-controls>
