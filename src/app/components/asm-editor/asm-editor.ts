@@ -68,6 +68,7 @@ export class AsmEditorComponent implements AfterViewInit
       this.aceEditor.session.setMode("ace/mode/assembly_x86");
         this.aceEditor.on("guttermousedown", (e: any) =>
         {
+          console.log(e)
             let target = e.domEvent.target;
             if (target.className.indexOf("ace_gutter-cell") === -1)
             {
@@ -89,7 +90,7 @@ export class AsmEditorComponent implements AfterViewInit
         }
         else
         {
-            this.aceEditor?.session.setBreakpoint(row,"");
+            this.aceEditor?.session.setBreakpoint(row,"ace_breakpoint");
             this._breakpoints.push(row);
         }
 
