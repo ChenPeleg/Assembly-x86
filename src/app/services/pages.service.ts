@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { firstValueFrom, tap } from "rxjs";
+import { DomSanitizer } from "@angular/platform-browser";
 
 export enum MDFiles {
   Links = "links",
