@@ -22,11 +22,28 @@ export const markdownToHTML = (markdown: string): string => {
 
   // Convert unordered lists
   markdown = markdown.replace(/^\* (.*)$/gm, "<li>$1</li>");
+  markdown = markdown.replace(/^- (.*)$/gm, "<li>$1</li>");
   markdown = markdown.replace(/^(?!<li>)[^\n]*(\n|$)/gm, "<ul>$&</ul>");
 
   // Convert ordered lists
   markdown = markdown.replace(/^\d+\. (.*)$/gm, "<li>$1</li>");
-  markdown = markdown.replace(/^(?!<li>)[^\n]*(\n|$)/gm, "<ol>$&</ol>");
+  // markdown = markdown.replace(/^(?!<li>)[^\n]*(\n|$)/gm, "<ol>$&</ol>");
+
+  // Images
+  markdown = markdown.replace(
+    /\!\[(.*?)\]\((.*?)\)/gim,
+    "<img alt='$1' src='$2' />"
+  );
+
+  // Blockquotes
+  markdown = markdown.replace(/^\>(.*)$/gim, "<blockquote>$1</blockquote>");
+
+  // Inline code
+  markdown = markdown.replace(/\`(.*)\`/gim, "<code>$1</code>");
+
+  // Paragraphs
+  markdown = markdown.replace(/\n$/gim, "<br />");
+  markdown = markdown.replace(/\n/gim, "<p>$1</p>");
 
   return markdown;
 };
