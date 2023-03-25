@@ -1,5 +1,7 @@
 import { AfterViewInit, Component } from "@angular/core";
 import { MDFiles, PagesService } from "../../../services/pages.service";
+import { markdownToHTML } from "../../../util/markdownToHtml";
+import { DomSanitizer, SafeHtml } from "@angular/platform-browser";
 
 @Component({
   selector: "app-links",
@@ -7,13 +9,25 @@ import { MDFiles, PagesService } from "../../../services/pages.service";
   styleUrls: ["./links.component.scss"],
 })
 export class LinksComponent implements AfterViewInit {
-  constructor(private pagesService: PagesService) {
-    this.getContent().then((r) => r);
+  content: SafeHtml | null = null;
+
+  constructor(
+    private pagesService: PagesService,
+    private sanitizer: DomSanitizer
+  ) {
+    this.getContent().then((safeHtml) => (this.content = safeHtml));
   }
 
-  async getContent() {
+  async getContent(): Promise<SafeHtml> {
     const content = await this.pagesService.getMarkdownText(MDFiles.Links);
-    console.log(content);
+    const html = markdownToHTML(content);
+    const sanitizedHtml: SafeHtml =
+      this.sanitizer.bypassSecurityTrustHtml(html);
+    if (sanitizedHtml.toString() === "") {
+      throw `no data was received from file ${MDFiles.Links}`;
+    }
+    console.log(html);
+    return sanitizedHtml;
   }
 
   ngAfterViewInit() {}
