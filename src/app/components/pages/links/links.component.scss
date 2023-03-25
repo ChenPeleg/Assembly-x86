@@ -2,14 +2,31 @@ li {
   display: list-item
 }
 
-
-ol, ul {
-  margin-top: initial;
-  margin-bottom: initial;
+::ng-deep ol, ul {
+  margin-top: unset;
+  margin-bottom: unset;
 }
 
-ol, ul, menu {
+:host ::ng-deep ol {
+  background-color: #a5e555;
   list-style: initial;
   margin: initial;
-  padding: initial;
+  padding: 20px;
 }
+
+.html-content {
+
+
+  ::ng-deep ol {
+    margin-top: unset;
+    margin-bottom: unset;
+  }
+
+  ::ng-deep ol, ul, menu {
+    list-style: initial;
+    margin: initial;
+    padding: initial;
+  }
+
+}
+
