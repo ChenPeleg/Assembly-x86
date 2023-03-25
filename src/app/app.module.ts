@@ -19,6 +19,7 @@ import {AppRoutingModule} from "./app.routing.module";
 import {InstructionsComponent} from "./components/pages/instructions/instructions.component";
 import {MatIconModule} from "@angular/material/icon";
 import {NavBarComponent} from "./components/navbar/nav-bar.component";
+import {LinksComponent} from "./components/pages/links/links.component";
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import {NavBarComponent} from "./components/navbar/nav-bar.component";
     MemoryComponent,
     ExecutionComponent,
     ConsoleComponent,
+    LinksComponent,
     AsmEditorComponent
   ],
   imports: [
