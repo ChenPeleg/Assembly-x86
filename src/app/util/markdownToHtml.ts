@@ -16,6 +16,11 @@ export const markdownToHTML = (markdown: string): string => {
   mdText = mdText.replace(/^\s*\*\s*(.*)$/gim, "\n<ul>\n<li>$1</li>\n</ul>");
   mdText = mdText.replace(/^\s*\d\.\s*(.*)$/gim, "\n<ol>\n<li>$1</li>\n</ol>");
 
+  mdText = mdText.replace(/<\/li>\n<ul>/gim, "<ul>");
+  mdText = mdText.replace(/<\/li>\n<ol>/gim, "<ol>");
+  mdText = mdText.replace(/<\/ol>\n<\/li>/gim, "</ol>");
+  mdText = mdText.replace(/<\/ul>\n<\/li>/gim, "</ul>");
+
   markdown = mdText;
   // Convert headers (h1, h2, h3)
   markdown = markdown.replace(/^# (.*)$/gm, "<h1>$1</h1>");
