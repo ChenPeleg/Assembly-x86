@@ -1,19 +1,18 @@
-import {AfterViewInit, Component} from "@angular/core";
-import {Router} from "@angular/router";
+import { AfterViewInit, Component } from "@angular/core";
+import { Router } from "@angular/router";
+import { PagesService } from "../../services/pages.service";
 
 @Component({
   selector: "app-navbar",
   templateUrl: "./nav-bar.component.html",
-  styleUrls: ["./nav-bar.component.scss"]
+  styleUrls: ["./nav-bar.component.scss"],
 })
 export class NavBarComponent implements AfterViewInit {
-  constructor(private router: Router) {
-  }
+  constructor(private router: Router) {}
 
-  ngAfterViewInit() {
-  }
+  ngAfterViewInit() {}
 
   async clickLinks() {
-    await this.router.navigate(['links'])
+    await this.router.navigate(["links/"]);
   }
 }

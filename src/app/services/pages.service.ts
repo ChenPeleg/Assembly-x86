@@ -7,7 +7,7 @@ export enum MDFiles {
 }
 
 @Injectable()
-export class SnackBarService {
+export class PagesService {
   constructor(private httpClient: HttpClient) {}
 
   public async getMarkdownText(fileName: MDFiles): Promise<string> {
