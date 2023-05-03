@@ -1,17 +1,18 @@
 <mat-toolbar class="nav-bar" color="primary">
-  <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+  <button aria-label="Example icon-button with menu icon" class="example-icon" mat-icon-button>
     <mat-icon>menu</mat-icon>
   </button>
   <span>Assembly x86</span>
 
 
-
-
   <span class="example-spacer"></span>
-  <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
+  <button aria-label="Example icon-button with heart icon" class="example-icon favorite-icon" mat-icon-button>
     <mat-icon>favorite</mat-icon>
   </button>
-  <button mat-icon-button (click)="clickLinks()" class="example-icon" aria-label="Example icon-button with share icon">
+  <button (click)="clickDocs()" aria-label="Example icon-button with share icon" class="example-icon" mat-icon-button>
+    <mat-icon>article</mat-icon>
+  </button>
+  <button (click)="clickLinks()" aria-label="Example icon-button with share icon" class="example-icon" mat-icon-button>
     <mat-icon>link</mat-icon>
   </button>
 </mat-toolbar>

@@ -1,20 +1,34 @@
-import { AfterViewInit, Component, ViewEncapsulation } from "@angular/core";
+import {
+  AfterViewInit,
+  Component,
+  OnDestroy,
+  ViewEncapsulation,
+} from "@angular/core";
 import { MDFiles, PagesService } from "../../../services/pages.service";
 import { markdownToHTML } from "../../../util/markdownToHtml";
 import { DomSanitizer, SafeHtml } from "@angular/platform-browser";
+import { map, Observable, Subject, takeUntil } from "rxjs";
+import { ActivatedRoute } from "@angular/router";
 
 @Component({
-  selector: "app-links",
-  templateUrl: "./links.component.html",
-  styleUrls: ["./links.component.scss"],
+  selector: "app-documentation",
+  templateUrl: "./documentation.component.html",
+  styleUrls: ["./documentation.component.scss"],
   encapsulation: ViewEncapsulation.None,
 })
-export class LinksComponent implements AfterViewInit {
+export class DocumentationComponent implements AfterViewInit, OnDestroy {
   content: SafeHtml | null = null;
+  private readonly destroy$ = new Subject<void>();
+  public readonly docId: Observable<string | null> =
+    this.activeRoute.params.pipe(
+      map((params) => params["docId"] ?? null),
+      takeUntil(this.destroy$)
+    );
 
   constructor(
     private pagesService: PagesService,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private readonly activeRoute: ActivatedRoute
   ) {
     this.getContent().then((safeHtml) => (this.content = safeHtml));
   }
@@ -32,4 +46,8 @@ export class LinksComponent implements AfterViewInit {
   }
 
   ngAfterViewInit() {}
+
+  ngOnDestroy(): void {
+    this.destroy$.complete();
+  }
 }

@@ -1,19 +1,8 @@
 export const markdownToHTML = (markdown: string): string => {
-  // Convert unordered lists
-  // markdown = markdown.replace(/^\* (.*)$/gm, "<li>$1</li>");
-  // markdown = markdown.replace(/^- (.*)$/gm, "<li>$1</li>");
-  // markdown = markdown.replace(/^(?!<li>)[^\n]*(\n|$)/gm, "<ul>$&</ul>");
   let mdText = markdown;
-  // mdText = mdText.replace(/^\* (.*)$/gim, "<li>$1</li>");
-  // mdText = mdText.replace(/^\d\. (.*)$/gim, "<li>$1</li>");
-  // mdText = mdText.replace(/<\/li>(\n?<li>)/gim, "</li><li>");
-  // mdText = mdText.replace(/^\s*<li>/gim, "<ul>\n<li>");
-  // mdText = mdText.replace(/<\/li>\s*$/gim, "</li>\n</ul>");
-  // mdText = mdText.replace(/^\s*\*\s*(.*)$/gim, "<ul>\n<li>$1</li>\n</ul>");
-  // mdText = mdText.replace(/^\s*\d\.\s*(.*)$/gim, "<ol>\n<li>$1</li>\n</ol>");
 
-  mdText = mdText.replace(/^\s*-\s*(.*)$/gim, "\n<ul>\n<li>$1</li>\n</ul>");
-  mdText = mdText.replace(/^\s*\*\s*(.*)$/gim, "\n<ul>\n<li>$1</li>\n</ul>");
+  mdText = mdText.replace(/^\s*-\s*(.*)$/gim, "\n<li>$1</li>");
+  mdText = mdText.replace(/^\s*\*\s*(.*)$/gim, "\n<li>$1</li>");
   mdText = mdText.replace(/^\s*\d\.\s*(.*)$/gim, "\n<ol>\n<li>$1</li>\n</ol>");
 
   mdText = mdText.replace(/<\/li>\n<ul>/gim, "<ul>");
@@ -42,9 +31,6 @@ export const markdownToHTML = (markdown: string): string => {
     /```([\s\S]*?)```/g,
     "<pre><code>$1</code></pre>"
   );
-  // Convert ordered lists
-  // markdown = markdown.replace(/^\d+\. (.*)$/gm, "<li>$1</li>");
-  // markdown = markdown.replace(/^(?!<li>)[^\n]*(\n|$)/gm, "<ol>$&</ol>");
 
   // Images
   markdown = markdown.replace(
