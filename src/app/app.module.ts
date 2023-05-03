@@ -22,6 +22,7 @@ import { NavBarComponent } from "./components/navbar/nav-bar.component";
 import { LinksComponent } from "./components/pages/links/links.component";
 import { PagesService } from "./services/pages.service";
 import { HttpClientModule } from "@angular/common/http";
+import { DocumentationComponent } from "./components/pages/documentation/documentation.component";
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { HttpClientModule } from "@angular/common/http";
     ConsoleComponent,
     LinksComponent,
     AsmEditorComponent,
+    DocumentationComponent,
   ],
   imports: [
     HttpClientModule,

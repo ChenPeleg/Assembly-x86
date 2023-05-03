@@ -15,4 +15,8 @@ export class NavBarComponent implements AfterViewInit {
   async clickLinks() {
     await this.router.navigate(["links/"]);
   }
+
+  async clickDocs() {
+    await this.router.navigate(["docs/"]);
+  }
 }
