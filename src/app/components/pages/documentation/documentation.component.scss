@@ -2,6 +2,7 @@ li {
   display: list-item
 }
 
+
 ::ng-deep ol, ul {
   margin-top: unset;
   margin-bottom: unset;
@@ -15,10 +16,12 @@ li {
 }
 
 .html-content {
-  padding: 2em;
+  padding: 0 3em;
+  font-family: Poppins, serif;
 
   li {
-    color: red;
+    line-height: 200%;
+    //color: red;
   }
 
 

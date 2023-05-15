@@ -86,7 +86,8 @@ ${n.join(" ")}
     }
     for (const page of this.pagesNames) {
       if (PagesService.NamePageToDocId(page) === docId) {
-        this.getContent().then((safeHtml) => (this.content = safeHtml));
+        console.log(docId);
+        this.getContent(docId).then((safeHtml) => (this.content = safeHtml));
         return;
       }
     }
