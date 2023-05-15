@@ -18,6 +18,7 @@ import { ActivatedRoute } from "@angular/router";
 })
 export class DocumentationComponent implements AfterViewInit, OnDestroy {
   content: SafeHtml | null = null;
+  pagesNames: string[][] = [];
   private readonly destroy$ = new Subject<void>();
   public readonly docId: Observable<string | null> =
     this.activeRoute.params.pipe(
@@ -30,10 +31,18 @@ export class DocumentationComponent implements AfterViewInit, OnDestroy {
     private sanitizer: DomSanitizer,
     private readonly activeRoute: ActivatedRoute
   ) {
+    this.getPagesNames().then();
     this.getContent().then((safeHtml) => (this.content = safeHtml));
   }
 
+  async getPagesNames() {
+    this.pagesNames = await this.pagesService.getPagesNames();
+    console.log(this.pagesNames);
+  }
+
   async getContent(): Promise<SafeHtml> {
+    if (this.pagesNames) {
+    }
     const content = await this.pagesService.getMarkdownText(MDFiles.Links);
     const html = markdownToHTML(content);
     const sanitizedHtml: SafeHtml =
