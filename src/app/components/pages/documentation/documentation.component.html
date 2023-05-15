@@ -1,5 +1,5 @@
 <div>
-  <h2> Documentation {{replacePlus(docId | async)}}</h2>
+  <h2 class="m-10"><a [routerLink]="'/docs/'">Documentation</a> {{replacePlus(docId | async)}}</h2>
   <div class="html-content">
     <div [innerHTML]="content"></div>
   </div>

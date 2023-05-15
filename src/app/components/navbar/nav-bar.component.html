@@ -2,7 +2,7 @@
   <button aria-label="Example icon-button with menu icon" class="example-icon" mat-icon-button>
     <mat-icon>menu</mat-icon>
   </button>
-  <span>Assembly x86</span>
+  <div [routerLink]="'/'" class="cursor-pointer">Assembly x86</div>
 
 
   <span class="example-spacer"></span>
@@ -12,7 +12,5 @@
   <button (click)="clickDocs()" aria-label="Example icon-button with share icon" class="example-icon" mat-icon-button>
     <mat-icon>article</mat-icon>
   </button>
-  <button (click)="clickLinks()" aria-label="Example icon-button with share icon" class="example-icon" mat-icon-button>
-    <mat-icon>link</mat-icon>
-  </button>
+
 </mat-toolbar>
