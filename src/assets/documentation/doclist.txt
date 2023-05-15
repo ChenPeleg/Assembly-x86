@@ -1,2 +1,2 @@
-\basics\assembly-basics.md
-\links.md
+/basics/assembly-basics.md
+/links.md
