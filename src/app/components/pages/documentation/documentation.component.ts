@@ -7,7 +7,7 @@ import {
 import { MDFiles, PagesService } from "../../../services/pages.service";
 import { markdownToHTML } from "../../../util/markdownToHtml";
 import { DomSanitizer, SafeHtml } from "@angular/platform-browser";
-import { map, Observable, Subject, takeUntil } from "rxjs";
+import { map, Observable, Subject, takeUntil, tap } from "rxjs";
 import { ActivatedRoute } from "@angular/router";
 
 @Component({
@@ -23,6 +23,7 @@ export class DocumentationComponent implements AfterViewInit, OnDestroy {
   public readonly docId: Observable<string | null> =
     this.activeRoute.params.pipe(
       map((params) => params["docId"] ?? null),
+      tap((params) => this.loadDocsContent(params)),
       takeUntil(this.destroy$)
     );
 
@@ -32,25 +33,22 @@ export class DocumentationComponent implements AfterViewInit, OnDestroy {
     private readonly activeRoute: ActivatedRoute
   ) {
     this.getPagesNames().then();
-    this.getContent().then((safeHtml) => (this.content = safeHtml));
+    this.docId.subscribe();
   }
 
   async getPagesNames() {
     this.pagesNames = await this.pagesService.getPagesNames();
-    console.log(this.pagesNames);
   }
 
-  async getContent(): Promise<SafeHtml> {
-    if (this.pagesNames) {
-    }
-    const content = await this.pagesService.getMarkdownText(MDFiles.Links);
+  async getContent(docId?: string): Promise<SafeHtml> {
+    const content = await this.pagesService.getMarkdownText(docId || "");
     const html = markdownToHTML(content);
     const sanitizedHtml: SafeHtml =
       this.sanitizer.bypassSecurityTrustHtml(html);
     if (sanitizedHtml.toString() === "") {
       throw `no data was received from file ${MDFiles.Links}`;
     }
-    console.log(html);
+
     return sanitizedHtml;
   }
 
@@ -58,5 +56,41 @@ export class DocumentationComponent implements AfterViewInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.destroy$.complete();
+  }
+
+  replacePlus(async: string | null) {
+    return async?.replace("+", " ");
+  }
+
+  private displayDocsContent() {
+    let htmlTableOfContent = `<h4>Table of content</h4>`;
+    this.pagesNames.forEach((n) => {
+      htmlTableOfContent += `<div><a href="#/docs/${PagesService.NamePageToDocId(
+        n
+      )}">
+${n.join(" ")}
+</a></div>`;
+    });
+    const html = htmlTableOfContent;
+    const sanitizedHtml: SafeHtml =
+      this.sanitizer.bypassSecurityTrustHtml(html);
+    if (sanitizedHtml.toString() === "") {
+      throw `no data was received from file ${MDFiles.Links}`;
+    }
+    this.content = sanitizedHtml;
+  }
+
+  private async loadDocsContent(docId: string) {
+    if (!this.pagesNames.length) {
+      await this.getPagesNames();
+    }
+    for (const page of this.pagesNames) {
+      if (PagesService.NamePageToDocId(page) === docId) {
+        this.getContent().then((safeHtml) => (this.content = safeHtml));
+        return;
+      }
+    }
+
+    this.displayDocsContent();
   }
 }
