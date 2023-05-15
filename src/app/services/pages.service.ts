@@ -9,14 +9,23 @@ export enum MDFiles {
 
 @Injectable()
 export class PagesService {
+  static readonly slashReplacesChar = "+";
   private _pagesNames: string[][] = [];
 
   constructor(private httpClient: HttpClient) {
     this.getAllPagesList().then((r) => r);
   }
 
-  public static linkFromPageName(linkNames: string[]) {
+  public static linkFromPageName(linkNames: string[]): string {
     return `/${linkNames.join("/")}`;
+  }
+
+  public static DocIdToNamePage(docId: string): string[] {
+    return docId.split(PagesService.slashReplacesChar);
+  }
+
+  public static NamePageToDocId(namePage: string[]): string {
+    return namePage.join(PagesService.slashReplacesChar);
   }
 
   public async getPagesNames() {
@@ -35,13 +44,21 @@ export class PagesService {
       })
     );
     const links = allPagesContent.split("\n");
-    this._pagesNames = links.map((l) => l.split("/").filter((n) => n));
+    this._pagesNames = links.map((l) =>
+      l
+        .replace(".md", "")
+        .split("/")
+        .filter((n) => n)
+    );
     return this._pagesNames;
   }
 
-  public async getMarkdownText(fileName: MDFiles): Promise<string> {
+  public async getMarkdownText(docId: string): Promise<string> {
+    const link = PagesService.linkFromPageName(
+      PagesService.DocIdToNamePage(docId)
+    );
     return await firstValueFrom(
-      this.httpClient.get(`assets/documentation/${fileName}.md`, {
+      this.httpClient.get(`assets/documentation${link}.md`, {
         responseType: "text",
       })
     );
