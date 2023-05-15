@@ -1,14 +1,14 @@
 <div class="core-app-wrapper">
   <div class="column">
-    <mat-card [appearance]="'outlined'" class="editor-card">
-    <div mat-card-title> Code</div>
-    <div class="editor-wrapper">
+    <mat-card [appearance]="'outlined'" class=" m-10 p-3 w-1/2">
+      <div mat-card-title> Code</div>
+      <div class="editor-wrapper">
 
-      <asm-editor (compile)="compileSource($event)"
-                  [activeLine]="getActiveLine()"
-                  (breakpointChange)="onBreakpointChanged($event)"></asm-editor>
-      <div class="errors">{{ compileErrors }}</div>
-    </div>
+        <asm-editor (breakpointChange)="onBreakpointChanged($event)"
+                    (compile)="compileSource($event)"
+                    [activeLine]="getActiveLine()"></asm-editor>
+        <div class="errors">{{ compileErrors }}</div>
+      </div>
     </mat-card>
     <div class="execution-wrapper">
       <h2>Controls</h2>
@@ -26,15 +26,15 @@
     </div>
     <div class="memory-wrapper">
       <h3>Memory</h3>
-      <div class="inner" *ngIf="runtime.hasProcess()">
+      <div *ngIf="runtime.hasProcess()" class="inner">
         Byte size:
         <div class="size-wrapper">
-          <label class="size-label" *ngFor="let item of [1, 2, 4]">
-            <input type="radio" name="memory-word-size" (click)="memory.wordSize = item"
-                   [checked]="item === memory.wordSize"><span>{{item}}</span></label>
+          <label *ngFor="let item of [1, 2, 4]" class="size-label">
+            <input (click)="memory.wordSize = item" [checked]="item === memory.wordSize" name="memory-word-size"
+                   type="radio"><span>{{item}}</span></label>
         </div>
-        Ascii: <input type="checkbox" [checked]="memory.ascii" (change)="memoryChecked($event) " />
-        <memory  #memory  [memory]="runtime.process.cpu.memory || undefined"></memory>
+        Ascii: <input (change)="memoryChecked($event) " [checked]="memory.ascii" type="checkbox" />
+        <memory #memory [memory]="runtime.process.cpu.memory || undefined"></memory>
       </div>
     </div>
   </div>

@@ -9,6 +9,7 @@ import { markdownToHTML } from "../../../util/markdownToHtml";
 import { DomSanitizer, SafeHtml } from "@angular/platform-browser";
 import { map, Observable, Subject, takeUntil, tap } from "rxjs";
 import { ActivatedRoute } from "@angular/router";
+import { makeExternalLinksOpenInNewTab } from "../../../util/makeExternalLinksOpenInNewTab";
 
 @Component({
   selector: "app-documentation",
@@ -42,7 +43,9 @@ export class DocumentationComponent implements AfterViewInit, OnDestroy {
 
   async getContent(docId?: string): Promise<SafeHtml> {
     const content = await this.pagesService.getMarkdownText(docId || "");
-    const html = markdownToHTML(content);
+    const rawHtml = markdownToHTML(content);
+    const html = makeExternalLinksOpenInNewTab(rawHtml);
+
     const sanitizedHtml: SafeHtml =
       this.sanitizer.bypassSecurityTrustHtml(html);
     if (sanitizedHtml.toString() === "") {
