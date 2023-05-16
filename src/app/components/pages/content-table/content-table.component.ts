@@ -107,6 +107,8 @@ export class ContentTableComponent {
     !!node.children && node.children.length > 0;
 
   setActiveElement = async (value: string | null) => {
+    if (!this.docElement[0].children.length) {
+    }
     this.docElement[0] = this.setActiveDocElement(
       this.docElement,
       PagesService.DocIdToNamePage(value || "")
