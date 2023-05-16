@@ -22,7 +22,10 @@
               {{  'chevron_right'  }}
             </mat-icon>
           </button>
-          {{node.name}}
+          <div class="cursor-pointer" matTreeNodeToggle>
+            {{node.name}}
+          </div>
+
         </div>
         <ul [@slideVertical]="treeControl.isExpanded(node) ? 'show' : null">
           <ng-container matTreeNodeOutlet></ng-container>
