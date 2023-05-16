@@ -47,7 +47,7 @@
   padding: 10px 20px;
   cursor: pointer;
 
-  &:hover, &:active {
+  &:hover, &:active, &.is-selected {
     background-color: #a5e555;
   }
 }

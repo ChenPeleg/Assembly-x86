@@ -8,7 +8,7 @@
   </div>
   <div class="ml-auto max-h-screen overflow-y-scroll">
     <div *ngIf="pagesNames.length" id="content-table-wrapper">
-      <content-table [pages]="pagesNames"></content-table>
+      <content-table [currentDoc]="(docId | async) " [pages]="pagesNames"></content-table>
     </div>
   </div>
 </div>
