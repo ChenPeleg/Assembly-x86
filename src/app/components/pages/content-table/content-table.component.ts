@@ -1,4 +1,35 @@
 import { Component, Input } from "@angular/core";
+import { NestedTreeControl } from "@angular/cdk/tree";
+import { MatTreeNestedDataSource } from "@angular/material/tree";
+
+/**
+ * Food data with nested structure.
+ * Each node has a name and an optional list of children.
+ */
+interface FoodNode {
+  name: string;
+  children?: FoodNode[];
+}
+
+const TREE_DATA: FoodNode[] = [
+  {
+    name: "Fruit",
+    children: [{ name: "Apple" }, { name: "Banana" }, { name: "Fruit loops" }],
+  },
+  {
+    name: "Vegetables",
+    children: [
+      {
+        name: "Green",
+        children: [{ name: "Broccoli" }, { name: "Brussels sprouts" }],
+      },
+      {
+        name: "Orange",
+        children: [{ name: "Pumpkins" }, { name: "Carrots" }],
+      },
+    ],
+  },
+];
 
 interface DocElement {
   type: "file" | "folder";
@@ -14,6 +45,8 @@ interface DocElement {
   styleUrls: ["./content-table.component.scss"],
 })
 export class ContentTableComponent {
+  treeControl = new NestedTreeControl<FoodNode>((node) => node.children);
+  dataSource = new MatTreeNestedDataSource<FoodNode>();
   public readonly docElement: DocElement = {
     children: [],
     father: null,
@@ -23,13 +56,18 @@ export class ContentTableComponent {
   };
   public pagesNames: string[][] | null = null;
 
-  constructor() {}
+  constructor() {
+    this.dataSource.data = TREE_DATA;
+  }
 
   @Input("pages") set pages(value: string[][]) {
     if (this.pagesNames) return;
     this.pagesNames = value;
     this.buildNestedDocElement(value);
   }
+
+  hasChild = (_: number, node: FoodNode) =>
+    !!node.children && node.children.length > 0;
 
   buildNestedDocElement(value: string[][]) {
     value.forEach((page) => {

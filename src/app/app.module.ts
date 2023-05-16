@@ -24,6 +24,7 @@ import { PagesService } from "./services/pages.service";
 import { HttpClientModule } from "@angular/common/http";
 import { DocumentationComponent } from "./components/pages/documentation/documentation.component";
 import { ContentTableComponent } from "./components/pages/content-table/content-table.component";
+import { MatTreeModule } from "@angular/material/tree";
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import { ContentTableComponent } from "./components/pages/content-table/content-
     MatButtonModule,
     AppRoutingModule,
     MatIconModule,
+    MatTreeModule,
   ],
   providers: [PagesService],
   bootstrap: [AppRootComponent],
