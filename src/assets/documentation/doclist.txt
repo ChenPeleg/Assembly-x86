@@ -1,5 +1,11 @@
 /basics/assembly-basics.md
 /commands/basic-commands.md
+/history/assembly-development/development-of-assembly-2.md
+/history/assembly-development/development-of-assembly.md
+/history/assembly-history.md
+/history/first-computers/first-computers-1.md
+/history/first-computers/first-computers-2.md
+/history/first-computers/first-computers-3.md
 /links.md
 /registers/cpu-word-size.md
 /registers/memory-size.md
