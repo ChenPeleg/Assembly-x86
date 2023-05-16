@@ -36,3 +36,14 @@
     transform: rotate(90deg);
   }
 }
+
+.app-tree-node {
+  border-radius: 40px;
+  transition: background-color ease-in-out 200ms;
+  padding: 10px 20px;
+  cursor: pointer;
+
+  &:hover, &:active {
+    background-color: #a5e555;
+  }
+}
