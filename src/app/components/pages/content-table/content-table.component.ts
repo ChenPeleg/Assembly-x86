@@ -47,6 +47,7 @@ interface DocElement {
   father: DocElement | null;
   children: DocElement[];
   order: number;
+  isSelected: boolean;
 }
 
 @Component({
@@ -82,12 +83,15 @@ export class ContentTableComponent {
       fullPath: [],
       type: "folder",
       order: 0,
+      isSelected: false,
     },
   ];
   public pagesNames: string[][] | null = null;
 
-  constructor(private router: Router) {
-    this.dataSource.data = this.docElement;
+  constructor(private router: Router) {}
+
+  @Input("currentDoc") set currentDoc(value: string | null) {
+    this.setActiveElement(value).then((r) => r);
   }
 
   @Input("pages") set pages(value: string[][]) {
@@ -95,12 +99,19 @@ export class ContentTableComponent {
     this.pagesNames = value;
     let allDocElement = this.buildNestedDocElement(value);
     allDocElement = this.reorderDocElement(allDocElement);
-    console.log(allDocElement);
+    this.docElement[0] = allDocElement[0];
     this.dataSource.data = allDocElement[0].children;
   }
 
   hasChild = (_: number, node: FoodNode) =>
     !!node.children && node.children.length > 0;
+
+  setActiveElement = async (value: string | null) => {
+    this.docElement[0] = this.setActiveDocElement(
+      this.docElement,
+      PagesService.DocIdToNamePage(value || "")
+    )[0];
+  };
 
   buildNestedDocElement(value: string[][]): DocElement[] {
     const docElement: DocElement[] = [
@@ -111,6 +122,7 @@ export class ContentTableComponent {
         fullPath: [],
         type: "folder",
         order: 0,
+        isSelected: false,
       },
     ];
     value.forEach((page) => {
@@ -127,6 +139,7 @@ export class ContentTableComponent {
             name: pagePartName,
             type: i === page.length - 1 ? "file" : "folder",
             order: i === page.length - 1 ? -1 : 0,
+            isSelected: false,
           };
           lastFather.children.push(element);
           lastFather = element;
@@ -146,6 +159,26 @@ export class ContentTableComponent {
       return docElement;
     };
     return docElement.map((d) => recursiveSortDocElement(d));
+  }
+
+  setActiveDocElement(docElement: DocElement[], path: string[]): DocElement[] {
+    const recursiveSetSelectedDocElement = (
+      docElement: DocElement
+    ): DocElement => {
+      console.log(docElement);
+      docElement.isSelected = false;
+
+      if (docElement.fullPath[0] === path[0]) {
+        if (docElement.fullPath.join() === path.join()) {
+          docElement.isSelected = true;
+        }
+      }
+      docElement.children = docElement.children.map((c) =>
+        recursiveSetSelectedDocElement(c)
+      );
+      return docElement;
+    };
+    return docElement.map((d) => recursiveSetSelectedDocElement(d));
   }
 
   async clickLink(node: DocElement) {
