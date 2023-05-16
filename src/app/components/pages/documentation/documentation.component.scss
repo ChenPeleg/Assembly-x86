@@ -8,6 +8,9 @@ li {
   display: list-item
 }
 
+#documentation-component-wrapper {
+  max-height: 89vh;
+}
 
 ::ng-deep ol, ul {
   margin-top: unset;
