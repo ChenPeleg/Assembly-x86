@@ -23,6 +23,7 @@ import { LinksComponent } from "./components/pages/links/links.component";
 import { PagesService } from "./services/pages.service";
 import { HttpClientModule } from "@angular/common/http";
 import { DocumentationComponent } from "./components/pages/documentation/documentation.component";
+import { ContentTableComponent } from "./components/pages/content-table/content-table.component";
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { DocumentationComponent } from "./components/pages/documentation/documen
     LinksComponent,
     AsmEditorComponent,
     DocumentationComponent,
+    ContentTableComponent,
   ],
   imports: [
     HttpClientModule,
