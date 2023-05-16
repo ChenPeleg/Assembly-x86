@@ -1,6 +1,13 @@
 import { Component, Input } from "@angular/core";
 import { NestedTreeControl } from "@angular/cdk/tree";
 import { MatTreeNestedDataSource } from "@angular/material/tree";
+import {
+  animate,
+  state,
+  style,
+  transition,
+  trigger,
+} from "@angular/animations";
 
 /**
  * Food data with nested structure.
@@ -43,6 +50,23 @@ interface DocElement {
   selector: "content-table",
   templateUrl: "./content-table.component.html",
   styleUrls: ["./content-table.component.scss"],
+  animations: [
+    trigger("slideVertical", [
+      state(
+        "*",
+        style({
+          height: 0,
+        })
+      ),
+      state(
+        "show",
+        style({
+          height: "*",
+        })
+      ),
+      transition("* => *", [animate("400ms cubic-bezier(0.25, 0.8, 0.25, 1)")]),
+    ]),
+  ],
 })
 export class ContentTableComponent {
   treeControl = new NestedTreeControl<FoodNode>((node) => node.children);

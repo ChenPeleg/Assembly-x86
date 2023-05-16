@@ -25,6 +25,7 @@ import { HttpClientModule } from "@angular/common/http";
 import { DocumentationComponent } from "./components/pages/documentation/documentation.component";
 import { ContentTableComponent } from "./components/pages/content-table/content-table.component";
 import { MatTreeModule } from "@angular/material/tree";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { MatTreeModule } from "@angular/material/tree";
   imports: [
     HttpClientModule,
     BrowserModule,
+    BrowserAnimationsModule,
     FormsModule,
     MatToolbarModule,
     MatCardModule,

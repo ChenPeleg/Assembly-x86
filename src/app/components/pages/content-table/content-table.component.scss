@@ -24,3 +24,15 @@
 .example-tree div[role=group] > .mat-tree-node {
   padding-left: 40px;
 }
+
+.example-tree ul {
+  overflow: hidden;
+}
+
+.mat-icon-rtl-mirror {
+  transition: transform 200ms ease-in-out;
+
+  &.open {
+    transform: rotate(90deg);
+  }
+}
