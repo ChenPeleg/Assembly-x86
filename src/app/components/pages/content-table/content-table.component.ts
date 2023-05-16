@@ -8,6 +8,8 @@ import {
   transition,
   trigger,
 } from "@angular/animations";
+import { PagesService } from "../../../services/pages.service";
+import { Router } from "@angular/router";
 
 /**
  * Food data with nested structure.
@@ -44,6 +46,7 @@ interface DocElement {
   fullPath: string[];
   father: DocElement | null;
   children: DocElement[];
+  order: number;
 }
 
 @Component({
@@ -69,33 +72,49 @@ interface DocElement {
   ],
 })
 export class ContentTableComponent {
-  treeControl = new NestedTreeControl<FoodNode>((node) => node.children);
-  dataSource = new MatTreeNestedDataSource<FoodNode>();
-  public readonly docElement: DocElement = {
-    children: [],
-    father: null,
-    name: "all",
-    fullPath: [],
-    type: "folder",
-  };
+  treeControl = new NestedTreeControl<DocElement>((node) => node.children);
+  dataSource = new MatTreeNestedDataSource<DocElement>();
+  public readonly docElement: DocElement[] = [
+    {
+      children: [],
+      father: null,
+      name: "all",
+      fullPath: [],
+      type: "folder",
+      order: 0,
+    },
+  ];
   public pagesNames: string[][] | null = null;
 
-  constructor() {
-    this.dataSource.data = TREE_DATA;
+  constructor(private router: Router) {
+    this.dataSource.data = this.docElement;
   }
 
   @Input("pages") set pages(value: string[][]) {
     if (this.pagesNames) return;
     this.pagesNames = value;
-    this.buildNestedDocElement(value);
+    let allDocElement = this.buildNestedDocElement(value);
+    allDocElement = this.reorderDocElement(allDocElement);
+    console.log(allDocElement);
+    this.dataSource.data = allDocElement[0].children;
   }
 
   hasChild = (_: number, node: FoodNode) =>
     !!node.children && node.children.length > 0;
 
-  buildNestedDocElement(value: string[][]) {
+  buildNestedDocElement(value: string[][]): DocElement[] {
+    const docElement: DocElement[] = [
+      {
+        children: [],
+        father: null,
+        name: "all",
+        fullPath: [],
+        type: "folder",
+        order: 0,
+      },
+    ];
     value.forEach((page) => {
-      let lastFather = this.docElement;
+      let lastFather: DocElement = docElement[0];
       page.forEach((pagePartName, i) => {
         let element = lastFather.children.find((c) => c.name === pagePartName);
         if (element) {
@@ -104,15 +123,33 @@ export class ContentTableComponent {
           element = {
             children: [],
             father: lastFather,
-            fullPath: [],
+            fullPath: [...lastFather.fullPath, pagePartName].filter((n) => n),
             name: pagePartName,
             type: i === page.length - 1 ? "file" : "folder",
+            order: i === page.length - 1 ? -1 : 0,
           };
           lastFather.children.push(element);
           lastFather = element;
         }
       });
     });
-    console.log(this.docElement);
+
+    return docElement;
+  }
+
+  reorderDocElement(docElement: DocElement[]): DocElement[] {
+    const recursiveSortDocElement = (docElement: DocElement): DocElement => {
+      docElement.children.sort((a, b) => b.order - a.order);
+      docElement.children = docElement.children.map((c) =>
+        recursiveSortDocElement(c)
+      );
+      return docElement;
+    };
+    return docElement.map((d) => recursiveSortDocElement(d));
+  }
+
+  async clickLink(node: DocElement) {
+    const docId = PagesService.NamePageToDocId(node.fullPath);
+    await this.router.navigate(["docs", docId]);
   }
 }
