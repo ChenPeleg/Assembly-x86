@@ -10,6 +10,7 @@ import {
 } from "@angular/animations";
 import { PagesService } from "../../../services/pages.service";
 import { Router } from "@angular/router";
+import { sleep } from "../../../util/sleep";
 
 /**
  * Food data with nested structure.
@@ -108,6 +109,7 @@ export class ContentTableComponent {
 
   setActiveElement = async (value: string | null) => {
     if (!this.docElement[0].children.length) {
+      await sleep(200);
     }
     this.docElement[0] = this.setActiveDocElement(
       this.docElement,
