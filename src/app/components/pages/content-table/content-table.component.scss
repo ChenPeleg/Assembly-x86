@@ -48,6 +48,17 @@
   cursor: pointer;
 
   &:hover, &:active, &.is-selected {
-    background-color: #a5e555;
+
+    background-color: rgba(229, 231, 235, 0.55);
+
   }
+
+  &.is-selected {
+    background-color: #a5e555;
+
+    &:hover, &:active {
+      background-color: #a5e555;
+    }
+  }
+
 }
