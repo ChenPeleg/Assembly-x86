@@ -27,7 +27,7 @@ export class LinksComponent implements AfterViewInit {
     if (sanitizedHtml.toString() === "") {
       throw `no data was received from file ${MDFiles.Links}`;
     }
-    console.log(html);
+
     return sanitizedHtml;
   }
 
