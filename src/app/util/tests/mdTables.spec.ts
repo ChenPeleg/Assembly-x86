@@ -1,4 +1,6 @@
-import { findMdTables } from "./findMdTables";
+import { findMdTables } from "../findMdTables";
+import { result } from "lodash";
+import { mdTableToHtml } from "../mdTableToHtmlTable";
 
 const mdTable1 = `| Bit value | Position value as a power of base 2 | Bit number |
 |-----------|-------------------------------------|------------|
@@ -52,5 +54,16 @@ describe("Find md tables", () => {
     }
     expect(result[0]).toBe(mdTable1);
     expect(result[1]).toBe(mdTable2);
+  });
+});
+describe("Find md tables", () => {
+  it("converts tables to html correctly 1", () => {
+    const table1 = findMdTables(`${mdTable1}`) as string[];
+    const result = mdTableToHtml(table1[0]) as HTMLTableElement;
+    console.log(result.outerHTML);
+    const headers = result.querySelectorAll("th");
+    const rows = result.querySelectorAll("tr");
+    expect(headers.length).toBe(5);
+    expect(rows.length).toBe(6);
   });
 });
