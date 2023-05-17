@@ -5,6 +5,7 @@ export const markdownToHTML = (markdown: string): string => {
   let mdText = markdown;
 
   const allTables = findMdTables(markdown);
+  console.log(allTables);
   allTables?.forEach((t) => {
     const tableInHtml = mdTableToHtml(t);
     mdText = mdText.replace(t, tableInHtml.outerHTML);

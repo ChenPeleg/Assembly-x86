@@ -1,4 +1,5 @@
 /basics/assembly-basics.md
+/basics/bit-tables.md
 /commands/basic-commands.md
 /history/assembly-development/development-of-assembly-2.md
 /history/assembly-development/development-of-assembly.md

@@ -11,6 +11,21 @@ const mdTable1 = `| Bit value | Position value as a power of base 2 | Bit number
 const mdTable2 = `| Another table | Position value as a power of base 2 | Bit number |
 |-----------|-------------------------------------|------------|
 | 1         | 128                                 | 7          |`;
+
+const fileExample = `# Bit talbes md
+
+| Bit value | Position value as a power of base 2 | Bit number |
+|-----------|-------------------------------------|------------|
+| 1         | 128                                 | 7          |
+| 1         | 64                                  | 6          |
+| 1         | 32                                  | 5          |
+| 1         | 16                                  | 4          |
+| 1         | 8                                   | 3          |
+| 1         | 4                                   | 2          |
+| 1         | 2                                   | 1          |
+| 1         | 1                                   | 0          |
+
+`;
 describe("Find md tables", () => {
   it("expect to find simple table", () => {
     const result = findMdTables(mdTable1);
@@ -55,15 +70,25 @@ describe("Find md tables", () => {
     expect(result[0]).toBe(mdTable1);
     expect(result[1]).toBe(mdTable2);
   });
+
+  it("expect to find 1 tables in the file example", () => {
+    const result = findMdTables(`${fileExample}`);
+    if (!result) {
+      throw `no results`;
+    }
+    console.log(result);
+    expect(result.length).toBe(1);
+  });
 });
 describe("Find md tables", () => {
   it("converts tables to html correctly 1", () => {
     const table1 = findMdTables(`${mdTable1}`) as string[];
+
     const result = mdTableToHtml(table1[0]) as HTMLTableElement;
-    console.log(result.outerHTML);
+
     const headers = result.querySelectorAll("th");
     const rows = result.querySelectorAll("tr");
-    expect(headers.length).toBe(5);
+    expect(headers.length).toBe(3);
     expect(rows.length).toBe(6);
   });
 });

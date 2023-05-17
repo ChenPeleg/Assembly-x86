@@ -169,7 +169,6 @@ export class ContentTableComponent {
     const recursiveSetSelectedDocElement = (
       docElement: DocElement
     ): DocElement => {
-      console.log(docElement);
       docElement.isSelected = false;
 
       if (docElement.fullPath[0] === path[0]) {
