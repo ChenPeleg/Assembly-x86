@@ -7,7 +7,15 @@ import {
 import { MDFiles, PagesService } from "../../../services/pages.service";
 import { markdownToHTML } from "../../../util/markdownToHtml";
 import { DomSanitizer, SafeHtml } from "@angular/platform-browser";
-import { map, Observable, Subject, takeUntil, tap } from "rxjs";
+import {
+  distinct,
+  distinctUntilChanged,
+  map,
+  Observable,
+  Subject,
+  takeUntil,
+  tap,
+} from "rxjs";
 import { ActivatedRoute } from "@angular/router";
 import { makeExternalLinksOpenInNewTab } from "../../../util/makeExternalLinksOpenInNewTab";
 
@@ -23,6 +31,7 @@ export class DocumentationComponent implements AfterViewInit, OnDestroy {
   private readonly destroy$ = new Subject<void>();
   public readonly docId: Observable<string | null> =
     this.activeRoute.params.pipe(
+      distinctUntilChanged(),
       map((params) => params["docId"] ?? null),
       tap((params) => this.loadDocsContent(params)),
       takeUntil(this.destroy$)
@@ -34,7 +43,7 @@ export class DocumentationComponent implements AfterViewInit, OnDestroy {
     private readonly activeRoute: ActivatedRoute
   ) {
     this.getPagesNames().then();
-    this.docId.subscribe();
+    // this.docId.subscribe();
   }
 
   async getPagesNames() {

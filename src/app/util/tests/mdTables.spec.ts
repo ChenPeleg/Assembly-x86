@@ -23,9 +23,7 @@ const fileExample = `# Bit talbes md
 | 1         | 8                                   | 3          |
 | 1         | 4                                   | 2          |
 | 1         | 2                                   | 1          |
-| 1         | 1                                   | 0          |
-
-`;
+| 1         | 1                                   | 0          |`;
 describe("Find md tables", () => {
   it("expect to find simple table", () => {
     const result = findMdTables(mdTable1);
@@ -76,7 +74,6 @@ describe("Find md tables", () => {
     if (!result) {
       throw `no results`;
     }
-    console.log(result);
     expect(result.length).toBe(1);
   });
 });

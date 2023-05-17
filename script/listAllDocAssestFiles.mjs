@@ -29,6 +29,6 @@ const listAllDocAssetFiles = async () => {
   const files = await getDirFiles(docsPath, ".md");
   const filesWithForwardSlash = files.map(f => f.replace(/\\/g, "/"));
   writeFileSync(path.resolve(docsPath, "doclist.txt"), filesWithForwardSlash.join("\n"));
-  console.log("updating doc asset files");
+
 };
 listAllDocAssetFiles().then((r) => console.log("****************"));
