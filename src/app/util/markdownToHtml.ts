@@ -1,5 +1,14 @@
+import { findMdTables } from "./findMdTables";
+import { mdTableToHtml } from "./mdTableToHtmlTable";
+
 export const markdownToHTML = (markdown: string): string => {
   let mdText = markdown;
+
+  const allTables = findMdTables(markdown);
+  allTables?.forEach((t) => {
+    const tableInHtml = mdTableToHtml(t);
+    mdText = mdText.replace(t, tableInHtml.outerHTML);
+  });
 
   mdText = mdText.replace(/^\s*-\s*(.*)$/gim, "\n<li>$1</li>");
   mdText = mdText.replace(/^\s*\*\s*(.*)$/gim, "\n<li>$1</li>");
@@ -50,32 +59,3 @@ export const markdownToHTML = (markdown: string): string => {
 
   return markdown;
 };
-
-function mdToHtmlTable(mdTable: string) {
-  // Split the Markdown table into rows.
-  const rows = mdTable.split("\n");
-
-  // Create a list of HTML table rows.
-  const htmlRows = [];
-  for (const row of rows) {
-    const htmlRow = [];
-    const cells = row.split("|");
-    for (const cell of cells) {
-      htmlRow.push(cell);
-    }
-    htmlRows.push(htmlRow);
-  }
-
-  // Create the HTML table.
-  let htmlTable: string = `<table>`;
-  for (const row of htmlRows) {
-    htmlTable += `<tr>`;
-    for (const cell of row) {
-      htmlTable += `<td>${cell}</td>`;
-    }
-    htmlTable += `</tr>`;
-  }
-  htmlTable += `</table>`;
-
-  return htmlTable;
-}
