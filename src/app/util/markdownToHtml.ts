@@ -3,34 +3,8 @@ import { mdTableToHtml } from "./mdTableToHtmlTable";
 
 export const markdownToHTML = (markdown: string): string => {
   let mdText = markdown.replace(/\r\n/g, "\n");
-  const table = `  # Bit talbes md
 
-| Bit value | Position value as a power of base 2 | Bit number |
-|-----------|-------------------------------------|------------|
-| 1         | 128                                 | 7          |
-| 1         | 64                                  | 6          |
-| 1         | 32                                  | 5          |
-| 1         | 16                                  | 4          |
-| 1         | 8                                   | 3          |
-| 1         | 4                                   | 2          |
-| 1         | 2                                   | 1          |
-| 1         | 1                                   | 0          |
-`;
   const allTables = findMdTables(mdText);
-  const char = mdText.charCodeAt(81);
-  const n = 2;
-  console.log(
-    markdown.charCodeAt(81),
-    markdown[80 + n],
-    markdown[81 + n],
-    markdown[82 + n]
-  );
-  console.log(
-    table.charCodeAt(81 + n),
-    table[80 + n],
-    table[81 + n],
-    table[82 + n]
-  );
 
   allTables?.forEach((t) => {
     const tableInHtml = mdTableToHtml(t);

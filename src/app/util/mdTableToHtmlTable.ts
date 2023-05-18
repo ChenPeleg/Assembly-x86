@@ -21,7 +21,8 @@ export const mdTableToHtml = (markdownTable: string) => {
   // Add the table rows.
 
   for (let i = 1; i < rows.length; i++) {
-    const row = rows[i].split("|");
+    const row = rows[i].split("|").slice(1);
+    console.log(row);
     const tr = document.createElement("tr");
 
     for (const cell of row) {
