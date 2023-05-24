@@ -1,5 +1,11 @@
 # Inspirations
 
+```shell
+section.text
+global _start
+_start:
+
+```
 ## Best:
 
 * [https://kobzol.github.io/davis/](https://kobzol.github.io/davis/)
@@ -37,10 +43,14 @@ The text section is used for keeping the actual code. This section must begin wi
 tells the kernel where the program execution begins.
 
 The syntax for declaring text section is −
+```shell
 
 section.text
 global _start
 _start:
+
+```
+
 Comments
 Assembly language comment begins with a semicolon (;). It may contain any printable character including blank. It can
 appear on a line by itself, like −

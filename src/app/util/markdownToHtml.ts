@@ -13,6 +13,7 @@ export const markdownToHTML = (markdown: string): string => {
   });
 
   const allCode = findMdCodeBlocks(mdText);
+
   allCode?.forEach((c) => {
     const codeHtml = mdCodeBlockToHtml(c);
     mdText = mdText.replace(c, codeHtml);
@@ -44,10 +45,10 @@ export const markdownToHTML = (markdown: string): string => {
   );
 
   // Convert code blocks
-  markdown = markdown.replace(
-    /```([\s\S]*?)```/g,
-    "<pre><code>$1</code></pre>"
-  );
+  // markdown = markdown.replace(
+  //   /```([\s\S]*?)```/g,
+  //   "<pre><code>$1</code></pre>"
+  // );
 
   // Images
   markdown = markdown.replace(
@@ -59,7 +60,7 @@ export const markdownToHTML = (markdown: string): string => {
   markdown = markdown.replace(/^\>(.*)$/gim, "<blockquote>$1</blockquote>");
 
   // Inline code
-  markdown = markdown.replace(/\`(.*)\`/gim, "<code>$1</code>");
+  // markdown = markdown.replace(/\`(.*)\`/gim, "<code>$1</code>");
 
   // Paragraphs
   // markdown = markdown.replace(/\n$/gim, "<br />");
