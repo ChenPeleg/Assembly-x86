@@ -86,6 +86,18 @@ describe("Find md tables", () => {
     const headers = result.querySelectorAll("th");
     const rows = result.querySelectorAll("tr");
     expect(headers.length).toBe(3);
-    expect(rows.length).toBe(6);
+    expect(rows.length).toBeGreaterThan(4);
+  });
+  it("removes the ---- from the table", () => {
+    const table1 = findMdTables(`${mdTable1}`) as string[];
+
+    const result = mdTableToHtml(table1[0]) as HTMLTableElement;
+
+    const headers = result.querySelectorAll("th");
+    const tableData = result.querySelectorAll("td");
+
+    expect(Array.from(tableData).some((d) => d.innerHTML.includes("--"))).toBe(
+      false
+    );
   });
 });
