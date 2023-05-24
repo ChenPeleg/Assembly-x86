@@ -1,5 +1,6 @@
 import { findMdTables } from "./findMdTables";
 import { mdTableToHtml } from "./mdTableToHtmlTable";
+import { findMdCodeBlocks, mdCodeBlockToHtml } from "./findMdCodeBlocks";
 
 export const markdownToHTML = (markdown: string): string => {
   let mdText = markdown.replace(/\r\n/g, "\n");
@@ -9,6 +10,12 @@ export const markdownToHTML = (markdown: string): string => {
   allTables?.forEach((t) => {
     const tableInHtml = mdTableToHtml(t);
     mdText = mdText.replace(t, tableInHtml.outerHTML);
+  });
+
+  const allCode = findMdCodeBlocks(mdText);
+  allCode?.forEach((c) => {
+    const codeHtml = mdCodeBlockToHtml(c);
+    mdText = mdText.replace(c, codeHtml);
   });
 
   mdText = mdText.replace(/^\s*-\s*(.*)$/gim, "\n<li>$1</li>");
