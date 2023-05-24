@@ -1,5 +1,5 @@
 import { findMdTables } from "../findMdTables";
-import { result } from "lodash";
+
 import { mdTableToHtml } from "../mdTableToHtmlTable";
 
 const mdTable1 = `| Bit value | Position value as a power of base 2 | Bit number |
