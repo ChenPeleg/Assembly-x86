@@ -1,5 +1,10 @@
 <div class="core-app-wrapper">
   <div class="column">
+    <div class="flex-row flex items-center gap-5 pl-1" id="execution-wrapper">
+      <h2 class="text-2xl">Controls</h2>
+      <execution-controls [process]="runtime.process"></execution-controls>
+      <button (click)="requestCompile()" class="assemble btn btn-primary" title="Assemble">Assemble</button>
+    </div>
     <mat-card [appearance]="'outlined'" class=" m-10 p-3 w-1/2">
       <div mat-card-title> Code</div>
       <div class="editor-wrapper">
@@ -10,10 +15,7 @@
         <div class="errors">{{ compileErrors }}</div>
       </div>
     </mat-card>
-    <div class="execution-wrapper">
-      <h2>Controls</h2>
-      <execution-controls [process]="runtime.process"></execution-controls>
-    </div>
+
     <div class="console-wrapper">
       <h2>Console</h2>
       <console></console>
