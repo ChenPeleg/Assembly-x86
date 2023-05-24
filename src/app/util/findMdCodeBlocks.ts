@@ -7,6 +7,5 @@ export const findMdCodeBlocks = (md: string) => {
 };
 export const mdCodeBlockToHtml = (md: string) => {
   const code = rgex.exec(md)?.groups?.["code"] || "";
-
   return `<pre><code>${code.replace("\n", "")}</code></pre>`;
 };
