@@ -32,10 +32,8 @@ describe("Find md code blocks", () => {
     if (!result) {
       throw "no results";
     }
-    expect(result).toBe(`<pre><code>section.text
-global _start
-_start:
-
-</code></pre>`);
+    expect(result).toBe(
+      `<pre><code>section.text\nglobal _start\n_start:\n\n</code></pre>`
+    );
   });
 });
