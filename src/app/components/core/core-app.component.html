@@ -1,12 +1,13 @@
-<div class="core-app-wrapper">
-  <div class="column">
+<div class="flex flex-row m-12 mt-2 overflow-y-hidden"  id="core-app-wrapper">
+  <div class="flex flex-col gap-5  max-h-screen" id="core-app-code-column">
+    <div class="nav-bar-spacer"></div>
     <div class="flex-row flex items-center gap-5 pl-1" id="execution-wrapper">
-      <h2 class="text-2xl">Controls</h2>
+
       <execution-controls [process]="runtime.process"></execution-controls>
       <button (click)="requestCompile()" class="assemble btn btn-primary" title="Assemble">Assemble</button>
     </div>
-    <mat-card [appearance]="'outlined'" class=" m-10 p-3 w-1/2">
-      <div mat-card-title> Code</div>
+<!--    <mat-card [appearance]="'outlined'" class=" m-10 p-3 w-1/2">-->
+<!--      <div mat-card-title> Code</div>-->
       <div class="editor-wrapper">
 
         <asm-editor (breakpointChange)="onBreakpointChanged($event)"
@@ -14,14 +15,16 @@
                     [activeLine]="getActiveLine()"></asm-editor>
         <div class="errors">{{ compileErrors }}</div>
       </div>
-    </mat-card>
+<!--    </mat-card>-->
 
+
+  </div>
+  <div class="flex flex-col gap-5  max-h-screen overflow-y-auto" id="core-app-utils-column">
+    <div class="nav-bar-spacer"></div>
     <div class="console-wrapper">
       <h2>Console</h2>
       <console></console>
     </div>
-  </div>
-  <div class="column">
     <div class="cpu-wrapper">
       <h3>CPU</h3>
       <cpu *ngIf="runtime.process?.cpu" [cpu]="runtime.process .cpu"></cpu>
