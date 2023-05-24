@@ -12,12 +12,12 @@ li {
   max-height: 89vh;
 }
 
-::ng-deep ol, ul {
+ol, ul {
   margin-top: unset;
   margin-bottom: unset;
 }
 
-:host ::ng-deep ol {
+:host ol {
   background-color: #a5e555;
   list-style: initial;
   margin: initial;
@@ -34,15 +34,26 @@ li {
   }
 
 
-  ::ng-deep ol {
+  ol {
     margin-top: unset;
     margin-bottom: unset;
   }
 
-  ::ng-deep ol, ul, menu {
+  ol, ul, menu {
     list-style: initial;
     margin: initial;
     padding: initial;
+  }
+
+  table {
+    th, td {
+      padding: 5px 20px;
+
+    }
+    tr {
+      border-bottom: 1px solid #b4b4b4;
+    }
+
   }
 
 }

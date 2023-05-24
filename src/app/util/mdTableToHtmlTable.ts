@@ -22,14 +22,18 @@ export const mdTableToHtml = (markdownTable: string) => {
 
   for (let i = 1; i < rows.length; i++) {
     const row = rows[i].split("|").slice(1);
-    console.log(row);
-    const tr = document.createElement("tr");
 
+    const tr = document.createElement("tr");
+    let isOnlyUnderline = true;
     for (const cell of row) {
       const td = document.createElement("td");
+      if (cell.replace(/-*/g, "")) {
+        isOnlyUnderline = false;
+      }
       td.textContent = cell;
       tr.appendChild(td);
     }
+    if (isOnlyUnderline) continue;
     tbody.appendChild(tr);
   }
 
