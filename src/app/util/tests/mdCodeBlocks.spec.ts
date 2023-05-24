@@ -25,8 +25,7 @@ describe("Find md code blocks", () => {
     if (!result) {
       throw "no results";
     }
-    expect(result).toBe(`<pre><code>cp 123 123
-</code></pre>`);
+    expect(result).toBe(`<pre><code>cp 123 123\n</code></pre>`);
   });
   it("converts to find simple code block 2", () => {
     const result = mdCodeBlockToHtml(codeBlockExample2);
