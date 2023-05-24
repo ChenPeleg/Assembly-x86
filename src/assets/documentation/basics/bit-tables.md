@@ -1,4 +1,11 @@
 # Bit talbes md
+``` 
+section.text
+global _start
+_start:
+
+```
+
 
 | Bit value | Position value as a power of base 2 | Bit number |
 |-----------|-------------------------------------|------------|
