@@ -25,8 +25,16 @@ describe("Find md code blocks", () => {
     if (!result) {
       throw "no results";
     }
-
-    expect(result).toBe(`<code>
-cp 123 123</code>`);
+    expect(result).toBe(`<pre><code>cp 123 123</code></pre>`);
+  });
+  it("converts to find simple code block 2", () => {
+    const result = mdCodeBlockToHtml(codeBlockExample2);
+    if (!result) {
+      throw "no results";
+    }
+    expect(result).toBe(`<pre><code>section.text
+global _start
+_start:
+</code></pre>`);
   });
 });

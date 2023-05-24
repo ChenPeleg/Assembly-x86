@@ -1,4 +1,4 @@
-const rgex = /```(?<language>[^\n`]*)(?<code>[^`]*)(?<end>\n```)$/g;
+const rgex = /```(?<language>[^\n`]*)(?<code>[^`]*)(?<end>\n```)/g;
 
 export const findMdCodeBlocks = (md: string) => {
   const codeBlocks = md.match(rgex);
@@ -7,5 +7,5 @@ export const findMdCodeBlocks = (md: string) => {
 };
 export const mdCodeBlockToHtml = (md: string) => {
   const code = rgex.exec(md)?.groups?.["code"] || "";
-  return `<code>${code}</code>`;
+  return `<pre><code>${code.replace("\n", "")}</code></pre>`;
 };
