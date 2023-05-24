@@ -1,9 +1,8 @@
 # Bit talbes md
-``` 
+```shell
 section.text
 global _start
 _start:
-
 ```
 
 
