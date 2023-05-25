@@ -22,7 +22,7 @@ import {
   styleUrls: ["./layout.component.scss"],
 })
 export class LayoutComponent implements OnDestroy, OnInit {
-  private readonly urlsWithoutSpacer = ["\\"];
+  private readonly urlsWithoutSpacer = ["/"];
   private readonly destroy$ = new Subject<void>();
   public readonly urlPath: Observable<any> = this.router.events.pipe(
     filter((event) => event instanceof NavigationEnd),
@@ -37,6 +37,6 @@ export class LayoutComponent implements OnDestroy, OnInit {
     this.urlPath.subscribe((e) => console.log(e));
   }
   public includeSpacer(url: string): boolean {
-    return this.urlsWithoutSpacer.includes(url);
+    return !this.urlsWithoutSpacer.includes(url);
   }
 }
