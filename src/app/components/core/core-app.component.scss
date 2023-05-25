@@ -6,6 +6,10 @@
 }
 .nav-bar-spacer {
   width: 90%;
-  height: 64px;
+  height: 58px;
   min-height: 64px;
+}
+#utils-wrapper {
+  max-height: calc(100vh - 100px);
+  overflow-y: auto;
 }

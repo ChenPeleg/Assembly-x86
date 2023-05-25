@@ -1,45 +1,49 @@
-<div class="flex flex-row m-12 mt-2 overflow-y-hidden"  id="core-app-wrapper">
-  <div class="flex flex-col gap-5  max-h-screen" id="core-app-code-column">
-    <div class="nav-bar-spacer"></div>
-    <div class="flex-row flex items-center gap-5 pl-1" id="execution-wrapper">
+<div class="flex flex-col m-12 mt-2 overflow-y-hidden" id="core-app-wrapper">
+  <div class="nav-bar-spacer"></div>
+  <div class="flex-row flex items-center gap-5 pl-1 mb-5" id="execution-wrapper">
 
-      <execution-controls [process]="runtime.process"></execution-controls>
-      <button (click)="requestCompile()" class="assemble btn btn-primary" title="Assemble">Assemble</button>
-    </div>
-<!--    <mat-card [appearance]="'outlined'" class=" m-10 p-3 w-1/2">-->
-<!--      <div mat-card-title> Code</div>-->
+    <execution-controls [process]="runtime.process"></execution-controls>
+    <button (click)="requestCompile()" class="assemble btn btn-primary" title="Assemble">Assemble</button>
+  </div>
+  <div class="flex flex-row" id="main-columns-wrapper">
+
+    <div class="flex flex-col gap-5  max-h-screen" id="core-app-code-column">
+
       <div class="editor-wrapper">
-
         <asm-editor (breakpointChange)="onBreakpointChanged($event)"
                     (compile)="compileSource($event)"
                     [activeLine]="getActiveLine()"></asm-editor>
         <div class="errors">{{ compileErrors }}</div>
       </div>
-<!--    </mat-card>-->
 
 
-  </div>
-  <div class="flex flex-col gap-5  max-h-screen overflow-y-auto" id="core-app-utils-column">
-    <div class="nav-bar-spacer"></div>
-    <div class="console-wrapper">
-      <h2>Console</h2>
-      <console></console>
     </div>
-    <div class="cpu-wrapper">
-      <h3>CPU</h3>
-      <cpu *ngIf="runtime.process?.cpu" [cpu]="runtime.process .cpu"></cpu>
-    </div>
-    <div class="memory-wrapper">
-      <h3>Memory</h3>
-      <div *ngIf="runtime.hasProcess()" class="inner">
-        Byte size:
-        <div class="size-wrapper">
-          <label *ngFor="let item of [1, 2, 4]" class="size-label">
-            <input (click)="memory.wordSize = item" [checked]="item === memory.wordSize" name="memory-word-size"
-                   type="radio"><span>{{item}}</span></label>
+
+    <div class="flex flex-col gap-5  max-h-screen " id="core-app-utils-column">
+<div></div>
+
+      <div class="" id="utils-wrapper">
+        <div class="console-wrapper ">
+          <h2>Console</h2>
+          <console></console>
         </div>
-        Ascii: <input (change)="memoryChecked($event) " [checked]="memory.ascii" type="checkbox" />
-        <memory #memory [memory]="runtime.process.cpu.memory || undefined"></memory>
+        <div class="cpu-wrapper">
+          <h3>CPU</h3>
+          <cpu *ngIf="runtime.process?.cpu" [cpu]="runtime.process .cpu"></cpu>
+        </div>
+        <div class="memory-wrapper">
+          <h3>Memory</h3>
+          <div *ngIf="runtime.hasProcess()" class="inner">
+            Byte size:
+            <div class="size-wrapper">
+              <label *ngFor="let item of [1, 2, 4]" class="size-label">
+                <input (click)="memory.wordSize = item" [checked]="item === memory.wordSize" name="memory-word-size"
+                       type="radio"><span>{{item}}</span></label>
+            </div>
+            Ascii: <input (change)="memoryChecked($event) " [checked]="memory.ascii" type="checkbox" />
+            <memory #memory [memory]="runtime.process.cpu.memory || undefined"></memory>
+          </div>
+        </div>
       </div>
     </div>
   </div>
