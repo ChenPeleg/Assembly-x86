@@ -3,9 +3,8 @@
   <button aria-label="Example icon button with a home icon" color="primary" mat-icon-button>
     <mat-icon color="red">play_circle</mat-icon>
   </button>
-  <button (click)="onStart()" [disabled]="process === null || process.isStarted()" class="btn btn-success glyphicon glyphicon-play" title="Start"></button>
-  <button (click)="onStop()" [disabled]="process === null || !process.isStarted()" class="btn btn-danger glyphicon glyphicon-stop" title="Stop"></button>
-  <button (click)="onPause()" [disabled]="process === null || !process.isRunning()" class="btn btn-danger glyphicon glyphicon-pause" title="Pause"></button>
-  <button (click)="onContinue()" [disabled]="process === null || !process.isPaused()" class="btn btn-success glyphicon glyphicon-play-circle" title="Continue"></button>
-  <button (click)="onStep()" [disabled]="process === null || !process.isPaused()" class="btn btn-info glyphicon glyphicon-step-forward" title="Step"></button>
+  <button (click)="buttonClicked(button)" *ngFor="let button of buttons"
+          [disabled]="getIsDisabled(button)" [ngClass]="getButtonClass(button)"
+          [title]="button.toLocaleUpperCase()"></button>
+
 </div>

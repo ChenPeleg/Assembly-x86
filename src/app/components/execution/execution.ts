@@ -8,7 +8,7 @@ export type Button = "start" | "stop" | "pause" | "continue" | "step";
   templateUrl: "./execution.html",
 })
 export class ExecutionComponent {
-  public readonly Buttons: Button[] = [
+  public readonly buttons: Button[] = [
     "start",
     "stop",
     "pause",
