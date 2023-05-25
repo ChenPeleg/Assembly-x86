@@ -28,6 +28,7 @@ export class ExecutionComponent {
     this.start.emit(this.process);
     this.process.start();
   }
+
   getIsDisabled(button: Button): boolean {
     if (this.process === null) {
       return true;
@@ -49,10 +50,47 @@ export class ExecutionComponent {
     }
   }
 
+  buttonClicked(button: Button): void {
+    switch (button) {
+      case "start":
+        this.onStart();
+        break;
+      case "stop":
+        this.onStop();
+        break;
+      case "pause":
+        this.onPause();
+        break;
+      case "continue":
+        this.onContinue();
+        break;
+      case "step":
+        this.onStep();
+        break;
+    }
+  }
+  getButtonClass(button: Button): string {
+    switch (button) {
+      case "start":
+        return `btn btn-success glyphicon glyphicon-play`;
+      case "stop":
+        return `btn btn-danger glyphicon glyphicon-stop`;
+      case "pause":
+        return `btn btn-danger glyphicon glyphicon-pause`;
+      case "continue":
+        return `btn btn-success glyphicon glyphicon-play-circle`;
+      case "step":
+        return `btn btn-info glyphicon glyphicon-step-forward`;
+      default:
+        return "";
+    }
+  }
+
   onStop() {
     this.stop.emit(this.process);
     this.process.cpu.halt();
   }
+
   public onContinue() {
     this.continueEvent.emit(this.process);
     this.process.cpu.run();
