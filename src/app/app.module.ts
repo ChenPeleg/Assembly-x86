@@ -29,6 +29,8 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { DisplayCockpitComponent } from "./components/display-cockpit/display-cockpit.component";
 import { CdkDrag, CdkDropList } from "@angular/cdk/drag-drop";
+import { counterReducer } from "./store/counter.reducer";
+import { StoreModule } from "@ngrx/store";
 
 @NgModule({
   declarations: [
@@ -49,6 +51,7 @@ import { CdkDrag, CdkDropList } from "@angular/cdk/drag-drop";
     DisplayCockpitComponent,
   ],
   imports: [
+    StoreModule.forRoot({ count: counterReducer }),
     HttpClientModule,
     BrowserModule,
     BrowserAnimationsModule,
