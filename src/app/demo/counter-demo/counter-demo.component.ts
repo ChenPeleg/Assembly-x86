@@ -8,6 +8,7 @@ import { decrement, increment, reset } from "../../store/counter.actions";
   templateUrl: "./counter-demo.component.html",
   styleUrls: ["./counter-demo.component.scss"],
 })
+//https://ngrx.io/guide/store
 export class CounterDemoComponent {
   count$: Observable<number>;
   constructor(private store: Store<{ count: number }>) {
