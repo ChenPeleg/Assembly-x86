@@ -105,4 +105,21 @@ export class ExecutionComponent {
     this.step.emit(this.process);
     this.process.cpu.step();
   }
+
+  getIcon(button: Button) {
+    switch (button) {
+      case "start":
+        return `play_arrow`; // play+circle
+      case "stop":
+        return `stop`;
+      case "pause":
+        return `pause`;
+      case "continue":
+        return `play_circle`;
+      case "step":
+        return `skip_next`;
+      default:
+        return "play_circle";
+    }
+  }
 }

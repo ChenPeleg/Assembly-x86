@@ -1,7 +1,7 @@
 <div class="execution btn-group">
 
-  <button aria-label="Example icon button with a home icon" color="primary" mat-icon-button>
-    <mat-icon color="red">play_circle</mat-icon>
+  <button *ngFor="let button of buttons" aria-label="Example icon button with a home icon" color="primary" mat-icon-button>
+    <mat-icon >{{getIcon(button)}}</mat-icon>
   </button>
   <button (click)="buttonClicked(button)" *ngFor="let button of buttons"
           [disabled]="getIsDisabled(button)" [ngClass]="getButtonClass(button)"
