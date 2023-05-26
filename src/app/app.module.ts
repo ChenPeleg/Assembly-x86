@@ -31,6 +31,7 @@ import { DisplayCockpitComponent } from "./components/display-cockpit/display-co
 import { CdkDrag, CdkDropList } from "@angular/cdk/drag-drop";
 import { counterReducer } from "./store/counter.reducer";
 import { StoreModule } from "@ngrx/store";
+import { CounterDemoComponent } from "./demo/counter-demo/counter-demo.component";
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import { StoreModule } from "@ngrx/store";
     DocumentationComponent,
     ContentTableComponent,
     DisplayCockpitComponent,
+    CounterDemoComponent,
   ],
   imports: [
     StoreModule.forRoot({ count: counterReducer }),
