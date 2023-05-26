@@ -1,5 +1,15 @@
 @import "src/app/styles/custom/scroll-bar.scss";
 
+#core-app-wrapper{
+  font-family: Roboto, sans-serif;
+ h3 {
+   font-size: 18px;
+   padding: 0 10px;
+   display: inline-block;
+ }
+
+}
+
 .editor-card {
   margin: 2em;
   padding: 2em;

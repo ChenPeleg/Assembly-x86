@@ -1,4 +1,4 @@
-import { Component, ViewChild, AfterViewInit } from "@angular/core";
+import { AfterViewInit, Component, ViewChild } from "@angular/core";
 import { MemoryBlock } from "../../emulation/memory-block";
 import { CPU, Interrupt } from "../../emulation/cpu";
 import { Assembler, AssemblyException } from "../../assembly/assembler";
@@ -59,6 +59,7 @@ factorial:
     LEAVE
     RET
 `;
+    this.requestCompile();
   }
   public memoryChecked($event: any): void {
     const memory: any = this.runtime.process?.cpu?.memory;
