@@ -1,11 +1,12 @@
 import {
-  Component,
-  Output,
-  EventEmitter,
-  ViewChild,
-  ElementRef,
-  Input,
   AfterViewInit,
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  Output,
+  ViewChild,
+  ViewEncapsulation,
 } from "@angular/core";
 import * as _ from "lodash";
 import * as ace from "brace";
@@ -18,6 +19,7 @@ ace.config.set("modePath", "./assets/js");
   selector: "asm-editor",
   templateUrl: "./asm-editor.html",
   styleUrls: ["./asm-editor.scss"],
+  encapsulation: ViewEncapsulation.None,
 })
 export class AsmEditorComponent implements AfterViewInit {
   private static ACTIVE_LINE_CLASS: string = "active-line";
