@@ -1,1 +1,11 @@
+<div class="m-20 text-3xl flex flex-col gap-20 max-w-2xl">
+
 <p>counter-demo works!</p>
+  <button (click)="increment()" mat-raised-button>Increment</button>
+
+  <div>Current Count: {{ count$ | async }}</div>
+
+  <button  (click)="decrement()"  mat-raised-button>Decrement</button>
+
+  <button  (click)="reset()" mat-raised-button>Reset Counter</button>
+</div>
