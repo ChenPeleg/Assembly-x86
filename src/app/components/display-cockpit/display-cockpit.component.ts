@@ -1,11 +1,5 @@
 import { Component } from "@angular/core";
-import { NgFor } from "@angular/common";
-import {
-  CdkDrag,
-  CdkDragDrop,
-  CdkDropList,
-  moveItemInArray,
-} from "@angular/cdk/drag-drop";
+import { CdkDragDrop, moveItemInArray } from "@angular/cdk/drag-drop";
 
 /**
  * @title Drag&Drop horizontal sorting
@@ -14,10 +8,8 @@ import {
   selector: "display-cockpit",
   templateUrl: "display-cockpit.component.html",
   styleUrls: ["display-cockpit.component.scss"],
-  standalone: true,
-  imports: [CdkDropList, NgFor, CdkDrag],
 })
-export class CdkDragDropHorizontalSortingExample {
+export class DisplayCockpitComponent {
   timePeriods = [
     "Bronze age",
     "Iron age",

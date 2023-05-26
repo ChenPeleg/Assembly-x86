@@ -27,6 +27,8 @@ import { ContentTableComponent } from "./components/pages/content-table/content-
 import { MatTreeModule } from "@angular/material/tree";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { MatTooltipModule } from "@angular/material/tooltip";
+import { DisplayCockpitComponent } from "./components/display-cockpit/display-cockpit.component";
+import { CdkDrag, CdkDropList } from "@angular/cdk/drag-drop";
 
 @NgModule({
   declarations: [
@@ -44,6 +46,7 @@ import { MatTooltipModule } from "@angular/material/tooltip";
     AsmEditorComponent,
     DocumentationComponent,
     ContentTableComponent,
+    DisplayCockpitComponent,
   ],
   imports: [
     HttpClientModule,
@@ -58,6 +61,8 @@ import { MatTooltipModule } from "@angular/material/tooltip";
     MatIconModule,
     MatTreeModule,
     MatTooltipModule,
+    CdkDropList,
+    CdkDrag,
   ],
   providers: [PagesService],
   bootstrap: [AppRootComponent],
