@@ -26,6 +26,7 @@ import { DocumentationComponent } from "./components/pages/documentation/documen
 import { ContentTableComponent } from "./components/pages/content-table/content-table.component";
 import { MatTreeModule } from "@angular/material/tree";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { MatTooltipModule } from "@angular/material/tooltip";
 
 @NgModule({
   declarations: [
@@ -56,6 +57,7 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
     AppRoutingModule,
     MatIconModule,
     MatTreeModule,
+    MatTooltipModule,
   ],
   providers: [PagesService],
   bootstrap: [AppRootComponent],
