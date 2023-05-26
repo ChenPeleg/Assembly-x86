@@ -1,6 +1,5 @@
 import { AfterViewInit, Component } from "@angular/core";
 import { Router } from "@angular/router";
-import { PagesService } from "../../services/pages.service";
 
 @Component({
   selector: "app-navbar",
@@ -14,6 +13,9 @@ export class NavBarComponent implements AfterViewInit {
 
   async clickLinks() {
     await this.router.navigate(["links/"]);
+  }
+  async clickDemo() {
+    await this.router.navigate(["demo/"]);
   }
 
   async clickDocs() {
