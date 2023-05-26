@@ -122,4 +122,21 @@ export class ExecutionComponent {
         return "play_circle";
     }
   }
+
+  getColor(button: Button): "primary" | "accent" | "warn" | undefined {
+    switch (button) {
+      case "start":
+        return `primary`; // play+circle
+      case "stop":
+        return `warn`;
+      case "pause":
+        return "primary";
+      case "continue":
+        return `primary`;
+      case "step":
+        return `primary`;
+      default:
+        return `primary`;
+    }
+  }
 }
