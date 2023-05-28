@@ -55,7 +55,7 @@ import { UIStateReducer } from "./stores/reducers/ui.state.reducer";
   ],
   imports: [
     StoreModule.forRoot(
-      { count: counterReducer, UIState: UIStateReducer },
+      { count: counterReducer, uiState: UIStateReducer },
       {
         runtimeChecks: {
           strictStateImmutability: true,
