@@ -17,6 +17,7 @@ import { CdkDragDrop, moveItemInArray } from "@angular/cdk/drag-drop";
 //https://ngrx.io/guide/store
 export class CounterDemoComponent {
   count$: Observable<number>;
+
   timePeriods = [
     "Bronze age",
     "Iron age",
@@ -24,10 +25,17 @@ export class CounterDemoComponent {
     "Early modern period",
     "Long nineteenth century",
   ];
+  uiState$: Observable<UIState>;
   constructor(private store: Store<{ count: number; uiState: UIState }>) {
     this.count$ = store.select("count");
+    this.uiState$ = store.select("uiState");
+    this.uiState$.subscribe((ui) => ui);
   }
   drop(event: CdkDragDrop<string[]>) {
+    moveItemInArray(this.timePeriods, event.previousIndex, event.currentIndex);
+  }
+  dropPanel(event: CdkDragDrop<string[]>) {
+    console.log(event);
     moveItemInArray(this.timePeriods, event.previousIndex, event.currentIndex);
   }
 
