@@ -1,20 +1,6 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
-import {
-  ActivatedRoute,
-  Data,
-  NavigationEnd,
-  Router,
-  UrlSegment,
-} from "@angular/router";
-import {
-  distinctUntilChanged,
-  filter,
-  map,
-  Observable,
-  Subject,
-  takeUntil,
-  tap,
-} from "rxjs";
+import { NavigationEnd, Router } from "@angular/router";
+import { filter, map, Observable, Subject, takeUntil } from "rxjs";
 
 @Component({
   selector: "app-layout",
@@ -34,7 +20,7 @@ export class LayoutComponent implements OnDestroy, OnInit {
     this.destroy$.complete();
   }
   ngOnInit() {
-    this.urlPath.subscribe((e) => console.log(e));
+    this.urlPath.subscribe((e) => e);
   }
   public includeSpacer(url: string): boolean {
     return !this.urlsWithoutSpacer.includes(url);

@@ -1,6 +1,6 @@
 import * as fs from "fs";
-import * as path from "path";
 import { writeFileSync } from "fs";
+import * as path from "path";
 
 export const getDirFiles = async (baseDir, testFilesNamesPattern) => {
   const testFilesNamesRegex = new RegExp(`.*${testFilesNamesPattern}`, "gi");
@@ -31,4 +31,4 @@ const listAllDocAssetFiles = async () => {
   writeFileSync(path.resolve(docsPath, "doclist.txt"), filesWithForwardSlash.join("\n"));
 
 };
-listAllDocAssetFiles().then((r) => console.log("****************"));
+listAllDocAssetFiles().then((r) => r);
