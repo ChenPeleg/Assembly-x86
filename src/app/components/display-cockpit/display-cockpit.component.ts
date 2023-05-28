@@ -11,18 +11,8 @@ import { UIStateActions } from "../../stores/actions/ui.state.actions";
   styleUrls: ["display-cockpit.component.scss"],
 })
 export class DisplayCockpitComponent {
-  count$: Observable<number>;
-
-  timePeriods = [
-    "Bronze age",
-    "Iron age",
-    "Middle ages",
-    "Early modern period",
-    "Long nineteenth century",
-  ];
   uiState$: Observable<UIState>;
   constructor(private store: Store<{ count: number; uiState: UIState }>) {
-    this.count$ = store.select("count");
     this.uiState$ = store.select("uiState");
     this.uiState$.subscribe((ui) => ui);
   }
