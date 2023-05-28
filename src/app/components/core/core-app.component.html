@@ -19,19 +19,25 @@
       </div>
     </div>
 
-    <div  class="flex flex-col gap-5  max-h-screen " id="core-app-utils-column">
+    <div class="flex flex-col gap-5  max-h-screen " id="core-app-utils-column">
 
 
       <div *ngIf="(uiState$ | async)?.panels as panels" class="flex  flex-col" id="utils-wrapper">
-        <div [ngStyle]="{order: getDisplayProps('console',panels).order }" class="console-wrapper">
+        <div
+          [ngStyle]="{'display'  : getDisplayProps('console',panels).visibility ? '' : 'none' ,  order: getDisplayProps('console',panels).order }"
+          class="console-wrapper">
           <h3>Console</h3>
           <console></console>
         </div>
-        <div [ngStyle]="{order: getDisplayProps('cpu',panels).order }"  class="cpu-wrapper">
+        <div
+          [ngStyle]="{'display'  : getDisplayProps('cpu',panels).visibility ? '' : 'none' ,order: getDisplayProps('cpu',panels).order }"
+          class="cpu-wrapper">
           <h3>CPU</h3>
           <cpu *ngIf="runtime.process?.cpu" [cpu]="runtime.process .cpu"></cpu>
         </div>
-        <div [ngStyle]="{order: getDisplayProps('memory',panels).order }" class="memory-wrapper" >
+        <div
+          [ngStyle]="{'display'  : getDisplayProps('memory',panels).visibility ? '' : 'none' ,order: getDisplayProps('memory',panels).order }"
+          class="memory-wrapper">
           <h3>Memory</h3>
           <div *ngIf="runtime.hasProcess()" class="inner">
             Byte size:
