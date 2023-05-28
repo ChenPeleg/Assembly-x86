@@ -1,5 +1,15 @@
 <div class="m-20 text-3xl flex flex-col gap-20 max-w-2xl">
-<display-cockpit></display-cockpit>
+  <div (cdkDropListDropped)="drop($event)" cdkDropList cdkDropListOrientation="horizontal" class="example-list">
+    <div *ngFor="let timePeriod of timePeriods" cdkDrag class="example-box">
+      <div>
+        {{timePeriod}}
+
+      </div>
+
+    </div>
+  </div>
+
+
 <p>counter-demo works!</p>
   <button (click)="increment()" mat-raised-button>Increment</button>
   <div>Current Count: {{ count$ | async }}</div>

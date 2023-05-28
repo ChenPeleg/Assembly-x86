@@ -10,6 +10,7 @@ import { CdkDragDrop, moveItemInArray } from "@angular/cdk/drag-drop";
   styleUrls: ["display-cockpit.component.scss"],
 })
 export class DisplayCockpitComponent {
+  // uiPanels: Panel[];
   timePeriods = [
     "Bronze age",
     "Iron age",
@@ -17,6 +18,7 @@ export class DisplayCockpitComponent {
     "Early modern period",
     "Long nineteenth century",
   ];
+  constructor() {}
 
   drop(event: CdkDragDrop<string[]>) {
     moveItemInArray(this.timePeriods, event.previousIndex, event.currentIndex);

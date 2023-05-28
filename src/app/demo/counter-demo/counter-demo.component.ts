@@ -6,6 +6,8 @@ import {
   increment,
   reset,
 } from "../../stores/actions/counter.actions";
+import { UIState } from "../../models/UIState";
+import { CdkDragDrop, moveItemInArray } from "@angular/cdk/drag-drop";
 
 @Component({
   selector: "app-counter-demo",
@@ -15,8 +17,18 @@ import {
 //https://ngrx.io/guide/store
 export class CounterDemoComponent {
   count$: Observable<number>;
-  constructor(private store: Store<{ count: number }>) {
+  timePeriods = [
+    "Bronze age",
+    "Iron age",
+    "Middle ages",
+    "Early modern period",
+    "Long nineteenth century",
+  ];
+  constructor(private store: Store<{ count: number; uiState: UIState }>) {
     this.count$ = store.select("count");
+  }
+  drop(event: CdkDragDrop<string[]>) {
+    moveItemInArray(this.timePeriods, event.previousIndex, event.currentIndex);
   }
 
   increment() {
