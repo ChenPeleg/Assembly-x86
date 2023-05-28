@@ -133,7 +133,7 @@ factorial:
     const panel = panels.find((p) => p.name === panelName);
     return {
       order: panel?.order || 1,
-      visibility: panel?.isVisible || true,
+      visibility: !!panel?.isVisible,
     };
   }
 
