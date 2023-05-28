@@ -4,6 +4,6 @@ export interface Panel {
   isVisible: boolean;
 }
 export interface UIState {
-  panels: [Panel, Panel, Panel];
+  panels: Panel[];
   theme: string;
 }
