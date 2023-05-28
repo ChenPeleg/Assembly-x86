@@ -29,9 +29,10 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { DisplayCockpitComponent } from "./components/display-cockpit/display-cockpit.component";
 import { CdkDrag, CdkDropList } from "@angular/cdk/drag-drop";
-import { counterReducer } from "./stores/reducers/counter.reducer";
 import { StoreModule } from "@ngrx/store";
 import { CounterDemoComponent } from "./demo/counter-demo/counter-demo.component";
+import { counterReducer } from "./stores/reducers/counter.reducer";
+import { UIStateReducer } from "./stores/reducers/ui.state.reducer";
 
 @NgModule({
   declarations: [
@@ -53,7 +54,17 @@ import { CounterDemoComponent } from "./demo/counter-demo/counter-demo.component
     CounterDemoComponent,
   ],
   imports: [
-    StoreModule.forRoot({ count: counterReducer }),
+    StoreModule.forRoot(
+      { count: counterReducer, UIState: UIStateReducer },
+      {
+        runtimeChecks: {
+          strictStateImmutability: true,
+          strictActionImmutability: true,
+        },
+      }
+    ),
+
+    // StoreModule.forRoot({ count: counterReducer }),
     HttpClientModule,
     BrowserModule,
     BrowserAnimationsModule,
