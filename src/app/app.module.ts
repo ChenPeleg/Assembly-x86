@@ -35,6 +35,18 @@ import { counterReducer } from "./stores/reducers/counter.reducer";
 import { UIStateReducer } from "./stores/reducers/ui.state.reducer";
 import { SharedModule } from "./common/shared.module";
 
+export const AllMatModules = [
+  MatToolbarModule,
+  MatCardModule,
+  MatButtonToggleModule,
+  MatButtonModule,
+  MatIconModule,
+  MatTreeModule,
+  MatTooltipModule,
+  CdkDropList,
+  CdkDrag,
+];
+
 @NgModule({
   declarations: [
     InstructionsComponent,
@@ -55,6 +67,7 @@ import { SharedModule } from "./common/shared.module";
     CounterDemoComponent,
   ],
   imports: [
+    ...AllMatModules,
     StoreModule.forRoot(
       { count: counterReducer, uiState: UIStateReducer },
       {
@@ -71,16 +84,8 @@ import { SharedModule } from "./common/shared.module";
     BrowserModule,
     BrowserAnimationsModule,
     FormsModule,
-    MatToolbarModule,
-    MatCardModule,
-    MatButtonToggleModule,
-    MatButtonModule,
+
     AppRoutingModule,
-    MatIconModule,
-    MatTreeModule,
-    MatTooltipModule,
-    CdkDropList,
-    CdkDrag,
   ],
   providers: [PagesService],
   bootstrap: [AppRootComponent],
