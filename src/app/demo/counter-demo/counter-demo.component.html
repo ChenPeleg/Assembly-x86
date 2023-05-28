@@ -1,26 +1,19 @@
 <div class="m-20 text-3xl flex flex-col gap-20 max-w-2xl">
-  <div (cdkDropListDropped)="drop($event)" cdkDropList cdkDropListOrientation="horizontal" class="example-list">
-    <div *ngFor="let timePeriod of timePeriods" cdkDrag class="example-box">
-      <div>
-        {{timePeriod}}
 
-      </div>
-
-    </div>
-  </div>
-  <div (cdkDropListDropped)="dropPanel($event,panels)" *ngIf="(uiState$ | async)?.panels as panels" cdkDropList cdkDropListOrientation="horizontal" class="example-list">
+  <div (cdkDropListDropped)="dropPanel($event,panels)" *ngIf="(uiState$ | async)?.panels as panels" cdkDropList
+       cdkDropListOrientation="horizontal" class="example-list">
     <div *ngFor="let panel of  panels" cdkDrag class="example-box">
-      <div>
-        {{panel.name}}
+      <div class="single-panel flex flex-row gap-5">
+        <div class="single-panel_visibility">
+          <button class="small-icon-button " mat-icon-button>
+            <mat-icon>visibility</mat-icon>
+          </button>
+        </div>
+        <div class="single-panel_name">{{panel.name}}</div>
       </div>
 
     </div>
   </div>
 
 
-<p>counter-demo works!</p>
-  <button (click)="increment()" mat-raised-button>Increment</button>
-  <div>Current Count: {{ count$ | async }}</div>
-  <button  (click)="decrement()"  mat-raised-button>Decrement</button>
-  <button  (click)="reset()" mat-raised-button>Reset Counter</button>
 </div>
