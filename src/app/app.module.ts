@@ -33,6 +33,7 @@ import { StoreModule } from "@ngrx/store";
 import { CounterDemoComponent } from "./demo/counter-demo/counter-demo.component";
 import { counterReducer } from "./stores/reducers/counter.reducer";
 import { UIStateReducer } from "./stores/reducers/ui.state.reducer";
+import { SharedModule } from "./common/shared.module";
 
 @NgModule({
   declarations: [
@@ -65,6 +66,7 @@ import { UIStateReducer } from "./stores/reducers/ui.state.reducer";
     ),
 
     // StoreModule.forRoot({ count: counterReducer }),
+    SharedModule,
     HttpClientModule,
     BrowserModule,
     BrowserAnimationsModule,
