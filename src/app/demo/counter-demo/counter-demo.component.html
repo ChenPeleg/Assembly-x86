@@ -5,9 +5,7 @@
     <div *ngFor="let panel of  panels" cdkDrag class="example-box">
       <div class="single-panel flex flex-row gap-5">
         <div class="single-panel_visibility">
-          <button class="small-icon-button " mat-icon-button>
-            <mat-icon>visibility</mat-icon>
-          </button>
+        <app-small-icon-button (clickEvent)="clickVisibility($event, panel)" [iconName]="'visibility_off'"></app-small-icon-button>
         </div>
         <div class="single-panel_name">{{panel.name}}</div>
       </div>

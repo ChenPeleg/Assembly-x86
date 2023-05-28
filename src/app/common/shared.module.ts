@@ -5,5 +5,6 @@ import { AllMatModules } from "../app.module";
 @NgModule({
   imports: [...AllMatModules],
   declarations: [SmallIconButtonComponent],
+  exports: [SmallIconButtonComponent],
 })
 export class SharedModule {}

@@ -1,3 +1,7 @@
+.single-panel {
+  font-family: Roboto, sans-serif;
+}
+
 .example-list {
   width: 400px;
   max-width: 100%;
@@ -51,27 +55,3 @@
 }
 
 
-.small-icon-button {
-  width: 24px !important;
-  height: 24px !important;
-  padding: 0px !important;
-  display: inline-flex !important;
-  align-items: center;
-  justify-content: center;
-
-  & > *[role=img] {
-    width: 16px;
-    height: 16px;
-    font-size: 16px;
-
-    svg {
-      width: 16px;
-      height: 16px;
-    }
-  }
-
-  .mat-mdc-button-touch-target {
-    width: 24px !important;
-    height: 24px !important;
-  }
-}
