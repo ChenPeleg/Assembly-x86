@@ -1,11 +1,12 @@
 <div class="m-20 text-3xl flex flex-col gap-20 max-w-2xl">
 
-  <div (cdkDropListDropped)="dropPanel($event,panels)" *ngIf="(uiState$ | async)?.panels as panels" cdkDropList
-       cdkDropListOrientation="horizontal" class="example-list">
-    <div *ngFor="let panel of  panels" cdkDrag class="example-box">
+  <div (cdkDropListDropped)="dropPanel($event,panels)"
+       *ngIf="(uiState$ | async)?.panels as panels" cdkDropList
+       cdkDropListOrientation="horizontal" class="panel-list">
+    <div *ngFor="let panel of  panels" cdkDrag class="panel-box">
       <div class="single-panel flex flex-row gap-5">
         <div class="single-panel_visibility">
-        <app-small-icon-button (clickEvent)="clickVisibility($event, panel)" [iconName]="'visibility_off'"></app-small-icon-button>
+        <app-small-icon-button (clickEvent)="clickVisibility($event, panel)" [iconName]="panel.isVisible ? 'visibility' : 'visibility_off'"></app-small-icon-button>
         </div>
         <div class="single-panel_name">{{panel.name}}</div>
       </div>
