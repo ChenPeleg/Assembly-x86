@@ -29,7 +29,7 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { DisplayCockpitComponent } from "./components/display-cockpit/display-cockpit.component";
 import { CdkDrag, CdkDropList } from "@angular/cdk/drag-drop";
-import { counterReducer } from "./store/counter.reducer";
+import { counterReducer } from "./stores/counter.reducer";
 import { StoreModule } from "@ngrx/store";
 import { CounterDemoComponent } from "./demo/counter-demo/counter-demo.component";
 

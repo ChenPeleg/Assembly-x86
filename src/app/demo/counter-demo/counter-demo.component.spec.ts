@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { CounterDemoComponent } from "./counter-demo.component";
 import { provideMockStore } from "@ngrx/store/testing";
-import { initialState } from "../../store/counter.reducer";
+import { initialState } from "../../stores/counter.reducer";
 
 describe("CounterDemoComponent", () => {
   let component: CounterDemoComponent;
