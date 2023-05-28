@@ -1,3 +1,3 @@
-<button class="small-icon-button " mat-icon-button>
-  <mat-icon>visibility</mat-icon>
+<button (click)="emitClick($event)" [disabled]="disabled" class="small-icon-button " mat-icon-button>
+  <mat-icon>{{iconName}}</mat-icon>
 </button>

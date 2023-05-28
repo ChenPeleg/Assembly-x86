@@ -53,4 +53,9 @@ export class CounterDemoComponent {
   reset() {
     this.store.dispatch(reset());
   }
+
+  clickVisibility($event: MouseEvent, panel: Panel) {
+    const newPanel = { ...panel, isVisible: !panel.isVisible };
+    this.store.dispatch(UIStateActions.changeVisibility(newPanel));
+  }
 }
