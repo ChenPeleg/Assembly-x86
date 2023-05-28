@@ -8,6 +8,7 @@ import { Runtime } from "../../emulation/runtime";
 import { Process } from "../../emulation/process";
 import { ConsoleComponent } from "../console/console";
 import { RuntimeException } from "../../emulation/runtime-exception";
+import { Panel } from "../../models/UIState";
 
 @Component({
   selector: "core-app",
@@ -116,6 +117,17 @@ factorial:
       throw "Error: asm Editor has no content";
     }
     this.asmEditor?.emitCompile();
+  }
+
+  public getDisplayProps(
+    panelName: "console" | "cpu" | "memory",
+    panels: Panel[]
+  ): { order: number; visibility: boolean } {
+    const panel = panels.find((p) => (p.name = panelName));
+    return {
+      order: panel?.order || 1,
+      visibility: panel?.isVisible || true,
+    };
   }
 
   private handleInterrupt(interrupt: Interrupt) {
