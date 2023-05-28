@@ -8,7 +8,9 @@ import { Runtime } from "../../emulation/runtime";
 import { Process } from "../../emulation/process";
 import { ConsoleComponent } from "../console/console";
 import { RuntimeException } from "../../emulation/runtime-exception";
-import { Panel } from "../../models/UIState";
+import { Panel, UIState } from "../../models/UIState";
+import { Observable } from "rxjs";
+import { Store } from "@ngrx/store";
 
 @Component({
   selector: "core-app",
@@ -21,9 +23,14 @@ export class CoreAppComponent implements AfterViewInit {
 
   runtime: Runtime = new Runtime();
   compileErrors: string = "";
+  uiState$: Observable<UIState>;
   private assembler: Assembler = new Assembler();
   private cpu: CPU | undefined;
   private memorySize: number = 256;
+
+  constructor(private store: Store<{ count: number; uiState: UIState }>) {
+    this.uiState$ = store.select("uiState");
+  }
 
   ngAfterViewInit() {
     // @ts-ignore
@@ -123,7 +130,7 @@ factorial:
     panelName: "console" | "cpu" | "memory",
     panels: Panel[]
   ): { order: number; visibility: boolean } {
-    const panel = panels.find((p) => (p.name = panelName));
+    const panel = panels.find((p) => p.name === panelName);
     return {
       order: panel?.order || 1,
       visibility: panel?.isVisible || true,
