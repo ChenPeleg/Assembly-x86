@@ -8,7 +8,7 @@
 
     </div>
   </div>
-  <div (cdkDropListDropped)="dropPanel($event)" *ngIf="(uiState$ | async)?.panels as panels" cdkDropList cdkDropListOrientation="horizontal" class="example-list">
+  <div (cdkDropListDropped)="dropPanel($event,panels)" *ngIf="(uiState$ | async)?.panels as panels" cdkDropList cdkDropListOrientation="horizontal" class="example-list">
     <div *ngFor="let panel of  panels" cdkDrag class="example-box">
       <div>
         {{panel.name}}

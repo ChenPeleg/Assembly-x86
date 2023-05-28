@@ -6,8 +6,9 @@ import {
   increment,
   reset,
 } from "../../stores/actions/counter.actions";
-import { UIState } from "../../models/UIState";
+import { Panel, UIState } from "../../models/UIState";
 import { CdkDragDrop, moveItemInArray } from "@angular/cdk/drag-drop";
+import { UIStateActions } from "../../stores/actions/ui.state.actions";
 
 @Component({
   selector: "app-counter-demo",
@@ -34,9 +35,11 @@ export class CounterDemoComponent {
   drop(event: CdkDragDrop<string[]>) {
     moveItemInArray(this.timePeriods, event.previousIndex, event.currentIndex);
   }
-  dropPanel(event: CdkDragDrop<string[]>) {
-    console.log(event);
-    moveItemInArray(this.timePeriods, event.previousIndex, event.currentIndex);
+  dropPanel(event: CdkDragDrop<string[]>, currentPanels: Panel[]) {
+    let newPanelArray = currentPanels.map((p, i) => ({ ...p, order: i + 1 }));
+    moveItemInArray(newPanelArray, event.previousIndex, event.currentIndex);
+    newPanelArray = newPanelArray.map((p, i) => ({ ...p, order: i + 1 }));
+    this.store.dispatch(UIStateActions.reorder({ panels: newPanelArray }));
   }
 
   increment() {
