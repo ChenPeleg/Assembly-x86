@@ -17,9 +17,9 @@ export const UIStateReducer = createReducer(
     ...state,
     panels,
   })),
-  on(UIStateActions.changeVisibility, (state, { panel }) => ({
+  on(UIStateActions.changeVisibility, (state, panel) => ({
     ...state,
     // @ts-ignore
-    panels: state.panels.map((p) => p),
+    panels: state.panels.map((p) => (p.name === panel.name ? panel : p)),
   }))
 );
