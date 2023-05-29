@@ -21,7 +21,7 @@
               "customWebpackConfig": {
                 "path": "./extra-webpack.config.js"
               },
-            "outputPath": "dist/modern-angular",
+            "outputPath": "dist",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -37,7 +37,10 @@
             "scripts": []
           },
           "configurations": {
-            "staging": {
+            "pages": {
+              "outputPath": "build",
+              "deployUrl": "Assembly-x86/",
+              "baseHref": "Assembly-x86",
               "budgets": [
                 {
                   "type": "initial",
