@@ -5,7 +5,10 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "build:prod": "ng build",
+
+    "build:prod": "ng build --configuration production",
+    "build:dev": "ng build --configuration development",
+    "build:stage": "ng build --configuration staging",
     "prebuild": "node script/listAllDocAssestFiles.mjs",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
