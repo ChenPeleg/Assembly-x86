@@ -11,4 +11,3 @@
 /registers/cpu-word-size.md
 /registers/memory-size.md
 /registers/registers-cheatsheet.md
-/tutorials/tutorials.md
