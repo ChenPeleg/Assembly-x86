@@ -41,6 +41,8 @@ jobs:
           cache-dependency-path: './'
 
       - run: npm install
+      - name: Update Docs Link
+        run: npm run prebuild
       - name: Build static site
         run: npm run build:pages
       - name: Setup Pages
