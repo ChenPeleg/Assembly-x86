@@ -41,6 +41,8 @@ jobs:
           cache-dependency-path: './'
 
       - run: npm install
+      - name: build static site
+        run: npm run build:prod
   #      - run:
   #      - >
   #          wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - && \
