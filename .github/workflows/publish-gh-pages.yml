@@ -45,9 +45,14 @@ jobs:
         run: npm run build:stage
       - name: Setup Pages
         uses: actions/configure-pages@v3
-#      - name: Check the dist library
-#        run:
-#         ->
+      - name: Test files check
+        run: |
+          cd ./dist
+          ls
+          cd ./modern-angular
+          echo "===== Build angular ====="
+          ls
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
