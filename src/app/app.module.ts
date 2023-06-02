@@ -2,8 +2,8 @@ import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
 
 import { CoreAppComponent } from "./components/core/core-app.component";
-import { CpuComponent } from "./components/cpu/cpu";
-import { RegisterComponent } from "./components/cpu/register";
+import { CpuPanelComponent } from "./components/cpu-panel/cpu";
+import { RegisterComponent } from "./components/cpu-panel/register";
 import { MemoryComponent } from "./components/memory/memory";
 import { ExecutionComponent } from "./components/execution/execution";
 import { ConsoleComponent } from "./components/console/console";
@@ -54,7 +54,7 @@ export const AllMatModules = [
     LayoutComponent,
     AppRootComponent,
     CoreAppComponent,
-    CpuComponent,
+    CpuPanelComponent,
     RegisterComponent,
     MemoryComponent,
     ExecutionComponent,
