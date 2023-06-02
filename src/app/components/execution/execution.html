@@ -5,13 +5,10 @@
           [disabled]="getIsDisabled(button)"
           [matTooltip]="button.toLocaleUpperCase()"  [title]="button.toLocaleUpperCase()"
           aria-label="Example icon button with a home icon"
-          class="md:ml-0 -ml-2.5"
+          class="md:ml-0 -ml-0.5"
           color="primary"
            mat-icon-button>
     <mat-icon   >{{getIcon(button)}}</mat-icon>
   </button>
-<!--  <button (click)="buttonClicked(button)" *ngFor="let button of buttons"-->
-<!--          [disabled]="getIsDisabled(button)" [ngClass]="getButtonClass(button)"-->
-<!--          [title]="button.toLocaleUpperCase()"></button>-->
 
 </div>

@@ -1,11 +1,14 @@
 <div class="flex flex-col md:m-12 mt-2 sm:m-1 overflow-y-hidden" id="core-app-wrapper">
   <div class="nav-bar-spacer"></div>
-  <div class="flex flex-row items-center gap-5 pl-1 mb-5" id="execution-wrapper">
+  <div class="flex flex-row items-center gap-1 md:gap-5 pl-1 mb-5" id="execution-wrapper">
 
     <execution-controls [process]="runtime.process"></execution-controls>
-    <button (click)="requestCompile()" class="assemble" color="primary" mat-raised-button title="Assemble">Assemble
+    <button (click)="requestCompile()" class="md:w-40 sm:w-5 mt-1" color="primary" mat-raised-button title="Assemble">
+      Assemble
     </button>
-    <display-cockpit></display-cockpit>
+    <div class=" max-w-0 md:max-w-2xl">
+      <display-cockpit></display-cockpit>
+    </div>
   </div>
   <div class="sm:flex  sm:flex-col md:flex-row" id="main-columns-wrapper">
 
@@ -23,6 +26,9 @@
 
 
       <div *ngIf="(uiState$ | async)?.panels as panels" class="flex  flex-col" id="utils-wrapper">
+        <div class="visible md:invisible mt-10">
+          <display-cockpit></display-cockpit>
+        </div>
         <div
           [ngStyle]="{'display'  : getDisplayProps('console',panels).visibility ? '' : 'none' ,  order: getDisplayProps('console',panels).order }"
           class="console-wrapper">

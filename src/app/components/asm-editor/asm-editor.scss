@@ -17,9 +17,7 @@
       }
     }
 
-    .assemble {
-      margin-top: 10px;
-    }
+
   }
 
   .errors {
@@ -34,7 +32,9 @@
 
 div.asm-editor-element {
   min-height: 75vh;
-  width: 500px
-  //min-width: 40vw;
-  //max-width: 60vw;
+  width: 500px;
+  @media  screen and (max-width: 540px) {
+    width: 98vw;
+
+  }
 }
