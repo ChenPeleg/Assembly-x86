@@ -3,7 +3,8 @@ import { CPU } from "../../emulation/cpu";
 
 @Component({
   selector: "cpu",
-  templateUrl: "./cpu.html",
+  templateUrl: "./cpu-panel.component.html",
+  styleUrls: ["./cpu-panel.component.scss"],
 })
 export class CpuPanelComponent {
   // @ts-ignore
