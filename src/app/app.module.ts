@@ -34,6 +34,7 @@ import { CounterDemoComponent } from "./demo/counter-demo/counter-demo.component
 import { counterReducer } from "./stores/reducers/counter.reducer";
 import { UIStateReducer } from "./stores/reducers/ui.state.reducer";
 import { SharedModule } from "./common/shared.module";
+import { MatSliderModule } from "@angular/material/slider";
 
 export const AllMatModules = [
   MatToolbarModule,
@@ -86,6 +87,7 @@ export const AllMatModules = [
     FormsModule,
 
     AppRoutingModule,
+    MatSliderModule,
   ],
   providers: [PagesService],
   bootstrap: [AppRootComponent],

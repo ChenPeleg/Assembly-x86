@@ -1,9 +1,15 @@
-<div class="cpu" *ngIf="cpu !== null || true">
-  
-  <label class="tick-rate">Tick rate: every {{ cpu.tickRate }} ms
-    <input type="range" min="100" max="500" [(ngModel)]="cpu.tickRate" /></label>
+<div *ngIf="cpu !== null || true" class="cpu">
 
-  <register [cpu]="cpu" [name]="reg" *ngFor="let reg of getRegisterKeys()"></register>
+  <label class="tick-rate">Tick rate: every {{ cpu.tickRate }} ms
+  </label>
+
+
+  <mat-slider max="500" min="100" step="5">
+    <input [(ngModel)]="cpu.tickRate" matSliderThumb />
+  </mat-slider>
+
+
+  <register *ngFor="let reg of getRegisterKeys()" [cpu]="cpu" [name]="reg"></register>
   <div *ngFor="let flag of getFlags()">
     <span class="label label-primary name">{{ flag.name }}</span>
     <span class="label label-default value">{{ flag.value ? 1 : 0 }}</span>
