@@ -1,4 +1,4 @@
-<div class="execution btn-group">
+<div class="flex flex-row ">
 
   <button (click)="buttonClicked(button)"  *ngFor="let button of buttons" [color]="getColor(button)"  [disabled]="getIsDisabled(button)"
           [matTooltip]="button.toLocaleUpperCase()"
