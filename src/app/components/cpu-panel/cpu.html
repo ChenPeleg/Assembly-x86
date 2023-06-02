@@ -1,12 +1,16 @@
-<div *ngIf="cpu !== null || true" class="cpu">
+<div *ngIf="cpu !== null || true" class="flex flex-col gap-1 cpu">
 
-  <label class="tick-rate">Tick rate: every {{ cpu.tickRate }} ms
-  </label>
+  <div class="flex flex-col mx-4">
+    <span>
+    Tick rate: {{ cpu.tickRate }} ms
+    </span>
+    <mat-slider class="w-full" max="500" min="100"   step="5">
+      <input [(ngModel)]="cpu.tickRate" matSliderThumb />
+    </mat-slider>
+  </div>
 
 
-  <mat-slider max="500" min="100" step="5">
-    <input [(ngModel)]="cpu.tickRate" matSliderThumb />
-  </mat-slider>
+
 
 
   <register *ngFor="let reg of getRegisterKeys()" [cpu]="cpu" [name]="reg"></register>
