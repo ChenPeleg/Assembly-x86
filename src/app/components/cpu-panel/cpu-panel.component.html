@@ -1,0 +1,29 @@
+<div *ngIf="cpu !== null || true" class="flex flex-col gap-1 cpu">
+
+  <div class="flex flex-col mx-4">
+    <span>
+    Tick rate: {{ cpu.tickRate }} ms
+    </span>
+    <mat-slider max="500" min="100" step="5"   style="max-width: 80%">
+      <input [(ngModel)]="cpu.tickRate" matSliderThumb />
+    </mat-slider>
+  </div>
+
+
+
+<div class="flex gap-10" id="registers-and-flags">
+  <div id="registers-list">
+    <register *ngFor="let reg of getRegisterKeys()" [cpu]="cpu" [name]="reg"></register>
+
+  </div>
+  <div id="flags-list">
+    <div *ngFor="let flag of getFlags()" class="flag">
+      <span class="label label-primary name">{{ flag.name }}</span>
+      <span class="label label-default value">{{ flag.value ? 1 : 0 }}</span>
+    </div>
+  </div>
+
+</div>
+
+
+</div>

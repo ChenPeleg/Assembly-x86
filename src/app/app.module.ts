@@ -2,7 +2,7 @@ import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
 
 import { CoreAppComponent } from "./components/core/core-app.component";
-import { CpuPanelComponent } from "./components/cpu-panel/cpu";
+import { CpuPanelComponent } from "./components/cpu-panel/cpu-panel.component";
 import { RegisterComponent } from "./components/cpu-panel/register";
 import { MemoryComponent } from "./components/memory/memory";
 import { ExecutionComponent } from "./components/execution/execution";
