@@ -21,22 +21,31 @@ export class MemoryOptionsComponent {
     }>
   ) {
     this.memoryDisplay$ = store.select("memoryDisplay");
-    this.memoryDisplay$.subscribe((md) => md);
+    this.memoryDisplay$.subscribe((md) => {
+      console.log(md);
+    });
     const lsData = window.localStorage.getItem(MemoryOptionsComponent.lsKey);
     if (lsData) {
       const memoryDisplay: MemoryDisplay = JSON.parse(lsData) as MemoryDisplay;
-
+      console.log(memoryDisplay);
       this.store.dispatch(
         MemoryDisplayActions.updateMemoryDisplay({ ...memoryDisplay })
       );
     }
   }
   wordSizeSelected($event: MatChipListboxChange) {
-    this.store.dispatch(MemoryDisplayActions.setWordSize($event.value));
+    this.store.dispatch(
+      MemoryDisplayActions.setWordSize({ wordSize: $event.value })
+    );
+
+    this.updateLocalStorage().then();
   }
 
   valueTypeChanged($event: MatChipListboxChange) {
-    this.store.dispatch(MemoryDisplayActions.setValueType($event.value));
+    this.store.dispatch(
+      MemoryDisplayActions.setValueType({ valueType: $event.value })
+    );
+    this.updateLocalStorage().then();
   }
   private async updateLocalStorage() {
     const uiState = await observableToPromise(this.memoryDisplay$);
