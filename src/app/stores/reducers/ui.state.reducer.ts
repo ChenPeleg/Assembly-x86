@@ -13,13 +13,22 @@ export const UIStateInitialState: UIState = {
 
 export const UIStateReducer = createReducer(
   UIStateInitialState,
-  on(UIStateActions.reorder, (state, { panels }) => ({
-    ...state,
-    panels,
-  })),
-  on(UIStateActions.changeVisibility, (state, panel) => ({
-    ...state,
-    // @ts-ignore
-    panels: state.panels.map((p) => (p.name === panel.name ? panel : p)),
-  }))
+  on(UIStateActions.reorder, (state, { panels }) => {
+    return {
+      ...state,
+      panels,
+    };
+  }),
+  on(UIStateActions.changeVisibility, (state, panel) => {
+    return {
+      ...state,
+      panels: state.panels.map((p) => (p.name === panel.name ? panel : p)),
+    };
+  }),
+  on(UIStateActions.updateUIState, (state, newState) => {
+    return {
+      ...newState,
+      panels: newState.panels.map((p) => ({ ...p })),
+    };
+  })
 );
