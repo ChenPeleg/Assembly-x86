@@ -11,6 +11,8 @@ import { RuntimeException } from "../../emulation/runtime-exception";
 import { Panel, UIState } from "../../models/UIState";
 import { Observable } from "rxjs";
 import { Store } from "@ngrx/store";
+import { MemoryDisplay } from "../../models/MemoryDisplay";
+import { MemoryComponent } from "../memory/memory";
 
 @Component({
   selector: "core-app",
@@ -20,16 +22,32 @@ import { Store } from "@ngrx/store";
 export class CoreAppComponent implements AfterViewInit {
   @ViewChild(AsmEditorComponent) asmEditor: AsmEditorComponent | undefined;
   @ViewChild(ConsoleComponent) console: ConsoleComponent | undefined;
+  @ViewChild(MemoryComponent) memory: MemoryComponent | undefined;
 
   runtime: Runtime = new Runtime();
   compileErrors: string = "";
   uiState$: Observable<UIState>;
+  memoryDisplay$: Observable<MemoryDisplay>;
   private assembler: Assembler = new Assembler();
   private cpu: CPU | undefined;
   private memorySize: number = 256;
 
-  constructor(private store: Store<{ count: number; uiState: UIState }>) {
+  constructor(
+    private store: Store<{
+      count: number;
+      uiState: UIState;
+      memoryDisplay: MemoryDisplay;
+    }>
+  ) {
     this.uiState$ = store.select("uiState");
+    this.memoryDisplay$ = store.select("memoryDisplay");
+    this.memoryDisplay$.subscribe((m) => {
+      if (this.memory) {
+        this.memory.wordSize = m.wordSize;
+        this.memory.ascii = m.valueType === "ascii";
+        this.memory.valueType = m.valueType;
+      }
+    });
   }
 
   ngAfterViewInit() {
@@ -69,12 +87,8 @@ factorial:
 `;
     this.requestCompile();
   }
-  public memoryAsciiChecked($event: any): void {
-    const memory: any = this.runtime.process?.cpu?.memory;
-    if (memory && $event?.target?.checked) {
-      memory.ascii = $event?.target?.checked;
-    }
-  }
+
+  public memoryAsciiChecked($event: any): void {}
 
   compileSource(source: string) {
     try {

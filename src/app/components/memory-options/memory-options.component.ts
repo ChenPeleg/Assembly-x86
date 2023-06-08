@@ -21,9 +21,7 @@ export class MemoryOptionsComponent {
     }>
   ) {
     this.memoryDisplay$ = store.select("memoryDisplay");
-    this.memoryDisplay$.subscribe((md) => {
-      console.log(md);
-    });
+    this.memoryDisplay$.subscribe((md) => md);
     const lsData = window.localStorage.getItem(MemoryOptionsComponent.lsKey);
     if (lsData) {
       const memoryDisplay: MemoryDisplay = JSON.parse(lsData) as MemoryDisplay;
