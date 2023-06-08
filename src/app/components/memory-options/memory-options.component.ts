@@ -15,6 +15,7 @@ import { observableToPromise } from "../../util/obeservableToPromise";
 export class MemoryOptionsComponent {
   static readonly lsKey = "assemblyMemoryDisplay";
   public readonly memoryDisplay$: Observable<MemoryDisplay>;
+
   constructor(
     private store: Store<{
       memoryDisplay: MemoryDisplay;
@@ -25,26 +26,34 @@ export class MemoryOptionsComponent {
     const lsData = window.localStorage.getItem(MemoryOptionsComponent.lsKey);
     if (lsData) {
       const memoryDisplay: MemoryDisplay = JSON.parse(lsData) as MemoryDisplay;
-      console.log(memoryDisplay);
       this.store.dispatch(
         MemoryDisplayActions.updateMemoryDisplay({ ...memoryDisplay })
       );
     }
   }
-  wordSizeSelected($event: MatChipListboxChange) {
+
+  wordSizeSelected($event: MatChipListboxChange, current: number) {
+    if (!$event.value) {
+      $event.source.value = current;
+      return;
+    }
     this.store.dispatch(
       MemoryDisplayActions.setWordSize({ wordSize: $event.value })
     );
-
     this.updateLocalStorage().then();
   }
 
-  valueTypeChanged($event: MatChipListboxChange) {
+  valueTypeChanged($event: MatChipListboxChange, current: string) {
+    if (!$event.value) {
+      $event.source.value = current;
+      return;
+    }
     this.store.dispatch(
       MemoryDisplayActions.setValueType({ valueType: $event.value })
     );
     this.updateLocalStorage().then();
   }
+
   private async updateLocalStorage() {
     const uiState = await observableToPromise(this.memoryDisplay$);
     window.localStorage.setItem(

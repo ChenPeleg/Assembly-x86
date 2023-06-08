@@ -47,11 +47,15 @@ export class MemoryComponent {
   public getCellValue(address: number): string {
     let value: number =
       this.memory?.load(address, this.wordSize).getValue() || 0;
-
-    if (this._ascii) {
-      return String.fromCharCode(value);
-    } else {
-      return value.toString();
+    switch (this._valueType) {
+      case "ascii":
+        return String.fromCharCode(value);
+      case "number":
+        return value.toString();
+      case "hex":
+        return value.toString(16).toUpperCase();
+      case "binary":
+        return value.toString(2);
     }
   }
 }

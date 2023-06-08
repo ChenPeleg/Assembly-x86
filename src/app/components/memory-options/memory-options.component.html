@@ -1,11 +1,13 @@
 <div *ngIf="memoryDisplay$ | async as memoryDisplay">
 
-  <mat-chip-listbox (change)="wordSizeSelected($event)" [value]="memoryDisplay.wordSize" aria-label="byte size selection">
-    <mat-chip-option [value]="1">1 Byte</mat-chip-option>
+  <mat-chip-listbox  (change)="wordSizeSelected($event , memoryDisplay.wordSize)" [hideSingleSelectionIndicator] [required]="true"
+    [value]="memoryDisplay.wordSize" aria-label="byte size selection">
+    <mat-chip-option  [value]="1">1 Byte</mat-chip-option>
     <mat-chip-option [value]="2">2 Bytes</mat-chip-option>
     <mat-chip-option [value]="4">4 Bytes</mat-chip-option>
   </mat-chip-listbox>
-  <mat-chip-listbox (change)="valueTypeChanged($event)" [value]="memoryDisplay.valueType" aria-label="value selection" class="values-type">
+  <mat-chip-listbox (change)="valueTypeChanged($event,memoryDisplay.valueType)" [value]="memoryDisplay.valueType"
+                    aria-label="value selection" class="values-type">
     <mat-chip-option value="number">Numbers</mat-chip-option>
     <mat-chip-option value="hex">Hex</mat-chip-option>
     <mat-chip-option value="ascii">Assci</mat-chip-option>

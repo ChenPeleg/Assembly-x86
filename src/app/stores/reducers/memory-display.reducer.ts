@@ -12,13 +12,13 @@ export const MemoryDisplayReducer = createReducer(
   on(MemoryDisplayActions.setWordSize, (state, { wordSize }) => {
     return {
       ...state,
-      wordSize: wordSize,
+      wordSize: wordSize || state.wordSize,
     };
   }),
   on(MemoryDisplayActions.setValueType, (state, { valueType }) => {
     return {
       ...state,
-      valueType: valueType,
+      valueType: valueType || state.valueType,
     };
   }),
   on(MemoryDisplayActions.updateMemoryDisplay, (state, newState) => {
