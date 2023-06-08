@@ -47,9 +47,7 @@
           <h3>Memory</h3>
           <memory-options></memory-options>
           <div *ngIf="runtime.hasProcess()" class="inner">
-
-            Ascii: <input (change)="memoryAsciiChecked($event) " [checked]="memory.ascii" type="checkbox" />
-            <memory #memory [memory]="runtime.process.cpu.memory || undefined"></memory>
+           <memory #memory [memory]="runtime.process.cpu.memory || undefined"></memory>
           </div>
         </div>
       </div>
