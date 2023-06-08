@@ -36,6 +36,7 @@ import { SharedModule } from "./common/shared.module";
 import { MatSliderModule } from "@angular/material/slider";
 import { MemoryOptionsComponent } from "./components/memory-options/memory-options.component";
 import { MatChipsModule } from "@angular/material/chips";
+import { MemoryDisplayReducer } from "./stores/reducers/memory-display.reducer";
 
 export const AllMatModules = [
   MatToolbarModule,
@@ -71,7 +72,11 @@ export const AllMatModules = [
   imports: [
     ...AllMatModules,
     StoreModule.forRoot(
-      { count: counterReducer, uiState: UIStateReducer },
+      {
+        count: counterReducer,
+        uiState: UIStateReducer,
+        memoryDisplay: MemoryDisplayReducer,
+      },
       {
         runtimeChecks: {
           strictStateImmutability: true,

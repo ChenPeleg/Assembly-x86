@@ -69,7 +69,7 @@ factorial:
 `;
     this.requestCompile();
   }
-  public memoryChecked($event: any): void {
+  public memoryAsciiChecked($event: any): void {
     const memory: any = this.runtime.process?.cpu?.memory;
     if (memory && $event?.target?.checked) {
       memory.ascii = $event?.target?.checked;

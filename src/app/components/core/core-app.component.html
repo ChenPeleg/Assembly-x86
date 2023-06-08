@@ -53,7 +53,7 @@
                 <input (click)="memory.wordSize = item" [checked]="item === memory.wordSize" name="memory-word-size"
                        type="radio"><span>{{item}}</span></label>
             </div>
-            Ascii: <input (change)="memoryChecked($event) " [checked]="memory.ascii" type="checkbox" />
+            Ascii: <input (change)="memoryAsciiChecked($event) " [checked]="memory.ascii" type="checkbox" />
             <memory #memory [memory]="runtime.process.cpu.memory || undefined"></memory>
           </div>
         </div>
