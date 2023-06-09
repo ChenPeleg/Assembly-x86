@@ -95,6 +95,7 @@ ${n.join(" ")}
 </a></div>`;
     });
     const html = htmlTableOfContent;
+
     const sanitizedHtml: SafeHtml =
       this.sanitizer.bypassSecurityTrustHtml(html);
     if (sanitizedHtml.toString() === "") {
@@ -110,7 +111,6 @@ ${n.join(" ")}
     for (const page of this.pagesNames) {
       if (PagesService.NamePageToDocId(page) === docId) {
         const newContent = await this.getContent(docId);
-        console.log();
         if (this.content?.toString() === newContent?.toString()) {
           return;
         }
@@ -128,13 +128,27 @@ ${n.join(" ")}
     if (!this.htmlDynamicContent) {
       return;
     }
-    const elements: NodeListOf<HTMLButtonElement> =
+    const buttonElements: NodeListOf<HTMLButtonElement> =
       this.htmlDynamicContent.nativeElement.querySelectorAll("button.run-code");
-    console.log("run");
-    for (const btn of Array.from(elements)) {
+
+    for (const btn of Array.from(buttonElements)) {
       this.renderer.listen(btn, "click", (evt) => {
         this.tryItButtonClicked(evt);
       });
+    }
+    const buttonWrapperElements: NodeListOf<HTMLDivElement> =
+      this.htmlDynamicContent.nativeElement.querySelectorAll("div.code-block");
+    for (const codeWrapper of Array.from(buttonWrapperElements)) {
+      const spanWithData = codeWrapper.nextElementSibling;
+      if (!spanWithData) {
+        return;
+      }
+
+      this.renderer.setAttribute(
+        codeWrapper,
+        "data-comments",
+        spanWithData.getAttribute("data-comments") || ""
+      );
     }
   }
 

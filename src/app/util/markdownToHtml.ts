@@ -70,7 +70,7 @@ export const markdownToHTML = (markdown: string): string => {
 
   markdown = markdown.replace(
     /^<!--(.*)-->$/gm,
-    `<span data-comment="$1"></span>`
+    `<span data-comments="$1"></span>`
   );
   return markdown;
 };
