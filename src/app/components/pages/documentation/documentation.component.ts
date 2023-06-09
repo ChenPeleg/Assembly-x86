@@ -8,7 +8,6 @@ import { MDFiles, PagesService } from "../../../services/pages.service";
 import { markdownToHTML } from "../../../util/markdownToHtml";
 import { DomSanitizer, SafeHtml } from "@angular/platform-browser";
 import {
-  distinct,
   distinctUntilChanged,
   map,
   Observable,
@@ -54,13 +53,16 @@ export class DocumentationComponent implements AfterViewInit, OnDestroy {
     const content = await this.pagesService.getMarkdownText(docId || "");
     const rawHtml = markdownToHTML(content);
     const html = makeExternalLinksOpenInNewTab(rawHtml);
-
+    console.log(html);
+    const htmlWithButtons = html.replace(
+      `</code>`,
+      `<button> Try me</button></code>`
+    );
     const sanitizedHtml: SafeHtml =
-      this.sanitizer.bypassSecurityTrustHtml(html);
+      this.sanitizer.bypassSecurityTrustHtml(htmlWithButtons);
     if (sanitizedHtml.toString() === "") {
       throw `no data was received from file ${MDFiles.Links}`;
     }
-
     return sanitizedHtml;
   }
 
