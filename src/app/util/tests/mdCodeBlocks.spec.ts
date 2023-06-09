@@ -1,6 +1,3 @@
-import { findMdTables } from "../findMdTables";
-
-import { mdTableToHtml } from "../mdTableToHtmlTable";
 import { findMdCodeBlocks, mdCodeBlockToHtml } from "../findMdCodeBlocks";
 
 const codeBlockExample = "```shell" + "\n" + "cp 123 123\n```";
@@ -25,7 +22,8 @@ describe("Find md code blocks", () => {
     if (!result) {
       throw "no results";
     }
-    expect(result).toBe(`<pre><code>cp 123 123\n</code></pre>`);
+    expect(result).toBe(`<div class="code-block"> <pre><code>cp 123 123
+</code></pre></div>`);
   });
   it("converts to find simple code block 2", () => {
     const result = mdCodeBlockToHtml(codeBlockExample2);
@@ -33,7 +31,11 @@ describe("Find md code blocks", () => {
       throw "no results";
     }
     expect(result).toBe(
-      `<pre><code>section.text\nglobal _start\n_start:\n\n</code></pre>`
+      `<div class="code-block"> <pre><code>section.text
+global _start
+_start:
+
+</code></pre></div>`
     );
   });
 });
