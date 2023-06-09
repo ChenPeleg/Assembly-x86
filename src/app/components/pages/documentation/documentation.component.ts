@@ -138,6 +138,7 @@ ${n.join(" ")}
     }
     const buttonWrapperElements: NodeListOf<HTMLDivElement> =
       this.htmlDynamicContent.nativeElement.querySelectorAll("div.code-block");
+    let runNumber = 1;
     for (const codeWrapper of Array.from(buttonWrapperElements)) {
       const spanWithData = codeWrapper.nextElementSibling;
       if (!spanWithData) {
@@ -149,6 +150,7 @@ ${n.join(" ")}
         "data-comments",
         spanWithData.getAttribute("data-comments") || ""
       );
+      this.renderer.setProperty(codeWrapper, "id", `run_${runNumber++}`);
     }
   }
 
