@@ -1,4 +1,9 @@
-import { AfterViewInit, Component, ViewChild } from "@angular/core";
+import {
+  AfterContentInit,
+  AfterViewInit,
+  Component,
+  ViewChild,
+} from "@angular/core";
 import { MemoryBlock } from "../../emulation/memory-block";
 import { CPU, Interrupt } from "../../emulation/cpu";
 import { Assembler, AssemblyException } from "../../assembly/assembler";
@@ -19,7 +24,7 @@ import { MemoryComponent } from "../memory/memory";
   templateUrl: "./core-app.component.html",
   styleUrls: ["./core-app.component.scss"],
 })
-export class CoreAppComponent implements AfterViewInit {
+export class CoreAppComponent implements AfterViewInit, AfterContentInit {
   @ViewChild(AsmEditorComponent) asmEditor: AsmEditorComponent | undefined;
   @ViewChild(ConsoleComponent) console: ConsoleComponent | undefined;
   @ViewChild(MemoryComponent) memory: MemoryComponent | undefined;
@@ -27,7 +32,6 @@ export class CoreAppComponent implements AfterViewInit {
   runtime: Runtime = new Runtime();
   compileErrors: string = "";
   uiState$: Observable<UIState>;
-  memoryDisplay$: Observable<MemoryDisplay>;
   private assembler: Assembler = new Assembler();
   private cpu: CPU | undefined;
   private memorySize: number = 256;
@@ -40,14 +44,10 @@ export class CoreAppComponent implements AfterViewInit {
     }>
   ) {
     this.uiState$ = store.select("uiState");
-    this.memoryDisplay$ = store.select("memoryDisplay");
-    this.memoryDisplay$.subscribe((m) => {
-      if (this.memory) {
-        this.memory.wordSize = m.wordSize;
-        this.memory.ascii = m.valueType === "ascii";
-        this.memory.valueType = m.valueType;
-      }
-    });
+  }
+
+  ngAfterContentInit(): void {
+    setTimeout(() => this.requestCompile(), 50);
   }
 
   ngAfterViewInit() {
@@ -85,7 +85,7 @@ factorial:
     LEAVE
     RET
 `;
-    this.requestCompile();
+    // this.requestCompile();
   }
 
   public memoryAsciiChecked($event: any): void {}
