@@ -1,27 +1,52 @@
-# ModernAngular
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.2.8.
 
-## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+# x86 assembly debugger
 
-## Code scaffolding
+**This project is based on [https://github.com/Kobzol/davis](https://github.com/Kobzol/davis)**
+This tool allows writing, running and debugging x86 assembly in the browser.<br />
+It visualizes the program state (cpu and memory), supports breakpoints and<br />
+enables line-by-line stepping.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+You can try it online [here](https://kobzol.github.io/davis).
 
-## Build
+## Features
+* x86 assembly editor
+  * Intel/NASM syntax with syntax-highlighting
+  * breakpoints
+  * current execution line highlight
+* CPU emulation
+  * run, stop, pause, continue, step execution
+  * register and status flags visualization
+  * tick rate setting
+* Memory visualization
+  * variable byte size (1/2/4)
+  * ASCII visualization
+* Output console
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## TODO
+* Stack visualizer
+* Register dereference visualiser
+* Proper arithmetic using 16-bit? calculations
+* More instructions
+* Enable comments on empty lines
 
-## Running unit tests
+##Installation
+Run `npm install`.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## Usage
+Opens the site in browser.
+```shell
+npm start
+```
 
-## Running end-to-end tests
+###Tests
+```shell
+npm test
+```
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+###Build
+Builds the application into `dist` folder.
+```shell
+npm run build
+```
