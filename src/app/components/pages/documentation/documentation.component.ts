@@ -1,7 +1,10 @@
 import {
   AfterViewInit,
   Component,
+  ElementRef,
   OnDestroy,
+  Renderer2,
+  ViewChild,
   ViewEncapsulation,
 } from "@angular/core";
 import { MDFiles, PagesService } from "../../../services/pages.service";
@@ -17,6 +20,7 @@ import {
 } from "rxjs";
 import { ActivatedRoute } from "@angular/router";
 import { makeExternalLinksOpenInNewTab } from "../../../util/makeExternalLinksOpenInNewTab";
+import { sleep } from "../../../util/sleep";
 
 @Component({
   selector: "app-documentation",
@@ -27,19 +31,24 @@ import { makeExternalLinksOpenInNewTab } from "../../../util/makeExternalLinksOp
 export class DocumentationComponent implements AfterViewInit, OnDestroy {
   content: SafeHtml | null = null;
   pagesNames: string[][] = [];
+
+  @ViewChild("htmlDynamicContent") private htmlDynamicContent:
+    | ElementRef
+    | undefined;
   private readonly destroy$ = new Subject<void>();
   public readonly docId: Observable<string | null> =
     this.activeRoute.params.pipe(
       distinctUntilChanged(),
       map((params) => params["docId"] ?? null),
-      tap((params) => this.loadDocsContent(params)),
+      tap((params) => this.loadDocumentsContent(params)),
       takeUntil(this.destroy$)
     );
 
   constructor(
     private pagesService: PagesService,
     private sanitizer: DomSanitizer,
-    private readonly activeRoute: ActivatedRoute
+    private readonly activeRoute: ActivatedRoute,
+    private renderer: Renderer2
   ) {
     this.getPagesNames().then();
     // this.docId.subscribe();
@@ -53,10 +62,10 @@ export class DocumentationComponent implements AfterViewInit, OnDestroy {
     const content = await this.pagesService.getMarkdownText(docId || "");
     const rawHtml = markdownToHTML(content);
     const html = makeExternalLinksOpenInNewTab(rawHtml);
-    console.log(html);
+
     const htmlWithButtons = html.replace(
-      `</code>`,
-      `<button> Try me</button></code>`
+      /class="code-block">/g,
+      `class="code-block"><button class="run-code"> Try me</button> `
     );
     const sanitizedHtml: SafeHtml =
       this.sanitizer.bypassSecurityTrustHtml(htmlWithButtons);
@@ -94,17 +103,42 @@ ${n.join(" ")}
     this.content = sanitizedHtml;
   }
 
-  private async loadDocsContent(docId: string) {
+  private async loadDocumentsContent(docId: string) {
     if (!this.pagesNames.length) {
       await this.getPagesNames();
     }
     for (const page of this.pagesNames) {
       if (PagesService.NamePageToDocId(page) === docId) {
-        this.getContent(docId).then((safeHtml) => (this.content = safeHtml));
+        const newContent = await this.getContent(docId);
+        console.log();
+        if (this.content?.toString() === newContent?.toString()) {
+          return;
+        }
+        this.content = newContent;
+        await sleep(300);
+        await this.addEventListenersToButtons();
         return;
       }
     }
 
     this.displayDocsContent();
+  }
+
+  private async addEventListenersToButtons() {
+    if (!this.htmlDynamicContent) {
+      return;
+    }
+    const elements: NodeListOf<HTMLButtonElement> =
+      this.htmlDynamicContent.nativeElement.querySelectorAll("button.run-code");
+    console.log("run");
+    for (const btn of Array.from(elements)) {
+      this.renderer.listen(btn, "click", (evt) => {
+        this.tryItButtonClicked(evt);
+      });
+    }
+  }
+
+  private tryItButtonClicked($event: MouseEvent) {
+    console.log($event);
   }
 }

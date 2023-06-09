@@ -2,7 +2,7 @@
   <div class=" max-w-7xl w-full ml-auto sm:max-h-full md:max-h-screen overflow-y-visible md:overflow-y-scroll" id="documentation-content-section ">
 
     <h2 class="m-10"><a [routerLink]="'/docs/'">Documentation</a> {{replacePlus(docId | async)}}</h2>
-    <div class="html-content">
+    <div #htmlDynamicContent class="html-content">
       <div [innerHTML]="content"></div>
     </div>
   </div>
