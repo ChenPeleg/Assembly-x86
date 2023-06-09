@@ -1,11 +1,15 @@
 # Inspirations
 
-<!-- console;cpu;binary; -->
+
+
 ```shell
 section.text
 global _start
 _start:
 ```
+<!-- console;cpu;binary; -->
+
+
 
 now try this
 
