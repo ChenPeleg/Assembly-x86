@@ -1,5 +1,13 @@
+div.memory {
+  max-width: 28vw;
+
+  @media  screen and (max-width: 540px) {
+    width: 98vw;
+  }
+}
 div.row {
   display: flex;
+  flex-wrap: wrap;
   margin: 0;
 }
 .cell {
@@ -7,11 +15,11 @@ div.row {
   min-width: 30px;
   height: 17px;
   margin: 2px;
-  padding: 2px;
+  padding: 3px;
   font-size: 11px;
   line-height: 1;
-  border: 1px solid #000;
+  border: 1px solid #3b3b3b;
   color: #000;
-  border-radius: 5px;
+  border-radius: 3px;
   text-align: center;
 }

@@ -1,7 +1,8 @@
 import { Component, Input } from "@angular/core";
 import { MemoryBlock } from "../../emulation/memory-block";
 import * as _ from "lodash";
-import { MemoryValueType } from "../../models/MemoryDisplay";
+import { MemoryDisplay, MemoryValueType } from "../../models/MemoryDisplay";
+import { Store } from "@ngrx/store";
 
 @Component({
   selector: "memory",
@@ -14,14 +15,15 @@ export class MemoryComponent {
   @Input() wordSize: number = 1;
   @Input() width: number = 10;
 
-  private _ascii: boolean = false;
-
-  get ascii(): boolean {
-    return this._ascii;
-  }
-
-  @Input() set ascii(value: boolean) {
-    this._ascii = value;
+  constructor(
+    private store: Store<{
+      memoryDisplay: MemoryDisplay;
+    }>
+  ) {
+    store.select("memoryDisplay").subscribe((m) => {
+      this._valueType = m.valueType;
+      this.wordSize = m.wordSize;
+    });
   }
 
   private _valueType: MemoryValueType = "number";
