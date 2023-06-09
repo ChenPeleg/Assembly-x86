@@ -30,20 +30,20 @@
           <display-cockpit></display-cockpit>
         </div>
         <div [ngStyle]="{'display'  : getDisplayProps('console',panels).visibility ? '' : 'none' ,  order: getDisplayProps('console',panels).order }"
-          class="console-wrapper"
+          class="console-wrapper pb-10"
           id="console-wrapper">
           <h3>Console</h3>
           <console></console>
         </div>
         <div [ngStyle]="{'display'  : getDisplayProps('cpu',panels).visibility ? '' : 'none' ,order: getDisplayProps('cpu',panels).order }"
-          class="cpu-wrapper"
+          class="cpu-wrapper pb-10"
           id="cpu-wrapper">
           <h3>CPU</h3>
           <cpu *ngIf="runtime.process?.cpu" [cpu]="runtime.process .cpu"></cpu>
         </div>
         <div
           [ngStyle]="{'display'  : getDisplayProps('memory',panels).visibility ? '' : 'none' ,order: getDisplayProps('memory',panels).order }"
-          class="memory-wrapper">
+          class="memory-wrapper pb-10">
           <h3>Memory</h3>
           <memory-options></memory-options>
           <div *ngIf="runtime.hasProcess()" class="inner">
