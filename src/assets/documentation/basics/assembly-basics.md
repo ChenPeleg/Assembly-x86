@@ -4,8 +4,11 @@
 
 ```shell
 section.text
+
 global _start
 _start:
+
+
 ```
 <!-- console;cpu;binary; -->
 
@@ -19,3 +22,5 @@ global _start
 _start:
 
 ```
+
+

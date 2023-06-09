@@ -154,9 +154,8 @@ ${n.join(" ")}
 
   private tryItButtonClicked($event: MouseEvent) {
     const path = $event.composedPath();
-
     const codeBlock = path[1] as HTMLDivElement;
-    const dataComments = codeBlock.getAttribute("data-comments");
+    const dataComments = codeBlock.getAttribute("data-comments") || "";
     const codeContent = codeBlock.querySelector("code")?.innerText;
     console.log(dataComments, codeContent);
   }
