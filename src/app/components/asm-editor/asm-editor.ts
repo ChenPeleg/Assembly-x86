@@ -28,6 +28,7 @@ export class AsmEditorComponent implements AfterViewInit {
   @Output() breakpointChange: EventEmitter<number[]> = new EventEmitter<
     number[]
   >();
+  @Input("isTryIt") isTryIt: boolean = false;
 
   // @ts-ignore
   @ViewChild("editor") private editor: ElementRef;
