@@ -26,7 +26,7 @@ import { observableToPromise } from "../../../util/obeservableToPromise";
 
 interface DocumentationsParams {
   docId: string;
-  example: string;
+  [DocumentationComponent.examplePlayQueryParam]: string | null;
 }
 @Component({
   selector: "app-documentation",
@@ -35,7 +35,8 @@ interface DocumentationsParams {
   encapsulation: ViewEncapsulation.None,
 })
 export class DocumentationComponent implements AfterViewInit, OnDestroy {
-  public static readonly IdStringForCodeBlocks = "example_";
+  public static readonly IdStringForCodeBlocks = "exm_";
+  public static readonly examplePlayQueryParam = "play";
   content: SafeHtml | null = null;
   pagesNames: string[][] = [];
   codeExamples: CodeExample[] = [];
@@ -44,13 +45,25 @@ export class DocumentationComponent implements AfterViewInit, OnDestroy {
     | ElementRef
     | undefined;
   private readonly destroy$ = new Subject<void>();
-  public readonly $docsParams: Observable<string | null> =
+
+  // @ts-ignore
+  public readonly $docsParams: Observable<DocumentationsParams | null> =
     this.activeRoute.params.pipe(
       distinctUntilChanged(),
+      map((params) => {
+        return {
+          docId: params["docId"],
+          example: params[DocumentationComponent.examplePlayQueryParam],
+        };
+      }),
       tap((params) =>
-        this.loadDocumentsContent(params["docId"], params["example"])
+        this.loadDocumentsContent(
+          params["docId"],
+          // @ts-ignore
+          params[DocumentationComponent.examplePlayQueryParam]
+        )
       ),
-      map((params) => params["docId"] ?? null),
+
       takeUntil(this.destroy$)
     );
 
@@ -172,7 +185,11 @@ ${n.join(" ")}
   private async tryItButtonClicked($event: MouseEvent) {
     const path = $event.composedPath();
     const codeBlock = path[1] as HTMLDivElement;
-    const docId = await observableToPromise(this.$docsParams);
-    await this.router.navigate(["docs", docId, { example: codeBlock.id }]);
+    const route = await observableToPromise(this.$docsParams);
+    await this.router.navigate(["docs", route?.docId], {
+      queryParams: {
+        [DocumentationComponent.examplePlayQueryParam]: codeBlock.id,
+      },
+    });
   }
 }
