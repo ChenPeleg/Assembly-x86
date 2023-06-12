@@ -161,13 +161,12 @@ ${n.join(" ")}
       codeSamples.push({ codeId, code, optionsString: dataComments, docId });
     }
     this.codeExamples = codeSamples;
-    console.log(this.codeExamples);
   }
 
   private async tryItButtonClicked($event: MouseEvent) {
     const path = $event.composedPath();
     const codeBlock = path[1] as HTMLDivElement;
     const docId = await observableToPromise(this.docId);
-    await this.router.navigate(["docs", docId, codeBlock.id]);
+    await this.router.navigate(["docs", docId, { example: codeBlock.id }]);
   }
 }
