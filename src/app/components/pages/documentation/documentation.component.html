@@ -1,14 +1,14 @@
 <div class="flex flex-col md:flex-row sm:overflow-y-visible md:overflow-y-hidden" id="documentation-component-wrapper">
   <div class=" max-w-7xl w-full ml-auto sm:max-h-full md:max-h-screen overflow-y-visible md:overflow-y-scroll" id="documentation-content-section ">
 
-    <h2 class="m-10"><a [routerLink]="'/docs/'">Documentation</a> {{replacePlus(docId | async)}}</h2>
+    <h2 class="m-10"><a [routerLink]="'/docs/'">Documentation</a> {{replacePlus($docsParams | async)}}</h2>
     <div #htmlDynamicContent class="html-content">
       <div [innerHTML]="content"></div>
     </div>
   </div>
   <div class="ml-auto max-h-screen sm:overflow-y-visible md:overflow-y-scroll">
     <div *ngIf="pagesNames.length" id="content-table-wrapper">
-      <content-table [currentDoc]="(docId | async) " [pages]="pagesNames"></content-table>
+      <content-table [currentDoc]="($docsParams | async) " [pages]="pagesNames"></content-table>
     </div>
   </div>
 </div>
