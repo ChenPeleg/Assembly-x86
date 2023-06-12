@@ -21,6 +21,7 @@ import {
 import { ActivatedRoute } from "@angular/router";
 import { makeExternalLinksOpenInNewTab } from "../../../util/makeExternalLinksOpenInNewTab";
 import { sleep } from "../../../util/sleep";
+import { CodeExample } from "../../../models/CodeExample";
 
 @Component({
   selector: "app-documentation",
@@ -29,8 +30,10 @@ import { sleep } from "../../../util/sleep";
   encapsulation: ViewEncapsulation.None,
 })
 export class DocumentationComponent implements AfterViewInit, OnDestroy {
+  public static readonly IdStringForCodeBlocks = "example_";
   content: SafeHtml | null = null;
   pagesNames: string[][] = [];
+  codeExamples: CodeExample[] = [];
 
   @ViewChild("htmlDynamicContent") private htmlDynamicContent:
     | ElementRef
@@ -51,7 +54,6 @@ export class DocumentationComponent implements AfterViewInit, OnDestroy {
     private renderer: Renderer2
   ) {
     this.getPagesNames().then();
-    // this.docId.subscribe();
   }
 
   async getPagesNames() {
@@ -116,7 +118,7 @@ ${n.join(" ")}
         }
         this.content = newContent;
         await sleep(300);
-        await this.addEventListenersToButtons();
+        await this.setupCodeExamples(docId);
         return;
       }
     }
@@ -124,7 +126,11 @@ ${n.join(" ")}
     this.displayDocsContent();
   }
 
-  private async addEventListenersToButtons() {
+  /**
+   * Add event listeners to the buttons and saves the code examples
+   * @private
+   */
+  private async setupCodeExamples(docId: string) {
     if (!this.htmlDynamicContent) {
       return;
     }
@@ -139,19 +145,21 @@ ${n.join(" ")}
     const buttonWrapperElements: NodeListOf<HTMLDivElement> =
       this.htmlDynamicContent.nativeElement.querySelectorAll("div.code-block");
     let runNumber = 1;
+    const codeSamples: CodeExample[] = [];
     for (const codeWrapper of Array.from(buttonWrapperElements)) {
       const spanWithData = codeWrapper.nextElementSibling;
-      if (!spanWithData) {
-        return;
-      }
 
-      this.renderer.setAttribute(
-        codeWrapper,
-        "data-comments",
-        spanWithData.getAttribute("data-comments") || ""
-      );
-      this.renderer.setProperty(codeWrapper, "id", `run_${runNumber++}`);
+      const codeId = `${
+        DocumentationComponent.IdStringForCodeBlocks
+      }${runNumber++}`;
+      const dataComments = spanWithData?.getAttribute("data-comments") || "";
+      const code = codeWrapper.querySelector("code")?.innerText || "";
+      this.renderer.setAttribute(codeWrapper, "data-comments", dataComments);
+      this.renderer.setProperty(codeWrapper, "id", codeId);
+      codeSamples.push({ codeId, code, optionsString: dataComments, docId });
     }
+    this.codeExamples = codeSamples;
+    console.log(this.codeExamples);
   }
 
   private tryItButtonClicked($event: MouseEvent) {
@@ -159,6 +167,6 @@ ${n.join(" ")}
     const codeBlock = path[1] as HTMLDivElement;
     const dataComments = codeBlock.getAttribute("data-comments") || "";
     const codeContent = codeBlock.querySelector("code")?.innerText;
-    console.log(dataComments, codeContent);
+    console.log(codeBlock.id);
   }
 }
