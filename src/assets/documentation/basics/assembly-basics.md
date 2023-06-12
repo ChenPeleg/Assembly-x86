@@ -13,13 +13,16 @@ _start:
 <!-- console;cpu;binary; -->
 
 
+Simple hello world
 
-now try this
 
 ```shell
-section.text
-global _start
-_start:
+section .data
+hello:
+    db 'Hello world!', 10, 0
+section .text
+    MOV EAX, hello
+    INT 2   ; print string EAX
 
 ```
 
