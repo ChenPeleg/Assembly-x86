@@ -26,8 +26,9 @@ import { observableToPromise } from "../../../util/obeservableToPromise";
 
 interface DocumentationsParams {
   docId: string;
-  [DocumentationComponent.examplePlayQueryParam]: string | null;
+  tryIt: string | null;
 }
+
 @Component({
   selector: "app-documentation",
   templateUrl: "./documentation.component.html",
@@ -36,7 +37,6 @@ interface DocumentationsParams {
 })
 export class DocumentationComponent implements AfterViewInit, OnDestroy {
   public static readonly IdStringForCodeBlocks = "exm_";
-  public static readonly examplePlayQueryParam = "play";
   content: SafeHtml | null = null;
   pagesNames: string[][] = [];
   codeExamples: CodeExample[] = [];
@@ -53,14 +53,14 @@ export class DocumentationComponent implements AfterViewInit, OnDestroy {
       map((params) => {
         return {
           docId: params["docId"],
-          example: params[DocumentationComponent.examplePlayQueryParam],
+          tryIt: params["tryIt"],
         };
       }),
       tap((params) =>
         this.loadDocumentsContent(
           params["docId"],
           // @ts-ignore
-          params[DocumentationComponent.examplePlayQueryParam]
+          params["tryIt"]
         )
       ),
 
@@ -75,6 +75,7 @@ export class DocumentationComponent implements AfterViewInit, OnDestroy {
     private renderer: Renderer2
   ) {
     this.getPagesNames().then();
+    this.activeRoute.paramMap.subscribe((m) => console.log(m));
   }
 
   async getPagesNames() {
@@ -127,7 +128,7 @@ ${n.join(" ")}
     this.content = sanitizedHtml;
   }
 
-  private async loadDocumentsContent(docId: string, example: string) {
+  private async loadDocumentsContent(docId: string, tryIt: string) {
     if (!this.pagesNames.length) {
       await this.getPagesNames();
     }
@@ -148,7 +149,7 @@ ${n.join(" ")}
   }
 
   /**
-   * Add event listeners to the buttons and saves the code examples
+   * Add event listeners to the buttons and saves the code tryIts
    * @private
    */
   private async setupCodeExamples(docId: string) {
@@ -188,7 +189,7 @@ ${n.join(" ")}
     const route = await observableToPromise(this.$docsParams);
     await this.router.navigate(["docs", route?.docId], {
       queryParams: {
-        [DocumentationComponent.examplePlayQueryParam]: codeBlock.id,
+        ["tryIt"]: codeBlock.id,
       },
     });
   }
