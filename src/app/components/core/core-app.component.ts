@@ -2,6 +2,7 @@ import {
   AfterContentInit,
   AfterViewInit,
   Component,
+  Input,
   ViewChild,
 } from "@angular/core";
 import { MemoryBlock } from "../../emulation/memory-block";
@@ -28,6 +29,7 @@ export class CoreAppComponent implements AfterViewInit, AfterContentInit {
   @ViewChild(AsmEditorComponent) asmEditor: AsmEditorComponent | undefined;
   @ViewChild(ConsoleComponent) console: ConsoleComponent | undefined;
   @ViewChild(MemoryComponent) memory: MemoryComponent | undefined;
+  @Input("isTryIt") isTryIt: boolean = false;
 
   runtime: Runtime = new Runtime();
   compileErrors: string = "";
