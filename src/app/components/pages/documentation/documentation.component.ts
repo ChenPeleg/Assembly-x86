@@ -50,6 +50,7 @@ export class DocumentationComponent implements AfterViewInit, OnDestroy {
   // @ts-ignore
   public readonly $docsParams: Observable<DocumentationsParams | null> =
     combineLatest([this.activeRoute.params, this.activeRoute.queryParams]).pipe(
+      // ,
       distinctUntilChanged(),
       map(([params, queryParams]) => {
         console.log(params, queryParams);
@@ -58,12 +59,9 @@ export class DocumentationComponent implements AfterViewInit, OnDestroy {
           tryIt: queryParams["tryIt"],
         };
       }),
+
       tap((params) =>
-        this.loadDocumentsContent(
-          params["docId"],
-          // @ts-ignore
-          params["tryIt"]
-        )
+        this.loadDocumentsContent(params["docId"], params["tryIt"])
       ),
 
       takeUntil(this.destroy$)

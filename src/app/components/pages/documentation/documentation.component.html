@@ -1,9 +1,7 @@
 <div *ngIf="($docsParams | async) as dockParams"
      class="flex flex-col md:flex-row sm:overflow-y-visible md:overflow-y-hidden" id="documentation-component-wrapper">
-  <div *ngIf="true  " id="core-app-container">
-    asdf
-    {{dockParams.tryIt}}
-<!--    <core-app></core-app>-->
+  <div *ngIf="dockParams.tryIt" id="core-app-container">
+    <core-app [isTryIt]="true"></core-app>
   </div>
   <div class=" max-w-7xl w-full ml-auto sm:max-h-full md:max-h-screen overflow-y-visible md:overflow-y-scroll"
        id="documentation-content-section ">
