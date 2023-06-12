@@ -19,6 +19,7 @@ import { Observable } from "rxjs";
 import { Store } from "@ngrx/store";
 import { MemoryDisplay } from "../../models/MemoryDisplay";
 import { MemoryComponent } from "../memory/memory";
+import { sleep } from "../../util/sleep";
 
 @Component({
   selector: "core-app",
@@ -90,7 +91,13 @@ factorial:
     // this.requestCompile();
   }
 
-  public memoryAsciiChecked($event: any): void {}
+  public async setEditorText(text: string): Promise<void> {
+    if (!this.asmEditor) {
+      await sleep(200);
+      if (!this.asmEditor) return;
+    }
+    this.asmEditor.text = text;
+  }
 
   compileSource(source: string) {
     try {
