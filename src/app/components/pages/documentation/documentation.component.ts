@@ -18,10 +18,11 @@ import {
   takeUntil,
   tap,
 } from "rxjs";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { makeExternalLinksOpenInNewTab } from "../../../util/makeExternalLinksOpenInNewTab";
 import { sleep } from "../../../util/sleep";
 import { CodeExample } from "../../../models/CodeExample";
+import { observableToPromise } from "../../../util/obeservableToPromise";
 
 @Component({
   selector: "app-documentation",
@@ -51,6 +52,7 @@ export class DocumentationComponent implements AfterViewInit, OnDestroy {
     private pagesService: PagesService,
     private sanitizer: DomSanitizer,
     private readonly activeRoute: ActivatedRoute,
+    private readonly router: Router,
     private renderer: Renderer2
   ) {
     this.getPagesNames().then();
@@ -162,11 +164,10 @@ ${n.join(" ")}
     console.log(this.codeExamples);
   }
 
-  private tryItButtonClicked($event: MouseEvent) {
+  private async tryItButtonClicked($event: MouseEvent) {
     const path = $event.composedPath();
     const codeBlock = path[1] as HTMLDivElement;
-    const dataComments = codeBlock.getAttribute("data-comments") || "";
-    const codeContent = codeBlock.querySelector("code")?.innerText;
-    console.log(codeBlock.id);
+    const docId = await observableToPromise(this.docId);
+    await this.router.navigate(["docs", docId, codeBlock.id]);
   }
 }
