@@ -24,6 +24,10 @@ import { sleep } from "../../../util/sleep";
 import { CodeExample } from "../../../models/CodeExample";
 import { observableToPromise } from "../../../util/obeservableToPromise";
 
+interface DocumentationsParams {
+  docId: string;
+  example: string;
+}
 @Component({
   selector: "app-documentation",
   templateUrl: "./documentation.component.html",
@@ -40,11 +44,13 @@ export class DocumentationComponent implements AfterViewInit, OnDestroy {
     | ElementRef
     | undefined;
   private readonly destroy$ = new Subject<void>();
-  public readonly docId: Observable<string | null> =
+  public readonly $docsParams: Observable<string | null> =
     this.activeRoute.params.pipe(
       distinctUntilChanged(),
+      tap((params) =>
+        this.loadDocumentsContent(params["docId"], params["example"])
+      ),
       map((params) => params["docId"] ?? null),
-      tap((params) => this.loadDocumentsContent(params)),
       takeUntil(this.destroy$)
     );
 
@@ -108,7 +114,7 @@ ${n.join(" ")}
     this.content = sanitizedHtml;
   }
 
-  private async loadDocumentsContent(docId: string) {
+  private async loadDocumentsContent(docId: string, example: string) {
     if (!this.pagesNames.length) {
       await this.getPagesNames();
     }
@@ -166,7 +172,7 @@ ${n.join(" ")}
   private async tryItButtonClicked($event: MouseEvent) {
     const path = $event.composedPath();
     const codeBlock = path[1] as HTMLDivElement;
-    const docId = await observableToPromise(this.docId);
+    const docId = await observableToPromise(this.$docsParams);
     await this.router.navigate(["docs", docId, { example: codeBlock.id }]);
   }
 }
