@@ -9,6 +9,7 @@ const routes: Routes = [
   { path: "", component: CoreAppComponent },
   { path: "instructions", component: InstructionsComponent },
   { path: "links", component: LinksComponent },
+  // { path: "docs/:docId", component: DocumentationComponent },
   { path: "docs/:docId", component: DocumentationComponent },
   { path: "docs", component: DocumentationComponent },
 ];
