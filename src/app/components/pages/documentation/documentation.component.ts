@@ -24,6 +24,7 @@ import { makeExternalLinksOpenInNewTab } from "../../../util/makeExternalLinksOp
 import { sleep } from "../../../util/sleep";
 import { CodeExample } from "../../../models/CodeExample";
 import { observableToPromise } from "../../../util/obeservableToPromise";
+import { CoreAppComponent } from "../../core/core-app.component";
 
 interface DocumentationsParams {
   docId: string;
@@ -44,6 +45,9 @@ export class DocumentationComponent implements AfterViewInit, OnDestroy {
 
   @ViewChild("htmlDynamicContent") private htmlDynamicContent:
     | ElementRef
+    | undefined;
+  @ViewChild("coreAppComponent") private coreAppComponent:
+    | CoreAppComponent
     | undefined;
   private readonly destroy$ = new Subject<void>();
 
@@ -107,8 +111,14 @@ export class DocumentationComponent implements AfterViewInit, OnDestroy {
   replacePlus(async: string | null) {
     return async?.replace("+", " ");
   }
-
-  private displayDocsContent() {
+  private async loadContentAndTryIt(docId: string, tryIt: string) {
+    await this.loadDocumentsContent(docId, tryIt);
+    if (tryIt) {
+      const codeExample = this.codeExamples.find((c) => c.codeId === tryIt);
+      console.log(codeExample);
+    }
+  }
+  private async displayDocsContent() {
     let htmlTableOfContent = `<h4>Table of content</h4>`;
     this.pagesNames.forEach((n) => {
       htmlTableOfContent += `<div><a href="#/docs/${PagesService.NamePageToDocId(
