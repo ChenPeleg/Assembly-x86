@@ -65,7 +65,7 @@ export class DocumentationComponent implements AfterViewInit, OnDestroy {
       }),
 
       tap((params) =>
-        this.loadDocumentsContent(params["docId"], params["tryIt"])
+        this.loadContentAndTryIt(params["docId"], params["tryIt"])
       ),
 
       takeUntil(this.destroy$)
@@ -115,7 +115,9 @@ export class DocumentationComponent implements AfterViewInit, OnDestroy {
     await this.loadDocumentsContent(docId, tryIt);
     if (tryIt) {
       const codeExample = this.codeExamples.find((c) => c.codeId === tryIt);
-      console.log(codeExample);
+      if (!codeExample?.code) return;
+
+      this.coreAppComponent?.setEditorText(codeExample.code);
     }
   }
   private async displayDocsContent() {
@@ -154,7 +156,7 @@ ${n.join(" ")}
       }
     }
 
-    this.displayDocsContent();
+    await this.displayDocsContent();
   }
 
   /**
