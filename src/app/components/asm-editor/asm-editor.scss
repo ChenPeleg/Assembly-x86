@@ -35,6 +35,8 @@ div.asm-editor-element {
   width: 500px;
   @media  screen and (max-width: 540px) {
     width: 98vw;
-
+  }
+  &.isTryIt {
+    width: 370px;
   }
 }

@@ -1,4 +1,4 @@
-<div class="flex flex-col md:m-12 mt-2 sm:m-1 overflow-y-hidden" id="core-app-wrapper">
+<div   [ngClass]="{isTryIt}" class="core-wrapper flex flex-col md:m-12 mt-2 sm:m-1 overflow-y-hidden" id="core-app-wrapper">
   <div *ngIf="!isTryIt" class="nav-bar-spacer"></div>
   <div class="flex flex-row items-center gap-1 md:gap-5 pl-1 mb-5" id="execution-wrapper">
 
@@ -15,9 +15,9 @@
     <div class="flex flex-col gap-5  max-h-screen" id="core-app-code-column">
 
       <div class="editor-wrapper">
-        <asm-editor (breakpointChange)="onBreakpointChanged($event)"
-                    (compile)="compileSource($event)"
-                    [activeLine]="getActiveLine()"></asm-editor>
+        <asm-editor (breakpointChange)="onBreakpointChanged($event)" (compile)="compileSource($event)"
+                    [activeLine]="getActiveLine()"
+                    [isTryIt]="isTryIt"></asm-editor>
         <div class="errors">{{ compileErrors }}</div>
       </div>
     </div>
