@@ -11,6 +11,7 @@ import { MDFiles, PagesService } from "../../../services/pages.service";
 import { markdownToHTML } from "../../../util/markdownToHtml";
 import { DomSanitizer, SafeHtml } from "@angular/platform-browser";
 import {
+  combineLatest,
   distinctUntilChanged,
   map,
   Observable,
@@ -48,12 +49,13 @@ export class DocumentationComponent implements AfterViewInit, OnDestroy {
 
   // @ts-ignore
   public readonly $docsParams: Observable<DocumentationsParams | null> =
-    this.activeRoute.params.pipe(
+    combineLatest([this.activeRoute.params, this.activeRoute.queryParams]).pipe(
       distinctUntilChanged(),
-      map((params) => {
+      map(([params, queryParams]) => {
+        console.log(params, queryParams);
         return {
           docId: params["docId"],
-          tryIt: params["tryIt"],
+          tryIt: queryParams["tryIt"],
         };
       }),
       tap((params) =>
@@ -75,7 +77,6 @@ export class DocumentationComponent implements AfterViewInit, OnDestroy {
     private renderer: Renderer2
   ) {
     this.getPagesNames().then();
-    this.activeRoute.paramMap.subscribe((m) => console.log(m));
   }
 
   async getPagesNames() {
