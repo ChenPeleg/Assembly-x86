@@ -10,7 +10,7 @@ import { ConsoleComponent } from "./components/console/console";
 import { AsmEditorComponent } from "./components/asm-editor/asm-editor";
 import { FormsModule } from "@angular/forms";
 import { AppRootComponent } from "./components/root/app-root.component";
-import { LayoutComponent } from "./components/layout/layout.component";
+import { LayoutComponent } from "./layout/layout.component";
 import { MatToolbarModule } from "@angular/material/toolbar";
 import { MatCardModule } from "@angular/material/card";
 import { MatButtonToggleModule } from "@angular/material/button-toggle";
