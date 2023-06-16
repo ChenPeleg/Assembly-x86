@@ -21,4 +21,7 @@ export class NavBarComponent implements AfterViewInit {
   async clickDocs() {
     await this.router.navigate(["docs/"]);
   }
+  async clickSave() {
+    await this.router.navigate(["docs/"]);
+  }
 }
