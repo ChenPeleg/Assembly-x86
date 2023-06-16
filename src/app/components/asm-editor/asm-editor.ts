@@ -11,6 +11,7 @@ import {
 import * as _ from "lodash";
 import * as ace from "brace";
 import { Editor } from "brace";
+import { debounceTime, Subject } from "rxjs";
 
 // @ts-ignore
 ace.config.set("modePath", "./assets/js");
@@ -29,6 +30,10 @@ export class AsmEditorComponent implements AfterViewInit {
     number[]
   >();
   @Input("isTryIt") isTryIt: boolean = false;
+  private readonly $editorChange: Subject<boolean> = new Subject<boolean>();
+  private readonly $debouncedEditorChange = this.$editorChange.pipe(
+    debounceTime(1000)
+  );
 
   // @ts-ignore
   @ViewChild("editor") private editor: ElementRef;
@@ -82,6 +87,9 @@ export class AsmEditorComponent implements AfterViewInit {
       let row = e.getDocumentPosition().row;
       this.toggleBreakpoint(row);
       e.stop();
+    });
+    this.aceEditor.on("change", (e: any) => {
+      this.$editorChange.next(false);
     });
   }
 
