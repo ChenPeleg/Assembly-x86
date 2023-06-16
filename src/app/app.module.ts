@@ -30,7 +30,7 @@ import { MatTooltipModule } from "@angular/material/tooltip";
 import { DisplayCockpitComponent } from "./components/display-cockpit/display-cockpit.component";
 import { CdkDrag, CdkDropList } from "@angular/cdk/drag-drop";
 import { StoreModule } from "@ngrx/store";
-import { counterReducer } from "./stores/reducers/counter.reducer";
+import { codeReducer } from "./stores/reducers/code.reducer";
 import { UIStateReducer } from "./stores/reducers/ui.state.reducer";
 import { SharedModule } from "./common/shared.module";
 import { MatSliderModule } from "@angular/material/slider";
@@ -74,7 +74,7 @@ export const AllMatModules = [
     ...AllMatModules,
     StoreModule.forRoot(
       {
-        count: counterReducer,
+        count: codeReducer,
         uiState: UIStateReducer,
         memoryDisplay: MemoryDisplayReducer,
       },
