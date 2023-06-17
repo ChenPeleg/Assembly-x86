@@ -1,6 +1,8 @@
-import { AfterViewInit, Component } from "@angular/core";
+import { AfterViewInit, Component, ElementRef, ViewChild } from "@angular/core";
 import { Router } from "@angular/router";
 import { CodeEditorService } from "../../services/codeEditor.service";
+import { Observable } from "rxjs";
+import { sleep } from "../../util/sleep";
 
 @Component({
   selector: "app-navbar",
@@ -8,10 +10,25 @@ import { CodeEditorService } from "../../services/codeEditor.service";
   styleUrls: ["./nav-bar.component.scss"],
 })
 export class NavBarComponent implements AfterViewInit {
+  public readonly $recordNameInEdit: Observable<string | null>;
+  public recordName: string | null = null;
+  public isRecordNameInEdit: boolean = false;
+  @ViewChild("codeRecordRename") private codeRecordRenameInput:
+    | ElementRef<HTMLInputElement>
+    | undefined;
+
   constructor(
     private router: Router,
     private codeEditorService: CodeEditorService
-  ) {}
+  ) {
+    this.$recordNameInEdit =
+      this.codeEditorService.$currentEditRecordName.asObservable();
+    this.$recordNameInEdit.subscribe((name) => {
+      if (!this.isRecordNameInEdit) {
+        this.recordName = name;
+      }
+    });
+  }
 
   ngAfterViewInit() {}
 
@@ -27,5 +44,16 @@ export class NavBarComponent implements AfterViewInit {
   }
   async clickSave() {
     this.codeEditorService.saveCodeClicked();
+  }
+
+  finishedEditRecordName($event: FocusEvent) {
+    this.isRecordNameInEdit = false;
+    this.codeEditorService.renameCurrentCodeRecord(this.recordName || "");
+  }
+
+  async editNameClickHandler($event: MouseEvent) {
+    this.isRecordNameInEdit = true;
+    await sleep(20);
+    this.codeRecordRenameInput?.nativeElement.focus();
   }
 }

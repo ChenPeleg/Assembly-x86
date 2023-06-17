@@ -1,17 +1,25 @@
 <mat-toolbar class="nav-bar" color="primary">
-<!--  <button aria-label="Example icon-button with menu icon" class="example-icon" mat-icon-button>-->
-<!--      <mat-icon>menu</mat-icon>-->
-<!--    </button>-->
+  <!--  <button aria-label="Example icon-button with menu icon" class="example-icon" mat-icon-button>-->
+  <!--      <mat-icon>menu</mat-icon>-->
+  <!--    </button>-->
   <div [routerLink]="'/'" class="cursor-pointer ml-5">Assembly x86</div>
 
 
   <span class="example-spacer"></span>
+  <div *ngIf=" $recordNameInEdit | async ">
+    <div (click)="editNameClickHandler($event)" *ngIf="!isRecordNameInEdit" [matTooltip]="'rename'" class="mx-4 px-2 py-1 rounded border-transparent border-2 border-solid hover:border-gray-300">
+      <span  > {{recordName}} </span>
+    </div>
+    <div [ngClass]=" {'hidden' : !isRecordNameInEdit}" class="mx-4 px-2 py-1 rounded border-transparent border-2 border-solid  " >
+     <input #codeRecordRename (blur)="finishedEditRecordName($event)"  [(ngModel)]="recordName"  class="bg-transparent w-52"   />
+    </div>
+  </div>
 
-  <button (click)="clickSave()" aria-label=" save icon" class=" " mat-icon-button>
+  <button (click)="clickSave()" *ngIf="!($recordNameInEdit | async )" aria-label=" save icon" class=" " mat-icon-button>
     <mat-icon>save</mat-icon>
   </button>
   <button aria-label="Example icon-button with heart icon" class=" " mat-icon-button>
-    <mat-icon> folder </mat-icon>
+    <mat-icon> folder</mat-icon>
   </button>
   <button (click)="clickDocs()" aria-label="Example icon-button with share icon" class="example-icon" mat-icon-button>
     <mat-icon>school</mat-icon>

@@ -8,22 +8,28 @@ import { generateNewId } from "../util/generateNewId";
 @Injectable()
 export class CodeEditorService {
   $editorCodeUpdater: Subject<CodeEditorState> = new Subject<CodeEditorState>();
-  $currentEditRecordName: Subject<string | null> = new Subject<string | null>();
+  public readonly $currentEditRecordName: Subject<string | null> = new Subject<
+    string | null
+  >();
   typeOfCode: TypeOfCodeInEditor = TypeOfCodeInEditor.Default;
   codeSavedRecords: CodeEditorRecord[] = [];
   currentSavedRecord: CodeEditorRecord | null = null;
   currentEditorCode: string = "";
+
   constructor() {}
+
   public updateCodeEditor(codeEditorState: CodeEditorState) {
     this.typeOfCode = codeEditorState.typeOfCode;
     this.$editorCodeUpdater.next(codeEditorState);
   }
+
   public updateCodeChangesTracker(codeEditorState: string | undefined) {
     this.currentEditorCode = codeEditorState || "";
   }
+
   public saveCodeClicked() {
     const newId = generateNewId(this.codeSavedRecords);
-    const name = `draft ${newId}`;
+    const name = `Draft ${newId}`;
     this.typeOfCode = TypeOfCodeInEditor.Saved;
     this.currentSavedRecord = {
       id: newId.toString(),
@@ -31,5 +37,11 @@ export class CodeEditorService {
       name,
     };
     this.$currentEditRecordName.next(name);
+  }
+
+  public renameCurrentCodeRecord(newName: string) {
+    if (!this.currentSavedRecord) return;
+    this.currentSavedRecord.name = newName;
+    this.$currentEditRecordName.next(newName);
   }
 }
