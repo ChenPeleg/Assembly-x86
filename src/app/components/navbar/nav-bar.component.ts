@@ -46,7 +46,7 @@ export class NavBarComponent implements AfterViewInit {
     this.codeEditorService.saveCodeClicked();
   }
 
-  finishedEditRecordName($event: FocusEvent) {
+  finishedEditRecordName($event: FocusEvent | Event) {
     this.isRecordNameInEdit = false;
     this.codeEditorService.renameCurrentCodeRecord(this.recordName || "");
   }
@@ -55,5 +55,9 @@ export class NavBarComponent implements AfterViewInit {
     this.isRecordNameInEdit = true;
     await sleep(20);
     this.codeRecordRenameInput?.nativeElement.focus();
+  }
+
+  calculateNameWidth(name: string | null) {
+    return `${(name?.length || 10) * 12}px`;
   }
 }
