@@ -19,9 +19,42 @@ import { Observable } from "rxjs";
 import { Store } from "@ngrx/store";
 import { MemoryDisplay } from "../../models/MemoryDisplay";
 import { MemoryComponent } from "../memory/memory";
-import { sleep } from "../../util/sleep";
 import { CodeEditorService } from "../../services/codeEditor.service";
 import { TypeOfCodeInEditor } from "../../models/TypeOfCodeInEditor";
+
+const defaultCode = `section .data
+hello:
+    db 'Hello world!', 10, 0
+section .text
+    MOV EAX, hello
+    INT 2   ; print string EAX
+
+    PUSH 5
+    CALL factorial
+    INT 1   ; print EAX
+    HLT
+
+factorial:
+    ENTER
+
+    CMP [EBP + 8], 1
+    JNE .recurse
+    MOV EAX, 1
+    JMP .end
+
+.recurse:
+    MOV EAX, [EBP + 8]
+    DEC EAX
+
+    PUSH EAX
+    CALL factorial
+
+    IMUL [EBP + 8]
+
+.end:
+    LEAVE
+    RET
+`;
 
 @Component({
   selector: "core-app",
@@ -57,54 +90,28 @@ export class CoreAppComponent implements AfterViewInit, AfterContentInit {
   }
 
   ngAfterViewInit() {
+    this.codeEditorService.updateCodeEditor({
+      code: defaultCode,
+      typeOfCode: TypeOfCodeInEditor.Default,
+      savedCodeId: null,
+    });
+    if (true) return;
     // @ts-ignore
-    this.asmEditor.text = `section .data
-hello:
-    db 'Hello world!', 10, 0
-section .text
-    MOV EAX, hello
-    INT 2   ; print string EAX
-
-    PUSH 5
-    CALL factorial
-    INT 1   ; print EAX
-    HLT
-
-factorial:
-    ENTER
-
-    CMP [EBP + 8], 1
-    JNE .recurse
-    MOV EAX, 1
-    JMP .end
-
-.recurse:
-    MOV EAX, [EBP + 8]
-    DEC EAX
-
-    PUSH EAX
-    CALL factorial
-
-    IMUL [EBP + 8]
-
-.end:
-    LEAVE
-    RET
-`;
+    this.asmEditor.text = defaultCode;
     // this.requestCompile();
   }
 
   public async setEditorText(text: string): Promise<void> {
-    if (!this.asmEditor) {
-      await sleep(200);
-      if (!this.asmEditor) return;
-    }
-    this.asmEditor.text = text;
-    this.codeEditorService.updateCodeEditor({
-      code: text,
-      typeOfCode: TypeOfCodeInEditor.Default,
-      savedCodeId: null,
-    });
+    // if (!this.asmEditor) {
+    //   await sleep(200);
+    //   if (!this.asmEditor) return;
+    // }
+    // this.asmEditor.text = text;
+    // this.codeEditorService.updateCodeEditor({
+    //   code: text,
+    //   typeOfCode: TypeOfCodeInEditor.Default,
+    //   savedCodeId: null,
+    // });
   }
 
   compileSource(source: string) {
