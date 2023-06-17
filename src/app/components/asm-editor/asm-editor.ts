@@ -39,7 +39,15 @@ export class AsmEditorComponent implements AfterViewInit {
   @ViewChild("editor") private editor: ElementRef;
   private aceEditor: Editor | null = null;
 
-  constructor(private codeEditorService: CodeEditorService) {}
+  constructor(private codeEditorService: CodeEditorService) {
+    this.codeEditorService.$editorCodeUpdated.subscribe((change) => {
+      if (this.aceEditor === null) {
+        return;
+      }
+
+      this.aceEditor.session.getDocument().setValue(change.code);
+    });
+  }
 
   private _breakpoints: number[] = [];
 
@@ -67,13 +75,13 @@ export class AsmEditorComponent implements AfterViewInit {
     }
   }
 
-  @Input() set text(value: string) {
-    if (this.aceEditor === null) {
-      return;
-    }
-
-    this.aceEditor.session.getDocument().setValue(value);
-  }
+  // @Input() set text(value: string) {
+  //   if (this.aceEditor === null) {
+  //     return;
+  //   }
+  //
+  //   this.aceEditor.session.getDocument().setValue(value);
+  // }
 
   ngAfterViewInit() {
     const el = this.editor.nativeElement;

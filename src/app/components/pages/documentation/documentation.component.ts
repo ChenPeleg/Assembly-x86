@@ -56,10 +56,8 @@ export class DocumentationComponent implements AfterViewInit, OnDestroy {
   // @ts-ignore
   public readonly $docsParams: Observable<DocumentationsParams | null> =
     combineLatest([this.activeRoute.params, this.activeRoute.queryParams]).pipe(
-      // ,
       distinctUntilChanged(),
       map(([params, queryParams]) => {
-        console.log(params, queryParams);
         return {
           docId: params["docId"],
           tryIt: queryParams["tryIt"],
@@ -120,7 +118,7 @@ export class DocumentationComponent implements AfterViewInit, OnDestroy {
       const codeExample = this.codeExamples.find((c) => c.codeId === tryIt);
       if (!codeExample?.code) return;
 
-      this.coreAppComponent?.setEditorText(codeExample.code);
+      // this.coreAppComponent?.setEditorText(codeExample.code);
       this.codeEditorService.updateCodeEditor({
         code: codeExample.code,
         typeOfCode: TypeOfCodeInEditor.TryIt,
