@@ -75,14 +75,6 @@ export class AsmEditorComponent implements AfterViewInit {
     }
   }
 
-  // @Input() set text(value: string) {
-  //   if (this.aceEditor === null) {
-  //     return;
-  //   }
-  //
-  //   this.aceEditor.session.getDocument().setValue(value);
-  // }
-
   ngAfterViewInit() {
     const el = this.editor.nativeElement;
     this.aceEditor = ace.edit(el);
