@@ -12,6 +12,7 @@ import * as _ from "lodash";
 import * as ace from "brace";
 import { Editor } from "brace";
 import { debounceTime, Subject } from "rxjs";
+import { CodeEditorService } from "../../services/codeEditor.service";
 
 // @ts-ignore
 ace.config.set("modePath", "./assets/js");
@@ -34,10 +35,11 @@ export class AsmEditorComponent implements AfterViewInit {
   private readonly $debouncedEditorChange = this.$editorChange.pipe(
     debounceTime(1000)
   );
-
   // @ts-ignore
   @ViewChild("editor") private editor: ElementRef;
   private aceEditor: Editor | null = null;
+
+  constructor(private codeEditorService: CodeEditorService) {}
 
   private _breakpoints: number[] = [];
 

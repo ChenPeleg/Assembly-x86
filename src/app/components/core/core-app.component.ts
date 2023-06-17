@@ -20,6 +20,8 @@ import { Store } from "@ngrx/store";
 import { MemoryDisplay } from "../../models/MemoryDisplay";
 import { MemoryComponent } from "../memory/memory";
 import { sleep } from "../../util/sleep";
+import { CodeEditorService } from "../../services/codeEditor.service";
+import { TypeOfCodeInEditor } from "../../models/TypeOfCodeInEditor";
 
 @Component({
   selector: "core-app",
@@ -44,7 +46,8 @@ export class CoreAppComponent implements AfterViewInit, AfterContentInit {
       count: number;
       uiState: UIState;
       memoryDisplay: MemoryDisplay;
-    }>
+    }>,
+    private codeEditorService: CodeEditorService
   ) {
     this.uiState$ = store.select("uiState");
   }
@@ -97,6 +100,11 @@ factorial:
       if (!this.asmEditor) return;
     }
     this.asmEditor.text = text;
+    this.codeEditorService.updateCodeEditor({
+      code: text,
+      typeOfCode: TypeOfCodeInEditor.Default,
+      savedCodeId: null,
+    });
   }
 
   compileSource(source: string) {
