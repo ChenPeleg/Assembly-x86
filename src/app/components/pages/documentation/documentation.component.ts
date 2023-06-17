@@ -118,7 +118,6 @@ export class DocumentationComponent implements AfterViewInit, OnDestroy {
       const codeExample = this.codeExamples.find((c) => c.codeId === tryIt);
       if (!codeExample?.code) return;
 
-      // this.coreAppComponent?.setEditorText(codeExample.code);
       this.codeEditorService.updateCodeEditor({
         code: codeExample.code,
         typeOfCode: TypeOfCodeInEditor.TryIt,
