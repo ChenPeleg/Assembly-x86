@@ -38,7 +38,29 @@ export class CodeEditorService {
       this.currentSavedRecord.code = this.currentEditorCode;
     }
   }
-
+  public deleteCodeClicked() {
+    if (!this.currentSavedRecord) {
+      return;
+    }
+    const idToRemove = this.currentSavedRecord.id;
+    const index = this.codeSavedRecords.map((c) => c.id).indexOf(idToRemove);
+    this.codeSavedRecords = this.codeSavedRecords.filter(
+      (r) => r.id !== idToRemove
+    );
+    this.saveCodeToRecords();
+    if (!this.codeSavedRecords.length) {
+      this.$currentEditRecordName.next("");
+      this.typeOfCode = TypeOfCodeInEditor.Draft;
+      this.currentSavedRecord = null;
+      return;
+    }
+    const newRecordIndex = index > 0 ? index - 1 : 0;
+    const newRecordToEdit = this.codeSavedRecords[newRecordIndex];
+    this.choseRecordClicked({
+      id: newRecordToEdit.id,
+      name: newRecordToEdit.name,
+    });
+  }
   public saveCodeClicked() {
     const newId = generateNewId(this.codeSavedRecords);
     const name = `Draft ${newId}`;
