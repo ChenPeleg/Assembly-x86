@@ -12,10 +12,12 @@ export class CodeEditorService {
   public readonly $currentEditRecordName: Subject<string | null> = new Subject<
     string | null
   >();
-  typeOfCode: TypeOfCodeInEditor = TypeOfCodeInEditor.Default;
-  codeSavedRecords: CodeEditorRecord[] = [];
-  currentSavedRecord: CodeEditorRecord | null = null;
-  currentEditorCode: string = "";
+  public readonly $currentRecordsList: Subject<{ name: string; id: string }[]> =
+    new Subject<{ name: string; id: string }[]>();
+  private typeOfCode: TypeOfCodeInEditor = TypeOfCodeInEditor.Default;
+  private codeSavedRecords: CodeEditorRecord[] = [];
+  private currentSavedRecord: CodeEditorRecord | null = null;
+  private currentEditorCode: string = "";
 
   constructor() {
     this.getRecords();
@@ -40,8 +42,22 @@ export class CodeEditorService {
       name,
     };
     this.codeSavedRecords.push(this.currentSavedRecord);
+
     this.$currentEditRecordName.next(name);
     this.saveCodeToRecords();
+  }
+  public choseRecordClicked(record: { name: string; id: string }) {
+    const chosenRecord = this.codeSavedRecords.find(
+      (r) => r.id === record.id
+    ) as CodeEditorRecord;
+
+    this.currentSavedRecord = chosenRecord;
+    this.updateCodeEditor({
+      code: chosenRecord.code,
+      typeOfCode: TypeOfCodeInEditor.Saved,
+      savedCodeId: chosenRecord.id,
+    });
+    this.$currentEditRecordName.next(chosenRecord.name);
   }
 
   public renameCurrentCodeRecord(newName: string) {
@@ -55,6 +71,9 @@ export class CodeEditorService {
       CodeEditorService.LSSaveRecordsKey,
       JSON.stringify(this.codeSavedRecords)
     );
+    this.$currentRecordsList.next(
+      this.codeSavedRecords.map((r) => ({ name: r.name, id: r.id }))
+    );
   }
 
   private getRecords() {
@@ -63,5 +82,8 @@ export class CodeEditorService {
     );
 
     this.codeSavedRecords = (records && JSON.parse(records)) || [];
+    this.$currentRecordsList.next(
+      this.codeSavedRecords.map((r) => ({ name: r.name, id: r.id }))
+    );
   }
 }

@@ -11,6 +11,7 @@ import { sleep } from "../../util/sleep";
 })
 export class NavBarComponent implements AfterViewInit {
   public readonly $recordNameInEdit: Observable<string | null>;
+  public readonly $codeRecordList: Observable<{ name: string; id: string }[]>;
   public recordName: string | null = null;
   public isRecordNameInEdit: boolean = false;
   @ViewChild("codeRecordRename") private codeRecordRenameInput:
@@ -23,6 +24,8 @@ export class NavBarComponent implements AfterViewInit {
   ) {
     this.$recordNameInEdit =
       this.codeEditorService.$currentEditRecordName.asObservable();
+    this.$codeRecordList =
+      this.codeEditorService.$currentRecordsList.asObservable();
     this.$recordNameInEdit.subscribe((name) => {
       if (!this.isRecordNameInEdit) {
         this.recordName = name;
@@ -59,5 +62,9 @@ export class NavBarComponent implements AfterViewInit {
 
   calculateNameWidth(name: string | null) {
     return `${(name?.length || 10) * 12}px`;
+  }
+
+  recordClickHandler($event: MouseEvent, record: { name: string; id: string }) {
+    this.codeEditorService.choseRecordClicked(record);
   }
 }

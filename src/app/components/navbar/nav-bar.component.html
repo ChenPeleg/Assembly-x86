@@ -7,24 +7,28 @@
 
   <span class="example-spacer"></span>
   <div *ngIf=" $recordNameInEdit | async ">
-    <div (click)="editNameClickHandler($event)" *ngIf="!isRecordNameInEdit" [matTooltip]="'rename'" class="record-name rounded-lg  mx-4 px-2 py-0  rounded ">
-      <span  > {{recordName}} </span>
+    <div (click)="editNameClickHandler($event)" *ngIf="!isRecordNameInEdit" [matTooltip]="'rename'"
+         class="record-name rounded-lg  mx-4 px-2 py-0  rounded ">
+      <span> {{recordName}} </span>
     </div>
-    <div [ngClass]=" {'hidden' : !isRecordNameInEdit}"  >
-     <input #codeRecordRename  (blur)="finishedEditRecordName($event)"  (keyup.enter)="finishedEditRecordName($event)"  [(ngModel)]="recordName"  [ngStyle]="{'width' : calculateNameWidth($recordNameInEdit | async)}"  class="record-name bg-transparent mx-4 px-2 py-0  rounded-lg appearance-none"     />
+    <div [ngClass]=" {'hidden' : !isRecordNameInEdit}">
+      <input #codeRecordRename (blur)="finishedEditRecordName($event)" (keyup.enter)="finishedEditRecordName($event)"
+             [(ngModel)]="recordName" [ngStyle]="{'width' : calculateNameWidth($recordNameInEdit | async)}"
+             class="record-name bg-transparent mx-4 px-2 py-0  rounded-lg appearance-none" />
     </div>
   </div>
 
   <button (click)="clickSave()" *ngIf="!($recordNameInEdit | async )" aria-label=" save icon" class=" " mat-icon-button>
     <mat-icon>save</mat-icon>
   </button>
-  <button [matMenuTriggerFor]="menu" mat-button>Menu</button>
-  <mat-menu #menu="matMenu">
-    <button mat-menu-item>Item 1</button>
-    <button mat-menu-item>Item 2</button>
-  </mat-menu>
-  <button aria-label="Example icon-button with heart icon" class=" " mat-icon-button>
 
+
+  <button *ngIf=" ($codeRecordList | async) as recordList" [matMenuTriggerFor]="menu"
+          aria-label="Example icon-button with heart icon" class=" " mat-icon-button>
+    <mat-menu #menu="matMenu" xPosition="before">
+      <button (click)="recordClickHandler($event,record)" *ngFor="let record of recordList" mat-menu-item>{{record.name}}</button>
+
+    </mat-menu>
     <mat-icon> folder</mat-icon>
   </button>
   <button (click)="clickDocs()" aria-label="Example icon-button with share icon" class="example-icon" mat-icon-button>
