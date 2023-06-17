@@ -62,6 +62,6 @@ export class CodeEditorService {
       CodeEditorService.LSSaveRecordsKey
     );
 
-    this.codeSavedRecords = records && JSON.parse(records);
+    this.codeSavedRecords = (records && JSON.parse(records)) || [];
   }
 }
