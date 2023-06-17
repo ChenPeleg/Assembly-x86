@@ -3,4 +3,5 @@ export enum TypeOfCodeInEditor {
   Draft = 1,
   TryIt = 2,
   Saved = 3,
+  Hidden = 4,
 }

@@ -123,6 +123,8 @@ export class DocumentationComponent implements AfterViewInit, OnDestroy {
         typeOfCode: TypeOfCodeInEditor.TryIt,
         savedCodeId: null,
       });
+    } else {
+      this.codeEditorService.clearRecordSelection();
     }
   }
   private async displayDocsContent() {
