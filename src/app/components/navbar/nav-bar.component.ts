@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, ElementRef, ViewChild } from "@angular/core";
 import { Router } from "@angular/router";
 import { CodeEditorService } from "../../services/codeEditor.service";
-import { Observable } from "rxjs";
+import { BehaviorSubject, Observable } from "rxjs";
 import { sleep } from "../../util/sleep";
 
 @Component({
@@ -11,7 +11,9 @@ import { sleep } from "../../util/sleep";
 })
 export class NavBarComponent implements AfterViewInit {
   public readonly $recordNameInEdit: Observable<string | null>;
-  public readonly $codeRecordList: Observable<{ name: string; id: string }[]>;
+  public readonly $codeRecordList: BehaviorSubject<
+    { name: string; id: string }[]
+  >;
   public recordName: string | null = null;
   public isRecordNameInEdit: boolean = false;
   @ViewChild("codeRecordRename") private codeRecordRenameInput:
@@ -24,8 +26,7 @@ export class NavBarComponent implements AfterViewInit {
   ) {
     this.$recordNameInEdit =
       this.codeEditorService.$currentEditRecordName.asObservable();
-    this.$codeRecordList =
-      this.codeEditorService.$currentRecordsList.asObservable();
+    this.$codeRecordList = this.codeEditorService.$currentRecordsList;
     this.$recordNameInEdit.subscribe((name) => {
       if (!this.isRecordNameInEdit) {
         this.recordName = name;
