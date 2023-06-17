@@ -40,13 +40,14 @@ export class AsmEditorComponent implements AfterViewInit {
   private aceEditor: Editor | null = null;
 
   constructor(private codeEditorService: CodeEditorService) {
-    this.codeEditorService.$editorCodeUpdated.subscribe((change) => {
-      if (this.aceEditor === null) {
-        return;
-      }
-
-      this.aceEditor.session.getDocument().setValue(change.code);
+    this.codeEditorService.$editorCodeUpdater.subscribe((change) => {
+      this.aceEditor?.session.getDocument().setValue(change.code);
     });
+    this.$debouncedEditorChange.subscribe((change) =>
+      this.codeEditorService.updateCodeChangesTracker(
+        this.aceEditor?.session.getValue()
+      )
+    );
   }
 
   private _breakpoints: number[] = [];
