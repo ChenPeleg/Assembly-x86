@@ -1,5 +1,6 @@
 import { AfterViewInit, Component } from "@angular/core";
 import { Router } from "@angular/router";
+import { CodeEditorService } from "../../services/codeEditor.service";
 
 @Component({
   selector: "app-navbar",
@@ -7,7 +8,10 @@ import { Router } from "@angular/router";
   styleUrls: ["./nav-bar.component.scss"],
 })
 export class NavBarComponent implements AfterViewInit {
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private codeEditorService: CodeEditorService
+  ) {}
 
   ngAfterViewInit() {}
 
@@ -22,6 +26,6 @@ export class NavBarComponent implements AfterViewInit {
     await this.router.navigate(["docs/"]);
   }
   async clickSave() {
-    await this.router.navigate(["docs/"]);
+    this.codeEditorService.saveCodeClicked();
   }
 }
