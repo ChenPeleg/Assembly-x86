@@ -72,4 +72,8 @@ export class NavBarComponent implements AfterViewInit {
   clickDelete() {
     this.codeEditorService.deleteCodeClicked();
   }
+
+  newRecordClickHandler($event: MouseEvent) {
+    this.codeEditorService.createNewCodeClicked();
+  }
 }

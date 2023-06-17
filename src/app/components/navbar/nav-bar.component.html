@@ -6,9 +6,9 @@
 
 
   <span class="example-spacer"></span>
-  <div class="flex-row flex items-center justify-start">
+  <div class="code-records-buttons flex-row flex items-center justify-start">
 
-    <div *ngIf=" $recordNameInEdit | async " class="delete-button relative">
+    <div *ngIf=" $recordNameInEdit | async " class="delete-button  ">
       <button (click)="clickDelete()" aria-label="delete icon" class="example-icon" mat-icon-button>
         <mat-icon>delete</mat-icon>
       </button>
@@ -35,9 +35,10 @@
     <button *ngIf=" ($codeRecordList | async) as recordList" [matMenuTriggerFor]="menu"
             aria-label="Example icon-button with heart icon" class=" " mat-icon-button>
       <mat-menu #menu="matMenu" xPosition="before">
+        <button (click)="newRecordClickHandler($event )"
+                mat-menu-item> <mat-icon>code</mat-icon> Create new</button>
         <button (click)="recordClickHandler($event,record)" *ngFor="let record of recordList"
                 mat-menu-item>{{record.name}}</button>
-
       </mat-menu>
       <mat-icon> folder</mat-icon>
     </button>

@@ -2,6 +2,18 @@
   position: fixed;
   top: 0;
   z-index: 100;
+  .delete-button {
+    transition: opacity 100ms ease-in-out;
+    opacity: 0;
+  }
+  &:hover {
+    .delete-button {
+      opacity: 1;
+    }
+  }
+}
+.code-records-buttons {
+
 }
 
 .example-spacer {
