@@ -38,6 +38,7 @@ import { MemoryOptionsComponent } from "./components/memory-options/memory-optio
 import { MatChipsModule } from "@angular/material/chips";
 import { MemoryDisplayReducer } from "./stores/reducers/memory-display.reducer";
 import { CodeEditorService } from "./services/codeEditor.service";
+import { MatMenuModule } from "@angular/material/menu";
 
 export const AllMatModules = [
   MatToolbarModule,
@@ -96,6 +97,7 @@ export const AllMatModules = [
     AppRoutingModule,
     MatSliderModule,
     MatChipsModule,
+    MatMenuModule,
   ],
   providers: [PagesService, CodeEditorService],
   bootstrap: [AppRootComponent],
