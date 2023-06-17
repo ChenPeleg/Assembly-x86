@@ -38,6 +38,9 @@ export class CodeEditorService {
       this.currentSavedRecord.code = this.currentEditorCode;
     }
   }
+  public createNewCodeClicked() {
+    this.saveCodeClicked();
+  }
   public deleteCodeClicked() {
     if (!this.currentSavedRecord) {
       return;
