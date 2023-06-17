@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { CodeEditorState } from "../models/CodeEditorState";
-import { Subject } from "rxjs";
+import { BehaviorSubject, Subject } from "rxjs";
 import { TypeOfCodeInEditor } from "../models/TypeOfCodeInEditor";
 import { CodeEditorRecord } from "../models/CodeEditorRecord";
 import { generateNewId } from "../util/generateNewId";
@@ -12,8 +12,9 @@ export class CodeEditorService {
   public readonly $currentEditRecordName: Subject<string | null> = new Subject<
     string | null
   >();
-  public readonly $currentRecordsList: Subject<{ name: string; id: string }[]> =
-    new Subject<{ name: string; id: string }[]>();
+  public readonly $currentRecordsList: BehaviorSubject<
+    { name: string; id: string }[]
+  > = new BehaviorSubject<{ name: string; id: string }[]>([]);
   private typeOfCode: TypeOfCodeInEditor = TypeOfCodeInEditor.Default;
   private codeSavedRecords: CodeEditorRecord[] = [];
   private currentSavedRecord: CodeEditorRecord | null = null;
@@ -30,6 +31,12 @@ export class CodeEditorService {
 
   public updateCodeChangesTracker(codeEditorState: string | undefined) {
     this.currentEditorCode = codeEditorState || "";
+    if (
+      this.typeOfCode === TypeOfCodeInEditor.Saved &&
+      this.currentSavedRecord
+    ) {
+      this.currentSavedRecord.code = this.currentEditorCode;
+    }
   }
 
   public saveCodeClicked() {
@@ -82,6 +89,7 @@ export class CodeEditorService {
     );
 
     this.codeSavedRecords = (records && JSON.parse(records)) || [];
+    console.log(this.codeSavedRecords);
     this.$currentRecordsList.next(
       this.codeSavedRecords.map((r) => ({ name: r.name, id: r.id }))
     );
