@@ -8,18 +8,19 @@ import { generateNewId } from "../util/generateNewId";
 @Injectable()
 export class CodeEditorService {
   private static readonly LSSaveRecordsKey = "Asm86CodeRecords";
-  $editorCodeUpdater: Subject<CodeEditorState> = new Subject<CodeEditorState>();
 
+  public readonly $editorCodeUpdater: Subject<CodeEditorState> =
+    new Subject<CodeEditorState>();
   public readonly $currentEditRecordName: Subject<string | null> = new Subject<
     string | null
   >();
-
   public readonly $currentRecordsList: BehaviorSubject<
     { name: string; id: string }[]
   > = new BehaviorSubject<{ name: string; id: string }[]>([]);
+  public readonly $showRecordButtonOnNavBar: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(true);
 
   private typeOfCode: TypeOfCodeInEditor = TypeOfCodeInEditor.Default;
-
   private codeSavedRecords: CodeEditorRecord[] = [];
   private currentSavedRecord: CodeEditorRecord | null = null;
   private currentEditorCode: string = "";
@@ -31,8 +32,11 @@ export class CodeEditorService {
   public updateCodeEditor(codeEditorState: CodeEditorState) {
     this.typeOfCode = codeEditorState.typeOfCode;
     this.$editorCodeUpdater.next(codeEditorState);
+    this.$showRecordButtonOnNavBar.next(true);
   }
-
+  public hideRecordButtonOnNavBar() {
+    this.$showRecordButtonOnNavBar.next(false);
+  }
   public updateCodeChangesTracker(codeEditorState: string | undefined) {
     this.currentEditorCode = codeEditorState || "";
     if (

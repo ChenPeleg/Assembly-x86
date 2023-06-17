@@ -6,7 +6,7 @@
 
 
   <span class="example-spacer"></span>
-  <div class="code-records-buttons flex-row flex items-center justify-start">
+  <div *ngIf="$showRecordButtons | async" class="code-records-buttons flex-row flex items-center justify-start">
 
     <div *ngIf=" $recordNameInEdit | async " class="delete-button  ">
       <button (click)="clickDelete()" aria-label="delete icon" class="example-icon" mat-icon-button>
@@ -42,8 +42,9 @@
       </mat-menu>
       <mat-icon> folder</mat-icon>
     </button>
-    <button (click)="clickDocs()" aria-label="Example icon-button with share icon" class="example-icon" mat-icon-button>
-      <mat-icon>school</mat-icon>
-    </button>
-  </div>
+    </div>
+  <button (click)="clickDocs()" aria-label="Example icon-button with share icon" class="example-icon" mat-icon-button>
+    <mat-icon>school</mat-icon>
+  </button>
+
 </mat-toolbar>

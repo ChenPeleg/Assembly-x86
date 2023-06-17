@@ -14,6 +14,7 @@ export class NavBarComponent implements AfterViewInit {
   public readonly $codeRecordList: BehaviorSubject<
     { name: string; id: string }[]
   >;
+  public readonly $showRecordButtons: BehaviorSubject<boolean>;
   public recordName: string | null = null;
   public isRecordNameInEdit: boolean = false;
   @ViewChild("codeRecordRename") private codeRecordRenameInput:
@@ -27,6 +28,7 @@ export class NavBarComponent implements AfterViewInit {
     this.$recordNameInEdit =
       this.codeEditorService.$currentEditRecordName.asObservable();
     this.$codeRecordList = this.codeEditorService.$currentRecordsList;
+    this.$showRecordButtons = this.codeEditorService.$showRecordButtonOnNavBar;
     this.$recordNameInEdit.subscribe((name) => {
       if (!this.isRecordNameInEdit) {
         this.recordName = name;

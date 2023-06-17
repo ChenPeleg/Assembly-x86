@@ -125,6 +125,7 @@ export class DocumentationComponent implements AfterViewInit, OnDestroy {
       });
     } else {
       this.codeEditorService.clearRecordSelection();
+      this.codeEditorService.hideRecordButtonOnNavBar();
     }
   }
   private async displayDocsContent() {
