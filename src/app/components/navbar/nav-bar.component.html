@@ -10,8 +10,8 @@
     <div (click)="editNameClickHandler($event)" *ngIf="!isRecordNameInEdit" [matTooltip]="'rename'" class="mx-4 px-2 py-1 rounded border-transparent border-2 border-solid hover:border-gray-300">
       <span  > {{recordName}} </span>
     </div>
-    <div [ngClass]=" {'hidden' : !isRecordNameInEdit}" class="mx-4 px-2 py-1 rounded border-transparent border-2 border-solid  " >
-     <input #codeRecordRename (blur)="finishedEditRecordName($event)"  [(ngModel)]="recordName"  class="bg-transparent w-52"   />
+    <div [ngClass]=" {'hidden' : !isRecordNameInEdit}"  class="mx-4 px-2 py-1 rounded border-transparent border-2 border-solid  " >
+     <input #codeRecordRename (blur)="finishedEditRecordName($event)"  (keyup.enter)="finishedEditRecordName($event)"  [(ngModel)]="recordName"  [ngStyle]="{'width' : calculateNameWidth($recordNameInEdit | async)}"  class="bg-transparent w-52"   />
     </div>
   </div>
 
