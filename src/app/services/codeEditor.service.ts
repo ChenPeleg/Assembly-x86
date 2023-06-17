@@ -9,13 +9,17 @@ import { generateNewId } from "../util/generateNewId";
 export class CodeEditorService {
   private static readonly LSSaveRecordsKey = "Asm86CodeRecords";
   $editorCodeUpdater: Subject<CodeEditorState> = new Subject<CodeEditorState>();
+
   public readonly $currentEditRecordName: Subject<string | null> = new Subject<
     string | null
   >();
+
   public readonly $currentRecordsList: BehaviorSubject<
     { name: string; id: string }[]
   > = new BehaviorSubject<{ name: string; id: string }[]>([]);
+
   private typeOfCode: TypeOfCodeInEditor = TypeOfCodeInEditor.Default;
+
   private codeSavedRecords: CodeEditorRecord[] = [];
   private currentSavedRecord: CodeEditorRecord | null = null;
   private currentEditorCode: string = "";
@@ -41,6 +45,11 @@ export class CodeEditorService {
   public createNewCodeClicked() {
     this.saveCodeClicked();
   }
+  public clearRecordSelection() {
+    this.$currentEditRecordName.next("");
+    this.typeOfCode = TypeOfCodeInEditor.Draft;
+    this.currentSavedRecord = null;
+  }
   public deleteCodeClicked() {
     if (!this.currentSavedRecord) {
       return;
@@ -52,9 +61,7 @@ export class CodeEditorService {
     );
     this.saveCodeToRecords();
     if (!this.codeSavedRecords.length) {
-      this.$currentEditRecordName.next("");
-      this.typeOfCode = TypeOfCodeInEditor.Draft;
-      this.currentSavedRecord = null;
+      this.clearRecordSelection();
       return;
     }
     const newRecordIndex = index > 0 ? index - 1 : 0;
