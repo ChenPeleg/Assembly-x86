@@ -6,4 +6,7 @@ import { Subject } from "rxjs";
 export class CodeEditorService {
   $editorCodeUpdated: Subject<CodeEditorState> = new Subject<CodeEditorState>();
   constructor() {}
+  public updateCodeEditor(codeEditorState: CodeEditorState) {
+    this.$editorCodeUpdated.next(codeEditorState);
+  }
 }

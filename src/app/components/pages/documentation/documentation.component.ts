@@ -25,6 +25,8 @@ import { sleep } from "../../../util/sleep";
 import { CodeExample } from "../../../models/CodeExample";
 import { observableToPromise } from "../../../util/obeservableToPromise";
 import { CoreAppComponent } from "../../core/core-app.component";
+import { CodeEditorService } from "../../../services/codeEditor.service";
+import { TypeOfCodeInEditor } from "../../../models/TypeOfCodeInEditor";
 
 interface DocumentationsParams {
   docId: string;
@@ -76,7 +78,8 @@ export class DocumentationComponent implements AfterViewInit, OnDestroy {
     private sanitizer: DomSanitizer,
     private readonly activeRoute: ActivatedRoute,
     private readonly router: Router,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    private codeEditorService: CodeEditorService
   ) {
     this.getPagesNames().then();
   }
@@ -118,6 +121,11 @@ export class DocumentationComponent implements AfterViewInit, OnDestroy {
       if (!codeExample?.code) return;
 
       this.coreAppComponent?.setEditorText(codeExample.code);
+      this.codeEditorService.updateCodeEditor({
+        code: codeExample.code,
+        typeOfCode: TypeOfCodeInEditor.TryIt,
+        savedCodeId: null,
+      });
     }
   }
   private async displayDocsContent() {
