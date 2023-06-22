@@ -29,5 +29,8 @@
 .core-wrapper {
   &.isTryIt {
     margin: 10px !important;
+    @media screen and (max-width: 540px) {
+      margin: 4px !important;
+    }
   }
 }

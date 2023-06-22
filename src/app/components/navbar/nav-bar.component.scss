@@ -29,3 +29,8 @@ input.record-name {
   border:  1px solid white;
   outline: none;
 }
+.button-icon {
+  @media screen and (max-width: 540px) {
+    margin: 0 -5px;
+  }
+}
