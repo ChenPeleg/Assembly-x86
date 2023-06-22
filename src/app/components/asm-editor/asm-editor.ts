@@ -13,6 +13,7 @@ import * as ace from "brace";
 import { Editor } from "brace";
 import { debounceTime, Subject } from "rxjs";
 import { CodeEditorService } from "../../services/codeEditor.service";
+import { getScreenMediaState } from "../../util/screenMediaSatate";
 
 // @ts-ignore
 ace.config.set("modePath", "./assets/js");
@@ -27,6 +28,7 @@ export class AsmEditorComponent implements AfterViewInit {
   private static ACTIVE_LINE_CLASS: string = "active-line";
   public hideAssembleButton: boolean = true;
   public numberOfLines = 40;
+  public isMobile: boolean = getScreenMediaState().isMobile;
   @Output() compile: EventEmitter<string> = new EventEmitter<string>();
   @Output() breakpointChange: EventEmitter<number[]> = new EventEmitter<
     number[]
@@ -56,9 +58,9 @@ export class AsmEditorComponent implements AfterViewInit {
   get breakpoints(): number[] {
     return this._breakpoints;
   }
-  get editorHeight(): string {
+  get editorHeight() {
     const fives = Math.ceil((this.numberOfLines || 1) / 5) * 5;
-    return `${fives * 16}px`;
+    return this.isMobile ? { height: `${fives * 16}px` } : null;
   }
 
   // @ts-ignore
