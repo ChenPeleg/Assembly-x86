@@ -60,7 +60,7 @@ export class AsmEditorComponent implements AfterViewInit {
   }
   get editorHeight() {
     const fives = Math.ceil((this.numberOfLines || 1) / 5) * 5;
-    return this.isMobile ? { height: `${fives * 16}px` } : null;
+    return this.isMobile ? { height: `${fives * 14}px` } : null;
   }
 
   // @ts-ignore
