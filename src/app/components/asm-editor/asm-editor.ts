@@ -26,6 +26,7 @@ ace.config.set("modePath", "./assets/js");
 export class AsmEditorComponent implements AfterViewInit {
   private static ACTIVE_LINE_CLASS: string = "active-line";
   public hideAssembleButton: boolean = true;
+  public numberOfLines = 40;
   @Output() compile: EventEmitter<string> = new EventEmitter<string>();
   @Output() breakpointChange: EventEmitter<number[]> = new EventEmitter<
     number[]
@@ -43,17 +44,21 @@ export class AsmEditorComponent implements AfterViewInit {
     this.codeEditorService.$editorCodeUpdater.subscribe((change) => {
       this.aceEditor?.session.getDocument().setValue(change.code);
     });
-    this.$debouncedEditorChange.subscribe((change) =>
-      this.codeEditorService.updateCodeChangesTracker(
-        this.aceEditor?.session.getValue()
-      )
-    );
+    this.$debouncedEditorChange.subscribe((change) => {
+      const newValue = this.aceEditor?.session.getValue();
+      this.numberOfLines = newValue?.split("\n").length || this.numberOfLines;
+      this.codeEditorService.updateCodeChangesTracker(newValue);
+    });
   }
 
   private _breakpoints: number[] = [];
 
   get breakpoints(): number[] {
     return this._breakpoints;
+  }
+  get editorHeight(): string {
+    const fives = Math.ceil((this.numberOfLines || 1) / 5) * 5;
+    return `${fives * 16}px`;
   }
 
   // @ts-ignore
