@@ -2,6 +2,14 @@
   <!--  <button aria-label="Example icon-button with menu icon" class="example-icon" mat-icon-button>-->
   <!--      <mat-icon>menu</mat-icon>-->
   <!--    </button>-->
+  <div [routerLink]="'/'" class="cursor-pointer ml-5 flex flex-row items-center gap-3">
+  <span class="hidden sm:block">
+     Assembly x86
+  </span>
+    <span>
+      x86
+    </span>
+  </div>
 
 
   <span class="example-spacer"></span>
@@ -15,7 +23,7 @@
     <div *ngIf=" $recordNameInEdit | async " class="flex flex-row">
 
       <div (click)="editNameClickHandler($event)" *ngIf="!isRecordNameInEdit" [matTooltip]="'rename'"
-           class="record-name rounded-lg  mx-4 px-2 py-0  rounded ">
+           class="record-name   mx-4 px-2 py-0  rounded ">
         <span> {{recordName}} </span>
       </div>
       <div [ngClass]=" {'hidden' : !isRecordNameInEdit}">
@@ -35,13 +43,16 @@
             aria-label="Example icon-button with heart icon" class=" " mat-icon-button>
       <mat-menu #menu="matMenu" xPosition="before">
         <button (click)="newRecordClickHandler($event )"
-                mat-menu-item> <mat-icon>code</mat-icon> Create new</button>
+                mat-menu-item>
+          <mat-icon>code</mat-icon>
+          Create new
+        </button>
         <button (click)="recordClickHandler($event,record)" *ngFor="let record of recordList"
                 mat-menu-item>{{record.name}}</button>
       </mat-menu>
       <mat-icon> folder</mat-icon>
     </button>
-    </div>
+  </div>
   <button (click)="clickDocs()" aria-label="Example icon-button with share icon" class="example-icon" mat-icon-button>
     <mat-icon>school</mat-icon>
   </button>
