@@ -69,6 +69,7 @@ export class CoreAppComponent implements AfterViewInit, AfterContentInit {
 
   runtime: Runtime = new Runtime();
   compileErrors: string = "";
+  compileSuccess: string = "";
   uiState$: Observable<UIState>;
   private assembler: Assembler = new Assembler();
   private cpu: CPU | undefined;
@@ -130,6 +131,7 @@ export class CoreAppComponent implements AfterViewInit, AfterContentInit {
       this.runtime.process = new Process(this.cpu);
 
       this.compileErrors = "";
+      // this.compileSuccess = "Assembled successfully!";
     } catch (e) {
       if (e instanceof AssemblyException) {
         this.compileErrors = `Error at line ${e.line}: ${e.message}`;

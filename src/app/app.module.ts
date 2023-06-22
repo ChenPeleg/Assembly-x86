@@ -40,6 +40,7 @@ import { MemoryDisplayReducer } from "./stores/reducers/memory-display.reducer";
 import { CodeEditorService } from "./services/codeEditor.service";
 import { MatMenuModule } from "@angular/material/menu";
 import { NgOptimizedImage } from "@angular/common";
+import { MatProgressBarModule } from "@angular/material/progress-bar";
 
 export const AllMatModules = [
   MatToolbarModule,
@@ -100,6 +101,7 @@ export const AllMatModules = [
     MatChipsModule,
     MatMenuModule,
     NgOptimizedImage,
+    MatProgressBarModule,
   ],
   providers: [PagesService, CodeEditorService],
   bootstrap: [AppRootComponent],
