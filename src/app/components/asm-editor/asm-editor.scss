@@ -31,11 +31,12 @@
 }
 
 div.asm-editor-element {
-  min-height: 15vh;
+  height: 75vh;
   width: 500px;
-  @media  screen and (max-width: 540px) {
+  @media screen and (max-width: 540px) {
     width: 98vw;
   }
+
   &.isTryIt {
     width: 370px;
   }
