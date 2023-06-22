@@ -15,7 +15,11 @@
     <div class="flex flex-col gap-5  md:max-h-screen " id="core-app-code-column">
 
       <div class="editor-wrapper">
-        <div class="errors mb-2">{{ compileErrors }}</div>
+        <div class=" mb-2">
+          <span class="errors">{{ compileErrors }}</span>
+          <span *ngIf="compileSuccess" class="text-green-900 "> {{ compileSuccess }}</span>
+
+        </div>
         <asm-editor (breakpointChange)="onBreakpointChanged($event)" (compile)="compileSource($event)"
                     [activeLine]="getActiveLine()"
                     [isTryIt]="isTryIt"></asm-editor>
