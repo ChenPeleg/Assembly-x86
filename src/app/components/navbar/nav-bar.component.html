@@ -1,8 +1,8 @@
 <mat-toolbar class="nav-bar" color="primary">
-  <!--  <button aria-label="Example icon-button with menu icon" class="example-icon" mat-icon-button>-->
+  <!--  <button aria-label="Example icon-button with menu icon" class="button-icon" mat-icon-button>-->
   <!--      <mat-icon>menu</mat-icon>-->
   <!--    </button>-->
-  <div [routerLink]="'/'" class="cursor-pointer ml-5 flex flex-row items-center gap-3">
+  <div [routerLink]="'/'" class="cursor-pointer  md:ml-5  ml-1 flex flex-row items-center gap-3">
   <span class="hidden sm:block">
      Assembly
   </span><span> x86
@@ -14,24 +14,26 @@
   <div *ngIf="$showRecordButtons | async" class="code-records-buttons flex-row flex items-center justify-start">
 
     <div *ngIf=" $recordNameInEdit | async " class="delete-button  ">
-      <button (click)="clickDelete()" aria-label="delete icon" class="example-icon" mat-icon-button>
+      <button (click)="clickDelete()" aria-label="delete icon" class="button-icon" mat-icon-button>
         <mat-icon>delete</mat-icon>
       </button>
     </div>
-    <div *ngIf=" $recordNameInEdit | async " class="flex flex-row">
+    <div *ngIf=" $recordNameInEdit | async " class="flex flex-row" id="record-name-root">
 
-      <div (click)="editNameClickHandler($event)" *ngIf="!isRecordNameInEdit" [matTooltip]="'rename'"
-           class="record-name   mx-4 px-2 py-0  rounded ">
-        <span> {{recordName}} </span>
+      <div (click)="editNameClickHandler($event)" *ngIf="!isRecordNameInEdit"
+           [matTooltip]="'rename'" class="record-name
+            mx-4 px-2 py-0 rounded  max-w-[30vw] overflow-x-hidden "
+           id="record-name-span">
+        <span class="overflow-ellipsis overflow-x-hidden"> {{recordName}} </span>
       </div>
-      <div [ngClass]=" {'hidden' : !isRecordNameInEdit}">
+      <div [ngClass]=" {'hidden' : !isRecordNameInEdit}" class="max-w-[40vw] overflow-x-clip">
         <input #codeRecordRename (blur)="finishedEditRecordName($event)" (keyup.enter)="finishedEditRecordName($event)"
                [(ngModel)]="recordName" [ngStyle]="{'width' : calculateNameWidth($recordNameInEdit | async)}"
                class="record-name bg-transparent mx-4 px-2 py-0  rounded-lg appearance-none" />
       </div>
     </div>
 
-    <button (click)="clickSave()" *ngIf="!($recordNameInEdit | async )" aria-label=" save icon" class=" "
+    <button (click)="clickSave()" *ngIf="!($recordNameInEdit | async )" aria-label=" save icon" class="button-icon "
             mat-icon-button>
       <mat-icon>save</mat-icon>
     </button>
@@ -51,7 +53,7 @@
       <mat-icon> folder</mat-icon>
     </button>
   </div>
-  <button (click)="clickDocs()" aria-label="Example icon-button with share icon" class="example-icon" mat-icon-button>
+  <button (click)="clickDocs()" aria-label="docs icon" class="button-icon" mat-icon-button>
     <mat-icon>school</mat-icon>
   </button>
 
