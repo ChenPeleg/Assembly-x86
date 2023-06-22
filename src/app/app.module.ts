@@ -39,6 +39,7 @@ import { MatChipsModule } from "@angular/material/chips";
 import { MemoryDisplayReducer } from "./stores/reducers/memory-display.reducer";
 import { CodeEditorService } from "./services/codeEditor.service";
 import { MatMenuModule } from "@angular/material/menu";
+import { NgOptimizedImage } from "@angular/common";
 
 export const AllMatModules = [
   MatToolbarModule,
@@ -98,6 +99,7 @@ export const AllMatModules = [
     MatSliderModule,
     MatChipsModule,
     MatMenuModule,
+    NgOptimizedImage,
   ],
   providers: [PagesService, CodeEditorService],
   bootstrap: [AppRootComponent],
