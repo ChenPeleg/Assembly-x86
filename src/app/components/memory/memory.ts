@@ -51,6 +51,9 @@ export class MemoryComponent {
       this.memory?.load(address, this.wordSize).getValue() || 0;
     switch (this._valueType) {
       case "ascii":
+        if (value === 32 || value === 10) {
+          return "";
+        }
         return String.fromCharCode(value);
       case "number":
         return value.toString();

@@ -1,9 +1,11 @@
-<div class="memory" *ngIf="memory !== null">
-  <div class="row" *ngFor="let row of createRange(getRowCount())">
-    <div class="col" *ngFor="let col of createRange(width)">
-        <span class="cell" *ngIf="memory?.isValid(createAddress(row, col))">
-          {{ getCellValue(createAddress(row, col)) }}
+<div *ngIf="memory !== null" class="memory">
+  <span *ngFor="let row of createRange(getRowCount())" class="row">
+    <span *ngFor="let col of createRange(width)" class="col inline relative">
+        <span *ngIf="memory?.isValid(createAddress(row, col))" class="cell">
+          {{ getCellValue(createAddress(row, col)) || '&nbsp;' }}
         </span>
-    </div>
-  </div>
+    </span>
+    <span class="w-1 h-5  border-r-black  border-r-2 " id="row-end">  </span>
+<!--    md:border-r-0 -->
+  </span>
 </div>

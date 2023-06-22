@@ -10,8 +10,24 @@ div.row {
   display: flex;
   flex-wrap: wrap;
   margin: 0;
+  @media screen and (max-width: 540px) {
+    display: inline-flex ;
+
+  }
 }
-.cell {
+span.row {
+  //display: flex;
+  // flex-wrap: wrap;
+  //margin: 0;
+  //@media screen and (max-width: 540px) {
+  //  display: inline-flex ;
+  //
+  //}
+
+}
+span.cell {
+  position: relative;
+ bottom: 0;
   display: inline-block;
   min-width: 30px;
   height: 17px;
