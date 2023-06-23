@@ -2,7 +2,7 @@
   <span *ngFor="let row of createRange(getRowCount())" class="row">
     <span *ngFor="let col of createRange(width)" class="col inline relative">
         <span (click)="clickCell(row, col)" *ngIf="memory?.isValid(createAddress(row, col))"
-             [matTooltip]="'Address ' + createAddress(row, col) + ' ' +  getCellValue(createAddress(row, col))" class="cell cursor-pointer"
+             [matTooltip]="'Address:' + createAddress(row, col) + ' \nValue:' +  getCellValue(createAddress(row, col))" class="cell cursor-pointer"
               matTooltipClass="memory-cell-mat-tooltip-class"   >
           {{ getCellValue(createAddress(row, col)) || '&nbsp;' }}
         </span>
