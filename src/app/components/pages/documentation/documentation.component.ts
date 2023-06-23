@@ -27,6 +27,13 @@ import { observableToPromise } from "../../../util/obeservableToPromise";
 import { CoreAppComponent } from "../../core/core-app.component";
 import { CodeEditorService } from "../../../services/codeEditor.service";
 import { TypeOfCodeInEditor } from "../../../models/TypeOfCodeInEditor";
+import {
+  animate,
+  state,
+  style,
+  transition,
+  trigger,
+} from "@angular/animations";
 
 interface DocumentationsParams {
   docId: string;
@@ -38,6 +45,29 @@ interface DocumentationsParams {
   templateUrl: "./documentation.component.html",
   styleUrls: ["./documentation.component.scss"],
   encapsulation: ViewEncapsulation.None,
+  animations: [
+    trigger("openClose", [
+      state(
+        "open",
+        style({
+          width: "100%",
+          maxWidth: "100%",
+          opacity: 1,
+        })
+      ),
+      state(
+        "closed",
+        style({
+          width: "0px",
+          opacity: 0,
+          overflow: "hidden",
+        })
+      ),
+      transition("open => closed", [animate("0.3s")]),
+      transition("* => open", [animate("0.3s")]),
+      transition("closed => open", [animate("0.3s")]),
+    ]),
+  ],
 })
 export class DocumentationComponent implements AfterViewInit, OnDestroy {
   public static readonly IdStringForCodeBlocks = "exm_";

@@ -1,12 +1,12 @@
 <div *ngIf="($docsParams | async) as dockParams"
      class="flex flex-col md:flex-row sm:overflow-y-visible md:overflow-y-hidden" id="documentation-component-wrapper">
-  <div *ngIf="dockParams.tryIt" id="core-app-container">
+  <div   [@openClose]="dockParams.tryIt ? 'open' : 'closed'" id="core-app-container">
     <core-app #coreAppComponent [isTryIt]="true"></core-app>
   </div>
   <div class=" max-w-7xl w-full ml-auto sm:max-h-full md:max-h-screen overflow-y-visible md:overflow-y-scroll"
        id="documentation-content-section ">
 
-    <h2 class="m-10"><a [routerLink]="'/docs/'">Documentation</a> {{replacePlus(dockParams.docId || null)}}</h2>
+    <h2 class="m-10 text-lg"><a [routerLink]="'/docs/'">Documentation</a> {{replacePlus(dockParams.docId || null)}}</h2>
     <div #htmlDynamicContent class="html-content">
       <div [innerHTML]="content"></div>
     </div>
