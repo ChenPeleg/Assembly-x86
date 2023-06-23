@@ -164,7 +164,6 @@ export class DocumentationComponent implements AfterViewInit, OnDestroy {
     return async?.replace("+", " ");
   }
   setNextAndPrevious(docId: string) {
-    console.log(docId, this.pagesNames);
     const allDocIds = this.pagesNames.map((p) =>
       PagesService.NamePageToDocId(p)
     );
