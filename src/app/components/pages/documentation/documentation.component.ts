@@ -138,7 +138,7 @@ export class DocumentationComponent implements AfterViewInit, OnDestroy {
   ngOnDestroy(): void {
     this.destroy$.complete();
   }
-
+  navDocuments(event: Event, nav: string) {}
   replacePlus(async: string | null) {
     return async?.replace("+", " ");
   }
