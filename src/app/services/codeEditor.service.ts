@@ -125,7 +125,7 @@ export class CodeEditorService {
     );
 
     this.codeSavedRecords = (records && JSON.parse(records)) || [];
-    console.log(this.codeSavedRecords);
+
     this.$currentRecordsList.next(
       this.codeSavedRecords.map((r) => ({ name: r.name, id: r.id }))
     );
