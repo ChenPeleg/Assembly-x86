@@ -5,10 +5,10 @@
   </div>
   <div class="pt-4 max-w-7xl w-full ml-auto sm:max-h-full md:max-h-screen overflow-y-visible md:overflow-y-scroll"
        id="documentation-content-section ">
-    <div class="px-4 flex flex-row w-full bg-amber-50 justify-between" id="documentation navigation">
-      <button  (click)="navDocuments($event,'previous')" mat-button> <mat-icon>chevron_left</mat-icon> previous</button>
+    <div class="px-4 flex flex-row w-full  justify-between" id="documentation navigation">
+      <button (click)="navDocuments($event,'previous')" [matTooltip]="previousPage?.description || ''" [ngClass]="{'invisible' : !this.previousPage}" mat-button> <mat-icon>chevron_left</mat-icon> previous</button>
       <button (click)="navDocuments($event,'table')" mat-button><mat-icon>toc</mat-icon> table</button>
-      <button (click)="navDocuments($event,'next')" mat-button><span class="flex flex-row items-center">next<mat-icon class="relative -right-1 top-[3px]" matIconSuffix style="font-size: 18px">chevron_right</mat-icon>   </span></button>
+      <button (click)="navDocuments($event,'next')" [matTooltip]="nextPage?.description || ''" [ngClass]="{'invisible' : !this.nextPage}" mat-button><span class="flex flex-row items-center">next<mat-icon class="relative -right-1 top-[3px]" matIconSuffix style="font-size: 18px">chevron_right</mat-icon>   </span></button>
     </div>
 
     <h2 class="  m-4 text-lg"><a [routerLink]="'/docs/'">Documentation</a> {{replacePlus(dockParams.docId || null)}}</h2>

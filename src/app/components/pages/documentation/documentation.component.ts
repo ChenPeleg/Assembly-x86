@@ -140,7 +140,18 @@ export class DocumentationComponent implements AfterViewInit, OnDestroy {
   ngOnDestroy(): void {
     this.destroy$.complete();
   }
-  navDocuments(event: Event, nav: string) {}
+  async navDocuments(event: Event, nav: "previous" | "next" | "table") {
+    switch (nav) {
+      case "previous":
+        await this.router.navigate(["docs", this.previousPage?.link]);
+        break;
+      case "next":
+        await this.router.navigate(["docs", this.nextPage?.link]);
+        break;
+      case "table":
+        break;
+    }
+  }
   replacePlus(async: string | null) {
     return async?.replace("+", " ");
   }
@@ -150,7 +161,7 @@ export class DocumentationComponent implements AfterViewInit, OnDestroy {
       PagesService.NamePageToDocId(p)
     );
     const index = allDocIds.indexOf(docId);
-    if (allDocIds.length < index + 1) {
+    if (index + 1 < allDocIds.length) {
       let nextDocId = allDocIds[index + 1];
       this.nextPage = {
         link: nextDocId,
