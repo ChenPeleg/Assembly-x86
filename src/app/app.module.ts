@@ -41,6 +41,7 @@ import { CodeEditorService } from "./services/codeEditor.service";
 import { MatMenuModule } from "@angular/material/menu";
 import { NgOptimizedImage } from "@angular/common";
 import { MatProgressBarModule } from "@angular/material/progress-bar";
+import { MatInputModule } from "@angular/material/input";
 
 export const AllMatModules = [
   MatToolbarModule,
@@ -102,6 +103,7 @@ export const AllMatModules = [
     MatMenuModule,
     NgOptimizedImage,
     MatProgressBarModule,
+    MatInputModule,
   ],
   providers: [PagesService, CodeEditorService],
   bootstrap: [AppRootComponent],
