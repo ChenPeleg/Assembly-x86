@@ -27,6 +27,11 @@ ol, ul {
 .html-content {
   padding: 0 3em;
   font-family: Poppins, serif;
+  a {
+    color: #15c;
+    text-decoration: underline;
+
+  }
 
   li {
     line-height: 200%;
