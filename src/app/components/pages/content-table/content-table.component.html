@@ -4,11 +4,12 @@
 <div>
   <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" class="example-tree">
     <!-- This is the tree node template for leaf nodes -->
-    <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding matTreeNodePaddingIndent="20">
+    <mat-tree-node  *matTreeNodeDef="let node" matTreeNodePadding matTreeNodePaddingIndent="20">
       <li class="mat-tree-node">
         <!-- use a disabled button to provide padding for tree leaf -->
         <button class="button-indent-override" disabled mat-icon-button></button>
-        <div (click)="clickLink(node)" [ngClass]="{'is-selected' : node.isSelected}" class="app-tree-node is-selected">
+        <div (click)="clickLink(node)" [id]="'tree_node_' + node.fullPath.join('_')" [ngClass]="{'is-selected' : node.isSelected}"
+             class="app-tree-node is-selected">
           {{node.name}}
         </div>
 

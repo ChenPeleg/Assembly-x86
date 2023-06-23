@@ -1,4 +1,4 @@
-import { Component, Input } from "@angular/core";
+import { Component, Input, Renderer2 } from "@angular/core";
 import { NestedTreeControl } from "@angular/cdk/tree";
 import { MatTreeNestedDataSource } from "@angular/material/tree";
 import {
@@ -11,35 +11,12 @@ import {
 import { PagesService } from "../../../services/pages.service";
 import { Router } from "@angular/router";
 import { sleep } from "../../../util/sleep";
+import { getScreenMediaState } from "../../../util/screenMediaSatate";
 
 /**
  * Food data with nested structure.
  * Each node has a name and an optional list of children.
  */
-interface FoodNode {
-  name: string;
-  children?: FoodNode[];
-}
-
-const TREE_DATA: FoodNode[] = [
-  {
-    name: "Fruit",
-    children: [{ name: "Apple" }, { name: "Banana" }, { name: "Fruit loops" }],
-  },
-  {
-    name: "Vegetables",
-    children: [
-      {
-        name: "Green",
-        children: [{ name: "Broccoli" }, { name: "Brussels sprouts" }],
-      },
-      {
-        name: "Orange",
-        children: [{ name: "Pumpkins" }, { name: "Carrots" }],
-      },
-    ],
-  },
-];
 
 interface DocElement {
   type: "file" | "folder";
@@ -74,6 +51,7 @@ interface DocElement {
   ],
 })
 export class ContentTableComponent {
+  public isMobile: boolean = getScreenMediaState().isMobile;
   treeControl = new NestedTreeControl<DocElement>((node) => node.children);
   dataSource = new MatTreeNestedDataSource<DocElement>();
   public readonly docElement: DocElement[] = [
@@ -89,7 +67,7 @@ export class ContentTableComponent {
   ];
   public pagesNames: string[][] | null = null;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private renderer: Renderer2) {}
 
   @Input("currentDoc") set currentDoc(value: string | null) {
     this.setActiveElement(value).then((r) => r);
@@ -137,7 +115,6 @@ export class ContentTableComponent {
         }
       });
     });
-
     return docElement;
   }
 
@@ -152,7 +129,7 @@ export class ContentTableComponent {
     return docElement.map((d) => recursiveSortDocElement(d));
   }
 
-  hasChild = (_: number, node: FoodNode) =>
+  hasChild = (_: number, node: any) =>
     !!node.children && node.children.length > 0;
 
   setActiveElement = async (value: string | null) => {
@@ -163,6 +140,7 @@ export class ContentTableComponent {
       this.docElement,
       PagesService.DocIdToNamePage(value || "")
     )[0];
+    this.expandParents(PagesService.DocIdToNamePage(value || ""));
   };
 
   setActiveDocElement(docElement: DocElement[], path: string[]): DocElement[] {
@@ -187,5 +165,21 @@ export class ContentTableComponent {
   async clickLink(node: DocElement) {
     const docId = PagesService.NamePageToDocId(node.fullPath);
     await this.router.navigate(["docs", docId]);
+  }
+
+  private expandParents(docs: string[]) {
+    let currentNode: DocElement | null = this.docElement[0];
+    docs.forEach((doc) => {
+      currentNode = currentNode?.children.find((c) => c.name === doc) || null;
+      if (currentNode) {
+        this.treeControl.expand(currentNode);
+      }
+    });
+    if (this.isMobile) {
+      return;
+    }
+    const nodeID = `tree_node_${currentNode.fullPath.join("_")}`;
+    const element = this.renderer.selectRootElement(`#${nodeID}`, true); // true to indicate that you will preserve the content
+    element.scrollIntoView({ behavior: "smooth" }); // for smooth scrolling
   }
 }
