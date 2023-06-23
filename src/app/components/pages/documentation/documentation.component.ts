@@ -74,6 +74,8 @@ export class DocumentationComponent implements AfterViewInit, OnDestroy {
   content: SafeHtml | null = null;
   pagesNames: string[][] = [];
   codeExamples: CodeExample[] = [];
+  nextPage: { link: string; description: string } | null = null;
+  previousPage: { link: string; description: string } | null = null;
 
   @ViewChild("htmlDynamicContent") private htmlDynamicContent:
     | ElementRef
@@ -142,8 +144,34 @@ export class DocumentationComponent implements AfterViewInit, OnDestroy {
   replacePlus(async: string | null) {
     return async?.replace("+", " ");
   }
+  setNextAndPrevious(docId: string) {
+    console.log(docId, this.pagesNames);
+    const allDocIds = this.pagesNames.map((p) =>
+      PagesService.NamePageToDocId(p)
+    );
+    const index = allDocIds.indexOf(docId);
+    if (allDocIds.length < index + 1) {
+      let nextDocId = allDocIds[index + 1];
+      this.nextPage = {
+        link: nextDocId,
+        description: this.replacePlus(nextDocId) || "",
+      };
+    } else {
+      this.nextPage = null;
+    }
+    if (index > 0) {
+      let nextDocId = allDocIds[index - 1];
+      this.previousPage = {
+        link: nextDocId,
+        description: this.replacePlus(nextDocId) || "",
+      };
+    } else {
+      this.previousPage = null;
+    }
+  }
   private async loadContentAndTryIt(docId: string, tryIt: string) {
     await this.loadDocumentsContent(docId, tryIt);
+    this.setNextAndPrevious(docId);
     if (tryIt) {
       const codeExample = this.codeExamples.find((c) => c.codeId === tryIt);
       if (!codeExample?.code) return;
