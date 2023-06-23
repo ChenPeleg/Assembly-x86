@@ -63,4 +63,10 @@ export class MemoryComponent {
         return value.toString(2);
     }
   }
+
+  clickCell(row: number, col: number) {
+    const adress = this.createAddress(row, col);
+    console.log(`Address ${adress}`);
+    console.log(`Value ${this.getCellValue(adress)}`);
+  }
 }
