@@ -98,26 +98,13 @@ export class ContentTableComponent {
   @Input("pages") set pages(value: string[][]) {
     if (this.pagesNames) return;
     this.pagesNames = value;
-    let allDocElement = this.buildNestedDocElement(value);
-    allDocElement = this.reorderDocElement(allDocElement);
+    let allDocElement = ContentTableComponent.buildNestedDocElement(value);
+    allDocElement = ContentTableComponent.reorderDocElement(allDocElement);
     this.docElement[0] = allDocElement[0];
     this.dataSource.data = allDocElement[0].children;
   }
 
-  hasChild = (_: number, node: FoodNode) =>
-    !!node.children && node.children.length > 0;
-
-  setActiveElement = async (value: string | null) => {
-    if (!this.docElement[0].children.length) {
-      await sleep(200);
-    }
-    this.docElement[0] = this.setActiveDocElement(
-      this.docElement,
-      PagesService.DocIdToNamePage(value || "")
-    )[0];
-  };
-
-  buildNestedDocElement(value: string[][]): DocElement[] {
+  static buildNestedDocElement(value: string[][]): DocElement[] {
     const docElement: DocElement[] = [
       {
         children: [],
@@ -154,7 +141,7 @@ export class ContentTableComponent {
     return docElement;
   }
 
-  reorderDocElement(docElement: DocElement[]): DocElement[] {
+  static reorderDocElement(docElement: DocElement[]): DocElement[] {
     const recursiveSortDocElement = (docElement: DocElement): DocElement => {
       docElement.children.sort((a, b) => b.order - a.order);
       docElement.children = docElement.children.map((c) =>
@@ -164,6 +151,19 @@ export class ContentTableComponent {
     };
     return docElement.map((d) => recursiveSortDocElement(d));
   }
+
+  hasChild = (_: number, node: FoodNode) =>
+    !!node.children && node.children.length > 0;
+
+  setActiveElement = async (value: string | null) => {
+    if (!this.docElement[0].children.length) {
+      await sleep(200);
+    }
+    this.docElement[0] = this.setActiveDocElement(
+      this.docElement,
+      PagesService.DocIdToNamePage(value || "")
+    )[0];
+  };
 
   setActiveDocElement(docElement: DocElement[], path: string[]): DocElement[] {
     const recursiveSetSelectedDocElement = (
