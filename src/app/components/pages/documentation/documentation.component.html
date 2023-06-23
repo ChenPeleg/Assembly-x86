@@ -7,7 +7,7 @@
        id="documentation-content-section ">
     <div class="px-4 flex flex-row w-full  justify-between" id="documentation navigation">
       <button (click)="navDocuments($event,'previous')" [matTooltip]="previousPage?.description || ''" [ngClass]="{'invisible' : !this.previousPage}" mat-button> <mat-icon>chevron_left</mat-icon> previous</button>
-      <button (click)="navDocuments($event,'table')" mat-button><mat-icon>toc</mat-icon> table</button>
+      <button  (click)="navDocuments($event,'closeTryIt')" [ngClass]="{'invisible' : !dockParams.tryIt}" mat-button><mat-icon>cancel</mat-icon> close assembler</button>
       <button (click)="navDocuments($event,'next')" [matTooltip]="nextPage?.description || ''" [ngClass]="{'invisible' : !this.nextPage}" mat-button><span class="flex flex-row items-center">next<mat-icon class="relative -right-1 top-[3px]" matIconSuffix style="font-size: 18px">chevron_right</mat-icon>   </span></button>
     </div>
 
@@ -16,8 +16,8 @@
       <div [innerHTML]="content"></div>
     </div>
   </div>
-  <div class="ml-auto max-h-screen sm:overflow-y-visible md:overflow-y-scroll">
-    <div *ngIf="pagesNames.length" id="content-table-wrapper">
+  <div  class="ml-auto max-h-screen sm:overflow-y-visible md:overflow-y-scroll">
+    <div *ngIf="pagesNames.length" [@openClose]="dockParams.tryIt ? 'closed':  'open' " id="content-table-wrapper">
       <content-table [currentDoc]="dockParams.docId || null " [pages]="pagesNames"></content-table>
     </div>
   </div>
