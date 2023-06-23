@@ -307,9 +307,7 @@ export class Assembler {
     assemblyData: AssemblyData
   ): EncodedInstruction {
     if (!_.has(InstructionMapping, instruction.name)) {
-      console.log(instruction.name.toUpperCase());
       if (_.has(InstructionMapping, instruction.name.toUpperCase())) {
-        console.log(instruction.name.toUpperCase());
         instruction.name = instruction.name.toUpperCase();
       } else {
         throw new AssemblyException(
