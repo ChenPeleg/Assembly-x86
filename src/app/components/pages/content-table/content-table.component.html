@@ -1,40 +1,43 @@
-<div>
-  <h2 class="m-2"> Table of contents</h2>
-</div>
-<div>
-  <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" class="example-tree">
-    <!-- This is the tree node template for leaf nodes -->
-    <mat-tree-node  *matTreeNodeDef="let node" matTreeNodePadding matTreeNodePaddingIndent="20">
-      <li class="mat-tree-node">
-        <!-- use a disabled button to provide padding for tree leaf -->
-        <button class="button-indent-override" disabled mat-icon-button></button>
-        <div (click)="clickLink(node)" [id]="'tree_node_' + node.fullPath.join('_')" [ngClass]="{'is-selected' : node.isSelected}"
-             class="app-tree-node is-selected">
-          {{node.name}}
-        </div>
-
-      </li>
-    </mat-tree-node>
-    <!-- This is the tree node template for expandable nodes -->
-    <mat-nested-tree-node *matTreeNodeDef="let node; when: hasChild"
-                          matTreeNodePadding matTreeNodePaddingIndent="20">
-      <li>
-        <div class="mat-tree-node">
-          <button [attr.aria-label]="'toggle ' + node.name" class="button-indent-override"
-                  mat-icon-button matTreeNodeToggle>
-            <mat-icon [ngClass]="{'open' : treeControl.isExpanded(node)}" class="mat-icon-rtl-mirror">
-              {{  'chevron_right'  }}
-            </mat-icon>
-          </button>
-          <div class="app-tree-node " matTreeNodeToggle>
+<div   class="w-[450px]"  id="content-table-root">
+  <div>
+    <h2 class="m-2"> Table of contents</h2>
+  </div>
+  <div>
+    <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" class="example-tree">
+      <!-- This is the tree node template for leaf nodes -->
+      <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding matTreeNodePaddingIndent="20">
+        <li class="mat-tree-node">
+          <!-- use a disabled button to provide padding for tree leaf -->
+          <button class="button-indent-override" disabled mat-icon-button></button>
+          <div (click)="clickLink(node)" [id]="'tree_node_' + node.fullPath.join('_')"
+               [ngClass]="{'is-selected' : node.isSelected}"
+               class="app-tree-node is-selected">
             {{node.name}}
           </div>
 
-        </div>
-        <ul [@slideVertical]="treeControl.isExpanded(node) ? 'show' : null" class="pl-8">
-          <ng-container matTreeNodeOutlet></ng-container>
-        </ul>
-      </li>
-    </mat-nested-tree-node>
-  </mat-tree>
+        </li>
+      </mat-tree-node>
+      <!-- This is the tree node template for expandable nodes -->
+      <mat-nested-tree-node *matTreeNodeDef="let node; when: hasChild"
+                            matTreeNodePadding matTreeNodePaddingIndent="20">
+        <li>
+          <div class="mat-tree-node">
+            <button [attr.aria-label]="'toggle ' + node.name" class="button-indent-override"
+                    mat-icon-button matTreeNodeToggle>
+              <mat-icon [ngClass]="{'open' : treeControl.isExpanded(node)}" class="mat-icon-rtl-mirror">
+                {{  'chevron_right'  }}
+              </mat-icon>
+            </button>
+            <div class="app-tree-node " matTreeNodeToggle>
+              {{node.name}}
+            </div>
+
+          </div>
+          <ul [@slideVertical]="treeControl.isExpanded(node) ? 'show' : null" class="pl-8">
+            <ng-container matTreeNodeOutlet></ng-container>
+          </ul>
+        </li>
+      </mat-nested-tree-node>
+    </mat-tree>
+  </div>
 </div>
