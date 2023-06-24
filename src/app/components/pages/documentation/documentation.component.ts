@@ -39,6 +39,8 @@ import { Panel, UIState } from "../../../models/UIState";
 import { MemoryDisplay, MemoryValueType } from "../../../models/MemoryDisplay";
 import { UIStateInitialState } from "../../../stores/reducers/ui.state.reducer";
 import { MemoryDisplayInitialState } from "../../../stores/reducers/memory-display.reducer";
+import { UIStateActions } from "../../../stores/actions/ui.state.actions";
+import { MemoryDisplayActions } from "../../../stores/actions/memory-display.actions";
 
 interface DocumentationsParams {
   docId: string;
@@ -124,19 +126,23 @@ export class DocumentationComponent implements AfterViewInit, OnDestroy {
     this.getPagesNames().then();
   }
 
-  static optionStringToAssemblerDisplay(
-    optionsString: string
-  ): { uiState: UIState; memoryDisplay: MemoryDisplay } | null {
+  static optionStringToAssemblerDisplay(optionsString: string): {
+    uiState: UIState;
+    memoryDisplay: MemoryDisplay;
+  } {
     const uiState = structuredClone(UIStateInitialState);
     const memoryDisplay = structuredClone(MemoryDisplayInitialState);
     const allOptions = optionsString.split(" ");
     const panels: string[] = [];
-    for (const option in allOptions) {
+
+    for (const option of allOptions) {
+      console.log(option);
       const optionCommand = option.replace("-", "");
       switch (optionCommand) {
         case "console":
         case "memory":
         case "cpu":
+          console.log(option);
           panels.push(option);
           break;
         case "number":
@@ -260,10 +266,19 @@ export class DocumentationComponent implements AfterViewInit, OnDestroy {
         savedCodeId: null,
       });
       // codeExample.optionsString
-      // const uiState: UIState = {
-      //   panels: [],
-      // };
-      // this.store.dispatch(UIStateActions.updateUIState({ ...uiState }));
+      const displayState =
+        DocumentationComponent.optionStringToAssemblerDisplay(
+          codeExample.optionsString
+        );
+      console.log(displayState);
+      this.store.dispatch(
+        UIStateActions.updateUIState({ ...displayState.uiState })
+      );
+      this.store.dispatch(
+        MemoryDisplayActions.updateMemoryDisplay({
+          ...displayState.memoryDisplay,
+        })
+      );
     } else {
       this.codeEditorService.clearRecordSelection();
       this.codeEditorService.hideRecordButtonOnNavBar();
