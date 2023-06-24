@@ -60,7 +60,7 @@ export const markdownToHTML = (markdown: string): string => {
   // Blockquotes
   markdown = markdown.replace(/^\>(.*)$/gim, "<blockquote>$1</blockquote>");
   markdown = markdown.replace(
-    /<!--(.*)-->\n?<blockquote>/gs,
+    /<!-- ([^>]*) -->\n?<blockquote>/gs,
     `<blockquote class="$1">`
   );
   // Inline code
