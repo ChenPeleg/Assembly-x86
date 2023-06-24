@@ -187,6 +187,7 @@ export class DocumentationComponent implements AfterViewInit, OnDestroy {
       this.previousPage = null;
     }
   }
+
   private async loadContentAndTryIt(docId: string, tryIt: string) {
     await this.loadDocumentsContent(docId, tryIt);
     this.setNextAndPrevious(docId);
@@ -205,14 +206,34 @@ export class DocumentationComponent implements AfterViewInit, OnDestroy {
     }
   }
   private async displayDocsContent() {
-    let htmlTableOfContent = `<h4>Table of content</h4>`;
-    this.pagesNames.forEach((n) => {
-      htmlTableOfContent += `<div><a href="#/docs/${PagesService.NamePageToDocId(
-        n
-      )}">
+    const addTOC = false;
+    let htmlTableOfContent = `
+<div>
+  <h2> Welcome!</h2>
+  <div>
+    Welcome to the Assembly x86 emulator and tutorial!
+    This site is based on This project is based on
+    <a href="https://github.com/Kobzol/davis "> https://github.com/Kobzol/davis  </a>.
+    This tool allows writing, running and debugging x86 assembly in the browser.
+
+    You can start with the tutorial in the basics section, learn how to use the emulator, or goto more advanced examples.
+
+  </div>
+
+</div>
+
+`;
+    if (addTOC) {
+      htmlTableOfContent += `<h4>Table of content</h4>`;
+      this.pagesNames.forEach((n) => {
+        htmlTableOfContent += `<div><a href="#/docs/${PagesService.NamePageToDocId(
+          n
+        )}">
 ${n.join(" ")}
 </a></div>`;
-    });
+      });
+    }
+
     const html = htmlTableOfContent;
 
     const sanitizedHtml: SafeHtml =
@@ -227,6 +248,7 @@ ${n.join(" ")}
     if (!this.pagesNames.length) {
       await this.getPagesNames();
     }
+    console.log(docId);
     for (const page of this.pagesNames) {
       if (PagesService.NamePageToDocId(page) === docId) {
         const newContent = await this.getContent(docId);

@@ -19,7 +19,7 @@ import { AppRoutingModule } from "./app.routing.module";
 import { InstructionsComponent } from "./components/pages/instructions/instructions.component";
 import { MatIconModule } from "@angular/material/icon";
 import { NavBarComponent } from "./components/navbar/nav-bar.component";
-import { LinksComponent } from "./components/pages/links/links.component";
+import { WelcomePageComponent } from "./components/pages/welcome-page/welcome-page.component";
 import { PagesService } from "./services/pages.service";
 import { HttpClientModule } from "@angular/common/http";
 import { DocumentationComponent } from "./components/pages/documentation/documentation.component";
@@ -67,7 +67,7 @@ export const AllMatModules = [
     MemoryComponent,
     ExecutionComponent,
     ConsoleComponent,
-    LinksComponent,
+    WelcomePageComponent,
     AsmEditorComponent,
     DocumentationComponent,
     ContentTableComponent,
