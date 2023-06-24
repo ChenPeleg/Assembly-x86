@@ -1,9 +1,4 @@
-# Bit talbes md
-```shell
-section.text
-global _start
-_start:
-```
+# Bit talbes
 
 
 | Bit value | Position value as a power of base 2 | Bit number |
