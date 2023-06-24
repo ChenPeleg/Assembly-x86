@@ -20,7 +20,6 @@ export class DisplayCockpitComponent {
     const lsData = window.localStorage.getItem(DisplayCockpitComponent.lsKey);
     if (lsData) {
       const uiState: UIState = JSON.parse(lsData) as UIState;
-
       this.store.dispatch(UIStateActions.updateUIState({ ...uiState }));
     }
   }

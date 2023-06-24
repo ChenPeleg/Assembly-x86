@@ -2,6 +2,7 @@
 
 Let's start with a simple hello world example:
 
+<!-- new -->
 ```shell
 section .data
 hello:
@@ -13,7 +14,7 @@ section .text
 ```
 
 <!-- new -->
-> you can press the `try it` button to see this example live in the emulator
+> you can press the `Try it` button to see this example live in the emulator
 
 ## What is Assembly language?
 

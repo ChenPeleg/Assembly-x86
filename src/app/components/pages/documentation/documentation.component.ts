@@ -34,6 +34,8 @@ import {
   transition,
   trigger,
 } from "@angular/animations";
+import { Store } from "@ngrx/store";
+import { UIState } from "../../../models/UIState";
 
 interface DocumentationsParams {
   docId: string;
@@ -109,7 +111,8 @@ export class DocumentationComponent implements AfterViewInit, OnDestroy {
     private readonly activeRoute: ActivatedRoute,
     private readonly router: Router,
     private renderer: Renderer2,
-    private codeEditorService: CodeEditorService
+    private codeEditorService: CodeEditorService,
+    private store: Store<{ count: number; uiState: UIState }>
   ) {
     this.getPagesNames().then();
   }
@@ -200,6 +203,11 @@ export class DocumentationComponent implements AfterViewInit, OnDestroy {
         typeOfCode: TypeOfCodeInEditor.TryIt,
         savedCodeId: null,
       });
+      // codeExample.optionsString
+      // const uiState: UIState = {
+      //   panels: [],
+      // };
+      // this.store.dispatch(UIStateActions.updateUIState({ ...uiState }));
     } else {
       this.codeEditorService.clearRecordSelection();
       this.codeEditorService.hideRecordButtonOnNavBar();
@@ -209,7 +217,7 @@ export class DocumentationComponent implements AfterViewInit, OnDestroy {
     const addTOC = false;
     let htmlTableOfContent = `
 <div>
- 
+
   <div>
     Welcome to the Assembly x86 emulator and tutorial! <br>
     This site is based on This project is based on
@@ -248,7 +256,7 @@ ${n.join(" ")}
     if (!this.pagesNames.length) {
       await this.getPagesNames();
     }
-    console.log(docId);
+
     for (const page of this.pagesNames) {
       if (PagesService.NamePageToDocId(page) === docId) {
         const newContent = await this.getContent(docId);
