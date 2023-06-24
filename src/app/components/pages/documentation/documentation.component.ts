@@ -35,7 +35,10 @@ import {
   trigger,
 } from "@angular/animations";
 import { Store } from "@ngrx/store";
-import { UIState } from "../../../models/UIState";
+import { Panel, UIState } from "../../../models/UIState";
+import { MemoryDisplay, MemoryValueType } from "../../../models/MemoryDisplay";
+import { UIStateInitialState } from "../../../stores/reducers/ui.state.reducer";
+import { MemoryDisplayInitialState } from "../../../stores/reducers/memory-display.reducer";
 
 interface DocumentationsParams {
   docId: string;
@@ -112,9 +115,59 @@ export class DocumentationComponent implements AfterViewInit, OnDestroy {
     private readonly router: Router,
     private renderer: Renderer2,
     private codeEditorService: CodeEditorService,
-    private store: Store<{ count: number; uiState: UIState }>
+    private store: Store<{
+      count: number;
+      uiState: UIState;
+      memoryDisplay: MemoryDisplay;
+    }>
   ) {
     this.getPagesNames().then();
+  }
+
+  static optionStringToAssemblerDisplay(
+    optionsString: string
+  ): { uiState: UIState; memoryDisplay: MemoryDisplay } | null {
+    const uiState = structuredClone(UIStateInitialState);
+    const memoryDisplay = structuredClone(MemoryDisplayInitialState);
+    const allOptions = optionsString.split(" ");
+    const panels: string[] = [];
+    for (const option in allOptions) {
+      const optionCommand = option.replace("-", "");
+      switch (optionCommand) {
+        case "console":
+        case "memory":
+        case "cpu":
+          panels.push(option);
+          break;
+        case "number":
+        case "ascii":
+        case "binary":
+        case "hex":
+          memoryDisplay.valueType = option as MemoryValueType;
+          break;
+        case "word:1":
+        case "word:2":
+        case "word:4":
+          memoryDisplay.wordSize = +option.replace("word:", "") as 1 | 2 | 4;
+          break;
+      }
+    }
+    const originalPanels = [...uiState.panels];
+    const newPanels = panels.map((p, i) => {
+      const newPanel: Panel = {
+        name: p.replace("-", "") as "console" | "memory" | "cpu",
+        order: i + 1,
+        isVisible: !p.includes("-"),
+      };
+      return newPanel;
+    });
+    originalPanels.forEach((original) => {
+      if (!newPanels.find((p) => p.name === original.name)) {
+        newPanels.push(original);
+      }
+    });
+    uiState.panels = newPanels.map((p, i) => ({ ...p, order: i + 1 }));
+    return { uiState, memoryDisplay };
   }
 
   async getPagesNames() {
@@ -143,6 +196,7 @@ export class DocumentationComponent implements AfterViewInit, OnDestroy {
   ngOnDestroy(): void {
     this.destroy$.complete();
   }
+
   async navDocuments(event: Event, nav: "previous" | "next" | "closeTryIt") {
     switch (nav) {
       case "previous":
@@ -163,9 +217,11 @@ export class DocumentationComponent implements AfterViewInit, OnDestroy {
         break;
     }
   }
+
   replacePlus(async: string | null) {
     return async?.replace("+", " ");
   }
+
   setNextAndPrevious(docId: string) {
     const allDocIds = this.pagesNames.map((p) =>
       PagesService.NamePageToDocId(p)
@@ -213,6 +269,7 @@ export class DocumentationComponent implements AfterViewInit, OnDestroy {
       this.codeEditorService.hideRecordButtonOnNavBar();
     }
   }
+
   private async displayDocsContent() {
     const addTOC = false;
     let htmlTableOfContent = `
