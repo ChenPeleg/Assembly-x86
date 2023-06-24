@@ -25,8 +25,20 @@ ol, ul {
 }
 
 .html-content {
+  line-height: 180%;
   padding: 0 3em;
   font-family: Poppins, serif;
+
+  h1, h2, h3, h4 {
+    font-size: large;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  h1 {
+    font-size: x-large;
+  }
+
   a {
     color: #15c;
     text-decoration: underline;
@@ -60,6 +72,7 @@ ol, ul {
       border-bottom: 1px solid #b4b4b4;
       margin-right: 10px;
     }
+
     tr:last-child {
       border-bottom: 1px solid #b4b4b4;
       margin-bottom: 20px;
@@ -67,11 +80,15 @@ ol, ul {
 
     box-shadow: 0 3px 1px -2px #0003, 0 2px 2px #00000024, 0 1px 5px #0000001f;
   }
+
   div.code-block {
+    margin-bottom: 1rem;
+    margin-top: 1rem;
     position: relative;
+
     pre {
       display: block;
-      padding: 9.5px;
+      padding: 13px;
       margin: 0 0 10px;
       font-size: 13px;
       line-height: 1.42857143;
@@ -80,18 +97,20 @@ ol, ul {
       word-wrap: break-word;
       background-color: #f5f5f5;
       border: 1px solid #ccc;
-      border-radius: 4px;
+      border-radius: 6px;
     }
   }
+
   button.run-code {
     color: white;
     background-color: #3a59f6;
-    padding: 10px 20px;
+    padding: 5px 20px;
     border-radius: 5px;
     position: absolute;
     top: 10px;
     right: 5px;
     box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.06), 0 2px 2px rgba(0, 0, 0, 0.07), 0 1px 5px rgba(0, 0, 0, 0.02);
+
     &:hover {
       box-shadow: 0 3px 1px -2px #0003, 0 2px 2px #00000024, 0 1px 5px #0000001f;
     }
