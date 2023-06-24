@@ -129,6 +129,16 @@ export class ContentTableComponent {
     return docElement.map((d) => recursiveSortDocElement(d));
   }
 
+  static isScrolledIntoView(el: HTMLElement) {
+    const rect = el.getBoundingClientRect();
+    const elemTop = rect.top;
+    const elemBottom = rect.bottom;
+
+    const isVisible = elemTop >= 0 && elemBottom <= window.innerHeight;
+
+    return isVisible;
+  }
+
   hasChild = (_: number, node: any) =>
     !!node.children && node.children.length > 0;
 
@@ -179,7 +189,9 @@ export class ContentTableComponent {
       return;
     }
     const nodeID = `tree_node_${currentNode.fullPath.join("_")}`;
-    const element = this.renderer.selectRootElement(`#${nodeID}`, true); // true to indicate that you will preserve the content
-    element.scrollIntoView({ behavior: "smooth" }); // for smooth scrolling
+    const element = this.renderer.selectRootElement(`#${nodeID}`, true);
+    if (!ContentTableComponent.isScrolledIntoView(element)) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
   }
 }
