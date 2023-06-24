@@ -2,7 +2,7 @@
 
 Let's start with a simple hello world example:
 
-<!-- new -->
+
 ```shell
 section .data
 hello:
@@ -12,6 +12,8 @@ section .text
     INT 2   ; print string EAX
 
 ```
+<!-- console -memory -cpu -->
+
 
 <!-- new -->
 > you can press the `Try it` button to see this example live in the emulator
