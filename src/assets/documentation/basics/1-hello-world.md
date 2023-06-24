@@ -12,6 +12,8 @@ section .text
 
 ```
 
+<!-- new -->
+> you can press the `try it` button to see this example live in the emulator
 
 ## What is Assembly language?
 
