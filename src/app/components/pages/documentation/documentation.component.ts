@@ -209,9 +209,9 @@ export class DocumentationComponent implements AfterViewInit, OnDestroy {
     const addTOC = false;
     let htmlTableOfContent = `
 <div>
-  <h2> Welcome!</h2>
+ 
   <div>
-    Welcome to the Assembly x86 emulator and tutorial!
+    Welcome to the Assembly x86 emulator and tutorial! <br>
     This site is based on This project is based on
     <a href="https://github.com/Kobzol/davis "> https://github.com/Kobzol/davis  </a>.
     This tool allows writing, running and debugging x86 assembly in the browser.
