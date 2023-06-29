@@ -13,7 +13,7 @@ import * as ace from "brace";
 import { Editor } from "brace";
 import { debounceTime, Subject } from "rxjs";
 import { CodeEditorService } from "../../services/codeEditor.service";
-import { getScreenMediaState } from "../../util/screenMediaSatate";
+import { getScreenMediaState } from "../../styles/getScreenMediaSatate";
 
 // @ts-ignore
 ace.config.set("modePath", "./assets/js");

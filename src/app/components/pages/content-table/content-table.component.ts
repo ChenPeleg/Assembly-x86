@@ -11,7 +11,7 @@ import {
 import { PagesService } from "../../../services/pages.service";
 import { Router } from "@angular/router";
 import { sleep } from "../../../util/sleep";
-import { getScreenMediaState } from "../../../util/screenMediaSatate";
+import { getScreenMediaState } from "../../../styles/getScreenMediaSatate";
 
 /**
  * Food data with nested structure.
