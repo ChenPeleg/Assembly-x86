@@ -78,5 +78,7 @@ export const markdownToHTML = (markdown: string): string => {
     /^<!--(.*)-->$/gm,
     `<span data-comments="$1"></span>`
   );
+
+  markdown = markdown.replace(/\\\n/gm, `<br>\n`);
   return markdown;
 };
