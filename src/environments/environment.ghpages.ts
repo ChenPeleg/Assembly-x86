@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  environmentName: "prod-firebase",
+  environmentName: "gh-pages",
 };
