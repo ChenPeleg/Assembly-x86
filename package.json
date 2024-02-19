@@ -9,7 +9,7 @@
     "build:dev": "ng build --configuration development",
     "build:pages": "ng build --configuration pages",
     "build:site": "cross-env REACT_APP_ENV=prod-firebase react-scripts build",
-    "postbuild:site": "mkdir temp && mkdir temp/Sidur && cp -rf build/* temp/Sidur && cp -rf temp/* build && rm -rf temp/Sidur",
+    "postbuild:site2": "mkdir temp && mkdir temp/Sidur && cp -rf build/* temp/Sidur && cp -rf temp/* build && rm -rf temp/Sidur",
     "predeploy": "ng build --configuration pages",
     "deploy": "gh-pages -d build",
     "prebuild": "node script/listAllDocAssestFiles.mjs",
