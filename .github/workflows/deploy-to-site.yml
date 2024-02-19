@@ -24,7 +24,7 @@ jobs:
           -d '{
           "ref": "main",
           "inputs": {
-            "name": "Sidur",
+            "name": "Assembly-x86",
             "repo": "${{ github.repository }}",
             "branch": "production",
             "command": "build:site",
