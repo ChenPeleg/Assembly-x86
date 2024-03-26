@@ -5,6 +5,9 @@ import { TypeOfCodeInEditor } from "../models/TypeOfCodeInEditor";
 import { CodeEditorRecord } from "../models/CodeEditorRecord";
 import { generateNewId } from "../util/generateNewId";
 
+/**
+ * Service to manage user data - saved code mainly
+ */
 @Injectable()
 export class UserDataService {
   private static readonly LSSaveRecordsKey = "Asm86CodeRecords";
@@ -24,6 +27,7 @@ export class UserDataService {
   private codeSavedRecords: CodeEditorRecord[] = [];
   private currentSavedRecord: CodeEditorRecord | null = null;
   private currentEditorCode: string = "";
+  private applinksClient: any;
 
   constructor() {
     this.getRecords();
