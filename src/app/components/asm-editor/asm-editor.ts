@@ -12,7 +12,7 @@ import * as _ from "lodash";
 import * as ace from "brace";
 import { Editor } from "brace";
 import { debounceTime, Subject } from "rxjs";
-import { CodeEditorService } from "../../services/codeEditor.service";
+import { UserDataService } from "../../services/user-data.service";
 import { getScreenMediaState } from "../../util/screenMediaSatate";
 
 // @ts-ignore
@@ -42,7 +42,7 @@ export class AsmEditorComponent implements AfterViewInit {
   @ViewChild("editor") private editor: ElementRef;
   private aceEditor: Editor | null = null;
 
-  constructor(private codeEditorService: CodeEditorService) {
+  constructor(private codeEditorService: UserDataService) {
     this.codeEditorService.$editorCodeUpdater.subscribe((change) => {
       this.aceEditor?.session.getDocument().setValue(change.code);
     });

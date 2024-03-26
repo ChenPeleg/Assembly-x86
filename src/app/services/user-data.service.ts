@@ -6,7 +6,7 @@ import { CodeEditorRecord } from "../models/CodeEditorRecord";
 import { generateNewId } from "../util/generateNewId";
 
 @Injectable()
-export class CodeEditorService {
+export class UserDataService {
   private static readonly LSSaveRecordsKey = "Asm86CodeRecords";
 
   public readonly $editorCodeUpdater: Subject<CodeEditorState> =
@@ -85,7 +85,6 @@ export class CodeEditorService {
       name,
     };
     this.codeSavedRecords.push(this.currentSavedRecord);
-
     this.$currentEditRecordName.next(name);
     this.saveCodeToRecords();
   }
@@ -111,7 +110,7 @@ export class CodeEditorService {
   }
   private saveCodeToRecords(): void {
     window.localStorage.setItem(
-      CodeEditorService.LSSaveRecordsKey,
+      UserDataService.LSSaveRecordsKey,
       JSON.stringify(this.codeSavedRecords)
     );
     this.$currentRecordsList.next(
@@ -121,7 +120,7 @@ export class CodeEditorService {
 
   private getRecords() {
     const records = window.localStorage.getItem(
-      CodeEditorService.LSSaveRecordsKey
+      UserDataService.LSSaveRecordsKey
     );
 
     this.codeSavedRecords = (records && JSON.parse(records)) || [];

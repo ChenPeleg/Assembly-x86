@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, ElementRef, ViewChild } from "@angular/core";
 import { Router } from "@angular/router";
-import { CodeEditorService } from "../../services/codeEditor.service";
+import { UserDataService } from "../../services/user-data.service";
 import { BehaviorSubject, Observable } from "rxjs";
 import { sleep } from "../../util/sleep";
 
@@ -23,7 +23,7 @@ export class NavBarComponent implements AfterViewInit {
 
   constructor(
     private router: Router,
-    private codeEditorService: CodeEditorService
+    private codeEditorService: UserDataService
   ) {
     this.$recordNameInEdit =
       this.codeEditorService.$currentEditRecordName.asObservable();
