@@ -6,6 +6,6 @@ import { AppEnvironment } from "./environment.type";
 
 export const environment: AppEnvironment = {
   production: false,
-  hasAppLinkSave: true,
-  name: "development",
+  hasAppLinkSave: false,
+  name: "github-pages",
 };
