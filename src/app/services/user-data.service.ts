@@ -33,7 +33,7 @@ export class UserDataService {
 
   constructor() {
     if (environment.hasAppLinkSave) {
-      this.applinksClient = new APPLinksClient("effects-EFX107", {
+      this.applinksClient = new APPLinksClient("AsmDebug_x086", {
         appLinkUtils: undefined,
         debounceTime: 0,
         useClientPanel: true,
