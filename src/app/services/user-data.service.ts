@@ -4,6 +4,8 @@ import { BehaviorSubject, Subject } from "rxjs";
 import { TypeOfCodeInEditor } from "../models/TypeOfCodeInEditor";
 import { CodeEditorRecord } from "../models/CodeEditorRecord";
 import { generateNewId } from "../util/generateNewId";
+import { APPLinksClient, ApplinksPanel } from "../provider/appLinksClient";
+import { environment } from "../../environments/environment";
 
 /**
  * Service to manage user data - saved code mainly
@@ -27,9 +29,31 @@ export class UserDataService {
   private codeSavedRecords: CodeEditorRecord[] = [];
   private currentSavedRecord: CodeEditorRecord | null = null;
   private currentEditorCode: string = "";
-  private applinksClient: any;
+  private applinksClient: APPLinksClient | null = null;
 
   constructor() {
+    if (environment.hasAppLinkSave) {
+      this.applinksClient = new APPLinksClient("effects-EFX107", {
+        appLinkUtils: undefined,
+        debounceTime: 0,
+        useClientPanel: true,
+        useLocalStorage: true,
+        panelOptions: new ApplinksPanel.Options({
+          color: "",
+          iconsBgColor: "",
+          mainBgColor: "",
+          menuColor: "",
+          position: undefined,
+          textColor: "",
+          userIcon: undefined,
+          // @ts-ignore
+          panelType: ApplinksPanel.Options.PanelType.rounded,
+          x: 2,
+          y: 7,
+          sizeModifier: 115,
+        }),
+      });
+    }
     this.getRecords();
   }
 
