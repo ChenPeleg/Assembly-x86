@@ -19,7 +19,7 @@ import { Observable } from "rxjs";
 import { Store } from "@ngrx/store";
 import { MemoryDisplay } from "../../models/MemoryDisplay";
 import { MemoryComponent } from "../memory/memory";
-import { CodeEditorService } from "../../services/codeEditor.service";
+import { UserDataService } from "../../services/user-data.service";
 import { TypeOfCodeInEditor } from "../../models/TypeOfCodeInEditor";
 
 const defaultCode = `section .data
@@ -81,7 +81,7 @@ export class CoreAppComponent implements AfterViewInit, AfterContentInit {
       uiState: UIState;
       memoryDisplay: MemoryDisplay;
     }>,
-    private codeEditorService: CodeEditorService
+    private codeEditorService: UserDataService
   ) {
     this.uiState$ = store.select("uiState");
   }
