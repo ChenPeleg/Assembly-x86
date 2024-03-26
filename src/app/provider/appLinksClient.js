@@ -732,7 +732,7 @@ ${ApplinksPanelOptionsGraphicUtils.xIcon}</div>
  * @typedef ApplinksClientOptions
  * @property { boolean } useClientPanel
  * @property { boolean } useLocalStorage
- * @property { number } debaunceTime
+ * @property { number } debounceTime
  * @property { APPLinkUtils | any } appLinkUtils
  * @property { ApplinksPanelOptions | any } panelOptions
  */
@@ -1006,7 +1006,7 @@ export class APPLinksClient {
   #UserData = null;
 
   #debounceTime = 5000;
-  /** @type { NodeJS.Timeout | null} */
+  /** @type { any | null} */
   #lastSavedRecordTime = null;
 
   /**
@@ -1016,7 +1016,7 @@ export class APPLinksClient {
   constructor(
     appId,
     options = {
-      debaunceTime: 5000,
+      debounceTime: 5000,
       useClientPanel: false,
       useLocalStorage: true,
       appLinkUtils: APPLinkUtils,
