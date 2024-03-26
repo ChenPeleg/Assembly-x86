@@ -946,7 +946,7 @@ export class APPLinkUtils {
       fullName: userData.FullName,
       id: userData.UID,
       token: TokenKey,
-      refreshToken: refreshToken,
+      refreshToken: refreshToken || "",
     };
   }
 
@@ -995,15 +995,18 @@ export class APPLinksClient {
 
   /** @type {ApplinksClientOptions  } */
   #options;
+  /** @type { WindowProxy | null} */
   #newLoginWindowRef = null;
   /** @type {ApplinksPanel | false}     */
   #usePanel = false;
   /** @type {string} */ #appId;
   #util = APPLinkUtils;
+
   /** @type {UserData | null} */
-  #UserData;
+  #UserData = null;
 
   #debounceTime = 5000;
+  /** @type { NodeJS.Timeout | null} */
   #lastSavedRecordTime = null;
 
   /**
@@ -1077,6 +1080,10 @@ export class APPLinksClient {
       : null;
   }
 
+  /**
+   *
+   * @return {Promise< RecordData>}
+   */
   async loadSavedRecords() {
     if (!this.#validateUserData(this.#UserData)) {
       this.#emitAction({
@@ -1098,7 +1105,7 @@ export class APPLinksClient {
       });
     const { body, status, headers } = await this.#util.GetData(
       url,
-      this.#UserData?.token
+      this.#UserData?.token || ""
     );
 
     if (status === 440) {
@@ -1137,6 +1144,7 @@ export class APPLinksClient {
 
   /**
    * @param {Record<string, any>} dataToSave
+   * @return {Promise<RecordData>}
    */
   async savedRecord(dataToSave) {
     if (!this.#validateUserData(this.#UserData)) {
@@ -1161,7 +1169,7 @@ export class APPLinksClient {
     const { body, headers, status } = await this.#util.PostData(
       url,
       dataToSave,
-      this.#UserData.token
+      this.#UserData?.token || ""
     );
     if (status === 440) {
       if ((await this.#requestTokenRefresh()) === APPLinkUtils.Success) {
@@ -1212,8 +1220,13 @@ export class APPLinksClient {
       }`
     );
     this.#newLoginWindowRef = newLoginWindow;
+    if (!newLoginWindow) {
+      throw new Error("cannot open login window");
+    }
     const doc = newLoginWindow.document;
+
     const viewPortTag = doc.createElement("meta");
+
     viewPortTag.id = "viewport";
     viewPortTag.name = "viewport";
     viewPortTag.content =
@@ -1274,7 +1287,7 @@ export class APPLinksClient {
     const { status } = await this.#util.PostData(
       url,
       { refreshToken: this.#UserData?.refreshToken },
-      this.#UserData?.token
+      this.#UserData?.token || ""
     );
 
     if (status !== 200) {
@@ -1307,8 +1320,9 @@ export class APPLinksClient {
       // @ts-ignore
       this.#usePanel.actionCallBack =
         // @ts-ignore
-        (/** @type {"login" | "logout"} */ action) =>
-          this.#applinksClientPanelAction(action);
+        (/** @type {"login" | "logout"} */ action) => {
+          this.#applinksClientPanelAction(action).then();
+        };
     }
   };
 
@@ -1380,7 +1394,7 @@ export class APPLinksClient {
   };
 
   #validateUserData = (
-    /** @type {{ fullName: any; id: any; username: any; token: any; }} */ userData
+    /** @type {{ fullName: any; id: any; username: any; token: any; } | null} */ userData
   ) => userData?.fullName && userData.id && userData.username && userData.token;
 
   #saveUserDataToLocalStorage() {
