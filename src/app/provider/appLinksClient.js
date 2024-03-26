@@ -1026,8 +1026,8 @@ export class APPLinksClient {
     this.#appId = appId;
     this.#options = options;
     this.#setUpPanel(options);
-    if (options.debaunceTime) {
-      this.#debounceTime = options.debaunceTime;
+    if (options.debounceTime) {
+      this.#debounceTime = options.debounceTime;
     }
 
     if (options.useLocalStorage) {
