@@ -3,6 +3,7 @@ import { Router } from "@angular/router";
 import { UserDataService } from "../../services/user-data.service";
 import { BehaviorSubject, Observable } from "rxjs";
 import { sleep } from "../../util/sleep";
+import { environment } from "../../../environments/environment";
 
 @Component({
   selector: "app-navbar",
@@ -15,6 +16,7 @@ export class NavBarComponent implements AfterViewInit {
     { name: string; id: string }[]
   >;
   public readonly $showRecordButtons: BehaviorSubject<boolean>;
+  public readonly hasSaves: boolean = environment.hasAppLinkSave;
   public recordName: string | null = null;
   public isRecordNameInEdit: boolean = false;
   @ViewChild("codeRecordRename") private codeRecordRenameInput:

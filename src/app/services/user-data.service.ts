@@ -48,11 +48,17 @@ export class UserDataService {
           userIcon: undefined,
           // @ts-ignore
           panelType: ApplinksPanel.Options.PanelType.rounded,
-          x: 2,
-          y: 7,
-          sizeModifier: 115,
+          x: 5,
+          y: 12,
+          sizeModifier: 110,
         }),
       });
+      const callBack = (action: {
+        type: (typeof APPLinksClient.ApplinksClientEvents)[keyof APPLinksClient.ApplinksClientEvents];
+        data: any;
+      }) => {};
+      // @ts-ignore
+      this.applinksClient.setClientActionCallBack = callBack;
     }
     this.getRecords();
   }
