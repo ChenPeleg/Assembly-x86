@@ -1,4 +1,9 @@
 import { APPLinksClient } from "./appLinksClient";
 
 export type ApplinksClientEvents =
-  APPLinksClient.ApplinksClientEvents[keyof APPLinksClient.ApplinksClientEvents];
+  keyof typeof APPLinksClient.ApplinksClientEvents;
+export interface AppUser {
+  fullName: string;
+  id: string | number;
+  username: string;
+}

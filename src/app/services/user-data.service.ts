@@ -6,6 +6,8 @@ import { CodeEditorRecord } from "../models/CodeEditorRecord";
 import { generateNewId } from "../util/generateNewId";
 import { APPLinksClient, ApplinksPanel } from "../provider/appLinksClient";
 import { environment } from "../../environments/environment";
+import { UserRecords } from "../models/UserRecords";
+import { AppUser } from "../provider/applinksClientTypes";
 
 /**
  * Service to manage user data - saved code mainly
@@ -24,6 +26,8 @@ export class UserDataService {
   > = new BehaviorSubject<{ name: string; id: string }[]>([]);
   public readonly $showRecordButtonOnNavBar: BehaviorSubject<boolean> =
     new BehaviorSubject<boolean>(true);
+  public readonly $appUser: BehaviorSubject<AppUser | null> =
+    new BehaviorSubject<AppUser | null>(null);
 
   private typeOfCode: TypeOfCodeInEditor = TypeOfCodeInEditor.Default;
   private codeSavedRecords: CodeEditorRecord[] = [];
@@ -53,12 +57,17 @@ export class UserDataService {
           sizeModifier: 110,
         }),
       });
-      const callBack = (action: {
-        type: (typeof APPLinksClient.ApplinksClientEvents)[keyof APPLinksClient.ApplinksClientEvents];
+
+      this.applinksClient.setClientActionCallBack = (action: {
+        type: keyof typeof APPLinksClient.ApplinksClientEvents | string;
         data: any;
-      }) => {};
-      // @ts-ignore
-      this.applinksClient.setClientActionCallBack = callBack;
+      }) => {
+        switch (action.type) {
+          case APPLinksClient.ApplinksClientEvents.UserLoggedIn: {
+            break;
+          }
+        }
+      };
     }
     this.getRecords();
   }
@@ -143,9 +152,15 @@ export class UserDataService {
     this.saveCodeToRecords();
   }
   private saveCodeToRecords(): void {
+    const userRecords: UserRecords = {
+      user: this.$appUser.value,
+      records: this.codeSavedRecords,
+      timestamp: Date.now(),
+    };
+
     window.localStorage.setItem(
       UserDataService.LSSaveRecordsKey,
-      JSON.stringify(this.codeSavedRecords)
+      JSON.stringify(userRecords)
     );
     this.$currentRecordsList.next(
       this.codeSavedRecords.map((r) => ({ name: r.name, id: r.id }))
@@ -153,11 +168,16 @@ export class UserDataService {
   }
 
   private getRecords() {
-    const records = window.localStorage.getItem(
+    const rerecords = window.localStorage.getItem(
       UserDataService.LSSaveRecordsKey
     );
 
-    this.codeSavedRecords = (records && JSON.parse(records)) || [];
+    const userRecord: UserRecords = (rerecords && JSON.parse(rerecords)) || {
+      user: this.$appUser,
+      records: [],
+      timestamp: 0,
+    };
+    this.codeSavedRecords = userRecord.records;
 
     this.$currentRecordsList.next(
       this.codeSavedRecords.map((r) => ({ name: r.name, id: r.id }))
