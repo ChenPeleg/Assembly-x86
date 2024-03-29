@@ -1265,7 +1265,19 @@ export class APPLinksClient {
             this.#newLoginWindowRef = null;
           }
 
-          this.#loginActions();
+          this.#emitAction({
+            type: APPLinksClient.ApplinksClientEvents.UserLoggedIn,
+            data: {
+              userData: this.#UserData,
+              recordData: appSaveData
+                ? this.#util.serializeRecordData(appSaveData, appData)
+                : undefined,
+            },
+          });
+          this.#updatePanelStatus("logged-in");
+          if (this.#options.useLocalStorage) {
+            this.#saveUserDataToLocalStorage();
+          }
 
           resolve({
             userData: this.#UserData,
@@ -1382,16 +1394,7 @@ export class APPLinksClient {
     this.#usePanel.setStatus(status, this.#UserData);
   }
 
-  #loginActions = () => {
-    this.#emitAction({
-      type: APPLinksClient.ApplinksClientEvents.UserLoggedIn,
-      data: this.#UserData,
-    });
-    this.#updatePanelStatus("logged-in");
-    if (this.#options.useLocalStorage) {
-      this.#saveUserDataToLocalStorage();
-    }
-  };
+  #loginActions = () => {};
 
   #validateUserData = (
     /** @type {{ fullName: any; id: any; username: any; token: any; } | null} */ userData
