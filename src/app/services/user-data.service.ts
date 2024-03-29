@@ -60,12 +60,11 @@ export class UserDataService {
       if (this.applinksClient.user) {
         this.$appUser.next(this.applinksClient.user);
         this.applinksClient.loadSavedRecords().then((records) => {
-          console.log(records);
           const userRecords: UserRecords = records.app_data as UserRecords;
           if (!userRecords) {
             return;
           }
-          console.log(userRecords);
+
           this.checkIfServerRecordsAreNewer(userRecords);
         });
       }
