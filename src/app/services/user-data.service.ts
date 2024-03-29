@@ -71,7 +71,7 @@ export class UserDataService {
         }
       };
     }
-    this.getRecords();
+    this.getRecordsFromLs();
   }
 
   public updateCodeEditor(codeEditorState: CodeEditorState) {
@@ -79,9 +79,11 @@ export class UserDataService {
     this.$editorCodeUpdater.next(codeEditorState);
     this.$showRecordButtonOnNavBar.next(true);
   }
+
   public hideRecordButtonOnNavBar() {
     this.$showRecordButtonOnNavBar.next(false);
   }
+
   public updateCodeChangesTracker(codeEditorState: string | undefined) {
     this.currentEditorCode = codeEditorState || "";
     if (
@@ -91,14 +93,17 @@ export class UserDataService {
       this.currentSavedRecord.code = this.currentEditorCode;
     }
   }
+
   public createNewCodeClicked() {
     this.saveCodeClicked();
   }
+
   public clearRecordSelection() {
     this.$currentEditRecordName.next("");
     this.typeOfCode = TypeOfCodeInEditor.Draft;
     this.currentSavedRecord = null;
   }
+
   public deleteCodeClicked() {
     if (!this.currentSavedRecord) {
       return;
@@ -120,6 +125,7 @@ export class UserDataService {
       name: newRecordToEdit.name,
     });
   }
+
   public saveCodeClicked() {
     const newId = generateNewId(this.codeSavedRecords);
     const name = `Draft ${newId}`;
@@ -133,6 +139,7 @@ export class UserDataService {
     this.$currentEditRecordName.next(name);
     this.saveCodeToRecords();
   }
+
   public choseRecordClicked(record: { name: string; id: string }) {
     const chosenRecord = this.codeSavedRecords.find(
       (r) => r.id === record.id
@@ -153,37 +160,55 @@ export class UserDataService {
     this.$currentEditRecordName.next(newName);
     this.saveCodeToRecords();
   }
+
+  private checkIfServerRecordsAreNewer(serverRecords: UserRecords) {
+    const recordsFromLs = this.getUserRecordsFromLocalStorage();
+    if (serverRecords.timestamp > recordsFromLs.timestamp) {
+      this.codeSavedRecords = serverRecords.records;
+      this.saveCodeToRecords();
+    }
+  }
+
   private saveCodeToRecords(): void {
     const userRecords: UserRecords = {
       user: this.$appUser.value,
       records: this.codeSavedRecords,
       timestamp: Date.now(),
     };
-
-    window.localStorage.setItem(
-      UserDataService.LSSaveRecordsKey,
-      JSON.stringify(userRecords)
-    );
-    this.$currentRecordsList.next(
-      this.codeSavedRecords.map((r) => ({ name: r.name, id: r.id }))
-    );
+    this.updateLocalStorageRecords(userRecords);
+    this.updateRecordList(userRecords);
     if (this.applinksClient) {
       this.applinksClient.debounceSave(userRecords);
     }
   }
-
-  private getRecords() {
+  private updateRecordList(records: UserRecords) {
+    this.codeSavedRecords = records.records;
+    this.$currentRecordsList.next(
+      this.codeSavedRecords.map((r) => ({ name: r.name, id: r.id }))
+    );
+  }
+  private updateLocalStorageRecords(records: UserRecords) {
+    window.localStorage.setItem(
+      UserDataService.LSSaveRecordsKey,
+      JSON.stringify(records)
+    );
+  }
+  private getUserRecordsFromLocalStorage(): UserRecords {
     const rerecords = window.localStorage.getItem(
       UserDataService.LSSaveRecordsKey
     );
 
-    const userRecord: UserRecords = (rerecords && JSON.parse(rerecords)) || {
-      user: this.$appUser,
-      records: [],
-      timestamp: 0,
-    };
-    this.codeSavedRecords = userRecord.records;
+    return (
+      (rerecords && JSON.parse(rerecords)) || {
+        user: this.$appUser,
+        records: [],
+        timestamp: 0,
+      }
+    );
+  }
 
+  private getRecordsFromLs() {
+    this.codeSavedRecords = this.getUserRecordsFromLocalStorage().records;
     this.$currentRecordsList.next(
       this.codeSavedRecords.map((r) => ({ name: r.name, id: r.id }))
     );
