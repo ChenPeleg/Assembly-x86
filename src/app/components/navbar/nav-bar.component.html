@@ -1,9 +1,10 @@
-<mat-toolbar class="nav-bar" color="primary">
+<mat-toolbar class="nav-bar" color="primary" style="height: 56px">
   <!--  <button aria-label="Example icon-button with menu icon" class="button-icon" mat-icon-button>-->
   <!--      <mat-icon>menu</mat-icon>-->
   <!--    </button>-->
   <div [routerLink]="'/'" class="cursor-pointer  md:ml-5  ml-1 flex flex-row items-center gap-0">
-  <span class="hidden sm:block">
+  <div *ngIf="hasSaves" class="w-8 h-2"></div>
+    <span class="hidden sm:block">
      Assembly
   </span>&nbsp; <span> x86
     </span>
@@ -11,7 +12,8 @@
 
 
   <span class="example-spacer"></span>
-  <div *ngIf="$showRecordButtons | async" class="code-records-buttons flex-row flex items-center justify-start">
+
+  <div *ngIf="($showRecordButtons | async) && showSaveButtons" class="code-records-buttons flex-row flex items-center justify-start">
 
     <div *ngIf=" $recordNameInEdit | async " class="delete-button  ">
       <button (click)="clickDelete()" aria-label="delete icon" class="button-icon" mat-icon-button>

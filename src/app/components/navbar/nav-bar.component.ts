@@ -1,8 +1,9 @@
 import { AfterViewInit, Component, ElementRef, ViewChild } from "@angular/core";
 import { Router } from "@angular/router";
-import { CodeEditorService } from "../../services/codeEditor.service";
+import { UserDataService } from "../../services/user-data.service";
 import { BehaviorSubject, Observable } from "rxjs";
 import { sleep } from "../../util/sleep";
+import { environment } from "../../../environments/environment";
 
 @Component({
   selector: "app-navbar",
@@ -15,15 +16,18 @@ export class NavBarComponent implements AfterViewInit {
     { name: string; id: string }[]
   >;
   public readonly $showRecordButtons: BehaviorSubject<boolean>;
+  public readonly hasSaves: boolean = environment.hasAppLinkSave;
   public recordName: string | null = null;
   public isRecordNameInEdit: boolean = false;
+  public showSaveButtons: boolean = true;
   @ViewChild("codeRecordRename") private codeRecordRenameInput:
     | ElementRef<HTMLInputElement>
     | undefined;
 
   constructor(
     private router: Router,
-    private codeEditorService: CodeEditorService
+    private codeEditorService: UserDataService,
+    private userDataService: UserDataService
   ) {
     this.$recordNameInEdit =
       this.codeEditorService.$currentEditRecordName.asObservable();
@@ -34,6 +38,12 @@ export class NavBarComponent implements AfterViewInit {
         this.recordName = name;
       }
     });
+    if (environment.hasAppLinkSave) {
+      this.userDataService.$appUser.subscribe((user) => {
+        console.log("User", user);
+        this.showSaveButtons = !!user;
+      });
+    }
   }
 
   ngAfterViewInit() {}
@@ -41,6 +51,7 @@ export class NavBarComponent implements AfterViewInit {
   async clickLinks() {
     await this.router.navigate(["links/"]);
   }
+
   async clickDemo() {
     await this.router.navigate(["demo/"]);
   }
@@ -48,6 +59,7 @@ export class NavBarComponent implements AfterViewInit {
   async clickDocs() {
     await this.router.navigate(["docs/"]);
   }
+
   async clickSave() {
     this.codeEditorService.saveCodeClicked();
   }

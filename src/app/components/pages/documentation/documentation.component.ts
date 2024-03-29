@@ -25,7 +25,7 @@ import { sleep } from "../../../util/sleep";
 import { CodeExample } from "../../../models/CodeExample";
 import { observableToPromise } from "../../../util/obeservableToPromise";
 import { CoreAppComponent } from "../../core/core-app.component";
-import { CodeEditorService } from "../../../services/codeEditor.service";
+import { UserDataService } from "../../../services/user-data.service";
 import { TypeOfCodeInEditor } from "../../../models/TypeOfCodeInEditor";
 import {
   animate,
@@ -116,7 +116,7 @@ export class DocumentationComponent implements AfterViewInit, OnDestroy {
     private readonly activeRoute: ActivatedRoute,
     private readonly router: Router,
     private renderer: Renderer2,
-    private codeEditorService: CodeEditorService,
+    private codeEditorService: UserDataService,
     private store: Store<{
       count: number;
       uiState: UIState;

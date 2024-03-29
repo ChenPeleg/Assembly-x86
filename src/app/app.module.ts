@@ -37,7 +37,7 @@ import { MatSliderModule } from "@angular/material/slider";
 import { MemoryOptionsComponent } from "./components/memory-options/memory-options.component";
 import { MatChipsModule } from "@angular/material/chips";
 import { MemoryDisplayReducer } from "./stores/reducers/memory-display.reducer";
-import { CodeEditorService } from "./services/codeEditor.service";
+import { UserDataService } from "./services/user-data.service";
 import { MatMenuModule } from "@angular/material/menu";
 import { NgOptimizedImage } from "@angular/common";
 import { MatProgressBarModule } from "@angular/material/progress-bar";
@@ -105,7 +105,7 @@ export const AllMatModules = [
     MatProgressBarModule,
     MatInputModule,
   ],
-  providers: [PagesService, CodeEditorService],
+  providers: [PagesService, UserDataService],
   bootstrap: [AppRootComponent],
 })
 export class AppModule {}
