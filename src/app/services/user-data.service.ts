@@ -53,7 +53,7 @@ export class UserDataService {
           // @ts-ignore
           panelType: ApplinksPanel.Options.PanelType.rounded,
           x: 5,
-          y: 12,
+          y: 7,
           sizeModifier: 110,
         }),
       });
@@ -77,6 +77,10 @@ export class UserDataService {
           case APPLinksClient.ApplinksClientEvents.UserLoggedIn: {
             this.$appUser.next(action.data.userData);
             this.checkIfServerRecordsAreNewer(action.data.recordData);
+            break;
+          }
+          case APPLinksClient.ApplinksClientEvents.UserLoggedOut: {
+            this.$appUser.next(null);
             break;
           }
         }
