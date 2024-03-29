@@ -79,10 +79,11 @@ export class UserDataService {
             this.checkIfServerRecordsAreNewer(action.data.recordData);
             break;
           }
-          case APPLinksClient.ApplinksClientEvents.UserLoggedOut: {
-            this.$appUser.next(null);
-            break;
-          }
+        }
+        if (
+          this.applinksClient?.userStatus === APPLinksClient.Messages.UserNotSet
+        ) {
+          this.$appUser.next(null);
         }
       };
     }
