@@ -62,9 +62,10 @@ export class UserDataService {
         type: keyof typeof APPLinksClient.ApplinksClientEvents | string;
         data: any;
       }) => {
+        console.log("Client action", action);
         switch (action.type) {
           case APPLinksClient.ApplinksClientEvents.UserLoggedIn: {
-            this.$appUser.next(action.data);
+            this.$appUser.next(action.data.userData);
             break;
           }
         }
@@ -166,6 +167,9 @@ export class UserDataService {
     this.$currentRecordsList.next(
       this.codeSavedRecords.map((r) => ({ name: r.name, id: r.id }))
     );
+    if (this.applinksClient) {
+      this.applinksClient.debounceSave(userRecords);
+    }
   }
 
   private getRecords() {
