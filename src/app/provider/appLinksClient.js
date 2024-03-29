@@ -978,6 +978,7 @@ export class APPLinksClient {
   };
 
   static AuthError = APPLinkUtils.AuthError;
+  static PostMesssageIsOfDifferentOrigin = "PostMesssageIsOfDifferentOrigin";
   static ApplinksClientEvents = {
     UserLoggedIn: "UserLoggedIn",
     UserLoggedOut: "UserLoggedOut",
@@ -1245,7 +1246,7 @@ export class APPLinksClient {
         (msg) => {
           const data = msg.data;
           if (typeof data !== "object") {
-            return reject("data is not an object");
+            return reject(APPLinksClient.PostMesssageIsOfDifferentOrigin);
           }
           const {
             userData,
@@ -1265,8 +1266,8 @@ export class APPLinksClient {
             refreshToken
           );
           if (this.#newLoginWindowRef) {
-            //  this.#newLoginWindowRef.close();
-            //  this.#newLoginWindowRef = null;
+            this.#newLoginWindowRef.close();
+            this.#newLoginWindowRef = null;
           }
 
           this.#emitAction({
@@ -1352,6 +1353,10 @@ export class APPLinksClient {
             /** @type { UserData }*/ await this.LoginThroughAppLinks();
           localStorage.setItem("user-data", JSON.stringify(userData));
         } catch (err) {
+          if (err === APPLinksClient.PostMesssageIsOfDifferentOrigin) {
+            // This means the post message is not from the same origin (i.e. the login window)
+            return;
+          }
           this.#clientActionCallBack({
             type: APPLinksClient.ApplinksClientEvents.UserLoginFailed,
             data: err,
