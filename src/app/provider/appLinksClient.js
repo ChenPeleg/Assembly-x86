@@ -1082,6 +1082,20 @@ export class APPLinksClient {
   }
 
   /**
+   * @param {UserData} userData
+   */
+  #hideAuthData = (userData) => {
+    if (!userData || !userData.id) {
+      return userData;
+    }
+    return {
+      username: userData.username,
+      fullName: userData.fullName,
+      id: userData.id,
+    };
+  };
+
+  /**
    *
    * @return {Promise< RecordData>}
    */
@@ -1273,7 +1287,7 @@ export class APPLinksClient {
           this.#emitAction({
             type: APPLinksClient.ApplinksClientEvents.UserLoggedIn,
             data: {
-              userData: this.#UserData,
+              userData: this.#hideAuthData(this.#UserData),
               recordData: appSaveData
                 ? this.#util.serializeRecordData(appSaveData, appData)
                 : undefined,
