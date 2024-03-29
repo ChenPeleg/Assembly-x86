@@ -57,6 +57,18 @@ export class UserDataService {
           sizeModifier: 110,
         }),
       });
+      if (this.applinksClient.user) {
+        this.$appUser.next(this.applinksClient.user);
+        this.applinksClient.loadSavedRecords().then((records) => {
+          console.log(records);
+          const userRecords: UserRecords = records.app_data as UserRecords;
+          if (!userRecords) {
+            return;
+          }
+          console.log(userRecords);
+          this.checkIfServerRecordsAreNewer(userRecords);
+        });
+      }
 
       this.applinksClient.setClientActionCallBack = (action: {
         type: keyof typeof APPLinksClient.ApplinksClientEvents | string;
@@ -65,6 +77,7 @@ export class UserDataService {
         switch (action.type) {
           case APPLinksClient.ApplinksClientEvents.UserLoggedIn: {
             this.$appUser.next(action.data.userData);
+            this.checkIfServerRecordsAreNewer(action.data.recordData);
             break;
           }
         }
@@ -164,7 +177,13 @@ export class UserDataService {
     const recordsFromLs = this.getUserRecordsFromLocalStorage();
     if (serverRecords.timestamp > recordsFromLs.timestamp) {
       this.codeSavedRecords = serverRecords.records;
-      this.saveCodeToRecords();
+      const userRecords: UserRecords = {
+        user: this.$appUser.value,
+        records: this.codeSavedRecords,
+        timestamp: Date.now(),
+      };
+      this.updateLocalStorageRecords(userRecords);
+      this.updateRecordList(userRecords);
     }
   }
 
