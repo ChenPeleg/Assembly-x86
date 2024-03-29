@@ -14,7 +14,7 @@ import { AppUser } from "../provider/applinksClientTypes";
  */
 @Injectable()
 export class UserDataService {
-  private static readonly LSSaveRecordsKey = "Asm86CodeRecords";
+  private static readonly LSSaveRecordsKey = "Asm86CodeRecordsLsKey";
 
   public readonly $editorCodeUpdater: Subject<CodeEditorState> =
     new Subject<CodeEditorState>();
@@ -64,6 +64,7 @@ export class UserDataService {
       }) => {
         switch (action.type) {
           case APPLinksClient.ApplinksClientEvents.UserLoggedIn: {
+            this.$appUser.next(action.data);
             break;
           }
         }
