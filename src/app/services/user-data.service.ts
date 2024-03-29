@@ -62,7 +62,6 @@ export class UserDataService {
         type: keyof typeof APPLinksClient.ApplinksClientEvents | string;
         data: any;
       }) => {
-        console.log("Client action", action);
         switch (action.type) {
           case APPLinksClient.ApplinksClientEvents.UserLoggedIn: {
             this.$appUser.next(action.data.userData);
