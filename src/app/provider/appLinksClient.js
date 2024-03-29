@@ -1207,10 +1207,14 @@ export class APPLinksClient {
 
     const isMobile = screenWidth < 500;
     const cacheBreaker = Math.random().toString(36).substring(7);
+    const appIdForUrl = this.#appId ? `/${this.#appId}` : "";
 
     const html = `<div id="iframe-container" style="width: 100%; background-color: #ffffff; overflow: hidden;height: 100%; min-height: 60vh; max-height: 95vh;  display: flex; flex-direction: row;justify-content: center">
             <iframe allowtransparency="true"  style="width: 100% ; height: 100% ;border:none; color: black; background: #FFFFFF;" id="login-i-frame" src="${
-              this.#util.htmlLoginUrl + "?cacheBreaker=" + cacheBreaker
+              this.#util.htmlLoginUrl +
+              appIdForUrl +
+              "?cacheBreaker=" +
+              cacheBreaker
             }"></iframe> </div>`;
     const newLoginWindow = window.open(
       "",
@@ -1261,8 +1265,8 @@ export class APPLinksClient {
             refreshToken
           );
           if (this.#newLoginWindowRef) {
-            this.#newLoginWindowRef.close();
-            this.#newLoginWindowRef = null;
+            //  this.#newLoginWindowRef.close();
+            //  this.#newLoginWindowRef = null;
           }
 
           this.#emitAction({
@@ -1393,8 +1397,6 @@ export class APPLinksClient {
     // @ts-ignore
     this.#usePanel.setStatus(status, this.#UserData);
   }
-
-  #loginActions = () => {};
 
   #validateUserData = (
     /** @type {{ fullName: any; id: any; username: any; token: any; } | null} */ userData
