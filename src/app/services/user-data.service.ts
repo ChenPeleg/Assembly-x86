@@ -57,9 +57,10 @@ export class UserDataService {
           sizeModifier: 110,
         }),
       });
-      if (this.applinksClient.user) {
-        this.$appUser.next(this.applinksClient.user);
+      const user = this.applinksClient.user;
+      if (user) {
         this.applinksClient.loadSavedRecords().then((records) => {
+          this.$appUser.next(user);
           const userRecords: UserRecords = records.app_data as UserRecords;
           if (!userRecords) {
             return;
@@ -179,7 +180,8 @@ export class UserDataService {
 
   private checkIfServerRecordsAreNewer(serverRecords: UserRecords) {
     const recordsFromLs = this.getUserRecordsFromLocalStorage();
-    if (serverRecords.timestamp > recordsFromLs.timestamp) {
+
+    if (+serverRecords.timestamp > +recordsFromLs.timestamp) {
       this.codeSavedRecords = serverRecords.records;
       const userRecords: UserRecords = {
         user: this.$appUser.value,
@@ -203,18 +205,21 @@ export class UserDataService {
       this.applinksClient.debounceSave(userRecords);
     }
   }
+
   private updateRecordList(records: UserRecords) {
     this.codeSavedRecords = records.records;
     this.$currentRecordsList.next(
       this.codeSavedRecords.map((r) => ({ name: r.name, id: r.id }))
     );
   }
+
   private updateLocalStorageRecords(records: UserRecords) {
     window.localStorage.setItem(
       UserDataService.LSSaveRecordsKey,
       JSON.stringify(records)
     );
   }
+
   private getUserRecordsFromLocalStorage(): UserRecords {
     const rerecords = window.localStorage.getItem(
       UserDataService.LSSaveRecordsKey

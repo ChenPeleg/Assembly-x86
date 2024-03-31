@@ -40,7 +40,6 @@ export class NavBarComponent implements AfterViewInit {
     });
     if (environment.hasAppLinkSave) {
       this.userDataService.$appUser.subscribe((user) => {
-        console.log("User", user);
         this.showSaveButtons = !!user;
       });
     }
