@@ -136,13 +136,11 @@ export class DocumentationComponent implements AfterViewInit, OnDestroy {
     const panels: string[] = [];
 
     for (const option of allOptions) {
-      console.log(option);
       const optionCommand = option.replace("-", "");
       switch (optionCommand) {
         case "console":
         case "memory":
         case "cpu":
-          console.log(option);
           panels.push(option);
           break;
         case "number":
@@ -270,7 +268,7 @@ export class DocumentationComponent implements AfterViewInit, OnDestroy {
         DocumentationComponent.optionStringToAssemblerDisplay(
           codeExample.optionsString
         );
-      console.log(displayState);
+
       this.store.dispatch(
         UIStateActions.updateUIState({ ...displayState.uiState })
       );
