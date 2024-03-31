@@ -1,5 +1,7 @@
-# Bit talbes
 
+# Bit talbe
+
+The compputers
 
 | Bit value | Position value as a power of base 2 | Bit number |
 |-----------|-------------------------------------|------------|

@@ -1,5 +1,10 @@
+/basics/1 hello world.md
+/basics/2 binary numbers.md
+/basics/3-binary-numbers-in-action.md
+/basics/9-hello-world-advanced.md
 /basics/assembly-basics.md
 /basics/bit-tables.md
+/basics/hello-works.md
 /commands/basic-commands.md
 /history/assembly-development/development-of-assembly-2.md
 /history/assembly-development/development-of-assembly.md
@@ -11,3 +16,4 @@
 /registers/cpu-word-size.md
 /registers/memory-size.md
 /registers/registers-cheatsheet.md
+/tutorials/tutorials.md
