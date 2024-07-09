@@ -26,6 +26,7 @@ ace.config.set("modePath", "./assets/js");
 })
 export class AsmEditorComponent implements AfterViewInit {
   private static ACTIVE_LINE_CLASS: string = "active-line";
+  public lastChar: string = "";
   public hideAssembleButton: boolean = true;
   public numberOfLines = 40;
   public isMobile: boolean = getScreenMediaState().isMobile;
@@ -98,7 +99,9 @@ export class AsmEditorComponent implements AfterViewInit {
       this.toggleBreakpoint(row);
       e.stop();
     });
+
     this.aceEditor.on("change", (e: any) => {
+      this.lastChar = e.lines[0];
       this.$editorChange.next(false);
     });
   }
