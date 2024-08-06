@@ -41,6 +41,7 @@ export class AsmEditorComponent implements AfterViewInit {
   );
   // @ts-ignore
   @ViewChild("editor") private editor: ElementRef;
+  // @ts-ignore
   private aceEditor: Editor | null = null;
 
   constructor(private codeEditorService: UserDataService) {
@@ -48,9 +49,9 @@ export class AsmEditorComponent implements AfterViewInit {
       this.aceEditor?.session.getDocument().setValue(change.code);
     });
     this.$debouncedEditorChange.subscribe((change) => {
-      const newValue = this.aceEditor?.session.getValue();
-      this.numberOfLines = newValue?.split("\n").length || this.numberOfLines;
-      this.codeEditorService.updateCodeChangesTracker(newValue);
+      // const newValue = this.aceEditor?.session.getValue();
+      // this.numberOfLines = newValue?.split("\n").length || this.numberOfLines;
+      // this.codeEditorService.updateCodeChangesTracker(newValue);
     });
   }
 
@@ -68,7 +69,7 @@ export class AsmEditorComponent implements AfterViewInit {
   private _activeLine: number = null;
 
   @Input() set activeLine(value: number) {
-    if (this.aceEditor === null) {
+    if (this.aceEditor === null || this.aceEditor) {
       return;
     }
 
@@ -127,7 +128,7 @@ export class AsmEditorComponent implements AfterViewInit {
   }
 
   private removeActiveLine() {
-    if (this._activeLine !== -1) {
+    if (this._activeLine !== -1 && !this.aceEditor) {
       this.aceEditor?.session.removeGutterDecoration(
         this._activeLine,
         AsmEditorComponent.ACTIVE_LINE_CLASS
