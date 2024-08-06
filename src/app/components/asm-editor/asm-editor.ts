@@ -15,7 +15,6 @@ import { debounceTime, Subject } from "rxjs";
 import { UserDataService } from "../../services/user-data.service";
 import { getScreenMediaState } from "../../util/screenMediaSatate";
 
-const DEBUG_NO_ASM_EVENTS = true;
 // @ts-ignore
 ace.config.set("modePath", "./assets/js");
 
@@ -90,9 +89,7 @@ export class AsmEditorComponent implements AfterViewInit {
     this.aceEditor = ace.edit(el);
 
     this.aceEditor.session.setMode("ace/mode/assembly_x86");
-    if (DEBUG_NO_ASM_EVENTS) {
-      return;
-    }
+
     this.aceEditor.on("guttermousedown", (e: any) => {
       let target = e.domEvent.target;
       if (target.className.indexOf("ace_gutter-cell") === -1) {
@@ -130,9 +127,6 @@ export class AsmEditorComponent implements AfterViewInit {
   }
 
   private removeActiveLine() {
-    if (DEBUG_NO_ASM_EVENTS) {
-      return;
-    }
     if (this._activeLine !== -1) {
       this.aceEditor?.session.removeGutterDecoration(
         this._activeLine,
