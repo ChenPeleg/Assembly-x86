@@ -1,10 +1,10 @@
 module.exports = {
-  "module": {
-    "rules": [
+  module: {
+    rules: [
       {
-
-        "test": /\.pegjs$/,
-        "loader": "pegjs-loader"
-
-      }]}
-}
+        test: /\.pegjs$/,
+        loader: "pegjs-loader",
+      },
+    ],
+  },
+};
