@@ -1,3 +1,4 @@
+/about.md
 /basics/1 hello world.md
 /basics/2 binary numbers.md
 /basics/3-binary-numbers-in-action.md
