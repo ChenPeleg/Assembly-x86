@@ -18,6 +18,8 @@ import { getScreenMediaState } from "../../util/screenMediaSatate";
 // @ts-ignore
 ace.config.set("modePath", "./assets/js");
 
+const DEBUG_NO_EVENTS = true;
+
 @Component({
   selector: "asm-editor",
   templateUrl: "./asm-editor.html",
@@ -69,6 +71,9 @@ export class AsmEditorComponent implements AfterViewInit {
   private _activeLine: number = null;
 
   @Input() set activeLine(value: number) {
+    if (DEBUG_NO_EVENTS) {
+      return;
+    }
     if (this.aceEditor === null || this.aceEditor) {
       return;
     }
@@ -90,7 +95,9 @@ export class AsmEditorComponent implements AfterViewInit {
     this.aceEditor = ace.edit(el);
 
     this.aceEditor.session.setMode("ace/mode/assembly_x86");
-
+    if (DEBUG_NO_EVENTS) {
+      return;
+    }
     this.aceEditor.on("guttermousedown", (e: any) => {
       let target = e.domEvent.target;
       if (target.className.indexOf("ace_gutter-cell") === -1) {
@@ -112,6 +119,9 @@ export class AsmEditorComponent implements AfterViewInit {
   }
 
   private toggleBreakpoint(row: number) {
+    if (DEBUG_NO_EVENTS) {
+      return;
+    }
     if (this.hasBreakpoint(row)) {
       this.aceEditor?.session.clearBreakpoint(row);
       _.remove(this._breakpoints, (value: number) => value === row);
@@ -128,6 +138,9 @@ export class AsmEditorComponent implements AfterViewInit {
   }
 
   private removeActiveLine() {
+    if (DEBUG_NO_EVENTS) {
+      return;
+    }
     if (this._activeLine !== -1 && !this.aceEditor) {
       this.aceEditor?.session.removeGutterDecoration(
         this._activeLine,
