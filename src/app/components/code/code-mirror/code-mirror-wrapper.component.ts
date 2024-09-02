@@ -2,9 +2,9 @@ import { Component } from "@angular/core";
 
 @Component({
   selector: "code-mirror-component",
-  templateUrl: "./code-mirror.component.html",
+  templateUrl: "./code-mirror-wrapper.component.html",
 })
-export class CodeMirrorComponent {
+export class CodeMirrorWrapperComponent {
   public value: string = "";
 
   public print(value: string) {
