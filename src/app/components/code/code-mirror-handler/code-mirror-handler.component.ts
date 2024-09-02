@@ -5,11 +5,11 @@ import { EditorView } from "@codemirror/view";
 import { DOCUMENT } from "@angular/common";
 
 @Component({
-  selector: "app-root",
-  templateUrl: "./app.component.html",
-  styleUrls: ["./app.component.scss"],
+  selector: "code-mirror-handler",
+  templateUrl: "./code-mirror-handler.component.html",
+  styleUrls: ["./code-mirror-handler.component.scss"],
 })
-export class AppComponent implements AfterViewInit {
+export class CodeMirrorHandlerComponent implements AfterViewInit {
   title = "component-overview";
 
   @ViewChild("myeditor") myEditor: any;
