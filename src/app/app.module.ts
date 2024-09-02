@@ -42,6 +42,7 @@ import { MatMenuModule } from "@angular/material/menu";
 import { NgOptimizedImage } from "@angular/common";
 import { MatProgressBarModule } from "@angular/material/progress-bar";
 import { MatInputModule } from "@angular/material/input";
+import { CodeMirrorComponent } from "./components/code/code-mirror.component";
 
 export const AllMatModules = [
   MatToolbarModule,
@@ -73,6 +74,7 @@ export const AllMatModules = [
     ContentTableComponent,
     DisplayCockpitComponent,
     MemoryOptionsComponent,
+    CodeMirrorComponent,
   ],
   imports: [
     ...AllMatModules,
