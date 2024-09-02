@@ -4,6 +4,7 @@ import { InstructionsComponent } from "./components/pages/instructions/instructi
 import { CoreAppComponent } from "./components/core/core-app.component";
 import { WelcomePageComponent } from "./components/pages/welcome-page/welcome-page.component";
 import { DocumentationComponent } from "./components/pages/documentation/documentation.component";
+import { CodeMirrorComponent } from "./components/code/code-mirror.component";
 
 const routes: Routes = [
   { path: "", component: CoreAppComponent },
@@ -11,6 +12,7 @@ const routes: Routes = [
   { path: "links", component: WelcomePageComponent },
   { path: "docs/:docId", component: DocumentationComponent },
   { path: "docs", component: DocumentationComponent },
+  { path: "code-mirror", component: CodeMirrorComponent },
 ];
 
 // configures NgModule imports and exports
