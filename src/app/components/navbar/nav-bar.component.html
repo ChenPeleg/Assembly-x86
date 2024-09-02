@@ -8,11 +8,11 @@
      Assembly
   </span>&nbsp; <span> x86
     </span>
-    <div [routerLink]="'/code-mirror'"> code mirror</div>
+
   </div>
 
-
-  <span class="example-spacer"></span>
+  <div [routerLink]="'/code-mirror/'" class="mx-4"> code mirror</div>
+  <div class="example-spacer"></div>
 
   <div *ngIf="($showRecordButtons | async) && showSaveButtons" class="code-records-buttons flex-row flex items-center justify-start">
 
