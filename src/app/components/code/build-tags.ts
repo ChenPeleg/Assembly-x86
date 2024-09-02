@@ -63,75 +63,75 @@ export function addMultipleTags(tags: CodeMirrorTag[]): Extension {
         }
         return positions;
       }
-
-      token(stream: any, state: any): string | null {
-        console.log("stream", stream);
-        if (state.tokenize) {
-          return state.tokenize(stream, state);
-        }
-
-        if (stream.eatSpace()) {
-          return null;
-        }
-
-        let style: string | null = null;
-        let cur: string;
-        let ch = stream.next();
-
-        if (ch === "/") {
-          if (stream.eat("*")) {
-            state.tokenize = this.clikeComment;
-            return this.clikeComment(stream, state);
-          }
-        }
-
-        if (ch === "#") {
-          stream.skipToEnd();
-          return "comment";
-        }
-
-        if (ch === '"') {
-          this.nextUntilUnescaped(stream, '"');
-          return "string";
-        }
-
-        if (ch === ".") {
-          stream.eatWhile(/\w/);
-          cur = stream.current().toLowerCase();
-          style = "builtin"; // Assuming directives are built-in
-          return style || null;
-        }
-
-        if (ch === "=") {
-          stream.eatWhile(/\w/);
-          return "tag";
-        }
-
-        if (ch === "{" || ch === "}") {
-          return "bracket";
-        }
-
-        if (/\d/.test(ch)) {
-          if (ch === "0" && stream.eat("x")) {
-            stream.eatWhile(/[0-9a-fA-F]/);
-            return "number";
-          }
-          stream.eatWhile(/\d/);
-          return "number";
-        }
-
-        if (/\w/.test(ch)) {
-          stream.eatWhile(/\w/);
-          if (stream.eat(":")) {
-            return "tag";
-          }
-          cur = stream.current().toLowerCase();
-          style = "variable"; // Assuming registers are variables
-          return style || null;
-        }
-
-        return null;
-      }
+      //
+      // token(stream: any, state: any): string | null {
+      //   console.log("stream", stream);
+      //   if (state.tokenize) {
+      //     return state.tokenize(stream, state);
+      //   }
+      //
+      //   if (stream.eatSpace()) {
+      //     return null;
+      //   }
+      //
+      //   let style: string | null = null;
+      //   let cur: string;
+      //   let ch = stream.next();
+      //
+      //   if (ch === "/") {
+      //     if (stream.eat("*")) {
+      //       state.tokenize = this.clikeComment;
+      //       return this.clikeComment(stream, state);
+      //     }
+      //   }
+      //
+      //   if (ch === "#") {
+      //     stream.skipToEnd();
+      //     return "comment";
+      //   }
+      //
+      //   if (ch === '"') {
+      //     this.nextUntilUnescaped(stream, '"');
+      //     return "string";
+      //   }
+      //
+      //   if (ch === ".") {
+      //     stream.eatWhile(/\w/);
+      //     cur = stream.current().toLowerCase();
+      //     style = "builtin"; // Assuming directives are built-in
+      //     return style || null;
+      //   }
+      //
+      //   if (ch === "=") {
+      //     stream.eatWhile(/\w/);
+      //     return "tag";
+      //   }
+      //
+      //   if (ch === "{" || ch === "}") {
+      //     return "bracket";
+      //   }
+      //
+      //   if (/\d/.test(ch)) {
+      //     if (ch === "0" && stream.eat("x")) {
+      //       stream.eatWhile(/[0-9a-fA-F]/);
+      //       return "number";
+      //     }
+      //     stream.eatWhile(/\d/);
+      //     return "number";
+      //   }
+      //
+      //   if (/\w/.test(ch)) {
+      //     stream.eatWhile(/\w/);
+      //     if (stream.eat(":")) {
+      //       return "tag";
+      //     }
+      //     cur = stream.current().toLowerCase();
+      //     style = "variable"; // Assuming registers are variables
+      //     return style || null;
+      //   }
+      //
+      //   return null;
+      // }
 
       nextUntilUnescaped(stream: any, end: string): boolean {
         let escaped = false,
