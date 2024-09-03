@@ -4,6 +4,7 @@ import { EditorState, Extension } from "@codemirror/state";
 import { EditorView } from "@codemirror/view";
 import { DOCUMENT } from "@angular/common";
 import { addMultipleTags } from "../build-tags";
+import { asmTagList } from "../tag-list";
 
 @Component({
   selector: "code-mirror-handler",
@@ -21,14 +22,7 @@ export class CodeMirrorHandlerComponent implements AfterViewInit {
     let myEditorElement = this.myEditor.nativeElement;
     let myExt: Extension = [
       basicSetup,
-      addMultipleTags([
-        {
-          name: "variable.parameter.register.assembly",
-          regex: /EAX\b/,
-          caseSensitive: true,
-          order: 1,
-        },
-      ]),
+      addMultipleTags(asmTagList.splice(0, 3)),
     ];
     let state!: EditorState;
 
