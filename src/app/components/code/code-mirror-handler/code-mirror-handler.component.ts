@@ -1,4 +1,10 @@
-import { AfterViewInit, Component, Inject, ViewChild } from "@angular/core";
+import {
+  AfterViewInit,
+  Component,
+  Inject,
+  ViewChild,
+  ViewEncapsulation,
+} from "@angular/core";
 import { basicSetup } from "codemirror";
 import { EditorState, Extension } from "@codemirror/state";
 import { EditorView } from "@codemirror/view";
@@ -11,6 +17,7 @@ import { defaultCodeText } from "../../../stores/reducers/code-editor.reducer";
   selector: "code-mirror-handler",
   templateUrl: "./code-mirror-handler.component.html",
   styleUrls: ["./code-mirror-handler.component.scss"],
+  encapsulation: ViewEncapsulation.None,
 })
 export class CodeMirrorHandlerComponent implements AfterViewInit {
   title = "component-overview";
