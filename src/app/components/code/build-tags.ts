@@ -40,7 +40,9 @@ export function addMultipleTags(tags: CodeMirrorTag[]): Extension {
         for (let { from, to } of view.visibleRanges) {
           let text = view.state.doc.sliceString(from, to);
           let tagPositions = this.findTagPositions(text);
+          tagPositions.sort((a, b) => (a.start > b.start ? 1 : -1));
           for (let pos of tagPositions) {
+            console.log(pos);
             builder.add(
               from + pos.start,
               from + pos.end,
