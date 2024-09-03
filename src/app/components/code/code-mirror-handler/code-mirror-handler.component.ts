@@ -5,6 +5,7 @@ import { EditorView } from "@codemirror/view";
 import { DOCUMENT } from "@angular/common";
 import { addMultipleTags } from "../build-tags";
 import { asmTagList } from "../tag-list";
+import { defaultCodeText } from "../../../stores/reducers/code-editor.reducer";
 
 @Component({
   selector: "code-mirror-handler",
@@ -20,20 +21,12 @@ export class CodeMirrorHandlerComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     let myEditorElement = this.myEditor.nativeElement;
-    let myExt: Extension = [
-      basicSetup,
-      addMultipleTags(asmTagList.splice(0, 3)),
-    ];
+    let myExt: Extension = [basicSetup, addMultipleTags(asmTagList)];
     let state!: EditorState;
 
     try {
       state = EditorState.create({
-        doc:
-          "section .data\n" +
-          "hello:\n" +
-          "    db 'Hello world!', 10, 0\n" +
-          "section .text\n" +
-          "    MOV EAX, hello\n",
+        doc: defaultCodeText,
         extensions: myExt,
       });
     } catch (e) {

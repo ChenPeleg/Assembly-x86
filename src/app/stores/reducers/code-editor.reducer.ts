@@ -3,7 +3,7 @@ import { CodeEditorActions } from "../actions/code-editor.actions";
 import { CodeEditorState } from "../../models/CodeEditorState";
 import { TypeOfCodeInEditor } from "../../models/TypeOfCodeInEditor";
 
-const defaultCodeText = `section .data
+export const defaultCodeText = `section .data
 hello:
     db 'Hello world!', 10, 0
 section .text
