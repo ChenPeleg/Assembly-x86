@@ -28,7 +28,7 @@ export class CodeMirrorHandlerComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     let myEditorElement = this.myEditor.nativeElement;
-    let myExt: Extension = [basicSetup, addMultipleTags(asmTagList)];
+    let myExt: Extension = [basicSetup, addMultipleTags(asmTagList.slice(-1))];
     let state!: EditorState;
 
     try {

@@ -78,10 +78,10 @@ const allTags = [
   { token: "entity.name.function.assembly", regex: "^\\s*%\\$[\\w.]+?:$" },
   { token: "entity.name.function.assembly", regex: "^[\\w.]+?:" },
   { token: "entity.name.function.assembly", regex: "^[\\w.]+?\\b" },
-  { token: "comment.assembly", regex: ";.*$" },
+  { token: "comment.assembly", regex: ";.*\n", caseInsensitive: false },
 ];
 
-export const asmTagList: CodeMirrorTag[] = allTags.map((tag) => {
+export const asmTagList: CodeMirrorTag[] = allTags.map((tag, index) => {
   const name = Array.isArray(tag.token) ? tag.token.join(".") : tag.token;
   const nameWithSpaces = name.replace(/\./g, " ");
   const namesWithPrefix = nameWithSpaces
@@ -90,8 +90,8 @@ export const asmTagList: CodeMirrorTag[] = allTags.map((tag) => {
     .join(" ");
   return {
     name: namesWithPrefix,
-    regex: new RegExp(tag.regex, tag.caseInsensitive ? "" : "i"),
+    regex: tag.regex,
     caseSensitive: !tag.caseInsensitive,
-    order: 1,
+    order: allTags.length - index,
   };
 });

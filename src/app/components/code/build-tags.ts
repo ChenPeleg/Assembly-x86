@@ -12,7 +12,7 @@ export interface CodeMirrorTag {
    * @description Names of the tags seperated by a dot
    */
   name: string;
-  regex: RegExp;
+  regex: RegExp | string;
   order: number;
   caseSensitive: boolean;
 }
@@ -42,7 +42,6 @@ export function addMultipleTags(tags: CodeMirrorTag[]): Extension {
           let tagPositions = this.findTagPositions(text);
           tagPositions.sort((a, b) => (a.start > b.start ? 1 : -1));
           for (let pos of tagPositions) {
-            console.log(pos);
             builder.add(
               from + pos.start,
               from + pos.end,
@@ -62,9 +61,14 @@ export function addMultipleTags(tags: CodeMirrorTag[]): Extension {
           class: string;
         }[] = [];
         for (let tag of tags) {
-          let match;
-          const allMatches = [...text.matchAll(new RegExp(tag.regex, "g"))];
-          console.log(allMatches);
+          const regex = new RegExp(
+            tag.regex,
+            `g${tag.caseSensitive ? "i" : ""}`
+          );
+          const allMatches = [...text.matchAll(regex)];
+          console.log(text);
+          console.log(regex.test("    INT 2   ; print string EAX"), allMatches);
+
           allMatches.forEach((match) => {
             if (!match || match.index === undefined) {
               return;
