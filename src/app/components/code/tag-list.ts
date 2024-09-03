@@ -83,8 +83,10 @@ const allTags = [
 
 export const asmTagList: CodeMirrorTag[] = allTags.map((tag) => {
   const name = Array.isArray(tag.token) ? tag.token.join(".") : tag.token;
+  const nameWithSpaces = name.replace(/\./g, " ");
+
   return {
-    name,
+    name: nameWithSpaces,
     regex: new RegExp(tag.regex),
     caseSensitive: !tag.caseInsensitive,
     order: 1,
