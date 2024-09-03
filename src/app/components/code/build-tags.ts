@@ -66,8 +66,8 @@ export function addMultipleTags(tags: CodeMirrorTag[]): Extension {
             `g${tag.caseSensitive ? "i" : ""}`
           );
           const allMatches = [...text.matchAll(regex)];
-          console.log(text);
-          console.log(regex.test("    INT 2   ; print string EAX"), allMatches);
+          // console.log(text);
+          // console.log(regex.test("    INT 2   ; print string EAX"), allMatches);
 
           allMatches.forEach((match) => {
             if (!match || match.index === undefined) {
