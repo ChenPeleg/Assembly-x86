@@ -21,13 +21,25 @@ export class CodeMirrorHandlerComponent implements AfterViewInit {
     let myEditorElement = this.myEditor.nativeElement;
     let myExt: Extension = [
       basicSetup,
-      addMultipleTags([{ name: "consola", regex: /console/g, order: 1 }]),
+      addMultipleTags([
+        {
+          name: "variable.parameter.register.assembly",
+          regex: /EAX\b/,
+          caseSensitive: true,
+          order: 1,
+        },
+      ]),
     ];
     let state!: EditorState;
 
     try {
       state = EditorState.create({
-        doc: 'console.log("hello");\n// type if.',
+        doc:
+          "section .data\n" +
+          "hello:\n" +
+          "    db 'Hello world!', 10, 0\n" +
+          "section .text\n" +
+          "    MOV EAX, hello\n",
         extensions: myExt,
       });
     } catch (e) {
