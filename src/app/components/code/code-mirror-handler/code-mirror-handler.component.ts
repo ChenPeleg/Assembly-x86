@@ -7,7 +7,7 @@ import {
 } from "@angular/core";
 import { basicSetup } from "codemirror";
 import { EditorState, Extension } from "@codemirror/state";
-import { EditorView, gutter } from "@codemirror/view";
+import { EditorView, gutter, ViewUpdate } from "@codemirror/view";
 import { DOCUMENT } from "@angular/common";
 import { addMultipleTags } from "../build-tags";
 import { asmTagList } from "../tag-list";
@@ -54,24 +54,32 @@ export class CodeMirrorHandlerComponent implements AfterViewInit {
   private BuildBreakPointGutter(): Extension {
     const breakpoints = this.breakpoints;
     return gutter({
-      class: "ap-breakpoints",
+      class: "asm-breakpoints",
       renderEmptyElements: true,
-      domEventHandlers: {
-        click: (view, line) => {
-          const num = view.state.doc.lineAt(line.from).number;
-          // @ts-ignore
-          breakpoints[num] = !breakpoints[num];
 
-          const changespec = { from: line.from, to: line.to };
+      domEventHandlers: {
+        click: (view: EditorView, line: any, event: Event): boolean => {
+          const lineNumber = view.state.doc.lineAt(line.from).number;
+          // console.log("lineNumber", lineNumber);
+          breakpoints[lineNumber] = !breakpoints[lineNumber];
+          const changes = { from: line.from, to: line.to };
+
+          var changespec = { from: line.from, to: line.to };
           // @ts-ignore
-          const updated = view.state.update([{ changes: changespec }]);
+          var updated = view.state.update([{ changes: changespec }]);
           view.dispatch(updated);
+
           return true;
         },
       },
+      lineMarkerChange: (update: ViewUpdate): boolean => {
+        // console.log(update);
+        // const num = view.state.doc.lineAt(line.from).number;
+        // breakpoints[num] = !breakpoints[num];
+        return true;
+      },
       lineMarker(view, line) {
         const num = view.state.doc.lineAt(line.from).number;
-
         return new BreakMarker(breakpoints[num]);
       },
     });
