@@ -14,7 +14,7 @@ export class BreakMarker extends GutterMarker {
   override toDOM() {
     const el = document.createElement("span");
     el.setAttribute("class", this.show ? "active" : "");
-    el.innerText = this.show ? "⬤" : "•";
+    el.innerText = this.show ? "⬤" : " ";
     return el;
   }
 }
