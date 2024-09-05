@@ -14,7 +14,9 @@ import { asmTagList } from "../tag-list";
 import { defaultCodeText } from "../../../stores/reducers/code-editor.reducer";
 import { BuildBreakPointGutterExtension } from "../addons/gutter-breakpoints";
 import { customCMTheme } from "../addons/code-mirror-theme";
-import { jsonFold } from "../addons/json-fold-extention";
+import { getFoldingRangesByIndent } from "../addons/gutter-fold-code";
+import { foldService } from "@codemirror/language";
+import { customFoldGutter } from "../addons/gutter-fold-custom-marker";
 
 @Component({
   selector: "code-mirror-handler",
@@ -35,9 +37,8 @@ export class CodeMirrorHandlerComponent implements AfterViewInit {
       BuildBreakPointGutterExtension(this.breakpoints),
       basicSetup,
       customCMTheme,
-      jsonFold(),
-      // foldService.of(getFoldingRangesByIndent),
-      // customFoldGutter(),
+      customFoldGutter(),
+      foldService.of(getFoldingRangesByIndent),
       addMultipleTags(asmTagList),
     ];
     let state!: EditorState;
