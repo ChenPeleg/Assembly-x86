@@ -42,8 +42,8 @@ import { MatMenuModule } from "@angular/material/menu";
 import { NgOptimizedImage } from "@angular/common";
 import { MatProgressBarModule } from "@angular/material/progress-bar";
 import { MatInputModule } from "@angular/material/input";
-import { CodeMirrorWrapperComponent } from "./components/code/code-mirror/code-mirror-wrapper.component";
 import { CodeMirrorHandlerComponent } from "./components/code/code-mirror-handler/code-mirror-handler.component";
+import { CodeMirrorWrapperComponent } from "./components/code/code-mirror-wrapper/code-mirror-wrapper.component";
 
 export const AllMatModules = [
   MatToolbarModule,
