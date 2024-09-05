@@ -39,6 +39,7 @@ export const getFoldingRangesByIndent = (
   // Return a fold that covers the entire indent level
   return { from: foldStart, to: foldEnd };
 };
+
 //
 // function foldOnIndentLvl(view: EditorView, indentLevel: number) {
 //   const state = view.state;
