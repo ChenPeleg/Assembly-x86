@@ -3,12 +3,16 @@ import { foldGutter } from "@codemirror/language";
 import { Extension } from "@codemirror/state";
 
 class CustomFoldMarker extends GutterMarker {
+  override elementClass = "cm-customFoldMarker";
+
   constructor(private isFolded: boolean) {
     super();
+    this.elementClass = isFolded ? "cm-folded" : "cm-unfolded";
   }
+
   override toDOM() {
     const el = document.createElement("span");
-    el.className = "cm-foldMarker";
+    el.className = "cm-customFoldMarker";
     el.innerText = this.isFolded ? "▼" : "▲"; // Customize the icons here
     return el;
   }
