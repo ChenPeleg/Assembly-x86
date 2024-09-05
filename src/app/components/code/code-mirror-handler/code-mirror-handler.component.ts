@@ -7,12 +7,12 @@ import {
 } from "@angular/core";
 import { basicSetup } from "codemirror";
 import { EditorState, Extension } from "@codemirror/state";
-import { EditorView, gutter, ViewUpdate } from "@codemirror/view";
+import { EditorView } from "@codemirror/view";
 import { DOCUMENT } from "@angular/common";
 import { addMultipleTags } from "../addons/build-tags";
 import { asmTagList } from "../tag-list";
 import { defaultCodeText } from "../../../stores/reducers/code-editor.reducer";
-import { BreakMarker } from "../addons/gutter-breakpoints";
+import { BuildBreakPointGutterExtension } from "../addons/gutter-breakpoints";
 
 @Component({
   selector: "code-mirror-handler",
@@ -30,7 +30,7 @@ export class CodeMirrorHandlerComponent implements AfterViewInit {
   ngAfterViewInit(): void {
     let myEditorElement = this.myEditor.nativeElement;
     let myExt: Extension = [
-      this.BuildBreakPointGutterExtension(),
+      BuildBreakPointGutterExtension(this.breakpoints),
       basicSetup,
       addMultipleTags(asmTagList),
     ];
@@ -48,40 +48,6 @@ export class CodeMirrorHandlerComponent implements AfterViewInit {
     let view = new EditorView({
       state,
       parent: myEditorElement,
-    });
-  }
-
-  private BuildBreakPointGutterExtension(): Extension {
-    const breakpoints = this.breakpoints;
-    return gutter({
-      class: "asm-breakpoints",
-      renderEmptyElements: true,
-
-      domEventHandlers: {
-        click: (view: EditorView, line: any, event: Event): boolean => {
-          const lineNumber = view.state.doc.lineAt(line.from).number;
-          // console.log("lineNumber", lineNumber);
-          breakpoints[lineNumber] = !breakpoints[lineNumber];
-          const changes = { from: line.from, to: line.to };
-
-          const changespec = { from: line.from, to: line.to };
-          // @ts-ignore
-          const updated = view.state.update([{ changes: changespec }]);
-          view.dispatch(updated);
-
-          return true;
-        },
-      },
-      lineMarkerChange: (update: ViewUpdate): boolean => {
-        // console.log(update);
-        // const num = view.state.doc.lineAt(line.from).number;
-        // breakpoints[num] = !breakpoints[num];
-        return true;
-      },
-      lineMarker(view, line) {
-        const num = view.state.doc.lineAt(line.from).number;
-        return new BreakMarker(breakpoints[num]);
-      },
     });
   }
 }
