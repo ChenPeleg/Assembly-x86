@@ -21,7 +21,7 @@ ace.config.set("modePath", "./assets/js");
 const DEBUG_NO_EVENTS = true;
 
 @Component({
-  selector: "asm-editor",
+  selector: "code-editor",
   templateUrl: "./code-editor.component.html",
   styleUrls: ["./code-editor.component.scss"],
   encapsulation: ViewEncapsulation.None,
