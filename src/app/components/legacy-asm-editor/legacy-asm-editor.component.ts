@@ -22,11 +22,11 @@ const DEBUG_NO_EVENTS = true;
 
 @Component({
   selector: "asm-editor",
-  templateUrl: "./asm-editor.html",
-  styleUrls: ["./asm-editor.scss"],
+  templateUrl: "./legacy-asm-editor.component.html",
+  styleUrls: ["./legacy-asm-editor.component.scss"],
   encapsulation: ViewEncapsulation.None,
 })
-export class AsmEditorComponent implements AfterViewInit {
+export class LegacyAsmEditorComponent implements AfterViewInit {
   private static ACTIVE_LINE_CLASS: string = "active-line";
   public lastChar: string = "";
   public hideAssembleButton: boolean = true;
@@ -84,7 +84,7 @@ export class AsmEditorComponent implements AfterViewInit {
       this._activeLine = value;
       this.aceEditor.session.addGutterDecoration(
         value,
-        AsmEditorComponent.ACTIVE_LINE_CLASS
+        LegacyAsmEditorComponent.ACTIVE_LINE_CLASS
       );
       this.aceEditor.gotoLine(value + 1);
     }
@@ -144,7 +144,7 @@ export class AsmEditorComponent implements AfterViewInit {
     if (this._activeLine !== -1 && !this.aceEditor) {
       this.aceEditor?.session.removeGutterDecoration(
         this._activeLine,
-        AsmEditorComponent.ACTIVE_LINE_CLASS
+        LegacyAsmEditorComponent.ACTIVE_LINE_CLASS
       );
     }
   }
