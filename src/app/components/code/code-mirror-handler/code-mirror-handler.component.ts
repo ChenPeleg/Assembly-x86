@@ -35,9 +35,9 @@ export class CodeMirrorHandlerComponent implements AfterViewInit {
     let myExt: Extension = [
       BuildBreakPointGutterExtension(this.breakpoints),
       basicSetup,
-      foldService.of(getFoldingRangesByIndent),
-      addMultipleTags(asmTagList),
       customFoldGutter(),
+      foldService.compute([], (state: EditorState) => getFoldingRangesByIndent),
+      addMultipleTags(asmTagList),
     ];
     let state!: EditorState;
 

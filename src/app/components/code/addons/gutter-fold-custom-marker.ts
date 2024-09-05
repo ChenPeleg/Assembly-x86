@@ -5,7 +5,6 @@ class CustomFoldMarker extends GutterMarker {
   constructor(private isFolded: boolean) {
     super();
   }
-
   override toDOM() {
     const el = document.createElement("span");
     el.className = "cm-foldMarker";
