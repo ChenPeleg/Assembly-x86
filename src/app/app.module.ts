@@ -44,6 +44,7 @@ import { MatInputModule } from "@angular/material/input";
 import { CodeMirrorHandlerComponent } from "./components/code/code-mirror-handler/code-mirror-handler.component";
 import { CodeMirrorWrapperComponent } from "./components/code/code-mirror-wrapper/code-mirror-wrapper.component";
 import { LegacyAsmEditorComponent } from "./components/legacy-asm-editor/legacy-asm-editor.component";
+import { CodeEditorComponent } from "./components/code/code-editor/code-editor.component";
 
 export const AllMatModules = [
   MatToolbarModule,
@@ -68,6 +69,7 @@ export const AllMatModules = [
     RegisterComponent,
     MemoryComponent,
     ExecutionComponent,
+    CodeEditorComponent,
     ConsoleComponent,
     WelcomePageComponent,
     LegacyAsmEditorComponent,
