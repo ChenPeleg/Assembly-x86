@@ -162,3 +162,19 @@
   min-width: 20px;
 }
 
+.asm-editor .cm-gutter.cm-foldGutter  {
+  span:not(.cm-customFoldMarker) {
+    display: none !important;
+  }
+  span.cm-customFoldMarker {
+    display: inline-block;
+    position: relative;
+    transition: transform 1.3s ease-in-out;
+    transform: rotate(0deg);
+  }
+  margin-right : 3px;
+  span.cm-customFoldMarker.cm-folded {
+    transform: rotate(90deg);
+  }
+
+}
