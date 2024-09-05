@@ -1,5 +1,3 @@
-import { basicSetup, EditorView } from "codemirror";
-import { foldEffect, foldService } from "@codemirror/language";
 import { EditorState } from "@codemirror/state";
 
 export const getFoldingRangesByIndent = (
@@ -41,48 +39,48 @@ export const getFoldingRangesByIndent = (
   // Return a fold that covers the entire indent level
   return { from: foldStart, to: foldEnd };
 };
+//
+// function foldOnIndentLvl(view: EditorView, indentLevel: number) {
+//   const state = view.state;
+//   const doc = state.doc;
+//   const foldingRanges = [];
+//
+//   // Loop through all lines of the editor doc
+//   const numberOfLines = doc.lines;
+//   for (let line = 1; line < numberOfLines; line++) {
+//     const lineStart = doc.line(line).from; // Startposition der Zeile
+//     const lineEnd = doc.line(line).to; // Endposition der Zeile
+//
+//     // Get folding range of line
+//     const foldingRange = getFoldingRangesByIndent(state, lineStart, lineEnd);
+//
+//     // If folding range found, add it to the array
+//     if (foldingRange) {
+//       foldingRanges.push(foldingRange);
+//     }
+//   }
+//
+//   // Loop through all folding ranges
+//   for (const foldingRange of foldingRanges) {
+//     const line = doc.lineAt(foldingRange.from); // Get line from folding start position
+//     const lineIntendation = line.text.match(/^\s*/)?.[0].length; // Get intendation of line
+//
+//     // If line has no intendation or intendation is smaller than the indent level, continue (don't fold)
+//     if (!lineIntendation || lineIntendation !== indentLevel) {
+//       continue;
+//     }
+//
+//     // Fold the given range
+//     view.dispatch({
+//       effects: foldEffect.of({ from: foldingRange.from, to: foldingRange.to }),
+//     });
+//   }
+// }
 
-function foldOnIndentLvl(view: EditorView, indentLevel: number) {
-  const state = view.state;
-  const doc = state.doc;
-  const foldingRanges = [];
-
-  // Loop through all lines of the editor doc
-  const numberOfLines = doc.lines;
-  for (let line = 1; line < numberOfLines; line++) {
-    const lineStart = doc.line(line).from; // Startposition der Zeile
-    const lineEnd = doc.line(line).to; // Endposition der Zeile
-
-    // Get folding range of line
-    const foldingRange = getFoldingRangesByIndent(state, lineStart, lineEnd);
-
-    // If folding range found, add it to the array
-    if (foldingRange) {
-      foldingRanges.push(foldingRange);
-    }
-  }
-
-  // Loop through all folding ranges
-  for (const foldingRange of foldingRanges) {
-    const line = doc.lineAt(foldingRange.from); // Get line from folding start position
-    const lineIntendation = line.text.match(/^\s*/)?.[0].length; // Get intendation of line
-
-    // If line has no intendation or intendation is smaller than the indent level, continue (don't fold)
-    if (!lineIntendation || lineIntendation !== indentLevel) {
-      continue;
-    }
-
-    // Fold the given range
-    view.dispatch({
-      effects: foldEffect.of({ from: foldingRange.from, to: foldingRange.to }),
-    });
-  }
-}
-
-const view = new EditorView({
-  doc: "a\nb\nc\nFold 1\n    abc\n    Fold 2\n        def\n        ghijklFold 1\n    abc\n    Fold 2\n        def\n        ghijklFold 1\n    abc\n    Fold 2\n        def\n        ghijkl",
-  extensions: [basicSetup, foldService.of(getFoldingRangesByIndent)],
-  parent: document.body,
-});
-
-foldOnIndentLvl(view, 4);
+// const view = new EditorView({
+//   doc: "a\nb\nc\nFold 1\n    abc\n    Fold 2\n        def\n        ghijklFold 1\n    abc\n    Fold 2\n        def\n        ghijklFold 1\n    abc\n    Fold 2\n        def\n        ghijkl",
+//   extensions: [basicSetup, foldService.of(getFoldingRangesByIndent)],
+//   parent: document.body,
+// });
+//
+// foldOnIndentLvl(view, 4);
