@@ -30,9 +30,9 @@ export class CodeMirrorHandlerComponent implements AfterViewInit {
   ngAfterViewInit(): void {
     let myEditorElement = this.myEditor.nativeElement;
     let myExt: Extension = [
+      this.BuildBreakPointGutterExtension(),
       basicSetup,
       addMultipleTags(asmTagList),
-      this.BuildBreakPointGutter(),
     ];
     let state!: EditorState;
 
@@ -51,7 +51,7 @@ export class CodeMirrorHandlerComponent implements AfterViewInit {
     });
   }
 
-  private BuildBreakPointGutter(): Extension {
+  private BuildBreakPointGutterExtension(): Extension {
     const breakpoints = this.breakpoints;
     return gutter({
       class: "asm-breakpoints",
