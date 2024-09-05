@@ -1,6 +1,4 @@
-<span> Last char: {{lastChar}} </span>
+
 <div  class="asm-editor-container">
-<!--  <mat-progress-bar  mode="indeterminate"></mat-progress-bar>-->
-  <div  #editor [ngClass]="{isTryIt}" [ngStyle]="  editorHeight " class="asm-editor-element"></div>
-  <button (click)="emitCompile()" *ngIf="!hideAssembleButton" class="assemble btn btn-primary" title="Assemble">Assemble</button>
+    <button (click)="emitCompile()" *ngIf="!hideAssembleButton" class="assemble btn btn-primary" title="Assemble">Assemble</button>
 </div>
