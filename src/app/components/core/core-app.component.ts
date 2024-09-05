@@ -9,7 +9,6 @@ import { MemoryBlock } from "../../emulation/memory-block";
 import { CPU, Interrupt } from "../../emulation/cpu";
 import { Assembler, AssemblyException } from "../../assembly/assembler";
 import { Program } from "../../assembly/program";
-import { AsmEditorComponent } from "../asm-editor/asm-editor";
 import { Runtime } from "../../emulation/runtime";
 import { Process } from "../../emulation/process";
 import { ConsoleComponent } from "../console/console";
@@ -21,6 +20,7 @@ import { MemoryDisplay } from "../../models/MemoryDisplay";
 import { MemoryComponent } from "../memory/memory";
 import { UserDataService } from "../../services/user-data.service";
 import { TypeOfCodeInEditor } from "../../models/TypeOfCodeInEditor";
+import { LegacyAsmEditorComponent } from "../legacy-asm-editor/legacy-asm-editor.component";
 
 const defaultCode = `section .data
 hello:
@@ -62,7 +62,9 @@ factorial:
   styleUrls: ["./core-app.component.scss"],
 })
 export class CoreAppComponent implements AfterViewInit, AfterContentInit {
-  @ViewChild(AsmEditorComponent) asmEditor: AsmEditorComponent | undefined;
+  @ViewChild(LegacyAsmEditorComponent) asmEditor:
+    | LegacyAsmEditorComponent
+    | undefined;
   @ViewChild(ConsoleComponent) console: ConsoleComponent | undefined;
   @ViewChild(MemoryComponent) memory: MemoryComponent | undefined;
   @Input("isTryIt") isTryIt: boolean = false;

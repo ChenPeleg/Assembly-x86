@@ -7,7 +7,6 @@ import { RegisterComponent } from "./components/cpu-panel/register";
 import { MemoryComponent } from "./components/memory/memory";
 import { ExecutionComponent } from "./components/execution/execution";
 import { ConsoleComponent } from "./components/console/console";
-import { AsmEditorComponent } from "./components/asm-editor/asm-editor";
 import { FormsModule } from "@angular/forms";
 import { AppRootComponent } from "./components/root/app-root.component";
 import { LayoutComponent } from "./layout/layout.component";
@@ -44,6 +43,7 @@ import { MatProgressBarModule } from "@angular/material/progress-bar";
 import { MatInputModule } from "@angular/material/input";
 import { CodeMirrorHandlerComponent } from "./components/code/code-mirror-handler/code-mirror-handler.component";
 import { CodeMirrorWrapperComponent } from "./components/code/code-mirror-wrapper/code-mirror-wrapper.component";
+import { LegacyAsmEditorComponent } from "./components/legacy-asm-editor/legacy-asm-editor.component";
 
 export const AllMatModules = [
   MatToolbarModule,
@@ -70,7 +70,7 @@ export const AllMatModules = [
     ExecutionComponent,
     ConsoleComponent,
     WelcomePageComponent,
-    AsmEditorComponent,
+    LegacyAsmEditorComponent,
     DocumentationComponent,
     ContentTableComponent,
     DisplayCockpitComponent,
