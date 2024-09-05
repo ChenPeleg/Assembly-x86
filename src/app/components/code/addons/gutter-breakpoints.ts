@@ -1,24 +1,7 @@
-import { EditorView, gutter, GutterMarker, ViewUpdate } from "@codemirror/view";
+import { EditorView, gutter, ViewUpdate } from "@codemirror/view";
 import { Extension } from "@codemirror/state";
+import { BreakMarker } from "./gutter-breakpoints-custom-marker";
 
-class BreakMarker extends GutterMarker {
-  private readonly show: boolean;
-  constructor(show: boolean) {
-    super();
-    this.show = show;
-  }
-
-  override(other: GutterMarker): boolean {
-    return false;
-  }
-
-  override toDOM() {
-    const el = document.createElement("span");
-    el.setAttribute("class", this.show ? "active" : "");
-    el.innerText = this.show ? "⬤" : " ";
-    return el;
-  }
-}
 export function BuildBreakPointGutterExtension(breakPointRef: {
   [key: number]: boolean;
 }): Extension {
