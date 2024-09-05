@@ -1,4 +1,4 @@
-import { CodeMirrorTag } from "./build-tags";
+import { CodeMirrorTag } from "./addons/build-tags";
 
 const allTags = [
   {

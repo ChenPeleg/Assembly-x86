@@ -9,10 +9,10 @@ import { basicSetup } from "codemirror";
 import { EditorState, Extension } from "@codemirror/state";
 import { EditorView, gutter, ViewUpdate } from "@codemirror/view";
 import { DOCUMENT } from "@angular/common";
-import { addMultipleTags } from "../build-tags";
+import { addMultipleTags } from "../addons/build-tags";
 import { asmTagList } from "../tag-list";
 import { defaultCodeText } from "../../../stores/reducers/code-editor.reducer";
-import { BreakMarker } from "../gutter-breakpoints";
+import { BreakMarker } from "../addons/gutter-breakpoints";
 
 @Component({
   selector: "code-mirror-handler",
@@ -64,9 +64,9 @@ export class CodeMirrorHandlerComponent implements AfterViewInit {
           breakpoints[lineNumber] = !breakpoints[lineNumber];
           const changes = { from: line.from, to: line.to };
 
-          var changespec = { from: line.from, to: line.to };
+          const changespec = { from: line.from, to: line.to };
           // @ts-ignore
-          var updated = view.state.update([{ changes: changespec }]);
+          const updated = view.state.update([{ changes: changespec }]);
           view.dispatch(updated);
 
           return true;
