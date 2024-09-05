@@ -12,8 +12,10 @@ class CustomFoldMarker extends GutterMarker {
 
   override toDOM() {
     const el = document.createElement("span");
-    el.className = "cm-customFoldMarker";
-    el.innerText = this.isFolded ? "▼" : "▲"; // Customize the icons here
+    el.className = `cm-customFoldMarker ${
+      this.isFolded ? "cm-folded" : "cm-unfolded"
+    }`;
+    el.innerText = this.isFolded ? ">" : ">"; // Customize the icons here
     return el;
   }
 }
@@ -21,7 +23,7 @@ class CustomFoldMarker extends GutterMarker {
 export function customFoldGutter(): Extension {
   return foldGutter({
     markerDOM: (isFolded) => new CustomFoldMarker(isFolded).toDOM(),
-    openText: "▼", // Customize the open icon here
-    closedText: "▲", // Customize the closed icon here
+    openText: ">", // Customize the open icon here
+    closedText: ">", // Customize the closed icon here
   });
 }
