@@ -25,7 +25,7 @@ import { defaultCodeText } from "../../../stores/reducers/code-editor.reducer";
 import { EditorView, ViewUpdate } from "@codemirror/view";
 import { DOCUMENT } from "@angular/common";
 
-const DEBUG_NO_EVENTS = true;
+const DEBUG_NO_EVENTS = false;
 
 @Component({
   selector: "code-editor",
@@ -86,17 +86,21 @@ export class CodeEditorComponent implements AfterViewInit {
     if (DEBUG_NO_EVENTS) {
       return;
     }
+    console.log(value);
 
-    this.removeActiveLine();
+    // this.removeActiveLine();
 
-    if (value !== null) {
-      this._activeLine = value;
-      // this.legacyAceEditor.session.addGutterDecoration(
-      //   value,
-      //   CodeEditorComponent.ACTIVE_LINE_CLASS
-      // );
-      // this.legacyAceEditor.gotoLine(value + 1);
+    if (!this.codeEditorView) {
+      return;
     }
+
+    const line = this.codeEditorView.state.doc.line(value + 1);
+    const transaction = this.codeEditorView.state.update({
+      selection: { anchor: line.from },
+      scrollIntoView: true,
+    });
+
+    this.codeEditorView.dispatch(transaction);
   }
 
   ngAfterViewInit() {
