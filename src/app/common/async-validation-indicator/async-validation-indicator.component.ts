@@ -48,29 +48,9 @@ export enum GeneralFieldValidationStatus {
     </div>
     <div
       *ngIf="validationStatus === AsyncValidationStatus.CodeChanged"
-      class="async-validation-icon-wrapper"
+      class="async-validation-icon-wrapper check-spinner"
     >
-      <div class="text-blue-600">
-        <svg
-          fill="#5f6368"
-          height="24px"
-          viewBox="0 -960 960 960"
-          width="24px"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M320-240 80-480l240-240 57 57-184 184 183 183-56 56Zm320 0-57-57 184-184-183-183 56-56 240 240-240 240Z"
-          />
-        </svg>
-
-        <!--        {{ "{...}" }}-->
-        <!--        <img-->
-        <!--          ngSrc="../../../assets/svg/form-error-icon.svg"-->
-        <!--          alt="error"-->
-        <!--          height="24"-->
-        <!--          width="24"-->
-        <!--        />-->
-      </div>
+      <spinner-with-check-mark [status]="'changed'"></spinner-with-check-mark>
     </div>
     <div
       class="async-validation-message "

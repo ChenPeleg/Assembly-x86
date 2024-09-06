@@ -8,7 +8,7 @@ import { Component, Input, OnInit } from "@angular/core";
 export class SpinnerWithCheckMarkComponent implements OnInit {
   public styleObj: any = {};
   @Input("status")
-  public status: "pending" | "success" | "error" = "pending";
+  public status: "pending" | "success" | "error" | "changed" = "pending";
 
   @Input("Scale") set ScaleInPx(value: number) {
     const percent = value;
@@ -30,7 +30,9 @@ export class SpinnerWithCheckMarkComponent implements OnInit {
 
   public ngOnInit() {
     setTimeout(() => {
-      this.status = "success";
+      if (this.status === "pending") {
+        this.status = "success";
+      }
     }, 2000);
   }
 }

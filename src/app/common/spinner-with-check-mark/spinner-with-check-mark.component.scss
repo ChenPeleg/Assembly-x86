@@ -20,20 +20,34 @@ $noal-blue: #6B72E6;
   border-radius: 50%;
   animation: rotation 0.8s linear infinite;
 }
-.spinner.success {
-  top: 1px;
+.spinner.changed {
+  top: 6px;
   right: -4px;
   display: inline-block;
-  transform: rotate(45deg);
-  height: 1.1rem;
+  transform: rotate(-45deg);
+  height: 0.6rem;
   width: 0.6rem;
-  border-bottom: 4px solid $noal-blue;
-  border-right: 4px solid $noal-blue;
+  border-bottom: 2px solid $noal-blue;
+  border-right: 2px solid $noal-blue;
+  border-radius: 0 0 0 0;
+  animation: none;
+}
+.spinner.changed:after {
+  content: "";
+  position: relative;
+  top: -6px;
+  right: 6px;
+  display: inline-block;
+  transform: rotate(-180deg);
+  height: 0.6rem;
+  width: 0.6rem;
+  border-bottom: 2px solid $noal-blue;
+  border-right: 2px solid $noal-blue;
   border-radius: 0 0 0 0;
   animation: none;
 }
 
-.spinner.changed {
+.spinner.success {
   top: 1px;
   right: -4px;
   display: inline-block;
