@@ -9,7 +9,7 @@ import {
   ViewEncapsulation,
 } from "@angular/core";
 import { getScreenMediaState } from "../../../util/screenMediaSatate";
-import { debounceTime, Subject } from "rxjs";
+import { Subject } from "rxjs";
 
 import { UserDataService } from "../../../services/user-data.service";
 import { EditorState, Extension } from "@codemirror/state";
@@ -37,8 +37,7 @@ export class CodeEditorComponent implements AfterViewInit {
   private static ACTIVE_LINE_CLASS: string = "active-line";
   public title = "component-overview";
   @ViewChild("myeditor") myEditor: any;
-  public lastChar: string = "";
-  public hideAssembleButton: boolean = true;
+
   public numberOfLines = 40;
   public isMobile: boolean = getScreenMediaState().isMobile;
   @Output() compile: EventEmitter<string> = new EventEmitter<string>();
@@ -49,12 +48,10 @@ export class CodeEditorComponent implements AfterViewInit {
   private codeEditorView: EditorView | null = null;
   private codeEditorState: EditorState | null = null;
   private readonly $editorChange: Subject<boolean> = new Subject<boolean>();
-  private readonly $debouncedEditorChange = this.$editorChange.pipe(
-    debounceTime(1000)
-  );
 
   private updateListener = EditorView.updateListener.of((v: ViewUpdate) => {
     if (v.docChanged) {
+      this.$editorChange.next(true);
       console.log("Document changed:", v.state.doc.toString());
     }
   });
@@ -64,19 +61,16 @@ export class CodeEditorComponent implements AfterViewInit {
     @Inject(DOCUMENT) private document: Document
   ) {
     this.codeEditorService.$editorCodeUpdater.subscribe((change) => {
-      // this.legacyAceEditor?.session.getDocument().setValue(change.code);
-    });
-    this.$debouncedEditorChange.subscribe((change) => {
-      // const newValue = this.aceEditor?.session.getValue();
-      // this.numberOfLines = newValue?.split("\n").length || this.numberOfLines;
-      // this.codeEditorService.updateCodeChangesTracker(newValue);
+      if (!this.codeEditorView) {
+        return;
+      }
+      this.updateEditorContent(this.codeEditorView, change.code);
     });
   }
 
   private _breakpoints: { [key: number]: boolean } = {};
 
   get breakpoints(): number[] {
-    // convert object to array
     return Object.keys(this._breakpoints).map((key) => parseInt(key, 10));
   }
 
@@ -155,7 +149,15 @@ export class CodeEditorComponent implements AfterViewInit {
   }
 
   public emitCompile() {
-    // this.compile.emit(this.legacyAceEditor?.getValue());
+    const code = this.codeEditorView?.state.doc.toString() || "";
+    this.compile.emit(code);
+  }
+
+  private updateEditorContent(view: EditorView, newContent: string) {
+    const transaction = view.state.update({
+      changes: { from: 0, to: view.state.doc.length, insert: newContent },
+    });
+    view.dispatch(transaction);
   }
 
   private toggleBreakpoint(row: number) {
