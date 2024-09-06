@@ -41,10 +41,10 @@ import { MatMenuModule } from "@angular/material/menu";
 import { NgOptimizedImage } from "@angular/common";
 import { MatProgressBarModule } from "@angular/material/progress-bar";
 import { MatInputModule } from "@angular/material/input";
-import { CodeMirrorHandlerComponent } from "./components/code/code-mirror-handler/code-mirror-handler.component";
 import { CodeMirrorWrapperComponent } from "./components/code/code-mirror-wrapper/code-mirror-wrapper.component";
 import { LegacyAsmEditorComponent } from "./components/legacy-asm-editor/legacy-asm-editor.component";
 import { CodeEditorComponent } from "./components/code/code-editor/code-editor.component";
+import { LegacyCodeMirrorHandlerComponent } from "./archive/legacy-code-mirror-handler/legacy-code-mirror-handler.component";
 
 export const AllMatModules = [
   MatToolbarModule,
@@ -78,7 +78,7 @@ export const AllMatModules = [
     DisplayCockpitComponent,
     MemoryOptionsComponent,
     CodeMirrorWrapperComponent,
-    CodeMirrorHandlerComponent,
+    LegacyCodeMirrorHandlerComponent,
   ],
   imports: [
     ...AllMatModules,
