@@ -20,7 +20,7 @@ import { MemoryDisplay } from "../../models/MemoryDisplay";
 import { MemoryComponent } from "../memory/memory";
 import { UserDataService } from "../../services/user-data.service";
 import { TypeOfCodeInEditor } from "../../models/TypeOfCodeInEditor";
-import { LegacyAsmEditorComponent } from "../legacy-asm-editor/legacy-asm-editor.component";
+import { CodeEditorComponent } from "../code/code-editor/code-editor.component";
 
 const defaultCode = `section .data
 hello:
@@ -62,9 +62,7 @@ factorial:
   styleUrls: ["./core-app.component.scss"],
 })
 export class CoreAppComponent implements AfterViewInit, AfterContentInit {
-  @ViewChild(LegacyAsmEditorComponent) asmEditor:
-    | LegacyAsmEditorComponent
-    | undefined;
+  @ViewChild(CodeEditorComponent) asmEditor: CodeEditorComponent | undefined;
   @ViewChild(ConsoleComponent) console: ConsoleComponent | undefined;
   @ViewChild(MemoryComponent) memory: MemoryComponent | undefined;
   @Input("isTryIt") isTryIt: boolean = false;

@@ -1,7 +1,6 @@
 import {
   AfterViewInit,
   Component,
-  ElementRef,
   EventEmitter,
   Inject,
   Input,
@@ -11,7 +10,7 @@ import {
 } from "@angular/core";
 import { getScreenMediaState } from "../../../util/screenMediaSatate";
 import { debounceTime, Subject } from "rxjs";
-import { Editor } from "brace";
+
 import { UserDataService } from "../../../services/user-data.service";
 import { EditorState, Extension } from "@codemirror/state";
 import { BuildBreakPointGutterExtension } from "../addons/gutter-breakpoints";
@@ -23,7 +22,7 @@ import { getFoldingRangesByIndent } from "../addons/gutter-fold-code";
 import { addMultipleTags } from "../addons/build-tags";
 import { asmTagList } from "../tag-list";
 import { defaultCodeText } from "../../../stores/reducers/code-editor.reducer";
-import { EditorView } from "@codemirror/view";
+import { EditorView, ViewUpdate } from "@codemirror/view";
 import { DOCUMENT } from "@angular/common";
 
 const DEBUG_NO_EVENTS = true;
@@ -47,21 +46,25 @@ export class CodeEditorComponent implements AfterViewInit {
     number[]
   >();
   @Input("isTryIt") isTryIt: boolean = false;
+  private codeEditorView: EditorView | null = null;
+  private codeEditorState: EditorState | null = null;
   private readonly $editorChange: Subject<boolean> = new Subject<boolean>();
   private readonly $debouncedEditorChange = this.$editorChange.pipe(
     debounceTime(1000)
   );
-  // @ts-ignore
-  @ViewChild("editor") private legacyEditorRemove: ElementRef;
-  // @ts-ignore
-  private legacyAceEditor: Editor | null = null;
+
+  private updateListener = EditorView.updateListener.of((v: ViewUpdate) => {
+    if (v.docChanged) {
+      console.log("Document changed:", v.state.doc.toString());
+    }
+  });
 
   constructor(
     private codeEditorService: UserDataService,
     @Inject(DOCUMENT) private document: Document
   ) {
     this.codeEditorService.$editorCodeUpdater.subscribe((change) => {
-      this.legacyAceEditor?.session.getDocument().setValue(change.code);
+      // this.legacyAceEditor?.session.getDocument().setValue(change.code);
     });
     this.$debouncedEditorChange.subscribe((change) => {
       // const newValue = this.aceEditor?.session.getValue();
@@ -76,6 +79,7 @@ export class CodeEditorComponent implements AfterViewInit {
     // convert object to array
     return Object.keys(this._breakpoints).map((key) => parseInt(key, 10));
   }
+
   get editorHeight() {
     const fives = Math.ceil((this.numberOfLines || 1) / 5) * 5;
     return this.isMobile ? { height: `${fives * 14}px` } : null;
@@ -88,19 +92,16 @@ export class CodeEditorComponent implements AfterViewInit {
     if (DEBUG_NO_EVENTS) {
       return;
     }
-    if (this.legacyAceEditor === null || this.legacyAceEditor) {
-      return;
-    }
 
     this.removeActiveLine();
 
     if (value !== null) {
       this._activeLine = value;
-      this.legacyAceEditor.session.addGutterDecoration(
-        value,
-        CodeEditorComponent.ACTIVE_LINE_CLASS
-      );
-      this.legacyAceEditor.gotoLine(value + 1);
+      // this.legacyAceEditor.session.addGutterDecoration(
+      //   value,
+      //   CodeEditorComponent.ACTIVE_LINE_CLASS
+      // );
+      // this.legacyAceEditor.gotoLine(value + 1);
     }
   }
 
@@ -113,23 +114,22 @@ export class CodeEditorComponent implements AfterViewInit {
       customFoldGutter(),
       foldService.of(getFoldingRangesByIndent),
       addMultipleTags(asmTagList),
+      this.updateListener,
     ];
-    let state!: EditorState;
 
     try {
-      state = EditorState.create({
+      this.codeEditorState = EditorState.create({
         doc: defaultCodeText,
         extensions: myExt,
+      });
+
+      this.codeEditorView = new EditorView({
+        state: this.codeEditorState,
+        parent: myEditorElement,
       });
     } catch (e) {
       console.error(e);
     }
-
-    let view = new EditorView({
-      state,
-      parent: myEditorElement,
-    });
-
     /** Old Legacy Code */
     // const el = this.legacyEditorRemove.nativeElement;
     // this.legacyAceEditor = ace.edit(el);
@@ -155,7 +155,7 @@ export class CodeEditorComponent implements AfterViewInit {
   }
 
   public emitCompile() {
-    this.compile.emit(this.legacyAceEditor?.getValue());
+    // this.compile.emit(this.legacyAceEditor?.getValue());
   }
 
   private toggleBreakpoint(row: number) {
@@ -182,11 +182,11 @@ export class CodeEditorComponent implements AfterViewInit {
     if (DEBUG_NO_EVENTS) {
       return;
     }
-    if (this._activeLine !== -1 && !this.legacyAceEditor) {
-      this.legacyAceEditor?.session.removeGutterDecoration(
-        this._activeLine,
-        CodeEditorComponent.ACTIVE_LINE_CLASS
-      );
-    }
+    // if (this._activeLine !== -1 && !this.legacyAceEditor) {
+    //   this.legacyAceEditor?.session.removeGutterDecoration(
+    //     this._activeLine,
+    //     CodeEditorComponent.ACTIVE_LINE_CLASS
+    //   );
+    // }
   }
 }
