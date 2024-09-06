@@ -96,9 +96,9 @@ export class CoreAppComponent implements AfterViewInit, AfterContentInit {
       typeOfCode: TypeOfCodeInEditor.Default,
       savedCodeId: null,
     });
-    if (true) return;
+
     // @ts-ignore
-    this.asmEditor.text = defaultCode;
+    // this.asmEditor.text = defaultCode;
     // this.requestCompile();
   }
 

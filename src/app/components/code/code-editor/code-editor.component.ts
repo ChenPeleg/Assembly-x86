@@ -52,7 +52,7 @@ export class CodeEditorComponent implements AfterViewInit {
   private updateListener = EditorView.updateListener.of((v: ViewUpdate) => {
     if (v.docChanged) {
       this.$editorChange.next(true);
-      console.log("Document changed:", v.state.doc.toString());
+      console.log("Document changed:");
     }
   });
 
@@ -78,9 +78,6 @@ export class CodeEditorComponent implements AfterViewInit {
     const fives = Math.ceil((this.numberOfLines || 1) / 5) * 5;
     return this.isMobile ? { height: `${fives * 14}px` } : null;
   }
-
-  // @ts-ignore
-  private _activeLine: number = null;
 
   @Input() set activeLine(value: number) {
     if (DEBUG_NO_EVENTS) {
