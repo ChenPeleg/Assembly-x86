@@ -22,6 +22,7 @@ import { UserDataService } from "../../services/user-data.service";
 import { TypeOfCodeInEditor } from "../../models/TypeOfCodeInEditor";
 import { CodeEditorComponent } from "../code/code-editor/code-editor.component";
 import { GeneralFieldValidationStatus } from "../../common/async-validation-indicator/async-validation-indicator.component";
+import { sleep } from "../../util/sleep";
 
 const defaultCode = `section .data
 hello:
@@ -117,6 +118,7 @@ export class CoreAppComponent implements AfterViewInit, AfterContentInit {
 
   compileSource(source: string) {
     try {
+      this.codeStatus = GeneralFieldValidationStatus.Pending;
       let program: Program = this.assembler.assemble(source);
       let memory: MemoryBlock = new MemoryBlock(this.memorySize);
       this.cpu = new CPU(program, memory);
@@ -131,11 +133,14 @@ export class CoreAppComponent implements AfterViewInit, AfterContentInit {
       this.runtime.process = new Process(this.cpu);
 
       this.compileErrors = "";
-      this.codeStatus = GeneralFieldValidationStatus.Valid;
+      sleep(400).then(() => {
+        this.codeStatus = GeneralFieldValidationStatus.Valid;
+      });
       // this.compileSuccess = "Assembled successfully!";
     } catch (e) {
       if (e instanceof AssemblyException) {
         this.compileErrors = `Error at line ${e.line}: ${e.message}`;
+        this.codeStatus = GeneralFieldValidationStatus.Invalid;
       } else {
         throw e;
       }
