@@ -86,10 +86,6 @@ export class CodeEditorComponent implements AfterViewInit {
     if (DEBUG_NO_EVENTS) {
       return;
     }
-    console.log(value);
-
-    // this.removeActiveLine();
-
     if (!this.codeEditorView) {
       return;
     }
