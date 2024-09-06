@@ -63,6 +63,8 @@ factorial:
   styleUrls: ["./core-app.component.scss"],
 })
 export class CoreAppComponent implements AfterViewInit, AfterContentInit {
+  public codeStatus: GeneralFieldValidationStatus =
+    GeneralFieldValidationStatus.NoInfo;
   public readonly compileMessages: Record<
     keyof typeof GeneralFieldValidationStatus,
     string
@@ -71,7 +73,7 @@ export class CoreAppComponent implements AfterViewInit, AfterContentInit {
     Pending: "Compiling...",
     Valid: "Compiled successfully!",
     Invalid: "Error",
-    CodeChanged: "Error",
+    CodeChanged: "Code Changed",
     Missing: "Error",
   };
   @ViewChild(CodeEditorComponent) asmEditor: CodeEditorComponent | undefined;
@@ -102,30 +104,15 @@ export class CoreAppComponent implements AfterViewInit, AfterContentInit {
   ngAfterContentInit(): void {
     setTimeout(() => this.requestCompile(), 50);
   }
-
+  editorDocChanged(event: boolean) {
+    this.codeStatus = GeneralFieldValidationStatus.CodeChanged;
+  }
   ngAfterViewInit() {
     this.codeEditorService.updateCodeEditor({
       code: defaultCode,
       typeOfCode: TypeOfCodeInEditor.Default,
       savedCodeId: null,
     });
-
-    // @ts-ignore
-    // this.asmEditor.text = defaultCode;
-    // this.requestCompile();
-  }
-
-  public async setEditorText(text: string): Promise<void> {
-    // if (!this.asmEditor) {
-    //   await sleep(200);
-    //   if (!this.asmEditor) return;
-    // }
-    // this.asmEditor.text = text;
-    // this.codeEditorService.updateCodeEditor({
-    //   code: text,
-    //   typeOfCode: TypeOfCodeInEditor.Default,
-    //   savedCodeId: null,
-    // });
   }
 
   compileSource(source: string) {
@@ -144,6 +131,7 @@ export class CoreAppComponent implements AfterViewInit, AfterContentInit {
       this.runtime.process = new Process(this.cpu);
 
       this.compileErrors = "";
+      this.codeStatus = GeneralFieldValidationStatus.Valid;
       // this.compileSuccess = "Assembled successfully!";
     } catch (e) {
       if (e instanceof AssemblyException) {

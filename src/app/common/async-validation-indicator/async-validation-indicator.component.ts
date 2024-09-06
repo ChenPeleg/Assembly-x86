@@ -32,7 +32,6 @@ export enum GeneralFieldValidationStatus {
 
     <div
       *ngIf="
-        validationStatus === AsyncValidationStatus.CodeChanged ||
         validationStatus === AsyncValidationStatus.Invalid ||
         validationStatus === AsyncValidationStatus.Missing
       "
@@ -45,6 +44,20 @@ export enum GeneralFieldValidationStatus {
           height="24"
           width="24"
         />
+      </div>
+    </div>
+    <div
+      *ngIf="validationStatus === AsyncValidationStatus.CodeChanged"
+      class="async-validation-icon-wrapper"
+    >
+      <div class="text-blue-600">
+        {{ "{...}" }}
+        <!--        <img-->
+        <!--          ngSrc="../../../assets/svg/form-error-icon.svg"-->
+        <!--          alt="error"-->
+        <!--          height="24"-->
+        <!--          width="24"-->
+        <!--        />-->
       </div>
     </div>
     <div
