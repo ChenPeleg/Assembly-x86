@@ -20,9 +20,12 @@
           <span *ngIf="compileSuccess" class="text-green-900 "> {{ compileSuccess }}</span>
 
         </div>
-        <asm-editor (breakpointChange)="onBreakpointChanged($event)" (compile)="compileSource($event)"
+        <code-editor (breakpointChange)="onBreakpointChanged($event)" (compile)="compileSource($event)"
                     [activeLine]="getActiveLine()"
-                    [isTryIt]="isTryIt"></asm-editor>
+                    [isTryIt]="isTryIt"></code-editor>
+<!--        <asm-editor (breakpointChange)="onBreakpointChanged($event)" (compile)="compileSource($event)"-->
+<!--                    [activeLine]="getActiveLine()"-->
+<!--                    [isTryIt]="isTryIt"></asm-editor>-->
 
       </div>
     </div>

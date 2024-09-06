@@ -10,7 +10,7 @@ import {
 } from "@angular/core";
 import { getScreenMediaState } from "../../../util/screenMediaSatate";
 import { debounceTime, Subject } from "rxjs";
-import ace, { Editor } from "brace";
+import { Editor } from "brace";
 import { UserDataService } from "../../../services/user-data.service";
 import * as _ from "lodash";
 
@@ -39,13 +39,13 @@ export class CodeEditorComponent implements AfterViewInit {
     debounceTime(1000)
   );
   // @ts-ignore
-  @ViewChild("editor") private editor: ElementRef;
+  @ViewChild("editor") private legacyEditorRemove: ElementRef;
   // @ts-ignore
-  private aceEditor: Editor | null = null;
+  private legacyAceEditor: Editor | null = null;
 
   constructor(private codeEditorService: UserDataService) {
     this.codeEditorService.$editorCodeUpdater.subscribe((change) => {
-      this.aceEditor?.session.getDocument().setValue(change.code);
+      this.legacyAceEditor?.session.getDocument().setValue(change.code);
     });
     this.$debouncedEditorChange.subscribe((change) => {
       // const newValue = this.aceEditor?.session.getValue();
@@ -71,7 +71,7 @@ export class CodeEditorComponent implements AfterViewInit {
     if (DEBUG_NO_EVENTS) {
       return;
     }
-    if (this.aceEditor === null || this.aceEditor) {
+    if (this.legacyAceEditor === null || this.legacyAceEditor) {
       return;
     }
 
@@ -79,40 +79,41 @@ export class CodeEditorComponent implements AfterViewInit {
 
     if (value !== null) {
       this._activeLine = value;
-      this.aceEditor.session.addGutterDecoration(
+      this.legacyAceEditor.session.addGutterDecoration(
         value,
         CodeEditorComponent.ACTIVE_LINE_CLASS
       );
-      this.aceEditor.gotoLine(value + 1);
+      this.legacyAceEditor.gotoLine(value + 1);
     }
   }
 
   ngAfterViewInit() {
-    const el = this.editor.nativeElement;
-    this.aceEditor = ace.edit(el);
-
-    this.aceEditor.session.setMode("ace/mode/assembly_x86");
-    if (DEBUG_NO_EVENTS) {
-      return;
-    }
-    this.aceEditor.on("guttermousedown", (e: any) => {
-      let target = e.domEvent.target;
-      if (target.className.indexOf("ace_gutter-cell") === -1) {
-        return;
-      }
-
-      let row = e.getDocumentPosition().row;
-      this.toggleBreakpoint(row);
-      e.stop();
-    });
-    this.aceEditor.on("change", (e: any) => {
-      this.lastChar = e.lines[0];
-      this.$editorChange.next(false);
-    });
+    /** Old Legacy Code */
+    // const el = this.legacyEditorRemove.nativeElement;
+    // this.legacyAceEditor = ace.edit(el);
+    //
+    // this.legacyAceEditor.session.setMode("ace/mode/assembly_x86");
+    // if (DEBUG_NO_EVENTS) {
+    //   return;
+    // }
+    // this.legacyAceEditor.on("guttermousedown", (e: any) => {
+    //   let target = e.domEvent.target;
+    //   if (target.className.indexOf("ace_gutter-cell") === -1) {
+    //     return;
+    //   }
+    //
+    //   let row = e.getDocumentPosition().row;
+    //   this.toggleBreakpoint(row);
+    //   e.stop();
+    // });
+    // this.legacyAceEditor.on("change", (e: any) => {
+    //   this.lastChar = e.lines[0];
+    //   this.$editorChange.next(false);
+    // });
   }
 
   public emitCompile() {
-    this.compile.emit(this.aceEditor?.getValue());
+    this.compile.emit(this.legacyAceEditor?.getValue());
   }
 
   private toggleBreakpoint(row: number) {
@@ -120,10 +121,10 @@ export class CodeEditorComponent implements AfterViewInit {
       return;
     }
     if (this.hasBreakpoint(row)) {
-      this.aceEditor?.session.clearBreakpoint(row);
+      this.legacyAceEditor?.session.clearBreakpoint(row);
       _.remove(this._breakpoints, (value: number) => value === row);
     } else {
-      this.aceEditor?.session.setBreakpoint(row, "ace_breakpoint");
+      this.legacyAceEditor?.session.setBreakpoint(row, "ace_breakpoint");
       this._breakpoints.push(row);
     }
 
@@ -138,8 +139,8 @@ export class CodeEditorComponent implements AfterViewInit {
     if (DEBUG_NO_EVENTS) {
       return;
     }
-    if (this._activeLine !== -1 && !this.aceEditor) {
-      this.aceEditor?.session.removeGutterDecoration(
+    if (this._activeLine !== -1 && !this.legacyAceEditor) {
+      this.legacyAceEditor?.session.removeGutterDecoration(
         this._activeLine,
         CodeEditorComponent.ACTIVE_LINE_CLASS
       );
