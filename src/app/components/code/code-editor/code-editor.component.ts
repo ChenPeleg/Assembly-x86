@@ -9,7 +9,6 @@ import {
   ViewEncapsulation,
 } from "@angular/core";
 import { getScreenMediaState } from "../../../util/screenMediaSatate";
-import { Subject } from "rxjs";
 
 import { UserDataService } from "../../../services/user-data.service";
 import { EditorState, Extension } from "@codemirror/state";
@@ -44,15 +43,16 @@ export class CodeEditorComponent implements AfterViewInit {
   @Output() breakpointChange: EventEmitter<number[]> = new EventEmitter<
     number[]
   >();
+  @Output() editorDocChanged: EventEmitter<boolean> =
+    new EventEmitter<boolean>();
   @Input("isTryIt") isTryIt: boolean = false;
   private codeEditorView: EditorView | null = null;
   private codeEditorState: EditorState | null = null;
-  private readonly $editorChange: Subject<boolean> = new Subject<boolean>();
+  // private readonly $editorChange: Subject<boolean> = new Subject<boolean>();
 
   private updateListener = EditorView.updateListener.of((v: ViewUpdate) => {
     if (v.docChanged) {
-      this.$editorChange.next(true);
-      console.log("Document changed:");
+      this.editorDocChanged.next(true);
     }
   });
 
@@ -121,28 +121,6 @@ export class CodeEditorComponent implements AfterViewInit {
     } catch (e) {
       console.error(e);
     }
-    /** Old Legacy Code */
-    // const el = this.legacyEditorRemove.nativeElement;
-    // this.legacyAceEditor = ace.edit(el);
-    //
-    // this.legacyAceEditor.session.setMode("ace/mode/assembly_x86");
-    // if (DEBUG_NO_EVENTS) {
-    //   return;
-    // }
-    // this.legacyAceEditor.on("guttermousedown", (e: any) => {
-    //   let target = e.domEvent.target;
-    //   if (target.className.indexOf("ace_gutter-cell") === -1) {
-    //     return;
-    //   }
-    //
-    //   let row = e.getDocumentPosition().row;
-    //   this.toggleBreakpoint(row);
-    //   e.stop();
-    // });
-    // this.legacyAceEditor.on("change", (e: any) => {
-    //   this.lastChar = e.lines[0];
-    //   this.$editorChange.next(false);
-    // });
   }
 
   public emitCompile() {

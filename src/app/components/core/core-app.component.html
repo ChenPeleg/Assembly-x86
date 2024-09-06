@@ -7,7 +7,7 @@
       <span> Assemble</span>
     </button>
     <div>
-      <async-validation-indicator [textMessages]="compileMessages "  [validationStatus]="GeneralFieldValidationStatus.Pending"></async-validation-indicator> </div>
+      <async-validation-indicator [textMessages]="compileMessages "  [validationStatus]="codeStatus"></async-validation-indicator> </div>
     <div class="hidden sm:block">
       <display-cockpit></display-cockpit>
     </div>
@@ -23,11 +23,9 @@
 
         </div>
         <code-editor (breakpointChange)="onBreakpointChanged($event)" (compile)="compileSource($event)"
-                    [activeLine]="getActiveLine()"
-                    [isTryIt]="isTryIt"></code-editor>
-<!--        <asm-editor (breakpointChange)="onBreakpointChanged($event)" (compile)="compileSource($event)"-->
-<!--                    [activeLine]="getActiveLine()"-->
-<!--                    [isTryIt]="isTryIt"></asm-editor>-->
+                    (editorDocChanged)="editorDocChanged($event)"
+                    [activeLine]="getActiveLine()" [isTryIt]="isTryIt"></code-editor>
+
 
       </div>
     </div>
