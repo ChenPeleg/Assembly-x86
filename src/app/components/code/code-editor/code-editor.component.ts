@@ -3,6 +3,7 @@ import {
   Component,
   ElementRef,
   EventEmitter,
+  Inject,
   Input,
   Output,
   ViewChild,
@@ -12,7 +13,18 @@ import { getScreenMediaState } from "../../../util/screenMediaSatate";
 import { debounceTime, Subject } from "rxjs";
 import { Editor } from "brace";
 import { UserDataService } from "../../../services/user-data.service";
-import * as _ from "lodash";
+import { EditorState, Extension } from "@codemirror/state";
+import { BuildBreakPointGutterExtension } from "../addons/gutter-breakpoints";
+import { basicSetup } from "codemirror";
+import { customCMTheme } from "../addons/code-mirror-theme";
+import { customFoldGutter } from "../addons/gutter-fold-custom-marker";
+import { foldService } from "@codemirror/language";
+import { getFoldingRangesByIndent } from "../addons/gutter-fold-code";
+import { addMultipleTags } from "../addons/build-tags";
+import { asmTagList } from "../tag-list";
+import { defaultCodeText } from "../../../stores/reducers/code-editor.reducer";
+import { EditorView } from "@codemirror/view";
+import { DOCUMENT } from "@angular/common";
 
 const DEBUG_NO_EVENTS = true;
 
@@ -24,7 +36,8 @@ const DEBUG_NO_EVENTS = true;
 })
 export class CodeEditorComponent implements AfterViewInit {
   private static ACTIVE_LINE_CLASS: string = "active-line";
-
+  public title = "component-overview";
+  @ViewChild("myeditor") myEditor: any;
   public lastChar: string = "";
   public hideAssembleButton: boolean = true;
   public numberOfLines = 40;
@@ -43,7 +56,10 @@ export class CodeEditorComponent implements AfterViewInit {
   // @ts-ignore
   private legacyAceEditor: Editor | null = null;
 
-  constructor(private codeEditorService: UserDataService) {
+  constructor(
+    private codeEditorService: UserDataService,
+    @Inject(DOCUMENT) private document: Document
+  ) {
     this.codeEditorService.$editorCodeUpdater.subscribe((change) => {
       this.legacyAceEditor?.session.getDocument().setValue(change.code);
     });
@@ -54,10 +70,11 @@ export class CodeEditorComponent implements AfterViewInit {
     });
   }
 
-  private _breakpoints: number[] = [];
+  private _breakpoints: { [key: number]: boolean } = {};
 
   get breakpoints(): number[] {
-    return this._breakpoints;
+    // convert object to array
+    return Object.keys(this._breakpoints).map((key) => parseInt(key, 10));
   }
   get editorHeight() {
     const fives = Math.ceil((this.numberOfLines || 1) / 5) * 5;
@@ -88,6 +105,31 @@ export class CodeEditorComponent implements AfterViewInit {
   }
 
   ngAfterViewInit() {
+    let myEditorElement = this.myEditor.nativeElement;
+    let myExt: Extension = [
+      BuildBreakPointGutterExtension(this._breakpoints),
+      basicSetup,
+      customCMTheme,
+      customFoldGutter(),
+      foldService.of(getFoldingRangesByIndent),
+      addMultipleTags(asmTagList),
+    ];
+    let state!: EditorState;
+
+    try {
+      state = EditorState.create({
+        doc: defaultCodeText,
+        extensions: myExt,
+      });
+    } catch (e) {
+      console.error(e);
+    }
+
+    let view = new EditorView({
+      state,
+      parent: myEditorElement,
+    });
+
     /** Old Legacy Code */
     // const el = this.legacyEditorRemove.nativeElement;
     // this.legacyAceEditor = ace.edit(el);
@@ -117,22 +159,23 @@ export class CodeEditorComponent implements AfterViewInit {
   }
 
   private toggleBreakpoint(row: number) {
-    if (DEBUG_NO_EVENTS) {
-      return;
-    }
-    if (this.hasBreakpoint(row)) {
-      this.legacyAceEditor?.session.clearBreakpoint(row);
-      _.remove(this._breakpoints, (value: number) => value === row);
-    } else {
-      this.legacyAceEditor?.session.setBreakpoint(row, "ace_breakpoint");
-      this._breakpoints.push(row);
-    }
-
-    this.breakpointChange.emit(this._breakpoints);
+    // if (DEBUG_NO_EVENTS) {
+    //   return;
+    // }
+    // if (this.hasBreakpoint(row)) {
+    //   this.legacyAceEditor?.session.clearBreakpoint(row);
+    //   _.remove(this._breakpoints, (value: number) => value === row);
+    // } else {
+    //   this.legacyAceEditor?.session.setBreakpoint(row, "ace_breakpoint");
+    //   this._breakpoints.push(row);
+    // }
+    //
+    // this.breakpointChange.emit(this._breakpoints);
   }
 
   private hasBreakpoint(row: number): boolean {
-    return _.includes(this._breakpoints, row);
+    return false;
+    // return _.includes(this._breakpoints, row);
   }
 
   private removeActiveLine() {
