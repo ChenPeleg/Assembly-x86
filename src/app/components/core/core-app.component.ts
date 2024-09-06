@@ -21,6 +21,7 @@ import { MemoryComponent } from "../memory/memory";
 import { UserDataService } from "../../services/user-data.service";
 import { TypeOfCodeInEditor } from "../../models/TypeOfCodeInEditor";
 import { CodeEditorComponent } from "../code/code-editor/code-editor.component";
+import { GeneralFieldValidationStatus } from "../../common/async-validation-indicator/async-validation-indicator.component";
 
 const defaultCode = `section .data
 hello:
@@ -62,15 +63,27 @@ factorial:
   styleUrls: ["./core-app.component.scss"],
 })
 export class CoreAppComponent implements AfterViewInit, AfterContentInit {
+  public readonly compileMessages: Record<
+    keyof typeof GeneralFieldValidationStatus,
+    string
+  > = {
+    NoInfo: "",
+    Pending: "Compiling...",
+    Valid: "Compiled successfully!",
+    Invalid: "Error",
+    CodeChanged: "Error",
+    Missing: "Error",
+  };
   @ViewChild(CodeEditorComponent) asmEditor: CodeEditorComponent | undefined;
   @ViewChild(ConsoleComponent) console: ConsoleComponent | undefined;
   @ViewChild(MemoryComponent) memory: MemoryComponent | undefined;
   @Input("isTryIt") isTryIt: boolean = false;
-
   runtime: Runtime = new Runtime();
   compileErrors: string = "";
   compileSuccess: string = "";
   uiState$: Observable<UIState>;
+  protected readonly GeneralFieldValidationStatus =
+    GeneralFieldValidationStatus;
   private assembler: Assembler = new Assembler();
   private cpu: CPU | undefined;
   private memorySize: number = 256;
