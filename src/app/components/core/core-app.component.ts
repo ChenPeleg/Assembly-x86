@@ -71,11 +71,11 @@ export class CoreAppComponent implements AfterViewInit, AfterContentInit {
     string
   > = {
     NoInfo: "",
-    Pending: "Compiling...",
-    Valid: "Compiled successfully!",
-    Invalid: "Error",
-    CodeChanged: "Code Changed",
-    Missing: "Error",
+    Pending: "",
+    Valid: "",
+    Invalid: "",
+    CodeChanged: "",
+    Missing: "",
   };
   @ViewChild(CodeEditorComponent) asmEditor: CodeEditorComponent | undefined;
   @ViewChild(ConsoleComponent) console: ConsoleComponent | undefined;
