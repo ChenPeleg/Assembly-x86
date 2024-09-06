@@ -1,6 +1,6 @@
 <div   [ngClass]="{isTryIt}" class="core-wrapper flex flex-col md:m-4 mt-2 sm:m-1 overflow-y-hidden" id="core-app-wrapper">
   <div *ngIf="!isTryIt" class="nav-bar-spacer"></div>
-  <div class="flex flex-row items-center gap-1 md:gap-5 pl-1 mb-5" id="execution-wrapper">
+  <div class="flex flex-row items-center gap-1 md:gap-5 pl-1 md:mb-5" id="execution-wrapper">
 
     <execution-controls [process]="runtime.process"></execution-controls>
     <button (click)="requestCompile()" class="md:w-24sm:w-5 mt-1" color="primary" mat-raised-button title="Assemble">
@@ -34,11 +34,11 @@
 
 
       <div *ngIf="(uiState$ | async)?.panels as panels" class="flex  flex-col" id="utils-wrapper">
-        <div class="relative md:hidden mt-10">
+        <div class="relative md:hidden md:mt-10 mt-3">
           <display-cockpit></display-cockpit>
         </div>
         <div [ngStyle]="{'display'  : getDisplayProps('console',panels).visibility ? '' : 'none' ,  order: getDisplayProps('console',panels).order }"
-          class="console-wrapper pb-10"
+          class="console-wrapper md:pb-10 pb-1"
           id="console-wrapper">
           <h3>Console</h3>
           <console></console>
