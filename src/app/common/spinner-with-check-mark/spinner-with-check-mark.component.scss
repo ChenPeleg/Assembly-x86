@@ -33,6 +33,18 @@ $noal-blue: #6B72E6;
   animation: none;
 }
 
+.spinner.changed {
+  top: 1px;
+  right: -4px;
+  display: inline-block;
+  transform: rotate(45deg);
+  height: 1.1rem;
+  width: 0.6rem;
+  border-bottom: 4px solid $noal-blue;
+  border-right: 4px solid $noal-blue;
+  border-radius: 0 0 0 0;
+  animation: none;
+}
 
 @keyframes rotation {
   from {
