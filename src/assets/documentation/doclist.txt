@@ -1,8 +1,9 @@
 /about.md
 /basics/1 hello world.md
 /basics/2 binary numbers.md
-/basics/3-binary-numbers-in-action.md
-/basics/4-hexadecimal-numbers.md
+/basics/3 binary numbers in action.md
+/basics/4 hexadecimal numbers.md
+/basics/5 basic syntax.md
 /basics/9-hello-world-advanced.md
 /basics/assembly-basics.md
 /basics/bit-tables.md

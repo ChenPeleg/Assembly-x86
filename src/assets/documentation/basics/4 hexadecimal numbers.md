@@ -38,6 +38,13 @@ MOV [8], 0x96
 ```
 <!--  memory -console -cpu word:4 hex -->
 
+Run the code above. You will see that the hexadecimal numbers 1A, 2F, and 96 are stored in the first three memory locations (each memory location represents 4 bytes).
+
+Press the `Number` button to see the hexadecimal representation of the numbers in the memory locations:
+
+- 1A = 26
+- 2F = 47
+- 96 = 150
 
 ## Writing Hexadecimal Numbers
 
