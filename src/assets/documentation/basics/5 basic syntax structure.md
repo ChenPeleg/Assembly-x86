@@ -1,4 +1,4 @@
-# Basic syntax
+# Basic syntax - structure of an assembly program
 
 
 
@@ -28,3 +28,10 @@ section .text  ; the actual code of the program starts here:
 
 ## Comments
 
+
+Comments are used to document the code and explain what it does. Comments are ignored by the assembler and do not affect the execution of the program. Comments in NASM start with a semicolon `;` and continue until the end of the line.
+
+```shell
+section .text ;  This is a comment
+MOV EAX, 1 ; This is another comment
+```
