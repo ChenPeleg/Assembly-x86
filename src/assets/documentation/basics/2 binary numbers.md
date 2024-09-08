@@ -39,6 +39,6 @@ MOV  [0], 5
 
 <!--  memory -console -cpu word:4 number -->
 
-The instruction `MOV [0], 1` stores value 5 into the memory location at address 0.
+The instruction `MOV [0], 5` stores value 5 into the memory location at address 0.
 Run the code (with ▶️) and look at the value of the first memory cell.
 Now change the address type to `binary` you can see the number 101.
