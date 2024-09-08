@@ -22,9 +22,7 @@ The **binary system** is a numeral system that uses only two symbols, typically 
 Here is an example of assembly code that stores a binary number in memory and then retrieves it:
 
 ```shell
-
+ 
 section .text
-MOV [0], 5
-MOV [4], 10
-MOV [8], 15
+MOV EAX, binaryNumber
 ```
