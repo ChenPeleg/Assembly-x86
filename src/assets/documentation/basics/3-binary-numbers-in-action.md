@@ -28,3 +28,4 @@ MOV [0], 5
 MOV [4], 10
 MOV [8], 15
 ```
+<!--  memory -console -cpu word:4 binary -->

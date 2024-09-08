@@ -36,7 +36,6 @@ section .text
 MOV  [0], 5
 
 ```
-
 <!--  memory -console -cpu word:4 number -->
 
 The instruction `MOV [0], 5` stores value 5 into the memory location at address 0.

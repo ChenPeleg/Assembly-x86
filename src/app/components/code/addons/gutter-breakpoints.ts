@@ -13,7 +13,7 @@ export function BuildBreakPointGutterExtension(breakPointRef: {
     domEventHandlers: {
       click: (view: EditorView, line: any, event: Event): boolean => {
         const lineNumber = view.state.doc.lineAt(line.from).number;
-        // console.log("lineNumber", lineNumber);
+
         breakpoints[lineNumber] = !breakpoints[lineNumber];
         const changes = { from: line.from, to: line.to };
 
@@ -26,7 +26,6 @@ export function BuildBreakPointGutterExtension(breakPointRef: {
       },
     },
     lineMarkerChange: (update: ViewUpdate): boolean => {
-      // console.log(update);
       // const num = view.state.doc.lineAt(line.from).number;
       // breakpoints[num] = !breakpoints[num];
       return true;
