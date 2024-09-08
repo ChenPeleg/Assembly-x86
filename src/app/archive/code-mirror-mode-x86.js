@@ -2,7 +2,6 @@
 // Distributed under an MIT license: https://codemirror.net/5/LICENSE
 
 (function (mod) {
-  console.log("CodeMirror mode x86 loaded");
   if (typeof exports == "object" && typeof module == "object")
     // CommonJS
     mod(require("../../lib/codemirror"));
