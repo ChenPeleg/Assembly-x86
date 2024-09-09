@@ -45,6 +45,7 @@ section .text
     push 99 ; Push the value 99 (char c) onto the stack
 
 ```
+
 <!--  memory -console -cpu word:4 ascii -->
 
 When an element is pushed to the stack, the stack the next time there will be a push it will be to the next memory address, and when an element is popped from the stack.
