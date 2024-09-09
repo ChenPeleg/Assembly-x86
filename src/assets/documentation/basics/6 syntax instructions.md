@@ -96,6 +96,6 @@ section .text
     INT 1
 
 ```
-<!-- info -->
+<!-- notice -->
 > In this tutorial and emulator, we'll use the **INT** instruction to call system interrupts. The **INT** instruction generates a software interrupt, which transfers control to the operating system's interrupt handler. The interrupt number is specified as an operand to the **INT** instruction. Different interrupt numbers correspond to different system services or functions. In this example, we use interrupt number 1 to print a number, and 2 to print a string stored in the **EAX** register.
 
