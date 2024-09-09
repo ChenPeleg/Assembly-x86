@@ -33,4 +33,7 @@ The x86 architecture also has a set of floating-point registers that are used fo
 ```shell
 section .text
     MOV EAX, 1  ; Move the value 1 into the EAX register
+    ADD EAX, 1  ; Add 1 to the value in the EAX register
+    ADD EAX, 2  ; Add 2 to the value in the EAX register
+    INT 2       ; Call the interrupt 2 (exit the program)
 ```
