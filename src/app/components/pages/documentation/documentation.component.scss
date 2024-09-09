@@ -116,7 +116,18 @@ ol, ul {
     }
 
   }
+  blockquote.warning {
+    background: rgba(214, 65, 127, 0.2);
+    border-left: 4px solid #6e022b;
+    border-radius: 4px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12), 0 3px 10px rgba(0, 0, 0, 0.08);
+    padding: 0.8rem;
 
+    &:before {
+      content: ' ⚠️ ';
+      padding-right: 10px;
+    }
+  }
   blockquote.new {
     background: rgba(65, 214, 147, 0.2);
     border-left: 4px solid #026e57;

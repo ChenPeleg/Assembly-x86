@@ -6,6 +6,7 @@
 /basics/5 syntax structure.md
 /basics/6 syntax instructions.md
 /basics/7 registers.md
+/basics/8 the stack.md
 /basics/9-hello-world-advanced.md
 /basics/assembly-basics.md
 /basics/bit-tables.md
