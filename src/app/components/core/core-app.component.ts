@@ -185,17 +185,17 @@ export class CoreAppComponent implements AfterViewInit, AfterContentInit {
 
   private handleInterrupt(interrupt: Interrupt) {
     try {
+      if (!this.cpu) {
+        return;
+      }
       switch (interrupt) {
         case Interrupt.WRITE_NUM:
-          // @ts-ignore
           this.print(this.cpu.getRegisterByName("EAX").getValue().toString());
           break;
         case Interrupt.WRITE_STRING: {
           let data: string = "";
-          // @ts-ignore
           let start: number = this.cpu.getRegisterByName("EAX").getValue();
           while (true) {
-            // @ts-ignore
             let char = this.cpu.derefAddress(start, 1).getValue();
             if (char === 0) {
               break;
@@ -219,7 +219,6 @@ export class CoreAppComponent implements AfterViewInit, AfterContentInit {
   }
 
   private print(value: string) {
-    // @ts-ignore
-    this.console.print(value);
+    this.console?.print(value);
   }
 }

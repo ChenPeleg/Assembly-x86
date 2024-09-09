@@ -52,7 +52,7 @@ section .text
 - **mnemonic**: `JMP`
 - **operands**: `loop`
 
-### Example 4: Data Declaration with Comment
+### Example 4: Data Declaration
 
 ```shell
 
@@ -86,4 +86,15 @@ In this example:
 - The `NOP` instruction does nothing and is often used as a placeholder.
 
 These examples illustrate the basic structure and components of assembly language statements. By following this format, you can write clear and understandable assembly code.
+
+## Example 5: system interrupt
+
+```shell
+
+section .text
+    MOV EAX, 1
+    INT 2
+
+```
+
 
