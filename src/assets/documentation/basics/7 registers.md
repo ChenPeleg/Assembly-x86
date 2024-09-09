@@ -20,7 +20,8 @@ The general-purpose registers in the x86 architecture are:
 - **EBP**: Base pointer
 - **ESP**: Stack pointer
 
-These registers can be used to store data, perform arithmetic and logical operations, and control the flow of the program. Each register has a specific purpose and is used in different contexts. For example, the `EAX` register is commonly used as an accumulator to store the results of arithmetic operations, while the `EBX` register is often used as a base register to store memory addresses.
+These registers can be used to store data, perform arithmetic and logical operations, and control the flow of the program. Each register has a specific purpose and is used in different contexts.
+For example, the `EAX` register is commonly used as an accumulator to store the results of arithmetic operations, while the `EBX` register is often used as a base register to store memory addresses.
 
 In addition to the general-purpose registers, the x86 architecture also has segment registers, control registers, and debug registers. These registers are used for specific purposes, such as managing memory segments, controlling the operation of the CPU, and debugging programs.
 
@@ -35,5 +36,5 @@ section .text
     MOV EAX, 1  ; Move the value 1 into the EAX register
     ADD EAX, 1  ; Add 1 to the value in the EAX register
     ADD EAX, 2  ; Add 2 to the value in the EAX register
-    INT 2       ; Call the interrupt 2 (exit the program)
+    INT 1       ; Call the interrupt 1 (print the value in EAX)
 ```
