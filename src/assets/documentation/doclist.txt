@@ -3,8 +3,9 @@
 /basics/2 binary numbers.md
 /basics/3 binary numbers in action.md
 /basics/4 hexadecimal numbers.md
-/basics/5 basic syntax structure.md
-/basics/6 basic syntax instructions.md
+/basics/5 syntax structure.md
+/basics/6 syntax instructions.md
+/basics/7 registers.md
 /basics/9-hello-world-advanced.md
 /basics/assembly-basics.md
 /basics/bit-tables.md

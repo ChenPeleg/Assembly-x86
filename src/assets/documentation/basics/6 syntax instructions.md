@@ -1,12 +1,10 @@
 
 # Basic Assembly Syntax
 
-In assembly language, each statement typically follows a specific structure. The general format of an assembly language statement is:
-
+In assembly language, each statement typically follows a specific structure. The general format of an assembly language statement is:   <br><br>
 
 `[label]   mnemonic   [operands]   [;comment]`
-
-
+<br><br>
 - **label**: An optional field that marks a location in the code. It is used as a reference point for jumps and loops.
 - **mnemonic**: The operation code that specifies the instruction to be executed.
 - **operands**: The data or memory locations involved in the operation. This field is optional and depends on the mnemonic.
@@ -26,7 +24,6 @@ start:  MOV EAX, 1  ; Move the value 1 into the EAX register
 - **label**: `start`
 - **mnemonic**: `MOV`
 - **operands**: `EAX, 1`
-- **comment**: `Move the value 1 into the EAX register`
 
 ### Example 2: ADD Instruction with Comment
 
@@ -39,7 +36,6 @@ section .text
 - **label**: (none)
 - **mnemonic**: `ADD`
 - **operands**: `EAX, EBX`
-- **comment**: `Add the value in EBX to EAX`
 
 ### Example 3: JMP Instruction with Label
 
@@ -55,7 +51,6 @@ section .text
 - **label**: `loop`
 - **mnemonic**: `JMP`
 - **operands**: `loop`
-- **comment**: `Jump to the label 'loop'`
 
 ### Example 4: Data Declaration with Comment
 
@@ -69,15 +64,11 @@ section .text
 - **label**: `data`
 - **mnemonic**: `DB`
 - **operands**: `'Hello, World!'`
-- **comment**: `Declare a string`
-
 ### Example 5: Conditional Jump
 
 ```shell
 
 section .text
-
-
 
         CMP EAX, 0    ; Compare EAX with 0
         JE end        ; Jump to 'end' if EAX is zero
@@ -88,7 +79,6 @@ end:    NOP           ; No operation
 - **label**: `end`
 - **mnemonic**: `NOP`
 - **operands**: (none)
-- **comment**: `No operation`
 
 In this example:
 - The `CMP` instruction compares the value in `EAX` with 0.
