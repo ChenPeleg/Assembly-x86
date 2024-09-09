@@ -38,7 +38,11 @@ export const markdownToHTML = (markdown: string): string => {
   // Convert bold and italic text
   markdown = markdown.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
   markdown = markdown.replace(/\*(.*?)\*/g, "<em>$1</em>");
-
+  // Images
+  markdown = markdown.replace(
+    /\!\[(.*?)\]\((.*?)\)/gim,
+    "<img alt='$1' src='$2' />"
+  );
   // Convert links
   markdown = markdown.replace(
     /\[([^\]]+)\]\(([^)]+)\)/g,
@@ -50,12 +54,6 @@ export const markdownToHTML = (markdown: string): string => {
   //   /```([\s\S]*?)```/g,
   //   "<pre><code>$1</code></pre>"
   // );
-
-  // Images
-  markdown = markdown.replace(
-    /\!\[(.*?)\]\((.*?)\)/gim,
-    "<img alt='$1' src='$2' />"
-  );
 
   // Blockquotes
   markdown = markdown.replace(/^\>(.*)$/gim, "<blockquote>$1</blockquote>");
