@@ -17,9 +17,12 @@ In assembly language, each statement typically follows a specific structure. The
 ```shell
 
 section .text
+
 start:  MOV EAX, 1  ; Move the value 1 into the EAX register
 
 ```
+<!-- -console -memory cpu -->
+
 
 - **label**: `start`
 - **mnemonic**: `MOV`
@@ -30,8 +33,11 @@ start:  MOV EAX, 1  ; Move the value 1 into the EAX register
 ```shell
 
 section .text
+
    ADD EAX, EBX  ; Add the value in EBX to EAX
+
 ```
+<!-- -console -memory cpu -->
 
 - **label**: (none)
 - **mnemonic**: `ADD`
@@ -42,11 +48,13 @@ section .text
 ```shell
 
 section .text
+
    loop:
    mov EAX, 1
    JMP loop     ; Jump to the label 'loop'
 
 ```
+<!-- -console -memory cpu -->
 
 - **label**: `loop`
 - **mnemonic**: `JMP`
@@ -56,10 +64,12 @@ section .text
 
 ```shell
 
-.section .data
+section .data
+
     DB 'Hello, World!'  ; Declare a string
 
 ```
+<!-- -console memory -cpu word:1 ascii -->
 
 - **label**: `data`
 - **mnemonic**: `DB`
