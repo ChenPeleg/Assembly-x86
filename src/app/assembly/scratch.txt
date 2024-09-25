@@ -1,0 +1,4 @@
+TextLine =
+ (_ label:Label? _ inst:Instruction Comment? __ { return { tag: "Line", label: label, instruction: inst }; }) /
+    (_ label:Label Comment? __ { return { tag: "Line", label: label, instruction: null }; }) /
+    (Comment __ { return { tag: "Line", label: null, instruction: null }; })
