@@ -106,6 +106,9 @@ export class CoreAppComponent implements AfterViewInit, AfterContentInit {
     setTimeout(() => this.requestCompile(), 50);
   }
   editorDocChanged(event: boolean) {
+    if (this.codeStatus === GeneralFieldValidationStatus.NoInfo) {
+      return;
+    }
     this.codeStatus = GeneralFieldValidationStatus.CodeChanged;
   }
   ngAfterViewInit() {
