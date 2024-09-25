@@ -26,7 +26,8 @@ DataLine =
     {
     	return { label: label, size: size, constants: [constant].concat(constants) };
     }) /
-    (label:Label Comment? __ { return { label: label, size: null, constants: [] }; })
+    (label:Label Comment? __ { return { label: label, size: null, constants: [] }; }) /
+       (Comment __ { return { tag: "Line", label: null, instruction: null }; })
 
 DataConstant =
 	Number / String
@@ -38,7 +39,8 @@ DataSize =
 
 TextLine =
 	(_ label:Label? _ inst:Instruction Comment? __ { return { tag: "Line", label: label, instruction: inst }; }) /
-    (_ label:Label Comment? __ { return { tag: "Line", label: label, instruction: null }; })
+    (_ label:Label Comment? __ { return { tag: "Line", label: label, instruction: null }; }) /
+   (Comment __ { return { tag: "Line", label: null, instruction: null }; })
 
 Label =
 	local:"."? name:Identifier ":" { return { tag: "Label", name: name, local: local !== null }; }

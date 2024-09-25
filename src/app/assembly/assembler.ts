@@ -222,7 +222,8 @@ export class Assembler {
 
     let definitions: MemoryDefinition[] = [];
     let size: number = line.size;
-    if (size !== null) {
+    // There are no constants in comment lines
+    if (size !== null && line.constants) {
       for (let i = 0; i < line.constants.length; i++) {
         let constant = line.constants[i];
 
