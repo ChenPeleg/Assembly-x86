@@ -50,7 +50,7 @@ section .text
     MOV EAX, 0
     MOV EAX, 0
 ```
-
+<!-- -console -memory cpu -->
 Notice that you can't see the `EIP` register in the code, but you can see it on the emulator's register viewer.
 Each time an instruction is executed, the `EIP` register is updated to point to the next instruction to be executed.
 
