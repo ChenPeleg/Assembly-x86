@@ -70,19 +70,32 @@ export class ContentTableComponent {
   constructor(private router: Router, private renderer: Renderer2) {}
 
   @Input("currentDoc") set currentDoc(value: string | null) {
-    this.setActiveElement(value).then((r) => r);
+    //this.setActiveElement(value).then((r) => r);
   }
 
   @Input("pages") set pages(value: string[][]) {
     if (this.pagesNames) return;
-    this.pagesNames = value;
+    this.pagesNames = value.slice(10, 18);
     let allDocElement = ContentTableComponent.buildNestedDocElement(value);
-    allDocElement = ContentTableComponent.reorderDocElement(allDocElement);
+    // allDocElement = ContentTableComponent.reorderDocElement(allDocElement);
     this.docElement[0] = allDocElement[0];
+    console.log(this.pagesNames);
+    // console.log(JSON.stringify(allDocElement));
     this.dataSource.data = allDocElement[0].children;
   }
 
   static buildNestedDocElement(value: string[][]): DocElement[] {
+    const cloneFatherAndRemoveChildren = (father: DocElement) => {
+      return {
+        children: [],
+        father: father,
+        name: father.name,
+        fullPath: father.fullPath,
+        type: father.type,
+        order: father.order,
+        isSelected: father.isSelected,
+      };
+    };
     const docElement: DocElement[] = [
       {
         children: [],
@@ -94,24 +107,30 @@ export class ContentTableComponent {
         isSelected: false,
       },
     ];
-    value.forEach((page) => {
-      let lastFather: DocElement = docElement[0];
-      page.forEach((pagePartName, i) => {
-        let element = lastFather.children.find((c) => c.name === pagePartName);
+    value.forEach((pageWithLevelArray, level) => {
+      let firstFather: DocElement = docElement[0];
+      let lastFatherOfThisDocument: DocElement = docElement[0];
+      pageWithLevelArray.forEach((pagePartName, i) => {
+        let element = lastFatherOfThisDocument.children.find(
+          (c) => c.name === pagePartName
+        );
         if (element) {
-          lastFather = element;
+          lastFatherOfThisDocument = element;
         } else {
           element = {
             children: [],
-            father: lastFather,
-            fullPath: [...lastFather.fullPath, pagePartName].filter((n) => n),
+            father: cloneFatherAndRemoveChildren(lastFatherOfThisDocument),
+            fullPath: [
+              ...lastFatherOfThisDocument.fullPath,
+              pagePartName,
+            ].filter((n) => n),
             name: pagePartName,
-            type: i === page.length - 1 ? "file" : "folder",
-            order: i === page.length - 1 ? -1 : 0,
+            type: i === pageWithLevelArray.length - 1 ? "file" : "folder",
+            order: i === pageWithLevelArray.length - 1 ? -1 : 0,
             isSelected: false,
           };
-          lastFather.children.push(element);
-          lastFather = element;
+          lastFatherOfThisDocument.children.push(element);
+          lastFatherOfThisDocument = element;
         }
       });
     });
@@ -193,7 +212,7 @@ export class ContentTableComponent {
       return;
     }
     const nodeID = this.generateNodeID(currentNode);
-    console.log(nodeID);
+
     const element = this.renderer.selectRootElement(`#${nodeID}`, true);
 
     if (!ContentTableComponent.isScrolledIntoView(element)) {
