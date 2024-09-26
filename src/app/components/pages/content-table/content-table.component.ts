@@ -81,20 +81,23 @@ export class ContentTableComponent {
     this.docElement[0] = allDocElement[0];
     console.log(this.pagesNames);
     // console.log(JSON.stringify(allDocElement));
+    console.log(allDocElement);
     this.dataSource.data = allDocElement[0].children;
   }
 
   static buildNestedDocElement(value: string[][]): DocElement[] {
     const cloneFatherAndRemoveChildren = (father: DocElement) => {
-      return {
-        children: [],
-        father: father,
-        name: father.name,
-        fullPath: father.fullPath,
-        type: father.type,
-        order: father.order,
-        isSelected: father.isSelected,
-      };
+      return father
+        ? {
+            children: [],
+            father: father.father ? { ...father.father, children: [] } : null,
+            name: father.name,
+            fullPath: father.fullPath,
+            type: father.type,
+            order: father.order,
+            isSelected: father.isSelected,
+          }
+        : null;
     };
     const docElement: DocElement[] = [
       {
@@ -108,7 +111,6 @@ export class ContentTableComponent {
       },
     ];
     value.forEach((pageWithLevelArray, level) => {
-      let firstFather: DocElement = docElement[0];
       let lastFatherOfThisDocument: DocElement = docElement[0];
       pageWithLevelArray.forEach((pagePartName, i) => {
         let element = lastFatherOfThisDocument.children.find(
