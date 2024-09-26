@@ -24,8 +24,9 @@
           <div class="mat-tree-node">
             <button [attr.aria-label]="'toggle ' + node.name" class="button-indent-override"
                     mat-icon-button matTreeNodeToggle>
-              <mat-icon [ngClass]="{'open' : treeControl.isExpanded(node)}" class="mat-icon-rtl-mirror">
-                {{  'chevron_right'  }}
+              <mat-icon [ngClass]="{'open' : treeControl.isExpanded(node)}"
+                        class="mat-icon-rtl-mirror">
+                 {{ 'chevron_right' }}
               </mat-icon>
             </button>
             <div class="app-tree-node " matTreeNodeToggle>
