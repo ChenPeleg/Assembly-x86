@@ -12,7 +12,7 @@
           <div (click)="clickLink(node)" [id]=" generateNodeID(node)"
                [ngClass]="{'is-selected' : node.isSelected}"
                class="app-tree-node is-selected">
-            {{node.name}}
+            {{ calculateNodeName (node)}}
           </div>
 
         </li>
