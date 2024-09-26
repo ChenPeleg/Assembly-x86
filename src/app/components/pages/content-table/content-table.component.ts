@@ -46,7 +46,9 @@ interface DocElement {
           height: "*",
         })
       ),
-      transition("* => *", [animate("400ms cubic-bezier(0.25, 0.8, 0.25, 1)")]),
+      transition("* => show", [
+        animate("200ms cubic-bezier(0.25, 0.8, 0.25, 1)"),
+      ]),
     ]),
   ],
 })
@@ -101,11 +103,11 @@ export class ContentTableComponent {
     };
     const docElement: DocElement[] = [
       {
-        children: [],
-        father: null,
         name: "all",
-        fullPath: [],
         type: "folder",
+        fullPath: [],
+        father: null,
+        children: [],
         order: 0,
         isSelected: false,
       },
@@ -120,14 +122,14 @@ export class ContentTableComponent {
           lastFatherOfThisDocument = element;
         } else {
           element = {
-            children: [],
-            father: cloneFatherAndRemoveChildren(lastFatherOfThisDocument),
+            name: pagePartName,
+            type: i === pageWithLevelArray.length - 1 ? "file" : "folder",
             fullPath: [
               ...lastFatherOfThisDocument.fullPath,
               pagePartName,
             ].filter((n) => n),
-            name: pagePartName,
-            type: i === pageWithLevelArray.length - 1 ? "file" : "folder",
+            children: [],
+            father: cloneFatherAndRemoveChildren(lastFatherOfThisDocument),
             order: i === pageWithLevelArray.length - 1 ? -1 : 0,
             isSelected: false,
           };
