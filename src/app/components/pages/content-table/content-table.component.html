@@ -8,8 +8,8 @@
       <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding matTreeNodePaddingIndent="20">
         <li class="mat-tree-node">
           <!-- use a disabled button to provide padding for tree leaf -->
-          <button class="button-indent-override" disabled mat-icon-button></button>
-          <div (click)="clickLink(node)" [id]="'tree_node_' + node.fullPath.join('_')"
+          <button [disabled]="true" class="button-indent-override" mat-icon-button></button>
+          <div (click)="clickLink(node)" [id]=" generateNodeID(node)"
                [ngClass]="{'is-selected' : node.isSelected}"
                class="app-tree-node is-selected">
             {{node.name}}

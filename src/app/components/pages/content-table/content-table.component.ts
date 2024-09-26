@@ -139,6 +139,10 @@ export class ContentTableComponent {
     return isVisible;
   }
 
+  generateNodeID(node: DocElement) {
+    return `tree_node_${node.fullPath.join("_")}`.replace(/[\s ]/g, "_");
+  }
+
   hasChild = (_: number, node: any) =>
     !!node.children && node.children.length > 0;
 
@@ -188,7 +192,7 @@ export class ContentTableComponent {
     if (this.isMobile) {
       return;
     }
-    const nodeID = `tree_node_${currentNode.fullPath.join("_")}`;
+    const nodeID = this.generateNodeID(currentNode);
     console.log(nodeID);
     const element = this.renderer.selectRootElement(`#${nodeID}`, true);
 
