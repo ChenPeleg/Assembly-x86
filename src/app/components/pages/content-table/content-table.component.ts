@@ -189,7 +189,9 @@ export class ContentTableComponent {
       return;
     }
     const nodeID = `tree_node_${currentNode.fullPath.join("_")}`;
+    console.log(nodeID);
     const element = this.renderer.selectRootElement(`#${nodeID}`, true);
+
     if (!ContentTableComponent.isScrolledIntoView(element)) {
       element.scrollIntoView({ behavior: "smooth" });
     }
