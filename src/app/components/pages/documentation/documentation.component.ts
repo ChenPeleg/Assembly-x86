@@ -79,12 +79,13 @@ interface DocumentationsParams {
 })
 export class DocumentationComponent implements AfterViewInit, OnDestroy {
   public static readonly IdStringForCodeBlocks = "exm_";
+  public static readonly IdStringForCodeBlocksPersist = "persist_";
   content: SafeHtml | null = null;
   pagesNames: string[][] = [];
   codeExamples: CodeExample[] = [];
   nextPage: { link: string; description: string } | null = null;
   previousPage: { link: string; description: string } | null = null;
-
+  public tryItState: string = "";
   @ViewChild("htmlDynamicContent") private htmlDynamicContent:
     | ElementRef
     | undefined;
@@ -92,7 +93,6 @@ export class DocumentationComponent implements AfterViewInit, OnDestroy {
     | CoreAppComponent
     | undefined;
   private readonly destroy$ = new Subject<void>();
-
   // @ts-ignore
   public readonly $docsParams: Observable<DocumentationsParams | null> =
     combineLatest([this.activeRoute.params, this.activeRoute.queryParams]).pipe(
@@ -125,6 +125,9 @@ export class DocumentationComponent implements AfterViewInit, OnDestroy {
     }>
   ) {
     this.getPagesNames().then();
+    this.activeRoute.queryParams.subscribe((params) => {
+      this.tryItState = params["tryIt"] || "";
+    });
   }
 
   static optionStringToAssemblerDisplay(optionsString: string): {
@@ -203,12 +206,22 @@ export class DocumentationComponent implements AfterViewInit, OnDestroy {
   }
 
   async navDocuments(event: Event, nav: "previous" | "next" | "closeTryIt") {
+    const queryParams = {
+      ["tryIt"]: this.tryItState
+        ? DocumentationComponent.IdStringForCodeBlocksPersist
+        : null,
+    };
+
     switch (nav) {
       case "previous":
-        await this.router.navigate(["docs", this.previousPage?.link]);
+        await this.router.navigate(["docs", this.previousPage?.link], {
+          queryParams,
+        });
         break;
       case "next":
-        await this.router.navigate(["docs", this.nextPage?.link]);
+        await this.router.navigate(["docs", this.nextPage?.link], {
+          queryParams,
+        });
         break;
       case "closeTryIt":
         await this.router.navigate([], {
