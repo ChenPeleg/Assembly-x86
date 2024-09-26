@@ -41,6 +41,7 @@ import { UIStateInitialState } from "../../../stores/reducers/ui.state.reducer";
 import { MemoryDisplayInitialState } from "../../../stores/reducers/memory-display.reducer";
 import { UIStateActions } from "../../../stores/actions/ui.state.actions";
 import { MemoryDisplayActions } from "../../../stores/actions/memory-display.actions";
+import { extractNumberFromFileName } from "../../../util/extractNumberFromFileName";
 
 interface DocumentationsParams {
   docId: string;
@@ -222,8 +223,13 @@ export class DocumentationComponent implements AfterViewInit, OnDestroy {
     }
   }
 
-  replacePlus(async: string | null) {
-    return async?.replace("+", " ");
+  createDockNameFromDocId(docId: string | null) {
+    const fullPath = docId?.split("+") || [];
+    const allNumbers = fullPath.map((n) => extractNumberFromFileName(n).number);
+    const lastNode = fullPath[fullPath.length - 1];
+    const firstNodeName = extractNumberFromFileName(fullPath[0]).text;
+    const nodeNameText = extractNumberFromFileName(lastNode).text;
+    return `${allNumbers.join(".")} ${firstNodeName} - ${nodeNameText}`;
   }
 
   setNextAndPrevious(docId: string) {
@@ -235,7 +241,7 @@ export class DocumentationComponent implements AfterViewInit, OnDestroy {
       let nextDocId = allDocIds[index + 1];
       this.nextPage = {
         link: nextDocId,
-        description: this.replacePlus(nextDocId) || "",
+        description: this.createDockNameFromDocId(nextDocId) || "",
       };
     } else {
       this.nextPage = null;
@@ -244,7 +250,7 @@ export class DocumentationComponent implements AfterViewInit, OnDestroy {
       let nextDocId = allDocIds[index - 1];
       this.previousPage = {
         link: nextDocId,
-        description: this.replacePlus(nextDocId) || "",
+        description: this.createDockNameFromDocId(nextDocId) || "",
       };
     } else {
       this.previousPage = null;
