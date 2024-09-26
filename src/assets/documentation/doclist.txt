@@ -1,16 +1,16 @@
-/01 basics/1 hello world.md
-/01 basics/2 binary numbers.md
-/01 basics/3 binary numbers in action.md
-/01 basics/4 hexadecimal numbers.md
-/01 basics/5 syntax structure.md
-/01 basics/6 syntax instructions.md
-/01 basics/7 registers.md
-/01 basics/8 the stack.md
-/01 basics/9-hello-world-advanced.md
-/01 basics/assembly-basics.md
+/01 basics/01 hello world.md
+/01 basics/02 binary numbers.md
+/01 basics/03 binary numbers in action.md
+/01 basics/04 hexadecimal numbers.md
+/01 basics/05 syntax structure.md
+/01 basics/06 syntax instructions.md
+/01 basics/07 registers.md
+/01 basics/08 the stack.md
+/01 basics/09 hello world advanced.md
+/01 basics/10 assembly-basics.md
 /01 basics/bit-tables.md
 /01 basics/hello-works.md
-/02 commands/basic-commands.md
+/02 commands/01 basic-commands.md
 /03 registers/cpu-word-size.md
 /03 registers/memory-size.md
 /03 registers/registers-cheatsheet.md

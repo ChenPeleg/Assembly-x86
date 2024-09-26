@@ -72,18 +72,16 @@ export class ContentTableComponent {
   constructor(private router: Router, private renderer: Renderer2) {}
 
   @Input("currentDoc") set currentDoc(value: string | null) {
-    //this.setActiveElement(value).then((r) => r);
+    this.setActiveElement(value).then((r) => r);
   }
 
   @Input("pages") set pages(value: string[][]) {
     if (this.pagesNames) return;
-    this.pagesNames = value.slice(10, 18);
+    this.pagesNames = value;
     let allDocElement = ContentTableComponent.buildNestedDocElement(value);
-    // allDocElement = ContentTableComponent.reorderDocElement(allDocElement);
+    allDocElement = ContentTableComponent.reorderDocElement(allDocElement);
     this.docElement[0] = allDocElement[0];
-    console.log(this.pagesNames);
-    // console.log(JSON.stringify(allDocElement));
-    console.log(allDocElement);
+
     this.dataSource.data = allDocElement[0].children;
   }
 
