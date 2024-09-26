@@ -11,7 +11,9 @@
       <button (click)="navDocuments($event,'next')" [matTooltip]="nextPage?.description || ''" [ngClass]="{'invisible' : !this.nextPage}" mat-button><span class="flex flex-row items-center">next<mat-icon class="relative -right-1 top-[3px]" matIconSuffix style="font-size: 18px">chevron_right</mat-icon>   </span></button>
     </div>
 
-    <h2 class="pl-12  my-4 text-lg"><a [routerLink]="'/docs/'">Documentation</a> {{replacePlus(dockParams.docId || null)}}</h2>
+    <h2 class="pl-12  my-4 text-lg">
+<!--      <a [routerLink]="'/docs/'">Documentation</a>-->
+      {{createDockNameFromDocId(dockParams.docId || null)}}</h2>
     <div #htmlDynamicContent class="html-content">
       <div [innerHTML]="content"></div>
     </div>
