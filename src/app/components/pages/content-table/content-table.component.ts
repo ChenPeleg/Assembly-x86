@@ -12,6 +12,7 @@ import { PagesService } from "../../../services/pages.service";
 import { Router } from "@angular/router";
 import { sleep } from "../../../util/sleep";
 import { getScreenMediaState } from "../../../util/screenMediaSatate";
+import { extractNumberFromFileName } from "../../../util/extractNumberFromFileName";
 
 /**
  * Food data with nested structure.
@@ -158,6 +159,14 @@ export class ContentTableComponent {
     const isVisible = elemTop >= 0 && elemBottom <= window.innerHeight;
 
     return isVisible;
+  }
+
+  public calculateNodeName(node: DocElement): string {
+    const allNumbers = node.fullPath.map(
+      (n) => extractNumberFromFileName(n).number
+    );
+    const nodeNameText = extractNumberFromFileName(node.name).text;
+    return `${allNumbers.join(".")} ${nodeNameText}`;
   }
 
   generateNodeID(node: DocElement) {
