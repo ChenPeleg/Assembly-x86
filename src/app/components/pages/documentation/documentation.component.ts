@@ -319,13 +319,17 @@ ${n.join(" ")}
     if (!this.pagesNames.length) {
       await this.getPagesList();
     }
-    const newContent = this.loadDocumentContentFindDocument(docId);
+    const newContent = await this.loadDocumentContentFindDocument(docId);
     if (this.content?.toString() === newContent?.toString()) {
       return;
     }
+    if (!newContent) {
+      await this.displayDefaultDocsContent();
+      return;
+    }
+    this.content = newContent;
     await sleep(300);
     await this.setupCodeExamples(docId);
-    await this.displayDefaultDocsContent();
   }
 
   private async loadDocumentContentFindDocument(docId: string) {
