@@ -355,6 +355,7 @@ ${n.join(" ")}
     await this.setupCodeExamples(docId);
     await this.displayDefaultDocsContent();
   }
+
   private async loadDocumentContentFindDocument(docId: string) {
     for (const page of this.pagesNames) {
       if (PagesService.NamePageToDocId(page) === docId) {
@@ -364,6 +365,7 @@ ${n.join(" ")}
     }
     return null;
   }
+
   private clearCodeEditorButtons() {
     this.codeEditorService.clearRecordSelection();
     this.codeEditorService.hideRecordButtonOnNavBar();
