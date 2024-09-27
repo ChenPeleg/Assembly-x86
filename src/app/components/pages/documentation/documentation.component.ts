@@ -235,9 +235,6 @@ export class DocumentationComponent implements AfterViewInit, OnDestroy {
         break;
     }
   }
-  getFirstPage() {
-    return this.pagesNames[0];
-  }
 
   createDockNameFromDocId(docId: string | null) {
     const fullPath = docId?.split("+") || [];
@@ -270,38 +267,6 @@ export class DocumentationComponent implements AfterViewInit, OnDestroy {
       };
     } else {
       this.previousPage = null;
-    }
-  }
-
-  private async loadContentAndTryIt(docId: string, tryIt: string) {
-    await this.loadDocumentsContent(docId, tryIt);
-    this.setNextAndPrevious(docId);
-    if (tryIt) {
-      const codeExample = this.codeExamples.find((c) => c.codeId === tryIt);
-      if (!codeExample?.code) return;
-
-      this.codeEditorService.updateCodeEditor({
-        code: codeExample.code,
-        typeOfCode: TypeOfCodeInEditor.TryIt,
-        savedCodeId: null,
-      });
-      // codeExample.optionsString
-      const displayState =
-        DocumentationComponent.optionStringToAssemblerDisplay(
-          codeExample.optionsString
-        );
-
-      this.store.dispatch(
-        UIStateActions.updateUIState({ ...displayState.uiState })
-      );
-      this.store.dispatch(
-        MemoryDisplayActions.updateMemoryDisplay({
-          ...displayState.memoryDisplay,
-        })
-      );
-    } else {
-      this.codeEditorService.clearRecordSelection();
-      this.codeEditorService.hideRecordButtonOnNavBar();
     }
   }
 
@@ -344,6 +309,40 @@ ${n.join(" ")}
     this.content = sanitizedHtml;
   }
 
+  private async loadContentAndTryIt(docId: string, tryIt: string) {
+    await this.loadDocumentsContent(docId, tryIt);
+    this.setNextAndPrevious(docId);
+    if (tryIt) {
+      await this.loadTryItToCodeEditor(docId, tryIt);
+    } else {
+      this.clearCodeEditorButtons();
+    }
+  }
+
+  private async loadTryItToCodeEditor(docId: string, tryIt: string) {
+    const codeExample = this.codeExamples.find((c) => c.codeId === tryIt);
+    if (!codeExample?.code) return;
+
+    this.codeEditorService.updateCodeEditor({
+      code: codeExample.code,
+      typeOfCode: TypeOfCodeInEditor.TryIt,
+      savedCodeId: null,
+    });
+    // codeExample.optionsString
+    const displayState = DocumentationComponent.optionStringToAssemblerDisplay(
+      codeExample.optionsString
+    );
+
+    this.store.dispatch(
+      UIStateActions.updateUIState({ ...displayState.uiState })
+    );
+    this.store.dispatch(
+      MemoryDisplayActions.updateMemoryDisplay({
+        ...displayState.memoryDisplay,
+      })
+    );
+  }
+
   private async loadDocumentsContent(docId: string, tryIt: string) {
     if (!this.pagesNames.length) {
       await this.getPagesList();
@@ -363,6 +362,11 @@ ${n.join(" ")}
     }
 
     await this.displayDocsContent();
+  }
+
+  private clearCodeEditorButtons() {
+    this.codeEditorService.clearRecordSelection();
+    this.codeEditorService.hideRecordButtonOnNavBar();
   }
 
   /**
