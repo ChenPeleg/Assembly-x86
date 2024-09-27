@@ -105,7 +105,7 @@ export class DocumentationComponent implements AfterViewInit, OnDestroy {
       }),
 
       tap((params) =>
-        this.loadContentAndTryIt(params["docId"], params["tryIt"])
+        this.loadDocumentsContentAndTryIt(params["docId"], params["tryIt"])
       ),
 
       takeUntil(this.destroy$)
@@ -246,28 +246,24 @@ export class DocumentationComponent implements AfterViewInit, OnDestroy {
   }
 
   setNextAndPrevious(docId: string) {
+    const buildPage = (docId: string) => {
+      return {
+        link: docId,
+        description: this.createDockNameFromDocId(docId) || "",
+      };
+    };
     const allDocIds = this.pagesNames.map((p) =>
       PagesService.NamePageToDocId(p)
     );
-    const index = allDocIds.indexOf(docId);
-    if (index + 1 < allDocIds.length) {
-      let nextDocId = allDocIds[index + 1];
-      this.nextPage = {
-        link: nextDocId,
-        description: this.createDockNameFromDocId(nextDocId) || "",
-      };
-    } else {
-      this.nextPage = null;
-    }
-    if (index > 0) {
-      let nextDocId = allDocIds[index - 1];
-      this.previousPage = {
-        link: nextDocId,
-        description: this.createDockNameFromDocId(nextDocId) || "",
-      };
-    } else {
-      this.previousPage = null;
-    }
+
+    const currentId = allDocIds.indexOf(docId);
+    this.nextPage =
+      (currentId + 1 < allDocIds.length &&
+        buildPage(allDocIds[currentId + 1])) ||
+      null;
+
+    this.previousPage =
+      currentId > 0 ? buildPage(allDocIds[currentId - 1]) : null;
   }
 
   private async displayDefaultDocsContent() {
@@ -309,7 +305,7 @@ ${n.join(" ")}
     this.content = sanitizedHtml;
   }
 
-  private async loadContentAndTryIt(docId: string, tryIt: string) {
+  private async loadDocumentsContentAndTryIt(docId: string, tryIt: string) {
     await this.loadDocumentsContent(docId, tryIt);
     this.setNextAndPrevious(docId);
     if (tryIt) {
@@ -317,30 +313,6 @@ ${n.join(" ")}
     } else {
       this.clearCodeEditorButtons();
     }
-  }
-
-  private async loadTryItToCodeEditor(docId: string, tryIt: string) {
-    const codeExample = this.codeExamples.find((c) => c.codeId === tryIt);
-    if (!codeExample?.code) return;
-
-    this.codeEditorService.updateCodeEditor({
-      code: codeExample.code,
-      typeOfCode: TypeOfCodeInEditor.TryIt,
-      savedCodeId: null,
-    });
-    // codeExample.optionsString
-    const displayState = DocumentationComponent.optionStringToAssemblerDisplay(
-      codeExample.optionsString
-    );
-
-    this.store.dispatch(
-      UIStateActions.updateUIState({ ...displayState.uiState })
-    );
-    this.store.dispatch(
-      MemoryDisplayActions.updateMemoryDisplay({
-        ...displayState.memoryDisplay,
-      })
-    );
   }
 
   private async loadDocumentsContent(docId: string, tryIt: string) {
@@ -364,6 +336,29 @@ ${n.join(" ")}
       }
     }
     return null;
+  }
+
+  private async loadTryItToCodeEditor(docId: string, tryIt: string) {
+    const codeExample = this.codeExamples.find((c) => c.codeId === tryIt);
+    if (!codeExample?.code) return;
+
+    this.codeEditorService.updateCodeEditor({
+      code: codeExample.code,
+      typeOfCode: TypeOfCodeInEditor.TryIt,
+      savedCodeId: null,
+    });
+    const displayState = DocumentationComponent.optionStringToAssemblerDisplay(
+      codeExample.optionsString
+    );
+
+    this.store.dispatch(
+      UIStateActions.updateUIState({ ...displayState.uiState })
+    );
+    this.store.dispatch(
+      MemoryDisplayActions.updateMemoryDisplay({
+        ...displayState.memoryDisplay,
+      })
+    );
   }
 
   private clearCodeEditorButtons() {
