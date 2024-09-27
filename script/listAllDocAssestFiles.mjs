@@ -1,6 +1,11 @@
 import * as fs from "fs";
 import { writeFileSync } from "fs";
+import { readFile } from "node:fs/promises";
 import * as path from "path";
+
+export const readFileAsync = async (filePath) => {
+  return await readFile( filePath , "utf8");
+}
 
 export const getDirFiles = async (baseDir, testFilesNamesPattern) => {
   const testFilesNamesRegex = new RegExp(`.*${testFilesNamesPattern}`, "gi");
@@ -26,8 +31,14 @@ export const getDirFiles = async (baseDir, testFilesNamesPattern) => {
 
 const listAllDocAssetFiles = async () => {
   const docsPath = path.resolve("src", "assets", "documentation");
-  const files = await getDirFiles(docsPath, ".md");
-  const filesWithForwardSlash = files.map(f => f.replace(/\\/g, "/"));
+  const filePaths = await getDirFiles(docsPath, ".md");
+  for (const file of filePaths) {
+    const fileContents = await readFileAsync(path.join(docsPath, file ));
+    const customDocId = fileContents.match(/<!--\s*customDocId:\s*(\w+)\s*-->/);
+  }
+
+  const filesWithForwardSlash = filePaths.map(f => f.replace(/\\/g, "/"));
+
   writeFileSync(path.resolve(docsPath, "doclist.txt"), filesWithForwardSlash.join("\n"));
 
 };
