@@ -19,6 +19,10 @@ export const markdownToHTML = (markdown: string): string => {
     mdText = mdText.replace(c, codeHtml);
   });
 
+  // line breaks as two spaces at the end of the line
+  mdText = mdText.replace(/ {2}\n/gm, "</br>\n");
+  mdText = mdText.replace(/\n\n/gm, "</br>\n");
+  console.log(mdText);
   mdText = mdText.replace(/^\s*-\s*(.*)$/gim, "\n<li>$1</li>");
   mdText = mdText.replace(/^\s*\*\s*(.*)$/gim, "\n<li>$1</li>");
   mdText = mdText.replace(/^\s*\d\.\s*(.*)$/gim, "\n<ol>\n<li>$1</li>\n</ol>");
