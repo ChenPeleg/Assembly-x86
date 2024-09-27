@@ -33,3 +33,7 @@ language programs more efficient and gives programmers fine-grained control over
 <br>
 
 In this tutorial we'll try to explain the basics of the language and to show how the cpu actually works.
+
+
+
+<!-- customDocId:assembly_intro -->
