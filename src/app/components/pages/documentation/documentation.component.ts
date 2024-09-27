@@ -21,7 +21,6 @@ import {
 } from "rxjs";
 import { ActivatedRoute, Router } from "@angular/router";
 import { makeExternalLinksOpenInNewTab } from "../../../util/makeExternalLinksOpenInNewTab";
-import { sleep } from "../../../util/sleep";
 import { CodeExample } from "../../../models/CodeExample";
 import { observableToPromise } from "../../../util/obeservableToPromise";
 import { CoreAppComponent } from "../../core/core-app.component";
@@ -42,6 +41,7 @@ import { MemoryDisplayInitialState } from "../../../stores/reducers/memory-displ
 import { UIStateActions } from "../../../stores/actions/ui.state.actions";
 import { MemoryDisplayActions } from "../../../stores/actions/memory-display.actions";
 import { extractNumberFromFileName } from "../../../util/extractNumberFromFileName";
+import { sleep } from "../../../util/sleep";
 
 interface DocumentationsParams {
   docId: string;
@@ -270,7 +270,7 @@ export class DocumentationComponent implements AfterViewInit, OnDestroy {
     }
   }
 
-  private async displayDocsContent() {
+  private async displayDefaultDocsContent() {
     const addTOC = false;
     let htmlTableOfContent = `
 <div>
@@ -347,23 +347,23 @@ ${n.join(" ")}
     if (!this.pagesNames.length) {
       await this.getPagesList();
     }
-
+    const newContent = this.loadDocumentContentFindDocument(docId);
+    if (this.content?.toString() === newContent?.toString()) {
+      return;
+    }
+    await sleep(300);
+    await this.setupCodeExamples(docId);
+    await this.displayDefaultDocsContent();
+  }
+  private async loadDocumentContentFindDocument(docId: string) {
     for (const page of this.pagesNames) {
       if (PagesService.NamePageToDocId(page) === docId) {
         const newContent = await this.getContent(docId);
-        if (this.content?.toString() === newContent?.toString()) {
-          return;
-        }
-        this.content = newContent;
-        await sleep(300);
-        await this.setupCodeExamples(docId);
-        return;
+        return newContent;
       }
     }
-
-    await this.displayDocsContent();
+    return null;
   }
-
   private clearCodeEditorButtons() {
     this.codeEditorService.clearRecordSelection();
     this.codeEditorService.hideRecordButtonOnNavBar();
