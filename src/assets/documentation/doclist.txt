@@ -1,29 +1,29 @@
-/01 basics/01 assembly guide.md
-/01 basics/02 hello world.md
-/01 basics/03 binary numbers.md
-/01 basics/04 binary numbers in action.md
-/01 basics/05 hexadecimal numbers.md
-/01 basics/06 syntax structure.md
-/01 basics/07 syntax instructions.md
-/01 basics/08 registers.md
-/01 basics/09 the stack.md
-/01 basics/10 hello world advanced.md
-/01 basics/11 assembly-basics.md
-/01 basics/bit-tables.md
-/01 basics/hello-works.md
-/02 commands/01 basic-commands.md
-/03 registers/cpu-word-size.md
-/03 registers/memory-size.md
-/03 registers/registers-cheatsheet.md
-/04 registers part 2/cpu-word-size.md
-/04 registers part 2/memory-size.md
-/04 registers part 2/registers-cheatsheet.md
-/about.md
-/history/assembly-development/development-of-assembly-2.md
-/history/assembly-development/development-of-assembly.md
-/history/assembly-history.md
-/history/first-computers/first-computers-1.md
-/history/first-computers/first-computers-2.md
-/history/first-computers/first-computers-3.md
-/links.md
-/tutorials/tutorials.md
+/01 basics/01 assembly guide.md <assembly_intro>
+/01 basics/02 hello world.md <>
+/01 basics/03 binary numbers.md <>
+/01 basics/04 binary numbers in action.md <>
+/01 basics/05 hexadecimal numbers.md <>
+/01 basics/06 syntax structure.md <>
+/01 basics/07 syntax instructions.md <>
+/01 basics/08 registers.md <>
+/01 basics/09 the stack.md <>
+/01 basics/10 hello world advanced.md <>
+/01 basics/11 assembly-basics.md <>
+/01 basics/bit-tables.md <>
+/01 basics/hello-works.md <>
+/02 commands/01 basic-commands.md <>
+/03 registers/cpu-word-size.md <>
+/03 registers/memory-size.md <>
+/03 registers/registers-cheatsheet.md <>
+/04 registers part 2/cpu-word-size.md <>
+/04 registers part 2/memory-size.md <>
+/04 registers part 2/registers-cheatsheet.md <>
+/about.md <>
+/history/assembly-development/development-of-assembly-2.md <>
+/history/assembly-development/development-of-assembly.md <>
+/history/assembly-history.md <>
+/history/first-computers/first-computers-1.md <>
+/history/first-computers/first-computers-2.md <>
+/history/first-computers/first-computers-3.md <>
+/links.md <>
+/tutorials/tutorials.md <>
