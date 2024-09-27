@@ -93,7 +93,7 @@ export class DocumentationComponent implements AfterViewInit, OnDestroy {
     | CoreAppComponent
     | undefined;
   private readonly destroy$ = new Subject<void>();
-  // @ts-ignore
+
   public readonly $docsParams: Observable<DocumentationsParams | null> =
     combineLatest([this.activeRoute.params, this.activeRoute.queryParams]).pipe(
       distinctUntilChanged(),
@@ -234,6 +234,9 @@ export class DocumentationComponent implements AfterViewInit, OnDestroy {
 
         break;
     }
+  }
+  getFirstPage() {
+    return this.pagesNames[0];
   }
 
   createDockNameFromDocId(docId: string | null) {
