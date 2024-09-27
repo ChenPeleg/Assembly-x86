@@ -4,6 +4,7 @@ import { UserDataService } from "../../services/user-data.service";
 import { BehaviorSubject, Observable } from "rxjs";
 import { sleep } from "../../util/sleep";
 import { environment } from "../../../environments/environment";
+import { PagesService } from "../../services/pages.service";
 
 @Component({
   selector: "app-navbar",
@@ -27,7 +28,8 @@ export class NavBarComponent implements AfterViewInit {
   constructor(
     private router: Router,
     private codeEditorService: UserDataService,
-    private userDataService: UserDataService
+    private userDataService: UserDataService,
+    private pagesService: PagesService
   ) {
     this.$recordNameInEdit =
       this.codeEditorService.$currentEditRecordName.asObservable();
@@ -56,7 +58,9 @@ export class NavBarComponent implements AfterViewInit {
   }
 
   async clickDocs() {
-    await this.router.navigate(["docs/"]);
+    const firstDoc = this.pagesService.getFirstDocInTheDocumentsList();
+
+    await this.router.navigate(["docs/", firstDoc]);
   }
 
   async clickSave() {

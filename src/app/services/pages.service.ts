@@ -27,6 +27,10 @@ export class PagesService {
     return namePage.join(PagesService.slashReplacesChar);
   }
 
+  public getFirstDocInTheDocumentsList(): string {
+    return PagesService.NamePageToDocId(this._pagesNames[0]);
+  }
+
   public async getPagesNames() {
     return this._pagesNames.length
       ? this._pagesNames
@@ -50,7 +54,7 @@ export class PagesService {
           .split("/")
           .filter((n) => n)
       )
-      .map((p) => p.map((n) => n.replace(/<*.>/g, " ")));
+      .map((p) => p.map((n) => n.replace(/<.*?>/g, "").trim()));
     return this._pagesNames;
   }
 
