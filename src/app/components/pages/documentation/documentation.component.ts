@@ -331,8 +331,7 @@ ${n.join(" ")}
   private async loadDocumentContentFindDocument(docId: string) {
     for (const page of this.pagesNames) {
       if (PagesService.NamePageToDocId(page) === docId) {
-        const newContent = await this.getContent(docId);
-        return newContent;
+        return await this.getContent(docId);
       }
     }
     return null;
