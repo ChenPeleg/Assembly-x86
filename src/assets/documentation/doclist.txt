@@ -1,4 +1,4 @@
-/01 basics/01 assembly guide.md <assembly_intro>
+/01 basics/01 assembly guide welcome.md <>
 /01 basics/02 hello world.md <>
 /01 basics/03 binary numbers.md <>
 /01 basics/04 binary numbers in action.md <>
