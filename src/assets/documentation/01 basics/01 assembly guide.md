@@ -1,39 +1,14 @@
-# Hello world
+# Assembly x86 emulator and tutorial
 
-Let's start with a simple hello world example:
+Welcome to the Assembly x86 emulator and tutorial!
 
+This site contains a tutorial and an emulator for the x86 assembly language.
+The tutorial is designed to be a gentle introduction to assembly language, and the emulator is designed to be a simple way to run and debug assembly code.
 
-```shell
-section .data
-hello:
-    db 'Hello world!'
-section .text
-;------------------------------------------
-    MOV EAX, hello
-    INT 2   ; print string EAX
+This emulator is based on This project is based on
+[https://github.com/Kobzol/davis](https://github.com/Kobzol/davis)
+This tool allows writing, running and debugging x86 assembly in the browser.
 
-```
-<!-- console -memory -cpu -->
+You can start with the tutorial in the basics section, start playing with the emulator, or goto more advanced examples.
 
-
-<!-- new -->
-> you can press the `Try it` button to see this example live in the emulator
-
-## What is Assembly language?
-
-Assembly language is a low-level programming language that is a step closer to the actual hardware of a computer. It's like a bridge between the high-level languages that humans use to write programs and the machine language that computers understand.
-In assembly language, instructions are written using simple and short commands that directly correspond to the operations performed by the computer's processor. These commands are called "mnemonics." Each mnemonic represents a specific operation, such as adding numbers or moving data from one place to another.
-Unlike high-level languages that use words and
-phrases that are easier for humans to understand,
-assembly language instructions are more basic and
-closely resemble the actual machine instructions that
-the computer's processor can execute. This makes assembly
-language programs more efficient and gives programmers fine-grained control over the hardware.
-
-<br>
-
-In this tutorial we'll try to explain the basics of the language and to show how the cpu actually works.
-
-
-
-<!-- customDocId:assembly_intro -->
+Happy coding!
