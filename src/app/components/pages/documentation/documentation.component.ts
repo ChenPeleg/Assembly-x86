@@ -124,7 +124,7 @@ export class DocumentationComponent implements AfterViewInit, OnDestroy {
       memoryDisplay: MemoryDisplay;
     }>
   ) {
-    this.getPagesNames().then();
+    this.getPagesList().then();
     this.activeRoute.queryParams.subscribe((params) => {
       this.tryItState = params["tryIt"] || "";
     });
@@ -178,7 +178,7 @@ export class DocumentationComponent implements AfterViewInit, OnDestroy {
     return { uiState, memoryDisplay };
   }
 
-  async getPagesNames() {
+  async getPagesList() {
     this.pagesNames = await this.pagesService.getPagesNames();
   }
 
@@ -343,7 +343,7 @@ ${n.join(" ")}
 
   private async loadDocumentsContent(docId: string, tryIt: string) {
     if (!this.pagesNames.length) {
-      await this.getPagesNames();
+      await this.getPagesList();
     }
 
     for (const page of this.pagesNames) {
