@@ -43,12 +43,14 @@ export class PagesService {
       })
     );
     const linesFromDocsTextFile = allPagesContent.split("\n");
-    this._pagesNames = linesFromDocsTextFile.map((l) =>
-      l
-        .replace(".md", "")
-        .split("/")
-        .filter((n) => n)
-    );
+    this._pagesNames = linesFromDocsTextFile
+      .map((l) =>
+        l
+          .replace(".md", "")
+          .split("/")
+          .filter((n) => n)
+      )
+      .map((p) => p.map((n) => n.replace(/<*.>/g, " ")));
     return this._pagesNames;
   }
 
