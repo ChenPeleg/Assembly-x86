@@ -41,7 +41,7 @@ export class MarkdownToHtmlConverter {
     markdown = markdown.replace(/^\s*\*\s*(.*)$/gim, "\n<li>$1</li>");
 
     const wrappedMarkdown = markdown.replace(
-      /((<li>[\s\S]*?<\/li>\n\n?){1,})[\s\S]*?$/g,
+      /((<li>[\s\S]*?<\/li>\n\n?){1,})[\s]*?$/g,
       "<ol>$1</ol>"
     );
 
