@@ -112,7 +112,7 @@ export class MarkdownToHtmlConverter {
           return p1;
         }
 
-        return `<p data-test="test" class="${MarkdownToHtmlConverter.ParagraphClass}" >${p1}</p>`;
+        return `<p class="${MarkdownToHtmlConverter.ParagraphClass}" >${p1}</p>`;
       }
     );
 
