@@ -25,5 +25,6 @@
 /history/first-computers/first-computers-1.md <>
 /history/first-computers/first-computers-2.md <>
 /history/first-computers/first-computers-3.md <>
+/history/test.md <>
 /links.md <>
 /tutorials/tutorials.md <>
