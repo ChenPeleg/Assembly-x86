@@ -1,4 +1,7 @@
-import { findMdCodeBlocks, mdCodeBlockToHtml } from "../findMdCodeBlocks";
+import {
+  findMdCodeBlocks,
+  mdCodeBlockToHtml,
+} from "../markdown/findMdCodeBlocks";
 
 const codeBlockExample = "```shell" + "\n" + "cp 123 123\n```";
 const codeBlockExample2 =
