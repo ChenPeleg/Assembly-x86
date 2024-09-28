@@ -35,25 +35,32 @@ export class MarkdownToHtmlConverter {
     return markdown;
   }
 
-  static convertListsToHtml(mdText: string): string {
-    mdText = mdText.replace(/^\s*-\s*(.*)$/gim, "\n<li>$1</li>");
-    mdText = mdText.replace(/^\s*\*\s*(.*)$/gim, "\n<li>$1</li>");
-    mdText = mdText.replace(
-      /^\s*\d\.\s*(.*)$/gim,
-      "\n<ol>\n<li>$1</li>\n</ol>"
-    );
+  static convertListsToHtml(markdown: string): string {
+    markdown = markdown.replace(/^\s*-\s*(.*)$/gim, "\n<li>$1</li>");
+    markdown = markdown.replace(/^\s*\*\s*(.*)$/gim, "\n<li>$1</li>");
 
-    mdText = mdText.replace(/<\/li>\n<ul>/gim, "<ul>");
-    mdText = mdText.replace(/<\/li>\n<ol>/gim, "<ol>");
-    mdText = mdText.replace(/<\/ol>\n<\/li>/gim, "</ol>");
-    mdText = mdText.replace(/<\/ul>\n<\/li>/gim, "</ul>");
-    return mdText;
+    const wrappedMarkdown = markdown.replace(
+      /((<li>[\s\S]*?<\/li>\n\n?){1,})[\s\S]*?$/g,
+      "<ol>$1</ol>"
+    );
+    console.log(wrappedMarkdown);
+    // mdText = mdText.replace(
+    //   /^\s*\d\.\s*(.*)$/gim,
+    //   "\n<ol>\n<li>$1</li>\n</ol>"
+    // );
+    //
+    // mdText = mdText.replace(/<\/li>\n<ul>/gim, "<ul>");
+    // mdText = mdText.replace(/<\/li>\n<ol>/gim, "<ol>");
+    // mdText = mdText.replace(/<\/ol>\n<\/li>/gim, "</ol>");
+    // mdText = mdText.replace(/<\/ul>\n<\/li>/gim, "</ul>");
+    return wrappedMarkdown;
   }
 
   static convertHeadingsToHtml(markdown: string): string {
     markdown = markdown.replace(/^# (.*)$/gm, "<h1>$1</h1>");
     markdown = markdown.replace(/^## (.*)$/gm, "<h2>$1</h2>");
     markdown = markdown.replace(/^### (.*)$/gm, "<h3>$1</h3>");
+    markdown = markdown.replace(/^#### (.*)$/gm, "<h4>$1</h4>");
     return markdown;
   }
 
@@ -107,7 +114,7 @@ export class MarkdownToHtmlConverter {
         return `<p data-test="test" class="${MarkdownToHtmlConverter.ParagraphClass}" style="background-color: #${randomColor}">${p1}</p>`;
       }
     );
-    console.log(markdown);
+
     return markdown;
   }
 
