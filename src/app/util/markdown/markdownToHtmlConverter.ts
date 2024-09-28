@@ -24,6 +24,14 @@ export class MarkdownToHtmlConverter {
     });
     return markdown;
   }
+  static convertCodeBlocksToHtml(markdown: string): string {
+    const allCode = findMdCodeBlocks(markdown);
+    allCode?.forEach((c) => {
+      const codeHtml = mdCodeBlockToHtml(c);
+      markdown = markdown.replace(c, codeHtml);
+    });
+    return markdown;
+  }
   static convertListsToHtml(mdText: string): string {
     mdText = mdText.replace(/^\s*-\s*(.*)$/gim, "\n<li>$1</li>");
     mdText = mdText.replace(/^\s*\*\s*(.*)$/gim, "\n<li>$1</li>");
@@ -80,8 +88,9 @@ export class MarkdownToHtmlConverter {
   }
   static convertParagraphsToHtml(markdown: string): string {
     markdown = markdown.replace(
-      /(?:\r?\n){2,}([\s\S]*?)(?=(?:\r?\n){2,}|$)/gim,
-      `<p class="${MarkdownToHtmlConverter.ParagraphClass}">$1</p>`
+      /(?:\r?\n){2,}([\s\S]+?)(?=(?:\r?\n){2,}|$)/gim,
+      (match, p1) =>
+        `<p class="${MarkdownToHtmlConverter.ParagraphClass}">${p1}</p>`
     );
     return markdown;
   }
@@ -100,6 +109,7 @@ export class MarkdownToHtmlConverter {
   private convertHtmlToMarkdown(markdown: string): string {
     markdown = MarkdownToHtmlConverter.convertLineBreaksToNormalized(markdown);
     markdown = MarkdownToHtmlConverter.convertTablesToHtml(markdown);
+    markdown = MarkdownToHtmlConverter.convertCodeBlocksToHtml(markdown);
     markdown = MarkdownToHtmlConverter.convertListsToHtml(markdown);
     markdown = MarkdownToHtmlConverter.convertHeadingsToHtml(markdown);
     markdown = MarkdownToHtmlConverter.convertBoldAndItalicToHtml(markdown);
