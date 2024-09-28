@@ -1,6 +1,7 @@
 import { findMdTables } from "./findMdTables";
 import { mdTableToHtml } from "./mdTableToHtmlTable";
 import { findMdCodeBlocks, mdCodeBlockToHtml } from "./findMdCodeBlocks";
+import { MarkdownCodes } from "./markdownCodes";
 
 export class MarkdownToHtmlConverter {
   public static readonly ParagraphClass = "paragraph";
@@ -125,11 +126,18 @@ export class MarkdownToHtmlConverter {
   }
 
   static convertCommentsToHtml(markdown: string): string {
-    // console.log(markdown);
-    markdown = markdown.replace(
-      /<!--(.*)-->\s+$/gim,
-      `<span ${MarkdownToHtmlConverter.DataCommentClass}="$1"></span>`
-    );
+    markdown = markdown.replace(/<!--([^>.]*)-->/gim, (match, comment) => {
+      for (const term of [
+        MarkdownCodes.console,
+        MarkdownCodes.cpu,
+        MarkdownCodes.memory,
+      ]) {
+        if (comment.includes(term)) {
+          return `<span ${MarkdownToHtmlConverter.DataCommentClass}="${comment}"></span>`;
+        }
+      }
+      return match;
+    });
     return markdown;
   }
 
