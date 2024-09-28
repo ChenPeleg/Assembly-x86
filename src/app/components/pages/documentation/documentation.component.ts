@@ -42,6 +42,7 @@ import { UIStateActions } from "../../../stores/actions/ui.state.actions";
 import { MemoryDisplayActions } from "../../../stores/actions/memory-display.actions";
 import { extractNumberFromFileName } from "../../../util/extractNumberFromFileName";
 import { sleep } from "../../../util/sleep";
+import { MarkdownCodes } from "../../../util/markdown/markdownCodes";
 
 interface DocumentationsParams {
   docId: string;
@@ -142,20 +143,20 @@ export class DocumentationComponent implements AfterViewInit, OnDestroy {
     for (const option of allOptions) {
       const optionCommand = option.replace("-", "");
       switch (optionCommand) {
-        case "console":
-        case "memory":
-        case "cpu":
+        case MarkdownCodes.console:
+        case MarkdownCodes.memory:
+        case MarkdownCodes.cpu:
           panels.push(option);
           break;
-        case "number":
-        case "ascii":
-        case "binary":
-        case "hex":
+        case MarkdownCodes.number:
+        case MarkdownCodes.ascii:
+        case MarkdownCodes.binary:
+        case MarkdownCodes.hex:
           memoryDisplay.valueType = option as MemoryValueType;
           break;
-        case "word:1":
-        case "word:2":
-        case "word:4":
+        case MarkdownCodes.word1:
+        case MarkdownCodes.word2:
+        case MarkdownCodes.word4:
           memoryDisplay.wordSize = +option.replace("word:", "") as 1 | 2 | 4;
           break;
       }
