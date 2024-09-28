@@ -49,8 +49,62 @@ export class MarkdownToHtmlConverter {
     );
     return markdown;
   }
+  static constructorLinksToHtml(markdown: string): string {
+    markdown = markdown.replace(
+      /\[([^\]]+)\]\(([^)]+)\)/g,
+      '<a href="$2">$1</a>'
+    );
+    return markdown;
+  }
+  static convertBlockquotesToHtml(markdown: string): string {
+    markdown = markdown.replace(/^\>(.*)$/gim, "<blockquote>$1</blockquote>");
+    markdown = markdown.replace(
+      /<!-- ([^>]*) -->\n?<blockquote>/gs,
+      `<blockquote class="$1">`
+    );
+    return markdown;
+  }
+  static convertInlineCodeToHtml(markdown: string): string {
+    markdown = markdown.replace(
+      /\`(.*?)\`/gim,
+      `<code class="inline-code">$1</code>`
+    );
+    return markdown;
+  }
+  static convertParagraphsToHtml(markdown: string): string {
+    markdown = markdown.replace(
+      /(?:\r?\n){2,}([\s\S]*?)(?=(?:\r?\n){2,}|$)/gim,
+      `<p class="paragraph">$1</p>`
+    );
+    return markdown;
+  }
+  static convertCommentsToHtml(markdown: string): string {
+    markdown = markdown.replace(
+      /^<!--(.*)-->$/gm,
+      `<span data-comments="$1"></span>`
+    );
+    return markdown;
+  }
+  static convertLineBreaksToHtml(markdown: string): string {
+    markdown = markdown.replace(/\\\n/gm, `<br>\n`);
+    return markdown;
+  }
+
   private convertHtmlToMarkdown(markdown: string): string {
-    return markdownToHtmlConverter(this.html);
+    markdown = MarkdownToHtmlConverter.convertTablesToHtml(markdown);
+    markdown = MarkdownToHtmlConverter.convertListsToHtml(markdown);
+    markdown = MarkdownToHtmlConverter.convertHeadingsToHtml(markdown);
+    markdown = MarkdownToHtmlConverter.convertBoldAndItalicToHtml(markdown);
+    markdown = MarkdownToHtmlConverter.convertImagesToHtml(markdown);
+    markdown = MarkdownToHtmlConverter.constructorLinksToHtml(markdown);
+    markdown = MarkdownToHtmlConverter.convertBlockquotesToHtml(markdown);
+    markdown = MarkdownToHtmlConverter.convertInlineCodeToHtml(markdown);
+    markdown = MarkdownToHtmlConverter.convertParagraphsToHtml(markdown);
+    markdown = MarkdownToHtmlConverter.convertCommentsToHtml(markdown);
+    markdown = MarkdownToHtmlConverter.convertLineBreaksToHtml(markdown);
+    return markdown;
+
+    // return markdownToHtmlConverter(this.html);
   }
 }
 
@@ -114,6 +168,7 @@ export const markdownToHtmlConverter = (markdown: string): string => {
     /(?:\r?\n){2,}([\s\S]*?)(?=(?:\r?\n){2,}|$)/gim,
     `<p class="paragraph">$1</p>`
   );
+
   //comments to span with tags
 
   markdown = markdown.replace(
