@@ -2,7 +2,10 @@
 
 To understand more about assembly language, it's important to understand the binary system. The binary system is the foundation of all digital systems, including computers. In this section, we'll explore the binary system, binary digits, place value, binary to decimal conversion, and applications of the binary system.
 
+<!-- new -->
+> If you don't want to read some of the topics tou can click the `next` button to skip to the next topic. However, we recommend reading the tutorial to get a better understanding of all the concepts.
 
+  
 
 The **binary system** is a numeral system that uses only two symbols, typically "0" and "1". It is widely used in digital technology and forms the foundation of computing systems. In the binary system, each digit, also known as a **bit**, represents a value of either 0 or 1. The value of a binary number depends on the position of its bits.
 

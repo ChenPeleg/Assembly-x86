@@ -184,6 +184,7 @@ export class DocumentationComponent implements AfterViewInit, OnDestroy {
 
   async getContent(docId?: string): Promise<SafeHtml> {
     const content = await this.pagesService.getMarkdownText(docId || "");
+
     const rawHtml = new MarkdownToHtmlConverter(content).html;
     const html = makeExternalLinksOpenInNewTab(rawHtml);
 
