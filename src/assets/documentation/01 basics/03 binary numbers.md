@@ -1,5 +1,8 @@
-
 ## Binary System
+
+To understand more about assembly language, it's important to understand the binary system. The binary system is the foundation of all digital systems, including computers. In this section, we'll explore the binary system, binary digits, place value, binary to decimal conversion, and applications of the binary system.
+
+
 
 The **binary system** is a numeral system that uses only two symbols, typically "0" and "1". It is widely used in digital technology and forms the foundation of computing systems. In the binary system, each digit, also known as a **bit**, represents a value of either 0 or 1. The value of a binary number depends on the position of its bits.
 
@@ -28,7 +31,6 @@ So, the binary number 1010 is equivalent to the decimal number 10.\
 The binary system is fundamental in digital computing systems, where information is stored and processed using binary digits. It allows for efficient representation of data and enables the design of electronic circuits that manipulate and process binary information. Binary is used extensively in computer programming, communication systems, and other fields related to information technology.
 The Markdown format allows for easy formatting and readability.
 
-
 Let's take a look at this code:
 
 ```shell
@@ -36,7 +38,7 @@ section .text
 MOV  [0], 5
 
 ```
-<!--  memory -console -cpu word:4 number -->
+<!--  memory -console -cpu word:4   -->
 
 The instruction `MOV [0], 5` stores value 5 into the memory location at address 0.
 Run the code (with ▶️) and look at the value of the first memory cell.
