@@ -10,9 +10,8 @@ section .text
     MOV EAX, hello
     INT 2   ; print string EAX
 ```
-
-<!-- console -memory -cpu -->
-
+<!-- console -memory -cpu --> 
+ 
 
 <!-- new -->
 > you can press the `Try it` button to see this example live in the emulator
