@@ -1,10 +1,10 @@
 
 # Basic Assembly Syntax
 
-In assembly language, each statement typically follows a specific structure. The general format of an assembly language statement is:   <br><br>
+In assembly language, each statement typically follows a specific structure. The general format of an assembly language statement is:
 
 `[label]   mnemonic   [operands]   [;comment]`
-<br><br>
+
 - **label**: An optional field that marks a location in the code. It is used as a reference point for jumps and loops.
 - **mnemonic**: The operation code that specifies the instruction to be executed.
 - **operands**: The data or memory locations involved in the operation. This field is optional and depends on the mnemonic.
