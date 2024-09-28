@@ -8,7 +8,7 @@ import {
   ViewEncapsulation,
 } from "@angular/core";
 import { MDFiles, PagesService } from "../../../services/pages.service";
-import { markdownToHTML } from "../../../util/markdown/markdownToHtml";
+import { MarkdownToHtmlConverter } from "../../../util/markdown/markdownToHtmlConverter";
 import { DomSanitizer, SafeHtml } from "@angular/platform-browser";
 import {
   combineLatest,
@@ -184,7 +184,7 @@ export class DocumentationComponent implements AfterViewInit, OnDestroy {
 
   async getContent(docId?: string): Promise<SafeHtml> {
     const content = await this.pagesService.getMarkdownText(docId || "");
-    const rawHtml = markdownToHTML(content);
+    const rawHtml = new MarkdownToHtmlConverter(content).html;
     const html = makeExternalLinksOpenInNewTab(rawHtml);
 
     const htmlWithButtons = html.replace(

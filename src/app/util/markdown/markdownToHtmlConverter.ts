@@ -2,7 +2,59 @@ import { findMdTables } from "./findMdTables";
 import { mdTableToHtml } from "./mdTableToHtmlTable";
 import { findMdCodeBlocks, mdCodeBlockToHtml } from "./findMdCodeBlocks";
 
-export const markdownToHTML = (markdown: string): string => {
+export class MarkdownToHtmlConverter {
+  public readonly html: string;
+
+  constructor(markdown: string) {
+    this.html = this.convertHtmlToMarkdown(markdown);
+  }
+
+  static convertTablesToHtml(markdown: string): string {
+    const allTables = findMdTables(markdown);
+    allTables?.forEach((t) => {
+      const tableInHtml = mdTableToHtml(t);
+      markdown = markdown.replace(t, tableInHtml.outerHTML);
+    });
+    return markdown;
+  }
+  static convertListsToHtml(mdText: string): string {
+    mdText = mdText.replace(/^\s*-\s*(.*)$/gim, "\n<li>$1</li>");
+    mdText = mdText.replace(/^\s*\*\s*(.*)$/gim, "\n<li>$1</li>");
+    mdText = mdText.replace(
+      /^\s*\d\.\s*(.*)$/gim,
+      "\n<ol>\n<li>$1</li>\n</ol>"
+    );
+
+    mdText = mdText.replace(/<\/li>\n<ul>/gim, "<ul>");
+    mdText = mdText.replace(/<\/li>\n<ol>/gim, "<ol>");
+    mdText = mdText.replace(/<\/ol>\n<\/li>/gim, "</ol>");
+    mdText = mdText.replace(/<\/ul>\n<\/li>/gim, "</ul>");
+    return mdText;
+  }
+  static convertHeadingsToHtml(markdown: string): string {
+    markdown = markdown.replace(/^# (.*)$/gm, "<h1>$1</h1>");
+    markdown = markdown.replace(/^## (.*)$/gm, "<h2>$1</h2>");
+    markdown = markdown.replace(/^### (.*)$/gm, "<h3>$1</h3>");
+    return markdown;
+  }
+  static convertBoldAndItalicToHtml(markdown: string): string {
+    markdown = markdown.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
+    markdown = markdown.replace(/\*(.*?)\*/g, "<em>$1</em>");
+    return markdown;
+  }
+  static convertImagesToHtml(markdown: string): string {
+    markdown = markdown.replace(
+      /\!\[(.*?)\]\((.*?)\)/gim,
+      "<img alt='$1' src='$2' />"
+    );
+    return markdown;
+  }
+  private convertHtmlToMarkdown(markdown: string): string {
+    return markdownToHtmlConverter(this.html);
+  }
+}
+
+export const markdownToHtmlConverter = (markdown: string): string => {
   let mdText = markdown.replace(/\r\n/g, "\n");
 
   const allTables = findMdTables(mdText);
@@ -22,15 +74,6 @@ export const markdownToHTML = (markdown: string): string => {
   // line breaks as two spaces at the end of the line
   //mdText = mdText.replace(/ {2}\n/gm, "</br>\n");
   //mdText = mdText.replace(/\n\n/gm, "</br>\n");
-
-  mdText = mdText.replace(/^\s*-\s*(.*)$/gim, "\n<li>$1</li>");
-  mdText = mdText.replace(/^\s*\*\s*(.*)$/gim, "\n<li>$1</li>");
-  mdText = mdText.replace(/^\s*\d\.\s*(.*)$/gim, "\n<ol>\n<li>$1</li>\n</ol>");
-
-  mdText = mdText.replace(/<\/li>\n<ul>/gim, "<ul>");
-  mdText = mdText.replace(/<\/li>\n<ol>/gim, "<ol>");
-  mdText = mdText.replace(/<\/ol>\n<\/li>/gim, "</ol>");
-  mdText = mdText.replace(/<\/ul>\n<\/li>/gim, "</ul>");
 
   markdown = mdText;
 
