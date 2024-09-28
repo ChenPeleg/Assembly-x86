@@ -43,16 +43,7 @@ export class MarkdownToHtmlConverter {
       /((<li>[\s\S]*?<\/li>\n\n?){1,})[\s\S]*?$/g,
       "<ol>$1</ol>"
     );
-    console.log(wrappedMarkdown);
-    // mdText = mdText.replace(
-    //   /^\s*\d\.\s*(.*)$/gim,
-    //   "\n<ol>\n<li>$1</li>\n</ol>"
-    // );
-    //
-    // mdText = mdText.replace(/<\/li>\n<ul>/gim, "<ul>");
-    // mdText = mdText.replace(/<\/li>\n<ol>/gim, "<ol>");
-    // mdText = mdText.replace(/<\/ol>\n<\/li>/gim, "</ol>");
-    // mdText = mdText.replace(/<\/ul>\n<\/li>/gim, "</ul>");
+
     return wrappedMarkdown;
   }
 
@@ -104,16 +95,31 @@ export class MarkdownToHtmlConverter {
   }
 
   static convertParagraphsToHtml(markdown: string): string {
+    const codeBlockPlaceholder = "CODE_BLOCK_PLACEHOLDER";
+    const codeBlocks: string[] = [];
+
+    // Extract code blocks and replace them with placeholders
+    markdown = markdown.replace(/<code[^>\n?]*>[\s\S]*?<\/code>/g, (match) => {
+      codeBlocks.push(match);
+      return codeBlockPlaceholder;
+    });
+
+    // Convert paragraphs to HTML
     markdown = (markdown + "\n").replace(
       /(?:\r?\n){2,}([\s\S]+?)(?=(?:\r?\n){2,})/gim,
       (match, p1) => {
-        if (p1.match(/<p|<h[1-6]|<li/)) {
+        if (p1.match(/<p|<h[1-6]|<li|<code>/)) {
           return p1;
         }
-        const randomColor = Math.floor(Math.random() * 16777215).toString(16);
-        return `<p data-test="test" class="${MarkdownToHtmlConverter.ParagraphClass}" style="background-color: #${randomColor}">${p1}</p>`;
+
+        return `<p data-test="test" class="${MarkdownToHtmlConverter.ParagraphClass}" >${p1}</p>`;
       }
     );
+
+    // Restore code blocks from placeholders
+    codeBlocks.forEach((codeBlock, index) => {
+      markdown = markdown.replace(codeBlockPlaceholder, codeBlock);
+    });
 
     return markdown;
   }
