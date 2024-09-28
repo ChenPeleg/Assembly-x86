@@ -3,12 +3,15 @@ import { mdTableToHtml } from "./mdTableToHtmlTable";
 import { findMdCodeBlocks, mdCodeBlockToHtml } from "./findMdCodeBlocks";
 
 export class MarkdownToHtmlConverter {
+  public static readonly ParagraphClass = "paragraph";
+  public static readonly InlineCodeClass = "inline-code";
+  public static readonly DataCommentClass = "data-comments";
   public readonly html: string;
 
   constructor(markdown: string) {
     this.html = this.convertHtmlToMarkdown(markdown);
   }
-  static convertLineBreaksToNormelizedBreaks(markdown: string): string {
+  static convertLineBreaksToNormalized(markdown: string): string {
     markdown = markdown.replace(/\r\n/g, "\n");
     return markdown;
   }
@@ -71,21 +74,21 @@ export class MarkdownToHtmlConverter {
   static convertInlineCodeToHtml(markdown: string): string {
     markdown = markdown.replace(
       /\`(.*?)\`/gim,
-      `<code class="inline-code">$1</code>`
+      `<code class="${MarkdownToHtmlConverter.InlineCodeClass}">$1</code>`
     );
     return markdown;
   }
   static convertParagraphsToHtml(markdown: string): string {
     markdown = markdown.replace(
       /(?:\r?\n){2,}([\s\S]*?)(?=(?:\r?\n){2,}|$)/gim,
-      `<p class="paragraph">$1</p>`
+      `<p class="${MarkdownToHtmlConverter.ParagraphClass}">$1</p>`
     );
     return markdown;
   }
   static convertCommentsToHtml(markdown: string): string {
     markdown = markdown.replace(
       /^<!--(.*)-->$/gm,
-      `<span data-comments="$1"></span>`
+      `<span ${MarkdownToHtmlConverter.DataCommentClass}="$1"></span>`
     );
     return markdown;
   }
@@ -95,8 +98,7 @@ export class MarkdownToHtmlConverter {
   }
 
   private convertHtmlToMarkdown(markdown: string): string {
-    markdown =
-      MarkdownToHtmlConverter.convertLineBreaksToNormelizedBreaks(markdown);
+    markdown = MarkdownToHtmlConverter.convertLineBreaksToNormalized(markdown);
     markdown = MarkdownToHtmlConverter.convertTablesToHtml(markdown);
     markdown = MarkdownToHtmlConverter.convertListsToHtml(markdown);
     markdown = MarkdownToHtmlConverter.convertHeadingsToHtml(markdown);
@@ -114,7 +116,7 @@ export class MarkdownToHtmlConverter {
   }
 }
 
-export const markdownToHtmlConverter = (markdown: string): string => {
+export const legacyMarkdownToHtmlConverter = (markdown: string): string => {
   let mdText = markdown.replace(/\r\n/g, "\n");
 
   const allTables = findMdTables(mdText);
