@@ -108,7 +108,7 @@ export class MarkdownToHtmlConverter {
     markdown = (markdown + "\n").replace(
       /(?:\r?\n){2,}([\s\S]+?)(?=(?:\r?\n){2,})/gim,
       (match, p1) => {
-        if (p1.match(/<p|<h[1-6]|<li|<code>/)) {
+        if (p1.match(/<p|<h[1-6]|<li|<code>|<!--/)) {
           return p1;
         }
 
@@ -125,8 +125,9 @@ export class MarkdownToHtmlConverter {
   }
 
   static convertCommentsToHtml(markdown: string): string {
+    // console.log(markdown);
     markdown = markdown.replace(
-      /^<!--(.*)-->$/gm,
+      /<!--(.*)-->\s+$/gim,
       `<span ${MarkdownToHtmlConverter.DataCommentClass}="$1"></span>`
     );
     return markdown;
