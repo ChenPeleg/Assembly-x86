@@ -12,6 +12,11 @@ In assembly language, each statement typically follows a specific structure. The
 
 ## Examples
 
+Let's look at some examples of assembly language statements to illustrate the syntax and structure.
+
+<!-- info -->
+> Note: some of these examples may not be clear to you yet, but they will be explained in detail in later sections.
+
 ### Example 1: Simple MOV Instruction
 
 ```shell
@@ -106,6 +111,7 @@ section .text
     INT 1
 
 ```
+
 <!-- notice -->
 > In this tutorial and emulator, we'll use the **INT** instruction to call system interrupts. The **INT** instruction generates a software interrupt, which transfers control to the operating system's interrupt handler. The interrupt number is specified as an operand to the **INT** instruction. Different interrupt numbers correspond to different system services or functions. In this example, we use interrupt number 1 to print a number, and 2 to print a string stored in the **EAX** register.
 

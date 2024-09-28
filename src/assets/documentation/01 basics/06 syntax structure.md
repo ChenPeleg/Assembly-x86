@@ -35,3 +35,4 @@ Comments are used to document the code and explain what it does. Comments are ig
 section .text ;  This is a comment
 MOV EAX, 1 ; This is another comment
 ```
+<!-- console -memory -cpu -->
