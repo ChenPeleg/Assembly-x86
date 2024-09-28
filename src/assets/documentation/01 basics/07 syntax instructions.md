@@ -1,14 +1,16 @@
-
 # Basic Assembly Syntax
 
-In assembly language, each statement typically follows a specific structure. The general format of an assembly language statement is:
+In assembly language, each statement typically follows a specific structure. The general format of an assembly language
+statement is:
 
 `[label]   mnemonic   [operands]   [;comment]`
 
 - **label**: An optional field that marks a location in the code. It is used as a reference point for jumps and loops.
 - **mnemonic**: The operation code that specifies the instruction to be executed.
-- **operands**: The data or memory locations involved in the operation. This field is optional and depends on the mnemonic.
-- **comment**: An optional field that provides explanations or notes about the code. Comments start with a semicolon `;` and continue until the end of the line.
+- **operands**: The data or memory locations involved in the operation. This field is optional and depends on the
+  mnemonic.
+- **comment**: An optional field that provides explanations or notes about the code. Comments start with a semicolon `;`
+  and continue until the end of the line.
 
 ## Examples
 
@@ -26,8 +28,8 @@ section .text
 start:  MOV EAX, 1  ; Move the value 1 into the EAX register
 
 ```
-<!-- -console -memory cpu -->
 
+<!-- -console -memory cpu -->
 
 - **label**: `start`
 - **mnemonic**: `MOV`
@@ -42,6 +44,7 @@ section .text
    ADD EAX, EBX  ; Add the value in EBX to EAX
 
 ```
+
 <!-- -console -memory cpu -->
 
 - **label**: (none)
@@ -59,7 +62,10 @@ section .text
    JMP loop     ; Jump to the label 'loop'
 
 ```
+
 <!-- -console -memory cpu -->
+
+Notice that the `JMP` has a label as an operand. This label is used to specify the location to jump to.
 
 - **label**: `loop`
 - **mnemonic**: `JMP`
@@ -74,35 +80,14 @@ section .data
     DB 'Hello, World!'  ; Declare a string
 
 ```
+
 <!-- -console memory -cpu word:1 ascii -->
 
 - **label**: `data`
 - **mnemonic**: `DB`
 - **operands**: `'Hello, World!'`
-### Example 5: Conditional Jump
 
-```shell
-
-section .text
-
-        CMP EAX, 0    ; Compare EAX with 0
-        JE end        ; Jump to 'end' if EAX is zero
-end:    NOP           ; No operation
-
-```
-
-- **label**: `end`
-- **mnemonic**: `NOP`
-- **operands**: (none)
-
-In this example:
-- The `CMP` instruction compares the value in `EAX` with 0.
-- The `JE` instruction jumps to the label `end` if the comparison is true (i.e., `EAX` is zero).
-- The `NOP` instruction does nothing and is often used as a placeholder.
-
-These examples illustrate the basic structure and components of assembly language statements. By following this format, you can write clear and understandable assembly code.
-
-## Example 5: system interrupt
+## Example 4: system interrupt
 
 ```shell
 
@@ -112,6 +97,16 @@ section .text
 
 ```
 
+<!-- -console memory -cpu word:1 ascii -->
+The `INT` instruction is used to generate a software interrupt. In this example, we use interrupt number 1 to print a
+number stored in the `EAX` register.
+
+
+
 <!-- notice -->
-> In this tutorial and emulator, we'll use the **INT** instruction to call system interrupts. The **INT** instruction generates a software interrupt, which transfers control to the operating system's interrupt handler. The interrupt number is specified as an operand to the **INT** instruction. Different interrupt numbers correspond to different system services or functions. In this example, we use interrupt number 1 to print a number, and 2 to print a string stored in the **EAX** register.
+> In this tutorial and emulator, we'll use the **INT** instruction to call system interrupts. The **INT** instruction
+> generates a software interrupt, which transfers control to the operating system's interrupt handler. The interrupt
+> number is specified as an operand to the **INT** instruction. Different interrupt numbers correspond to different system
+> services or functions. In this example, we use interrupt number 1 to print a number, and 2 to print a string stored in
+> the **EAX** register.
 

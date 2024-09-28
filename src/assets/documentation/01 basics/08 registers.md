@@ -1,6 +1,6 @@
 # The Registers
 
-although we can access the memory with the `MOV` instruction, we can also use registers to store data and perform operations. Registers are small storage locations within the CPU that are used to store data temporarily. Registers are much faster than memory, so using registers can improve the performance of the program.
+Although we can access the memory with the `MOV` instruction, we can also use registers to store data and perform operations. Registers are small storage locations within the CPU that are used to store data temporarily. Registers are much faster than memory, so using registers can improve the performance of the program.
 In addition, registers are used to store the results of arithmetic and logical operations, as well as memory addresses and other data. The x86 architecture has a set of general-purpose registers that can be used for various purposes. These registers are used to store data, perform arithmetic and logical operations, and control the flow of the program.
 
 ## What are Registers?
@@ -32,6 +32,7 @@ section .text
     ADD EAX, 2  ; Add 2 to the value in the EAX register
     INT 1       ; Call the interrupt 1 (print the value in EAX)
 ```
+<!--  -memory cpu  console -->
 
 In addition to the general-purpose registers, the x86 architecture also has segment registers, control registers, and debug registers. These registers are used for specific purposes, such as managing memory segments, controlling the operation of the CPU, and debugging programs.
 
