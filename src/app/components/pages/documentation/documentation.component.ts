@@ -8,7 +8,7 @@ import {
   ViewEncapsulation,
 } from "@angular/core";
 import { MDFiles, PagesService } from "../../../services/pages.service";
-import { markdownToHTML } from "../../../util/markdownToHtml";
+import { markdownToHTML } from "../../../util/markdown/markdownToHtml";
 import { DomSanitizer, SafeHtml } from "@angular/platform-browser";
 import {
   combineLatest,

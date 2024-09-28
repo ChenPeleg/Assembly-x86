@@ -1,6 +1,6 @@
-import { findMdTables } from "../findMdTables";
+import { findMdTables } from "../markdown/findMdTables";
 
-import { mdTableToHtml } from "../mdTableToHtmlTable";
+import { mdTableToHtml } from "../markdown/mdTableToHtmlTable";
 
 const mdTable1 = `| Bit value | Position value as a power of base 2 | Bit number |
 |-----------|-------------------------------------|------------|
