@@ -97,13 +97,14 @@ export class MarkdownToHtmlConverter {
   }
 
   static convertParagraphsToHtml(markdown: string): string {
-    markdown = markdown.replace(
-      /(?:\r?\n){2,}([\s\S]+?)(?=(?:\r?\n){2,}|$)/gim,
+    markdown = (markdown + "\n").replace(
+      /(?:\r?\n){2,}([\s\S]+?)(?=(?:\r?\n){2,})/gim,
       (match, p1) => {
-        if (p1.match(/<p|<h[1-6]/)) {
+        if (p1.match(/<p|<h[1-6]|<li/)) {
           return p1;
         }
-        return `<p data-test="test" class="${MarkdownToHtmlConverter.ParagraphClass}" style="background-color: antiquewhite">${p1}</p>`;
+        const randomColor = Math.floor(Math.random() * 16777215).toString(16);
+        return `<p data-test="test" class="${MarkdownToHtmlConverter.ParagraphClass}" style="background-color: #${randomColor}">${p1}</p>`;
       }
     );
     console.log(markdown);
