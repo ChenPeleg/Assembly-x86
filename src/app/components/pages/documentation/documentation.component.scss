@@ -12,10 +12,7 @@ li {
   max-height: 89vh;
 }
 
-ol, ul {
-  margin-top: unset;
-  margin-bottom: unset;
-}
+
 
 :host ol {
   background-color: #a5e555;
@@ -28,11 +25,13 @@ ol, ul {
   line-height: 180%;
   padding: 0 3em;
   font-family: Poppins, serif;
- p {
-   background-color: #8291d2;
+
+  p {
+    background-color: #8291d2;
     //margin-top: 1rem;
     //margin-bottom: 1rem;
   }
+
   h1, h2, h3, h4 {
     font-size: large;
     margin-top: 1rem;
@@ -55,16 +54,18 @@ ol, ul {
   }
 
 
-  ol {
-    margin-top: unset;
-    margin-bottom: unset;
-  }
-
-  ol, ul, menu {
+  menu {
     list-style: initial;
-    margin: initial;
+    margin:  initial;
     padding: initial;
   }
+
+  ol, ul {
+    list-style: initial;
+    margin: 1em;
+    padding: initial;
+  }
+
 
   table {
     th, td {
@@ -120,6 +121,7 @@ ol, ul {
     }
 
   }
+
   blockquote.warning {
     background: rgba(214, 65, 127, 0.2);
     border-left: 4px solid #6e022b;
@@ -132,6 +134,7 @@ ol, ul {
       padding-right: 10px;
     }
   }
+
   blockquote.new {
     background: rgba(65, 214, 147, 0.2);
     border-left: 4px solid #026e57;
@@ -144,6 +147,7 @@ ol, ul {
       padding-right: 10px;
     }
   }
+
   blockquote.info {
     background: rgba(191, 164, 244, 0.2);
     border-left: 4px solid #68139f;
@@ -156,6 +160,7 @@ ol, ul {
       padding-right: 10px;
     }
   }
+
   blockquote.notice {
     background: rgba(250, 253, 0, 0.2);
     border-left: 4px solid #d1ba11;
@@ -168,6 +173,7 @@ ol, ul {
       padding-right: 10px;
     }
   }
+
   code.inline-code {
     padding: 0.2em 0.15em;
     font-weight: 400;
