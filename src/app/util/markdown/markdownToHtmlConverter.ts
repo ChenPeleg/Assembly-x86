@@ -8,6 +8,10 @@ export class MarkdownToHtmlConverter {
   constructor(markdown: string) {
     this.html = this.convertHtmlToMarkdown(markdown);
   }
+  static convertLineBreaksToNormelizedBreaks(markdown: string): string {
+    markdown = markdown.replace(/\r\n/g, "\n");
+    return markdown;
+  }
 
   static convertTablesToHtml(markdown: string): string {
     const allTables = findMdTables(markdown);
@@ -91,6 +95,8 @@ export class MarkdownToHtmlConverter {
   }
 
   private convertHtmlToMarkdown(markdown: string): string {
+    markdown =
+      MarkdownToHtmlConverter.convertLineBreaksToNormelizedBreaks(markdown);
     markdown = MarkdownToHtmlConverter.convertTablesToHtml(markdown);
     markdown = MarkdownToHtmlConverter.convertListsToHtml(markdown);
     markdown = MarkdownToHtmlConverter.convertHeadingsToHtml(markdown);
