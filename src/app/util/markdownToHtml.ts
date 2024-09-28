@@ -68,7 +68,7 @@ export const markdownToHTML = (markdown: string): string => {
   // Paragraphs
   // markdown = markdown.replace(/\n$/gim, "<br />");
   markdown = markdown.replace(
-    /(?:\r?\n){2,}([\s\S]+?)(?=(?:\r?\n){2,}|$)/gim,
+    /(?:\r?\n){2,}([\s\S]*?)(?=(?:\r?\n){2,}|$)/gim,
     `<p class="paragraph">$1</p>`
   );
   //comments to span with tags
