@@ -20,8 +20,8 @@ export const markdownToHTML = (markdown: string): string => {
   });
 
   // line breaks as two spaces at the end of the line
-  mdText = mdText.replace(/ {2}\n/gm, "</br>\n");
-  mdText = mdText.replace(/\n\n/gm, "</br>\n");
+  //mdText = mdText.replace(/ {2}\n/gm, "</br>\n");
+  //mdText = mdText.replace(/\n\n/gm, "</br>\n");
 
   mdText = mdText.replace(/^\s*-\s*(.*)$/gim, "\n<li>$1</li>");
   mdText = mdText.replace(/^\s*\*\s*(.*)$/gim, "\n<li>$1</li>");
@@ -53,12 +53,6 @@ export const markdownToHTML = (markdown: string): string => {
     '<a href="$2">$1</a>'
   );
 
-  // Convert code blocks
-  // markdown = markdown.replace(
-  //   /```([\s\S]*?)```/g,
-  //   "<pre><code>$1</code></pre>"
-  // );
-
   // Blockquotes
   markdown = markdown.replace(/^\>(.*)$/gim, "<blockquote>$1</blockquote>");
   markdown = markdown.replace(
@@ -73,7 +67,10 @@ export const markdownToHTML = (markdown: string): string => {
 
   // Paragraphs
   // markdown = markdown.replace(/\n$/gim, "<br />");
-  // markdown = markdown.replace(/\n/gim, "<p>$1</p>");
+  markdown = markdown.replace(
+    /(?:\r?\n){2,}([\s\S]+?)(?=(?:\r?\n){2,}|$)/gim,
+    `<p class="paragraph">$1</p>`
+  );
   //comments to span with tags
 
   markdown = markdown.replace(
