@@ -77,16 +77,38 @@ export class ALU {
 
   inc(value: number): number {
     value = this.normalize(value);
-    return this.normalize(value + 1);
+    const result = this.normalize(value + 1);
+    /**
+     * Todo: check that this is correct
+     */
+    this.cpu.setFlags(result);
+    this.cpu.statusWord.overflow = false;
+    this.cpu.statusWord.carry = false;
+    /**
+     * Todo: end
+     */
+    return result;
   }
   dec(value: number): number {
     value = this.normalize(value);
-    return this.normalize(value - 1);
+    const result = this.normalize(value - 1);
+    /**
+     * Todo: check that this is correct
+     */
+    this.cpu.setFlags(result);
+    this.cpu.statusWord.overflow = false;
+    this.cpu.statusWord.carry = false;
+    /**
+     * Todo: end
+     */
+    return result;
   }
 
   and(op1: number, op2: number): number {
     let result: number = op1 & op2;
-
+    /**
+     * Todo: check that this is correct
+     */
     this.cpu.setFlags(result);
     this.cpu.statusWord.overflow = false;
     this.cpu.statusWord.carry = false;
