@@ -68,3 +68,4 @@ loop_1:
 <!-- -memory cpu  console -->
 
 As you can see, the `ECX` register is used as a counter in this example. The `LOOP` instruction decrements the `ECX` register and jumps to the specified label if `ECX` is not zero. This allows you to repeat a block of code a specific number of times.
+The `ECX` register is commonly used as a counter in loops and other repetitive operations.
