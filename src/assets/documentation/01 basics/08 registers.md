@@ -55,5 +55,15 @@ section .text
 Notice that you can't see the `EIP` register in the code, but you can see it on the emulator's register viewer.
 Each time an instruction is executed, the `EIP` register is updated to point to the next instruction to be executed.
 
+### Example 3: Using the ECX Register
 
-
+```shell
+section .text
+    MOV ECX, 5  ; Move the value 5 into the ECX register
+loop:
+    MOV EAX, ECX  ; Move the value in ECX into EAX
+    INT 1         ; Call the interrupt 1 (print the value in EAX)
+    DEC ECX       ; Decrement the value in ECX
+    JNZ loop      ; Jump to the loop label if ECX is not zero
+```
+<!-- -memory cpu  console -->
