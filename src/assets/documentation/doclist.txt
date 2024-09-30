@@ -6,18 +6,18 @@
 /01 basics/06 syntax structure.md <>
 /01 basics/07 syntax instructions.md <>
 /01 basics/08 registers.md <>
-/01 basics/09 the stack.md <>
+/01 basics/09 memory.md <>
 /01 basics/10 hello world advanced.md <>
-/01 basics/11 assembly-basics.md <>
 /01 basics/bit-tables.md <>
-/01 basics/hello-works.md <>
-/02 commands/01 basic-commands.md <>
+/02 binary numbers/01 binary numbers.md <>
 /03 registers/cpu-word-size.md <>
+/03 registers/flags.md <>
 /03 registers/memory-size.md <>
 /03 registers/registers-cheatsheet.md <>
 /04 registers part 2/cpu-word-size.md <>
 /04 registers part 2/memory-size.md <>
 /04 registers part 2/registers-cheatsheet.md <>
+/05 commands/01 basic-commands.md <>
 /about.md <>
 /history/assembly-development/development-of-assembly-2.md <>
 /history/assembly-development/development-of-assembly.md <>
