@@ -1,4 +1,4 @@
-## Binary System
+## Binary System in depth
 
 To understand more about assembly language, it's important to understand the binary system. The binary system is the foundation of all digital systems, including computers. In this section, we'll explore the binary system, binary digits, place value, binary to decimal conversion, and applications of the binary system.
  
