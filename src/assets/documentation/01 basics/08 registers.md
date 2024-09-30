@@ -60,10 +60,11 @@ Each time an instruction is executed, the `EIP` register is updated to point to 
 ```shell
 section .text
     MOV ECX, 5  ; Move the value 5 into the ECX register
-loop:
+loop_1:
     MOV EAX, ECX  ; Move the value in ECX into EAX
-    INT 1         ; Call the interrupt 1 (print the value in EAX)
-    DEC ECX       ; Decrement the value in ECX
-    JNZ loop      ; Jump to the loop label if ECX is not zero
+    INT 1         ; Call the interrupt 1 (print the value in EAX) 
+    LOOP loop_1      ; Jump to the loop label if ECX is not zero
 ```
 <!-- -memory cpu  console -->
+
+As you can see, the `ECX` register is used as a counter in this example. The `LOOP` instruction decrements the `ECX` register and jumps to the specified label if `ECX` is not zero. This allows you to repeat a block of code a specific number of times.
