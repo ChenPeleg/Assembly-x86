@@ -9,7 +9,9 @@
 /01 basics/09 memory.md <>
 /01 basics/10 hello world advanced.md <>
 /01 basics/bit-tables.md <>
-/02 binary numbers/01 binary numbers.md <>
+/02 binary numbers/01 Numeral system examples.md <>
+/02 binary numbers/01 Numeral system.md <>
+/02 binary numbers/01 Representing numbers.md <>
 /03 registers/cpu-word-size.md <>
 /03 registers/flags.md <>
 /03 registers/memory-size.md <>
