@@ -54,7 +54,23 @@ example:
 
 ```shell
 section .text
-mov [0], 255
+mov [0], 4294967295
 add [0], 1
 ```
-<!--  memory -console -cpu word:4 binary -->
+<!-- -cpu memory -console word:4 binary -->
+
+In this example, the value `4294967295` is stored in the memory location at address `0`. When we add `1` to this value,
+an overflow condition occurs, and the result is truncated to fit within the available range. The memory location at
+address `0` now contains the value `0`.
+
+Notice that the next memory cell is not affected by the overflow, and it still contains the value `0`.
+
+ 
+When the result of an arithmetic operation exceeds the maximum value that can be represented by the number of bits
+available, an overflow condition occurs. This leads to setting the overflow flag in the CPU, OF (Overflow Flag).
+
+**Run the previous example with the CPU view**
+
+You will see that the overflow flag is set after the addition operation, indicating that an overflow condition has
+
+We'll learn more about the overflow flag and how to handle overflow conditions in the upcoming sections.
