@@ -30,7 +30,7 @@ local variables, function parameters, return addresses, and other data.
 When the operating system starts a program, it allocates a stack for the program to use. The stack is typically located
 at the top of the memory space and grows downward. The stack pointer (ESP) register points to the top of the stack, and
 the stack grows downward as items are pushed onto the stack.
-
+ 
 ![stack and heap memory](https://icarus.cs.weber.edu/~dab/cs1410/textbook/4.Pointers/images/layout.png)
 
 ## How the Stack Works
