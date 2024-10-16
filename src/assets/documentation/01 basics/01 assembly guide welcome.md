@@ -1,5 +1,10 @@
 # Assembly x86 emulator and tutorial
 
+
+![stack and heap memory](assets/img/breakpoint.png)
+![stack and heap memory](https://icarus.cs.weber.edu/~dab/cs1410/textbook/4.Pointers/images/layout.png)
+
+
 ### Welcome to the Assembly x86 emulator and tutorial!
 
 This site contains a tutorial and an emulator for the x86 assembly language.
@@ -17,3 +22,4 @@ Depending on your experience with assembly, you can choose the best path for you
 - [Basics - Hello world](#/docs/01%20basics%2B02%20hello%20world)
 
 Happy coding!
+
