@@ -8,15 +8,15 @@ In two's complement, the most significant bit (MSB) is used as the sign bit. If 
 
 For example, let's consider an 8-bit system:
 
-| Decimal | Binary  | Two's Complement |
-|---------|---------|------------------|
-| 0       | 00000000| 00000000         |
-| 1       | 00000001| 00000001         |
-| -1      | 00000001| 11111111         |
-| 2       | 00000010| 00000010         |
-| -2      | 00000010| 11111110         |
-| 127     | 01111111| 01111111         |
-| -128    | 10000000| 10000000         |
+| Decimal | Binary   | Two's Complement |
+|---------|----------|------------------|
+| 0       | 00000000 | 00000000         |
+| 1       | 00000001 | 00000001         |
+| -1      | 00000001 | 11111111         |
+| 2       | 00000010 | 00000010         |
+| -2      | 00000010 | 11111110         |
+| 127     | 01111111 | 01111111         |
+| -128    | 10000000 | 10000000         |
 
 ### Converting to Two's Complement
 
@@ -31,16 +31,45 @@ Example: Converting +5 to -5 in an 8-bit system:
 
 So, -5 in two's complement is `11111011`.
 
+example:
+
+```shell
+section .text
+mov [0], -5 
+```
+<!-- -cpu memory -console word:4 binary -->
+
+### Signed or Unsigned Interpretation
+
+When interpreting a binary number, it is essential to know whether it is signed or unsigned. For example, the binary number `11111111` can represent -1 in two's complement or 255 in an unsigned system. The interpretation depends on the context and the data type used.
+```shell
+section .text
+mov [0], -5 
+mov [4], 4294967291
+```
+<!-- -cpu memory -console word:4 binary -->
+
+<!-- warning -->
+> In this example we are (using a 32-bit system) the value `4294967291` is the same binary value as -5.  So you must be careful when interpreting the binary values, because each binary value can be interpreted as signed  or unsigned integer.
+
 ### Arithmetic Operations
 
 Arithmetic operations with two's complement numbers are straightforward. The same binary addition and subtraction rules apply, and the sign bit is automatically handled.
 
 Example: Adding -3 and 2 in an 8-bit system:
+
 1. -3 in binary (two's complement): `11111101`
 2. 2 in binary: `00000010`
 3. Add the numbers: `11111101 + 00000010 = 11111111`
 
 The result `11111111` is -1 in two's complement.
+
+```shell
+section .text
+mov [0], -3
+add [0], 2
+```
+<!-- -cpu memory -console word:4 binary -->
 
 ### Overflow in Two's Complement
 
