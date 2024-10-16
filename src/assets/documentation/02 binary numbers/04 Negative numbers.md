@@ -1,75 +1,58 @@
-# Representing numbers
+# Negative numbers 
 
-The computer's memory stores data in binary form, using a series of 0s and 1s to represent numbers, characters, and
-other information. Understanding how numbers are represented in binary is essential for working with assembly language
-and computer systems.
+In computer systems, negative numbers are typically represented using a method called two's complement. This method allows for efficient arithmetic operations and simplifies the design of the arithmetic logic unit (ALU) in the CPU.
 
-The computer's memory is made up of cells, within which binary numbers are stored. Each binary digit (0 or 1) is called
-a bit. This is a short form of the words binary digit. Now, let's assume a fundamental premise that we have a limit on
-the number of bits we can use to represent a number. In computers, this is a very practical limitation because computers
-store numbers in cells of fixed size. The common sizes are 8, 16, 32, or 64 bits. This means that the limit on the
-number of bits for representing a number is a basic part of how computers operate. Let's assume we have a cell with N
-bits. What is the largest number we can store in it? Let's look at the following table, which summarizes the largest
-number that can be represented by a number of bits ranging from 1 to 8:
+## Two's Complement Representation
 
-| Number of Bits (N) | Largest Number in Binary | Decimal Translation |
-|--------------------|--------------------------|---------------------|
-| 1                  | 1                        | 1                   |
-| 2                  | 11                       | 3                   |
-| 3                  | 111                      | 7                   |
-| 4                  | 1111                     | 15                  |
-| 5                  | 11111                    | 31                  |
-| 6                  | 111111                   | 63                  |
-| 7                  | 1111111                  | 127                 |
-| 8                  | 11111111                 | 255                 |
+In two's complement, the most significant bit (MSB) is used as the sign bit. If the MSB is 0, the number is positive; if the MSB is 1, the number is negative. The value of a negative number in two's complement is obtained by inverting all the bits of its positive counterpart and then adding 1 to the least significant bit (LSB).
 
-The table shows that the largest number that can be represented by N bits is 2^N - 1. This is because each bit can have
-one of two values (0 or 1), so the total number of unique combinations of N bits is 2^N. However, since we start
-counting from 0, the largest number that can be represented is 2^N - 1.
+For example, let's consider an 8-bit system:
 
-### Overflow
+| Decimal | Binary  | Two's Complement |
+|---------|---------|------------------|
+| 0       | 00000000| 00000000         |
+| 1       | 00000001| 00000001         |
+| -1      | 00000001| 11111111         |
+| 2       | 00000010| 00000010         |
+| -2      | 00000010| 11111110         |
+| 127     | 01111111| 01111111         |
+| -128    | 10000000| 10000000         |
 
-When working with binary numbers, it's important to be aware of the concept of overflow. Overflow occurs when the result
-of an arithmetic operation exceeds the maximum value that can be represented by the number of bits available. For
-example, if you add two binary numbers and the result is larger than the largest number that can be represented by the
-number of bits used, an overflow condition occurs. In this case, the result is truncated to fit within the available
-range, and the overflow condition is flagged.
+### Converting to Two's Complement
 
+To convert a positive number to its negative counterpart in two's complement:
+1. Invert all the bits (change 0s to 1s and 1s to 0s).
+2. Add 1 to the resulting binary number.
 
-example:
+Example: Converting +5 to -5 in an 8-bit system:
+1. +5 in binary: `00000101`
+2. Invert the bits: `11111010`
+3. Add 1: `11111010 + 1 = 11111011`
 
-```shell
-section .text
-mov EAX, 4294967295
-add EAX, 1
-```
-<!--  -memory -console cpu word:4 binary -->
+So, -5 in two's complement is `11111011`.
 
-in  this example, the value of the `EAX` register is `4294967295`, which is the largest 32-bit unsigned integer. When we
-add 1 to this value, the result exceeds the maximum value that can be represented by a 32-bit integer, causing an
-overflow condition. The result is truncated to fit within the available range, resulting in the value `0`.
+### Arithmetic Operations
 
+Arithmetic operations with two's complement numbers are straightforward. The same binary addition and subtraction rules apply, and the sign bit is automatically handled.
 
-example:
+Example: Adding -3 and 2 in an 8-bit system:
+1. -3 in binary (two's complement): `11111101`
+2. 2 in binary: `00000010`
+3. Add the numbers: `11111101 + 00000010 = 11111111`
 
-```shell
-section .text
-mov [0], 4294967295
-add [0], 1
-```
-<!-- -cpu memory -console word:4 binary -->
+The result `11111111` is -1 in two's complement.
 
-In this example, the value `4294967295` is stored in the memory location at address `0`. When we add `1` to this value,
-an overflow condition occurs, and the result is truncated to fit within the available range. The memory location at
-address `0` now contains the value `0`.
+### Overflow in Two's Complement
 
-Notice that the next memory cell is not affected by the overflow, and it still contains the value `0`.
+Overflow can also occur with two's complement numbers. It happens when the result of an arithmetic operation exceeds the range that can be represented with the given number of bits.
 
- 
-When the result of an arithmetic operation exceeds the maximum value that can be represented by the number of bits
-available, an overflow condition occurs. This leads to setting the carry flag in the CPU, CF  (Carry Flag).
+Example: Adding 127 and 1 in an 8-bit system:
+1. 127 in binary: `01111111`
+2. 1 in binary: `00000001`
+3. Add the numbers: `01111111 + 00000001 = 10000000`
 
-**Run the previous example with the CPU view**
+The result `10000000` is -128 in two's complement, indicating an overflow condition.
 
-You will see that the carry flag is set after the addition operation, indicating that an overflow/ carry condition has
-We'll learn more about the overflow/ carry flag and how to handle overflow conditions in the upcoming sections.
+### Summary
+
+Two's complement is a widely used method for representing negative numbers in binary systems. It simplifies arithmetic operations and is efficient for computer hardware. Understanding two's complement is essential for working with low-level programming and computer architecture.
