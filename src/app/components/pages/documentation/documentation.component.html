@@ -1,7 +1,7 @@
-<div *ngIf="($docsParams | async) as dockParams"
-     class="flex flex-col md:flex-row sm:overflow-y-visible md:overflow-y-hidden" id="documentation-component-wrapper">
-  <div [@openClose]="dockParams.tryIt ? 'open' : 'closed'" id="core-app-container">
-    <core-app #coreAppComponent [isTryIt]="true"></core-app>
+<div #coreAppComponent *ngIf="($docsParams | async) as dockParams"
+     class="flex flex-col md:flex-row sm:overflow-y-visible md:overflow-y-hidden custom-scroll-margins" id="documentation-component-wrapper">
+  <div  [@openClose]="dockParams.tryIt ? 'open' : 'closed'" id="core-app-container">
+    <core-app  [isTryIt]="true"></core-app>
   </div>
   <div #documentationSection class="pt-4 max-w-7xl w-full ml-auto sm:max-h-full md:max-h-screen overflow-y-visible md:overflow-y-scroll"
        id="documentation-content-section ">
