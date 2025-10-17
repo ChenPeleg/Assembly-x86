@@ -106,6 +106,9 @@ li {
       background-color: #f5f5f5;
       border: 1px solid #ccc;
       border-radius: 6px;
+      code {
+        white-space: pre-line;
+      }
     }
   }
 
