@@ -93,6 +93,9 @@ export class DocumentationComponent implements AfterViewInit, OnDestroy {
   @ViewChild("documentationSection") private documentationSection:
     | ElementRef
     | undefined;
+  @ViewChild("coreAppComponent") private coreAppComponent:
+    | ElementRef
+    | undefined;
   private readonly destroy$ = new Subject<void>();
   public readonly $docsParams: Observable<DocumentationsParams | null> =
     combineLatest([this.activeRoute.params, this.activeRoute.queryParams]).pipe(
@@ -419,6 +422,9 @@ ${n.join(" ")}
       queryParams: {
         ["tryIt"]: codeBlock.id,
       },
+    });
+    this.coreAppComponent?.nativeElement.scrollIntoView({
+      behavior: "smooth",
     });
   }
 }
