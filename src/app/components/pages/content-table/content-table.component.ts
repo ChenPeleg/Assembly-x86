@@ -1,4 +1,10 @@
-import { Component, Input, Renderer2 } from "@angular/core";
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  Renderer2,
+} from "@angular/core";
 import { NestedTreeControl } from "@angular/cdk/tree";
 import { MatTreeNestedDataSource } from "@angular/material/tree";
 import {
@@ -19,7 +25,7 @@ import { extractNumberFromFileName } from "../../../util/extractNumberFromFileNa
  * Each node has a name and an optional list of children.
  */
 
-interface DocElement {
+export interface DocElement {
   type: "file" | "folder";
   name: string;
   fullPath: string[];
@@ -54,6 +60,9 @@ interface DocElement {
   ],
 })
 export class ContentTableComponent {
+  @Output()
+  public contentTableItemClicked: EventEmitter<DocElement> =
+    new EventEmitter<DocElement>();
   public isMobile: boolean = getScreenMediaState().isMobile;
   treeControl = new NestedTreeControl<DocElement>((node) => node.children);
   dataSource = new MatTreeNestedDataSource<DocElement>();
@@ -208,6 +217,7 @@ export class ContentTableComponent {
 
   async clickLink(node: DocElement) {
     const docId = PagesService.NamePageToDocId(node.fullPath);
+    this.contentTableItemClicked.emit(node);
     await this.router.navigate(["docs", docId]);
   }
 
