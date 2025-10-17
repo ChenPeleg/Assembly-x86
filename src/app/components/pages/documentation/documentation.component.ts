@@ -23,7 +23,6 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { makeExternalLinksOpenInNewTab } from "../../../util/makeExternalLinksOpenInNewTab";
 import { CodeExample } from "../../../models/CodeExample";
 import { observableToPromise } from "../../../util/obeservableToPromise";
-import { CoreAppComponent } from "../../core/core-app.component";
 import { UserDataService } from "../../../services/user-data.service";
 import { TypeOfCodeInEditor } from "../../../models/TypeOfCodeInEditor";
 import {
@@ -43,6 +42,7 @@ import { MemoryDisplayActions } from "../../../stores/actions/memory-display.act
 import { extractNumberFromFileName } from "../../../util/extractNumberFromFileName";
 import { sleep } from "../../../util/sleep";
 import { MarkdownCodes } from "../../../util/markdown/markdownCodes";
+import { DocElement } from "../content-table/content-table.component";
 
 interface DocumentationsParams {
   docId: string;
@@ -90,11 +90,10 @@ export class DocumentationComponent implements AfterViewInit, OnDestroy {
   @ViewChild("htmlDynamicContent") private htmlDynamicContent:
     | ElementRef
     | undefined;
-  @ViewChild("coreAppComponent") private coreAppComponent:
-    | CoreAppComponent
+  @ViewChild("documentationSection") private documentationSection:
+    | ElementRef
     | undefined;
   private readonly destroy$ = new Subject<void>();
-
   public readonly $docsParams: Observable<DocumentationsParams | null> =
     combineLatest([this.activeRoute.params, this.activeRoute.queryParams]).pipe(
       distinctUntilChanged(),
@@ -266,6 +265,12 @@ export class DocumentationComponent implements AfterViewInit, OnDestroy {
 
     this.previousPage =
       currentId > 0 ? buildPage(allDocIds[currentId - 1]) : null;
+  }
+
+  contentTableItemClicked($event: DocElement) {
+    this.documentationSection?.nativeElement.scrollIntoView({
+      behavior: "smooth",
+    });
   }
 
   private async displayDefaultDocsContent() {

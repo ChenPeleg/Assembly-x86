@@ -3,7 +3,7 @@
   <div [@openClose]="dockParams.tryIt ? 'open' : 'closed'" id="core-app-container">
     <core-app #coreAppComponent [isTryIt]="true"></core-app>
   </div>
-  <div class="pt-4 max-w-7xl w-full ml-auto sm:max-h-full md:max-h-screen overflow-y-visible md:overflow-y-scroll"
+  <div #documentationSection class="pt-4 max-w-7xl w-full ml-auto sm:max-h-full md:max-h-screen overflow-y-visible md:overflow-y-scroll"
        id="documentation-content-section ">
     <div class="px-4 flex flex-row w-full  justify-between" id="documentation navigation">
       <button (click)="navDocuments($event,'previous')" [matTooltip]="previousPage?.description || ''" [ngClass]="{'invisible' : !this.previousPage}" mat-button> <mat-icon>chevron_left</mat-icon> previous</button>
@@ -12,7 +12,6 @@
     </div>
 
     <h2 class="pl-12  my-4 text-lg">
-<!--      <a [routerLink]="'/docs/'">Documentation</a>-->
       {{createDockNameFromDocId(dockParams.docId || null)}}</h2>
     <div #htmlDynamicContent class="html-content">
       <div [innerHTML]="content"></div>
@@ -20,7 +19,7 @@
   </div>
   <div  class="ml-auto max-h-screen sm:overflow-y-visible md:overflow-y-scroll">
     <div *ngIf="pagesNames.length" [@openClose]="dockParams.tryIt ? 'closed':  'open' " id="content-table-wrapper">
-      <content-table [currentDoc]="dockParams.docId || null " [pages]="pagesNames"></content-table>
+      <content-table (contentTableItemClicked)="contentTableItemClicked($event)" [currentDoc]="dockParams.docId || null " [pages]="pagesNames"></content-table>
     </div>
   </div>
 </div>
