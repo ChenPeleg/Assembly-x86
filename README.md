@@ -24,6 +24,21 @@ You can try it online [[here](https://chenpeleg.github.io/Assembly-x86/)
   * ASCII visualization
 * Output console
 
+## Documentation
+
+📚 **Comprehensive Documentation Plan Available!**
+
+We're expanding our documentation to create a complete learning resource for assembly programming. Check out our documentation plans:
+
+- **[Documentation Summary](docs/SUMMARY.md)** - Quick overview of the documentation expansion plan
+- **[Content Plan](docs/documentation-content-plan.md)** - Detailed strategy and roadmap
+- **[Quick Start Guide](docs/documentation-quick-start.md)** - Start contributing in 5 minutes
+- **[All Documentation Plans](docs/)** - Complete planning documents
+
+### Contributing to Documentation
+
+We welcome contributions! Whether you're fixing typos, writing tutorials, or creating comprehensive guides, every contribution helps. See our [Quick Start Guide](docs/documentation-quick-start.md) to get started.
+
 ## TODO
 * Stack visualizer
 * Register dereference visualiser
@@ -31,7 +46,7 @@ You can try it online [[here](https://chenpeleg.github.io/Assembly-x86/)
 * More instructions
 * Enable comments on empty lines
 
-##Installation
+## Installation
 Run `npm install`.
 
 ## Usage
@@ -40,12 +55,12 @@ Opens the site in browser.
 npm start
 ```
 
-###Tests
+### Tests
 ```shell
 npm test
 ```
 
-###Build
+### Build
 Builds the application into `dist` folder.
 ```shell
 npm run build
