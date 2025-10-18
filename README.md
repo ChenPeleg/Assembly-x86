@@ -8,7 +8,7 @@ This tool allows writing, running and debugging x86 assembly in the browser.<br 
 It visualizes the program state (cpu and memory), supports breakpoints and<br />
 enables line-by-line stepping.
 
-You can try it online [[here](https://chenpeleg.github.io/Assembly-x86/)
+You can try it online [here](https://chenpeleg.github.io/Assembly-x86/)
 
 ## Features
 * x86 assembly editor

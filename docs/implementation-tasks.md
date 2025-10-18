@@ -459,11 +459,14 @@ Tasks to be detailed when Phase 4-5 are underway.
 
 ## Quick Stats
 
-**Total Tasks Planned:** ~90
+**Total Tasks Explicitly Listed:** 55
 **Tasks Complete:** 4 (Planning)
-**High Priority Tasks:** ~40
-**Medium Priority Tasks:** ~35
-**Low Priority Tasks:** ~15
+**Tasks Remaining:** 51
+**High Priority Tasks:** ~35
+**Medium Priority Tasks:** ~15
+**Low Priority Tasks:** ~5
+
+**Note:** Many tasks in Phase 4-7 are grouped and will be broken down further during implementation.
 
 **Estimated Total Effort:** ~300-400 hours
 **Recommended Team Size:** 3-5 contributors
