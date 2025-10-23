@@ -1,6 +1,6 @@
 # GitHub Copilot Instructions for Assembly-x86
 
-x86 assembly debugger/emulator built with Angular 15, TypeScript, and Angular Material.
+An x86 assembly debugger/emulator built with Angular 15, TypeScript, and Angular Material.
 
 ## Project Info
 - **Build**: `npm run build` | **Test**: `npm test` | **Serve**: `npm start`
