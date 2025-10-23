@@ -1,3 +1,4 @@
+/00 quickstart/01 getting-started.md <>
 /01 basics/01 assembly guide welcome.md <>
 /01 basics/02 hello world.md <>
 /01 basics/03 binary numbers.md <>
