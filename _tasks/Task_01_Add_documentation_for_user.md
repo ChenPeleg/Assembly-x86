@@ -18,7 +18,7 @@ The Assembly x86 project includes a comprehensive documentation system built wit
 ## Part 2 - Suggestions for Content Improvement
 
 ### Suggestion 1: Add a Quick Start Guide
-**Description**: Create a dedicated quick start guide (e.g., `00 quick-start/getting-started.md`) that helps users understand the emulator interface and run their first program within 5 minutes.
+**Description**: Create a dedicated quick start guide (e.g., `00 quick start/getting-started.md`) that helps users understand the emulator interface and run their first program within 5 minutes.
 
 **Benefits**:
 - Reduces the learning curve for new users
@@ -53,7 +53,7 @@ The Assembly x86 project includes a comprehensive documentation system built wit
 - Reduces the need to search through multiple tutorial pages
 
 **Implementation**:
-- Create `05 commands/complete-reference.md` with a table format
+- Create a new reference section with `06 reference/complete-reference.md` in a table format
 - Include columns for: instruction name, syntax, description, example, affected flags
 - Add filter/search capability in the documentation component
 - Link related instructions (e.g., all arithmetic operations together)
