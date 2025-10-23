@@ -2,7 +2,7 @@
 
 ## Welcome!
 
-Welcome to the x86 Assembly Emulator! This guide will help you understand the emulator and run your first program in just 5 minutes.
+Welcome to the x86 Assembly Emulator! This guide will help you understand the emulator and run your first program.
 
 This is a browser-based x86 assembly emulator and debugger that allows you to write, run, and debug assembly code with visual feedback. You can see the CPU state, memory contents, and console output in real-time as your program executes.
 
@@ -23,9 +23,10 @@ This is where you write your assembly code. The editor supports:
 Displays text output from your program when you use the `INT 2` instruction to print strings or `INT 1` to print numbers.
 
 ### CPU Visualization (Right Side, Middle)
-Shows the current state of all CPU registers and flags:
-- **Registers**: EIP, EAX, EBX, ECX, EDX, EBP, ESP, ESI, EDI
-- **Flags**: ZF (Zero Flag), SF (Sign Flag), OF (Overflow Flag), CF (Carry Flag), DF (Direction Flag), PF (Parity Flag)
+Shows the current state of all CPU registers and status flags including:
+- **General-purpose registers**: EAX, EBX, ECX, EDX, and others
+- **Special registers**: EIP (Instruction Pointer), EBP (Base Pointer), ESP (Stack Pointer)
+- **Status flags**: Zero Flag (ZF), Sign Flag (SF), Overflow Flag (OF), and more
 - **Tick rate slider**: Control execution speed
 
 ### Memory View (Right Side, Bottom)
@@ -45,7 +46,7 @@ Displays the contents of memory in different formats:
 
 Let's start with a simple "Hello World" program. This example demonstrates basic assembly syntax and how to display text.
 
-```shell
+```nasm
 section .data
 hello:
     db 'Hello world!'
