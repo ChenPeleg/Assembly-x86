@@ -1,7 +1,7 @@
 # Assembly x86 emulator and tutorial
 
 
-![stack and heap memory](assets/img/breakpoint.png)
+![Assembly x86 architecture](assets/img/assembly-header.png)
 ![stack and heap memory](https://icarus.cs.weber.edu/~dab/cs1410/textbook/4.Pointers/images/layout.png)
 
 
