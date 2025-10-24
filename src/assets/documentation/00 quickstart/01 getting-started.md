@@ -125,10 +125,4 @@ Start with the basics tutorial to learn assembly fundamentals:
 - [Registers](#/docs/01%20basics%2B08%20registers) - Learn about CPU registers in detail
 - [Memory](#/docs/01%20basics%2B09%20memory) - Understand how memory works
 
-### Experiment!
-Try modifying the hello world program:
-- Change the message text
-- Add more `db` statements with different strings
-- Try printing numbers with `INT 1`
-
 Happy coding, and enjoy learning x86 assembly!
