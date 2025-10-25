@@ -1,3 +1,8 @@
+# CPU Flags Reference
+
+> **⚠️ WORK IN PROGRESS**  
+> This documentation is currently under development. Some sections (overflow flag, auxiliary carry flag) are incomplete.
+
 "Use of mnemonics" demonstrations
 Effect on flags
 This test demonstrates how various operations effect the flags. See Conditional jump and use of flags test to see how to use the flags to switch execution to different code areas. For this demonstration, set the breakpoint to FLAG_DEMONSTRATION then single-step through the code.
@@ -94,8 +99,14 @@ ADD AL,-1              ;8-bit instruction deals with first 8 bits only
 ;
 ;********************* now lets look at the overflow flag
 ;
+> **⚠️ Section Under Construction**  
+> The overflow flag section is being developed.
+
 under construction
 ;
 ;********************* now lets look at the auxiliary carry flag
 ;
+> **⚠️ Section Under Construction**  
+> The auxiliary carry flag section is being developed.
+
 under construction
