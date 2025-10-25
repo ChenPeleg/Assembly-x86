@@ -16,6 +16,9 @@
     <div #htmlDynamicContent class="html-content">
       <div [innerHTML]="content"></div>
     </div>
+    <div class="px-4 pb-4 flex md:hidden justify-end" id="documentation-navigation-bottom">
+      <button (click)="navDocuments($event,'next')" [matTooltip]="nextPage?.description || ''" [ngClass]="{'invisible' : !this.nextPage}" mat-button><span class="flex flex-row items-center">next<mat-icon class="relative -right-1 top-[3px]" matIconSuffix style="font-size: 18px">chevron_right</mat-icon>   </span></button>
+    </div>
   </div>
   <div  class="ml-auto max-h-screen sm:overflow-y-visible md:overflow-y-scroll">
     <div *ngIf="pagesNames.length" [@openClose]="dockParams.tryIt ? 'closed':  'open' " id="content-table-wrapper">
