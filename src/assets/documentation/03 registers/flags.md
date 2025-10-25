@@ -5,7 +5,7 @@
 
 "Use of mnemonics" demonstrations
 Effect on flags
-This test demonstrates how various operations effect the flags. See Conditional jump and use of flags test to see how to use the flags to switch execution to different code areas. For this demonstration, set the breakpoint to FLAG_DEMONSTRATION then single-step through the code.
+This test demonstrates how various operations affect the flags. See Conditional jump and use of flags test to see how to use the flags to switch execution to different code areas. For this demonstration, set the breakpoint to FLAG_DEMONSTRATION then single-step through the code.
 
 ;********************* first the zero flag
 ;
