@@ -221,16 +221,10 @@ export class DocumentationComponent implements AfterViewInit, OnDestroy {
         await this.router.navigate(["docs", this.previousPage?.link], {
           queryParams,
         });
-        this.documentationSection?.nativeElement.scrollIntoView({
-          behavior: "smooth",
-        });
         break;
       case "next":
         await this.router.navigate(["docs", this.nextPage?.link], {
           queryParams,
-        });
-        this.documentationSection?.nativeElement.scrollIntoView({
-          behavior: "smooth",
         });
         break;
       case "closeTryIt":
@@ -243,6 +237,12 @@ export class DocumentationComponent implements AfterViewInit, OnDestroy {
         });
 
         break;
+    }
+
+    if (nav === "previous" || nav === "next") {
+      this.documentationSection?.nativeElement.scrollIntoView({
+        behavior: "smooth",
+      });
     }
   }
 
