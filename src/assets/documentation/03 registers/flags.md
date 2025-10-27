@@ -111,10 +111,10 @@ ADD AL,-1              ;8-bit instruction deals with first 8 bits only
 ; - Subtracting a negative from a positive produces a negative
 ;
 MOV AL,127               ;AL = 127 (maximum 8-bit signed positive)
-ADD AL,1                 ;overflow! result wraps to -128, OF is set
+ADD AL,1                 ;result is 128, interpreted as -128 in signed, OF is set
 ;
 MOV AL,-128              ;AL = -128 (minimum 8-bit signed negative)
-SUB AL,1                 ;overflow! result wraps to 127, OF is set
+SUB AL,1                 ;result would be -129, becomes 127 in 8-bit signed, OF is set
 ;
 MOV AL,100
 ADD AL,20                ;no overflow, result is 120, OF is clear
@@ -129,10 +129,10 @@ MOV AL,-100
 ADD AL,-100              ;overflow! -200 is less than -128, OF is set
 ;
 MOV AX,32767             ;AX = 32767 (maximum 16-bit signed positive)
-ADD AX,1                 ;overflow! result wraps to -32768, OF is set
+ADD AX,1                 ;result is 32768, interpreted as -32768 in signed, OF is set
 ;
 MOV EAX,2147483647       ;EAX = maximum 32-bit signed positive
-ADD EAX,1                ;overflow! result wraps to negative, OF is set
+ADD EAX,1                ;result is 2147483648, interpreted as -2147483648, OF is set
 ;
 ; Note: Use JO (jump if overflow) or JNO to branch based on OF
 ; The overflow flag is different from the carry flag:
