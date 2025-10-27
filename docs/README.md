@@ -34,7 +34,7 @@ This directory contains technical documentation and planning materials for the A
 ## Quick Links
 
 - [Main README](../README.md)
-- [Task Planning](./_tasks/)
+- [Task Planning](../_tasks/)
 - [Source Code](../src/)
 
 ## Reporting New Issues
