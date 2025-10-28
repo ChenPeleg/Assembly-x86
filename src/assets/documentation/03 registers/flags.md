@@ -72,28 +72,118 @@ MOV AL,80h
 DEC AL                 ;8-bit instructions test the 8th bit
 INC AL
 ;
-;********************* now lets look at the carry flag
-;
+## Carry Flag (CF)
+
+The carry flag (CF) indicates unsigned integer overflow. It is set when an arithmetic operation generates a carry out from the most significant bit (for addition) or requires a borrow (for subtraction).
+
+The carry flag is useful for:
+- Multi-precision arithmetic (adding/subtracting large numbers)
+- Detecting unsigned overflow
+- Shift and rotate operations
+
+### Example 1: Basic Carry Flag Control
+
+You can directly manipulate the carry flag with these instructions:
+
+```nasm
+STC                    ;set carry flag (CF = 1)
+CLC                    ;clear carry flag (CF = 0)
+CMC                    ;complement carry flag (toggle)
+```
+<!-- -console -memory cpu -->
+
+> **Try it**: Step through this example to see how STC, CLC, and CMC affect the carry flag.
+
+### Example 2: Addition Overflow
+
+The carry flag is set when addition produces a result larger than the register can hold (unsigned overflow).
+
+```nasm
+MOV EAX,0FFFFFFFFh     ;EAX = maximum 32-bit value (4,294,967,295)
+ADD EAX,1              ;CF is set (overflow: result would be 4,294,967,296)
+ADD EAX,1              ;CF is clear (result fits in 32 bits)
+```
+<!-- -console -memory cpu -->
+
+> **Try it**: Watch the carry flag when adding to the maximum value.
+
+### Example 3: Subtraction Borrow
+
+The carry flag is set when subtraction requires a borrow.
+
+```nasm
+MOV EAX,5
+SUB EAX,10             ;CF is set (5 - 10 requires borrow in unsigned)
+MOV EAX,10
+SUB EAX,5              ;CF is clear (10 - 5 is valid)
+```
+<!-- -console -memory cpu -->
+
+> **Try it**: See how the carry flag indicates when subtraction requires a borrow.
+
+### Example 4: INC and DEC Don't Affect Carry Flag
+
+Unlike ADD and SUB, INC and DEC do not change the carry flag.
+
+```nasm
+STC                    ;set carry flag to 1
+INC EAX                ;CF remains set (INC doesn't change it)
+DEC EAX                ;CF still set (DEC doesn't change it)
+CLC                    ;clear carry flag to 0
+INC EAX                ;CF remains clear
+DEC EAX                ;CF still clear
+```
+<!-- -console -memory cpu -->
+
+> **Try it**: Notice that INC and DEC preserve the carry flag value.
+
+### Example 5: Logical Operations Clear Carry Flag
+
+Logical operations (AND, OR, XOR, TEST) always clear the carry flag.
+
+```nasm
 STC                    ;set carry flag
-CLC                    ;clear carry flag
-CMC                    ;complement carry flag
-CMC                    ;complement carry flag
-MOV EAX,-1
-ADD EAX,1              ;ADD changes carry flag
-ADD EAX,1              ;now clear because result not over data size
-SUB EAX,2              ;SUB changes carry flag
-INC EAX                ;but INC does not
-DEC EAX                ;nor DEC
-AND EAX,45h            ;AND always clears carry flag
-SHR EAX,1              ;shift instructions use carry flag
-XOR EAX,EAX            ;zeroing the register will clear it
-ADD EAX,8              ;remains clear because result not over data size
-ADD EAX,-1             ;but this is over data size
-OR EAX,EAX             ;OR always clears the carry flag
-ADD AX,-1              ;16-bit instruction deals with first 16 bits only
-TEST EAX,EAX           ;TEST always clears the carry flag
-ADD AL,-1              ;8-bit instruction deals with first 8 bits only
-;
+AND EAX,45h            ;CF is cleared (AND always clears it)
+STC                    ;set carry flag again
+OR EAX,EAX             ;CF is cleared (OR always clears it)
+STC                    ;set carry flag again
+XOR EAX,EAX            ;CF is cleared (XOR always clears it)
+STC                    ;set carry flag again
+TEST EAX,EAX           ;CF is cleared (TEST always clears it)
+```
+<!-- -console -memory cpu -->
+
+> **Try it**: See how logical operations always clear the carry flag.
+
+### Example 6: Shift Operations and Carry Flag
+
+Shift instructions use the carry flag to capture shifted-out bits.
+
+```nasm
+MOV EAX,0FFFFFFFFh     ;all bits set
+SHR EAX,1              ;CF gets the bit shifted out (bit 0, which is 1)
+SHR EAX,1              ;CF gets the next bit shifted out (bit 1, which is 1)
+MOV EAX,0FFFFFFFEh     ;all bits set except bit 0
+SHR EAX,1              ;CF gets bit 0, which is 0
+```
+<!-- -console -memory cpu -->
+
+> **Try it**: Watch how the shifted-out bit goes into the carry flag.
+
+### Example 7: Carry Flag with Different Data Sizes
+
+Operations on smaller data sizes (16-bit, 8-bit) only consider those bits.
+
+```nasm
+MOV EAX,0FFFFh         ;set lower 16 bits
+ADD AX,-1              ;16-bit operation: CF is set (0FFFFh + FFFFh overflow)
+MOV AL,0FFh            ;set lower 8 bits
+ADD AL,-1              ;8-bit operation: CF is set (0FFh + FFh overflow)
+```
+<!-- -console -memory cpu -->
+
+> **Try it**: See how carry flag works with 16-bit and 8-bit operations.
+
 ;********************* now lets look at the overflow flag
 ;
 ; The overflow flag (OF) indicates signed integer overflow.
