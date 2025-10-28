@@ -100,8 +100,8 @@ The carry flag is set when addition produces a result larger than the register c
 
 ```nasm
 MOV EAX,0FFFFFFFFh     ;EAX = maximum 32-bit value (4,294,967,295)
-ADD EAX,1              ;CF is set (overflow: result would be 4,294,967,296)
-ADD EAX,1              ;CF is clear (result fits in 32 bits)
+ADD EAX,1              ;CF is set (overflow: wraps to 0)
+ADD EAX,1              ;CF is clear (0 + 1 = 1, no overflow)
 ```
 <!-- -console -memory cpu -->
 
@@ -175,10 +175,10 @@ SHR EAX,1              ;CF gets bit 0, which is 0
 Operations on smaller data sizes (16-bit, 8-bit) only consider those bits.
 
 ```nasm
-MOV EAX,0FFFFh         ;set lower 16 bits
-ADD AX,-1              ;16-bit operation: CF is set (0FFFFh + FFFFh overflow)
-MOV AL,0FFh            ;set lower 8 bits
-ADD AL,-1              ;8-bit operation: CF is set (0FFh + FFh overflow)
+MOV EAX,0FFFFh         ;set lower 16 bits to maximum
+ADD AX,-1              ;16-bit operation: CF is set (0FFFFh + 0FFFFh causes overflow)
+MOV AL,0FFh            ;set lower 8 bits to maximum
+ADD AL,-1              ;8-bit operation: CF is set (0FFh + 0FFh causes overflow)
 ```
 <!-- -console -memory cpu -->
 
