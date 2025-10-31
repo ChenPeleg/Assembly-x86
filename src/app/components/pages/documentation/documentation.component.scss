@@ -50,11 +50,7 @@ li {
 
   // Mobile styles - increase font size for better readability
   @media (max-width: 640px) {
-    font-size: 1.125rem; // 18px base font size on mobile
-    
-    p {
-      font-size: 1.125rem; // 18px
-    }
+    font-size: 1.125rem; // 18px base font size on mobile (applies to p, li, and other text)
 
     h1 {
       font-size: 1.75rem; // 28px
@@ -66,10 +62,6 @@ li {
 
     h3, h4 {
       font-size: 1.25rem; // 20px
-    }
-
-    li {
-      font-size: 1.125rem; // 18px
     }
   }
 
