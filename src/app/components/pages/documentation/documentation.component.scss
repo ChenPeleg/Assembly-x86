@@ -50,6 +50,7 @@ li {
 
   // Mobile styles - increase font size for better readability
   @media (max-width: 640px) {
+    padding: 0 1em; // Reduce padding on mobile for wider text display
     font-size: 1.125rem; // 18px base font size on mobile (applies to p, li, and other text)
 
     h1 {
