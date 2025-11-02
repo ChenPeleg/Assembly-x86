@@ -37,6 +37,7 @@ import { MatMenuModule } from "@angular/material/menu";
 import { NgOptimizedImage } from "@angular/common";
 import { MatProgressBarModule } from "@angular/material/progress-bar";
 import { MatInputModule } from "@angular/material/input";
+import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { CodeEditorComponent } from "./components/code/code-editor/code-editor.component";
 
 export const AllMatModules = [
@@ -85,6 +86,7 @@ export const AllMatModules = [
     NgOptimizedImage,
     MatProgressBarModule,
     MatInputModule,
+    MatProgressSpinnerModule,
   ],
   providers: [PagesService, UserDataService],
   bootstrap: [AppRootComponent],

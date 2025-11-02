@@ -14,7 +14,11 @@
     <h2 class="pl-12  my-4 text-lg">
       {{createDockNameFromDocId(dockParams.docId || null)}}</h2>
     <div #htmlDynamicContent class="html-content">
-      <div [innerHTML]="content"></div>
+      <div *ngIf="isLoadingContent" class="loading-container">
+        <mat-spinner diameter="50"></mat-spinner>
+        <p class="loading-text">Loading documentation...</p>
+      </div>
+      <div *ngIf="!isLoadingContent" [innerHTML]="content"></div>
     </div>
     <div class="px-4 pb-4 flex md:hidden justify-end" id="documentation-navigation-bottom">
       <button (click)="navDocuments($event,'next')" [matTooltip]="nextPage?.description || ''" [ngClass]="{'invisible' : !this.nextPage}" mat-button><span class="flex flex-row items-center">next<mat-icon class="relative -right-1 top-[3px]" matIconSuffix style="font-size: 18px">chevron_right</mat-icon>   </span></button>

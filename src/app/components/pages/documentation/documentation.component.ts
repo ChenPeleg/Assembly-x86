@@ -84,6 +84,7 @@ export class DocumentationComponent implements AfterViewInit, OnDestroy {
   nextPage: { link: string; description: string } | null = null;
   previousPage: { link: string; description: string } | null = null;
   public tryItState: string = "";
+  public isLoadingContent: boolean = false;
   @ViewChild("htmlDynamicContent") private htmlDynamicContent:
     | ElementRef
     | undefined;
@@ -326,20 +327,25 @@ ${n.join(" ")}
   }
 
   private async loadDocumentsContent(docId: string, tryIt: string) {
-    if (!this.pagesNames.length) {
-      await this.getPagesList();
+    this.isLoadingContent = true;
+    try {
+      if (!this.pagesNames.length) {
+        await this.getPagesList();
+      }
+      const newContent = await this.loadDocumentContentFindDocument(docId);
+      if (this.content?.toString() === newContent?.toString()) {
+        return;
+      }
+      if (!newContent) {
+        await this.displayDefaultDocsContent();
+        return;
+      }
+      this.content = newContent;
+      await sleep(300);
+      await this.setupCodeExamples(docId);
+    } finally {
+      this.isLoadingContent = false;
     }
-    const newContent = await this.loadDocumentContentFindDocument(docId);
-    if (this.content?.toString() === newContent?.toString()) {
-      return;
-    }
-    if (!newContent) {
-      await this.displayDefaultDocsContent();
-      return;
-    }
-    this.content = newContent;
-    await sleep(300);
-    await this.setupCodeExamples(docId);
   }
 
   private async loadDocumentContentFindDocument(docId: string) {
