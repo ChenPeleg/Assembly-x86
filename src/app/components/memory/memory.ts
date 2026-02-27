@@ -2,7 +2,7 @@ import { Component, Input } from "@angular/core";
 import { MemoryBlock } from "../../emulation/memory-block";
 import * as _ from "lodash";
 import { MemoryDisplay, MemoryValueType } from "../../models/MemoryDisplay";
-import { Store } from "@ngrx/store";
+import { MemoryDisplayStoreService } from "../../services/memory-display-store.service";
 
 @Component({
   selector: "memory",
@@ -15,12 +15,8 @@ export class MemoryComponent {
   @Input() wordSize: number = 1;
   @Input() width: number = 10;
 
-  constructor(
-    private store: Store<{
-      memoryDisplay: MemoryDisplay;
-    }>
-  ) {
-    store.select("memoryDisplay").subscribe((m) => {
+  constructor(memoryDisplayStore: MemoryDisplayStoreService) {
+    memoryDisplayStore.state$.subscribe((m) => {
       this._valueType = m.valueType;
       this.wordSize = m.wordSize;
     });

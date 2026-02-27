@@ -28,14 +28,10 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { DisplayCockpitComponent } from "./components/display-cockpit/display-cockpit.component";
 import { CdkDrag, CdkDropList } from "@angular/cdk/drag-drop";
-import { StoreModule } from "@ngrx/store";
-import { codeEditorReducer } from "./stores/reducers/code-editor.reducer";
-import { UIStateReducer } from "./stores/reducers/ui.state.reducer";
 import { SharedModule } from "./common/shared.module";
 import { MatSliderModule } from "@angular/material/slider";
 import { MemoryOptionsComponent } from "./components/memory-options/memory-options.component";
 import { MatChipsModule } from "@angular/material/chips";
-import { MemoryDisplayReducer } from "./stores/reducers/memory-display.reducer";
 import { UserDataService } from "./services/user-data.service";
 import { MatMenuModule } from "@angular/material/menu";
 import { NgOptimizedImage } from "@angular/common";
@@ -76,21 +72,6 @@ export const AllMatModules = [
   ],
   imports: [
     ...AllMatModules,
-    StoreModule.forRoot(
-      {
-        count: codeEditorReducer,
-        uiState: UIStateReducer,
-        memoryDisplay: MemoryDisplayReducer,
-      },
-      {
-        runtimeChecks: {
-          strictStateImmutability: true,
-          strictActionImmutability: true,
-        },
-      }
-    ),
-
-    // StoreModule.forRoot({ count: counterReducer }),
     SharedModule,
     HttpClientModule,
     BrowserModule,
