@@ -11,7 +11,7 @@
           <button [disabled]="true" class="button-indent-override" mat-icon-button></button>
           <div (click)="clickLink(node)" [id]=" generateNodeID(node)"
                [ngClass]="{'is-selected' : node.isSelected}"
-               class="app-tree-node is-selected">
+               class="rounded-[40px] transition-colors duration-200 ease-in-out px-5 py-2.5 cursor-pointer hover:bg-gray-100/55 is-selected">
             {{ calculateNodeName (node)}}
           </div>
 
@@ -24,12 +24,12 @@
           <div class="mat-tree-node">
             <button [attr.aria-label]="'toggle ' + node.name" class="button-indent-override"
                     mat-icon-button matTreeNodeToggle>
-              <mat-icon [ngClass]="{'open' : treeControl.isExpanded(node)}"
-                        class="mat-icon-rtl-mirror">
+              <mat-icon [ngClass]="{'rotate-90' : treeControl.isExpanded(node)}"
+                        class="transition-transform duration-200 ease-in-out">
                  {{ 'chevron_right' }}
               </mat-icon>
             </button>
-            <div class="app-tree-node " matTreeNodeToggle>
+            <div class="rounded-[40px] transition-colors duration-200 ease-in-out px-5 py-2.5 cursor-pointer hover:bg-gray-100/55 " matTreeNodeToggle>
               {{node.name}}
             </div>
 

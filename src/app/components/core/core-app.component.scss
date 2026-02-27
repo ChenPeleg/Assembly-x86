@@ -2,13 +2,6 @@
 
 #core-app-wrapper{
   font-family: Roboto, sans-serif;
- h3 {
-   margin-top: 5px;
-   font-size: 18px;
-   padding: 0 10px;
-   display: inline-block;
- }
-
 }
 
 .editor-card {
@@ -16,21 +9,4 @@
   padding: 2em;
   width: 50vw;
 
-}
-.nav-bar-spacer {
-  width: 90%;
-  height: 58px;
-  min-height: 64px;
-}
-#utils-wrapper {
-  max-height: calc(100vh - 100px);
-  overflow-y: auto;
-}
-.core-wrapper {
-  &.isTryIt {
-    margin: 10px !important;
-    @media screen and (max-width: 540px) {
-      margin: 4px !important;
-    }
-  }
 }

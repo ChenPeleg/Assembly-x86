@@ -11,19 +11,19 @@
 
   </div>
 
-  <div class="example-spacer"></div>
+  <div class="flex-auto"></div>
 
   <div *ngIf="($showRecordButtons | async) && showSaveButtons" class="code-records-buttons flex-row flex items-center justify-start">
 
     <div *ngIf=" $recordNameInEdit | async " class="delete-button  ">
-      <button (click)="clickDelete()" aria-label="delete icon" class="button-icon" mat-icon-button>
+      <button (click)="clickDelete()" aria-label="delete icon" class="button-icon max-sm:-mx-[5px]" mat-icon-button>
         <mat-icon>delete</mat-icon>
       </button>
     </div>
     <div *ngIf=" $recordNameInEdit | async " class="flex flex-row" id="record-name-root">
 
       <div (click)="editNameClickHandler($event)" *ngIf="!isRecordNameInEdit"
-           [matTooltip]="'rename'" class="record-name
+           [matTooltip]="'rename'" class="border border-transparent hover:border-[#b0b0b0]
             mx-4 px-2 py-0 rounded  max-w-[30vw] overflow-x-hidden "
            id="record-name-span">
         <span class="overflow-ellipsis overflow-x-hidden"> {{recordName}} </span>
@@ -31,11 +31,11 @@
       <div [ngClass]=" {'hidden' : !isRecordNameInEdit}" class="max-w-[40vw] overflow-x-clip">
         <input #codeRecordRename (blur)="finishedEditRecordName($event)" (keyup.enter)="finishedEditRecordName($event)"
                [(ngModel)]="recordName" [ngStyle]="{'width' : calculateNameWidth($recordNameInEdit | async)}"
-               class="record-name bg-transparent mx-4 px-2 py-0  rounded-lg appearance-none" />
+               class="border border-white outline-none bg-transparent mx-4 px-2 py-0  rounded-lg appearance-none" />
       </div>
     </div>
 
-    <button (click)="clickSave()" *ngIf="!($recordNameInEdit | async )" aria-label=" save icon" class="button-icon "
+    <button (click)="clickSave()" *ngIf="!($recordNameInEdit | async )" aria-label=" save icon" class="button-icon max-sm:-mx-[5px]"
             mat-icon-button>
       <mat-icon>save</mat-icon>
     </button>
@@ -55,7 +55,7 @@
       <mat-icon> folder</mat-icon>
     </button>
   </div>
-  <button (click)="clickDocs()" aria-label="docs icon" class="button-icon" mat-icon-button>
+  <button (click)="clickDocs()" aria-label="docs icon" class="button-icon max-sm:-mx-[5px]" mat-icon-button>
     <mat-icon>school</mat-icon>
   </button>
 

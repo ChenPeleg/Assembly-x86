@@ -2,8 +2,8 @@
 
   <div (cdkDropListDropped)="dropPanel($event,panels)"
        *ngIf="(uiState$ | async)?.panels as panels" cdkDropList
-       cdkDropListOrientation="horizontal" class="panel-list">
-    <div *ngFor="let panel of  panels" cdkDrag class="panel-box">
+       cdkDropListOrientation="horizontal" class="w-[350px] max-w-full border border-[#ccc] min-h-[35px] flex flex-row bg-white rounded-[22px] overflow-hidden">
+    <div *ngFor="let panel of  panels" cdkDrag class="px-5 py-1.5 pl-2.5 text-black/87 flex border-r border-[#ccc] flex-row items-center justify-between box-border cursor-move bg-white text-sm grow basis-0">
       <div class="single-panel flex flex-row gap-5">
         <div class="single-panel_visibility">
           <app-small-icon-button (clickEvent)="clickVisibility($event, panel)" [iconName]="panel.isVisible ? 'visibility' : 'visibility_off'"></app-small-icon-button>
