@@ -1,8 +1,8 @@
-<div *ngIf="memory !== null" class="memory">
-  <span *ngFor="let row of createRange(getRowCount())" class="row">
+<div *ngIf="memory !== null" class="memory max-w-[28vw] max-sm:w-[98vw] max-sm:max-w-[99vw]">
+  <span *ngFor="let row of createRange(getRowCount())" class="row flex flex-wrap m-0 max-sm:inline-flex">
     <span *ngFor="let col of createRange(width)" class="col inline relative">
         <span (click)="clickCell(row, col)" *ngIf="memory?.isValid(createAddress(row, col))"
-             [matTooltip]="'Address:' + createAddress(row, col) + ' \nValue:' +  getCellValue(createAddress(row, col))" class="cell cursor-pointer"
+             [matTooltip]="'Address:' + createAddress(row, col) + ' \nValue:' +  getCellValue(createAddress(row, col))" class="relative bottom-0 inline-block min-w-[30px] h-[17px] m-0.5 p-[3px] text-[11px] leading-none border border-[#3b3b3b] text-black rounded-[3px] text-center cursor-pointer"
               matTooltipClass="memory-cell-mat-tooltip-class"   >
           {{ getCellValue(createAddress(row, col)) || '&nbsp;' }}
         </span>

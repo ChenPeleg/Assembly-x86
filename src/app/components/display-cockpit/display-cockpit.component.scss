@@ -4,35 +4,6 @@ $panel-border-radius: 22px;
   font-family: Roboto, sans-serif;
 }
 
-
-.panel-list {
-  width: 350px;
-  max-width: 100%;
-  border: solid 1px #ccc;
-  min-height: 35px;
-  display: flex;
-  flex-direction: row;
-  background: white;
-  border-radius: $panel-border-radius;
-  overflow: hidden;
-}
-
-.panel-box {
-  padding: 6px 20px 6px 10px;
-  color: rgba(0, 0, 0, 0.87);
-  display: flex;
-  border-right: solid 1px #ccc;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  box-sizing: border-box;
-  cursor: move;
-  background: white;
-  font-size: 14px;
-  flex-grow: 1;
-  flex-basis: 0;
-}
-
 .cdk-drag-preview {
   box-sizing: border-box;
   border-radius: $panel-border-radius;
@@ -49,11 +20,7 @@ $panel-border-radius: 22px;
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
 
-.panel-box:last-child {
-  border: none;
-}
-
-.panel-list.cdk-drop-list-dragging .panel-box:not(.cdk-drag-placeholder) {
+.cdk-drop-list-dragging .cdk-drag:not(.cdk-drag-placeholder) {
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
 

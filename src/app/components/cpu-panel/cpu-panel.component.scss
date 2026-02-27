@@ -1,24 +1,4 @@
 
-.label {
-  display: inline;
-  font-weight: 700;
-  line-height: 1;
-  color: #fff;
-  text-align: center;
-  white-space: nowrap;
-  vertical-align: baseline;
-  border-radius: 0.25em;
-}
 div.flag, div.register {
   @apply flex flex-row gap-2 p-1 items-center;
-  span {
-     @apply w-14 text-sm p-1  ;
-    &:first-child{
-      background-color: #3f51b5;
-    }
-    &:nth-child(2) {
-      background-color: #ccc8ca;
-      color: black;
-    }
-  }
 }

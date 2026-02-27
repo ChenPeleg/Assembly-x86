@@ -18,8 +18,8 @@
   </div>
   <div id="flags-list">
     <div *ngFor="let flag of getFlags()" class="flag">
-      <span class="label label-primary name">{{ flag.name }}</span>
-      <span class="label label-default value">{{ flag.value ? 1 : 0 }}</span>
+      <span class="inline font-bold leading-none text-white text-center whitespace-nowrap align-baseline rounded-[0.25em] bg-[#3f51b5] w-14 text-sm p-1 name">{{ flag.name }}</span>
+      <span class="inline font-bold leading-none text-black text-center whitespace-nowrap align-baseline rounded-[0.25em] bg-[#ccc8ca] w-14 text-sm p-1 value">{{ flag.value ? 1 : 0 }}</span>
     </div>
   </div>
 

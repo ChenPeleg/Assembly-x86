@@ -1,5 +1,5 @@
-<div   [ngClass]="{isTryIt}" class="core-wrapper flex flex-col md:m-4 mt-2 sm:m-1 overflow-y-hidden" id="core-app-wrapper">
-  <div *ngIf="!isTryIt" class="nav-bar-spacer"></div>
+<div   [ngClass]="{'!m-[10px] max-sm:!m-1': isTryIt}" class="core-wrapper flex flex-col md:m-4 mt-2 sm:m-1 overflow-y-hidden" id="core-app-wrapper">
+  <div *ngIf="!isTryIt" class="w-[90%] h-[58px] min-h-[64px]"></div>
   <div class="flex flex-row items-center gap-1 md:gap-5 pl-1 md:mb-5 h-full" id="execution-wrapper">
 
     <execution-controls [process]="runtime.process"></execution-controls>
@@ -36,26 +36,26 @@
     <div class="md:px-5  px-1  flex flex-col gap-5  max-h-screen " id="core-app-utils-column">
 
 
-      <div *ngIf="(uiState$ | async)?.panels as panels" class="flex  flex-col" id="utils-wrapper">
+      <div *ngIf="(uiState$ | async)?.panels as panels" class="flex flex-col max-h-[calc(100vh-100px)] overflow-y-auto" id="utils-wrapper">
         <div class="relative md:hidden md:mt-10 mt-3">
           <display-cockpit></display-cockpit>
         </div>
         <div [ngStyle]="{'display'  : getDisplayProps('console',panels).visibility ? '' : 'none' ,  order: getDisplayProps('console',panels).order }"
           class="console-wrapper md:pb-10 pb-1"
           id="console-wrapper">
-          <h3>Console</h3>
+          <h3 class="mt-[5px] text-[18px] px-[10px] inline-block">Console</h3>
           <console></console>
         </div>
         <div [ngStyle]="{'display'  : getDisplayProps('cpu',panels).visibility ? '' : 'none' ,order: getDisplayProps('cpu',panels).order }"
           class="cpu-wrapper pb-10"
           id="cpu-wrapper">
-          <h3>CPU</h3>
+          <h3 class="mt-[5px] text-[18px] px-[10px] inline-block">CPU</h3>
           <cpu *ngIf="runtime.process?.cpu" [cpu]="runtime.process .cpu"></cpu>
         </div>
         <div
           [ngStyle]="{'display'  : getDisplayProps('memory',panels).visibility ? '' : 'none' ,order: getDisplayProps('memory',panels).order }"
           class="memory-wrapper pb-10">
-          <h3>Memory</h3>
+          <h3 class="mt-[5px] text-[18px] px-[10px] inline-block">Memory</h3>
           <memory-options></memory-options>
           <div *ngIf="runtime.hasProcess()" class="inner">
            <memory #memory [memory]="runtime.process.cpu.memory || undefined"></memory>
