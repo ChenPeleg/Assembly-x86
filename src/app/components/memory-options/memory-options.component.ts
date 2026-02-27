@@ -1,10 +1,9 @@
 import { Component, ViewEncapsulation } from "@angular/core";
 import { MatChipListboxChange } from "@angular/material/chips";
-import { Store } from "@ngrx/store";
 import { MemoryDisplay } from "../../models/MemoryDisplay";
 import { Observable } from "rxjs";
-import { MemoryDisplayActions } from "../../stores/actions/memory-display.actions";
 import { observableToPromise } from "../../util/obeservableToPromise";
+import { MemoryDisplayStoreService } from "../../services/memory-display-store.service";
 
 @Component({
   selector: "memory-options",
@@ -16,19 +15,12 @@ export class MemoryOptionsComponent {
   static readonly lsKey = "assemblyMemoryDisplay";
   public readonly memoryDisplay$: Observable<MemoryDisplay>;
 
-  constructor(
-    private store: Store<{
-      memoryDisplay: MemoryDisplay;
-    }>
-  ) {
-    this.memoryDisplay$ = store.select("memoryDisplay");
-    this.memoryDisplay$.subscribe((md) => md);
+  constructor(private memoryDisplayStore: MemoryDisplayStoreService) {
+    this.memoryDisplay$ = memoryDisplayStore.state$;
     const lsData = window.localStorage.getItem(MemoryOptionsComponent.lsKey);
     if (lsData) {
       const memoryDisplay: MemoryDisplay = JSON.parse(lsData) as MemoryDisplay;
-      this.store.dispatch(
-        MemoryDisplayActions.updateMemoryDisplay({ ...memoryDisplay })
-      );
+      this.memoryDisplayStore.updateMemoryDisplay({ ...memoryDisplay });
     }
   }
 
@@ -37,9 +29,7 @@ export class MemoryOptionsComponent {
       $event.source.value = current;
       return;
     }
-    this.store.dispatch(
-      MemoryDisplayActions.setWordSize({ wordSize: $event.value })
-    );
+    this.memoryDisplayStore.setWordSize($event.value);
     this.updateLocalStorage().then();
   }
 
@@ -48,9 +38,7 @@ export class MemoryOptionsComponent {
       $event.source.value = current;
       return;
     }
-    this.store.dispatch(
-      MemoryDisplayActions.setValueType({ valueType: $event.value })
-    );
+    this.memoryDisplayStore.setValueType($event.value);
     this.updateLocalStorage().then();
   }
 

@@ -20,7 +20,7 @@ import { foldService } from "@codemirror/language";
 import { getFoldingRangesByIndent } from "../addons/gutter-fold-code";
 import { addMultipleTags } from "../addons/build-tags";
 import { asmTagList } from "../tag-list";
-import { defaultCodeText } from "../../../stores/reducers/code-editor.reducer";
+import { defaultCodeText } from "../../../services/code-editor-store.service";
 import { EditorView, ViewUpdate } from "@codemirror/view";
 import { DOCUMENT } from "@angular/common";
 

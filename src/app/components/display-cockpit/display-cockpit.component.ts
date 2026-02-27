@@ -2,8 +2,7 @@ import { Component } from "@angular/core";
 import { CdkDragDrop, moveItemInArray } from "@angular/cdk/drag-drop";
 import { Observable } from "rxjs";
 import { Panel, UIState } from "../../models/UIState";
-import { Store } from "@ngrx/store";
-import { UIStateActions } from "../../stores/actions/ui.state.actions";
+import { UiStateStoreService } from "../../services/ui-state-store.service";
 import { observableToPromise } from "../../util/obeservableToPromise";
 
 @Component({
@@ -14,13 +13,12 @@ import { observableToPromise } from "../../util/obeservableToPromise";
 export class DisplayCockpitComponent {
   static readonly lsKey = "assemblyUIState";
   uiState$: Observable<UIState>;
-  constructor(private store: Store<{ count: number; uiState: UIState }>) {
-    this.uiState$ = store.select("uiState");
-    this.uiState$.subscribe((ui) => ui);
+  constructor(private uiStateStore: UiStateStoreService) {
+    this.uiState$ = uiStateStore.state$;
     const lsData = window.localStorage.getItem(DisplayCockpitComponent.lsKey);
     if (lsData) {
       const uiState: UIState = JSON.parse(lsData) as UIState;
-      this.store.dispatch(UIStateActions.updateUIState({ ...uiState }));
+      this.uiStateStore.updateUIState({ ...uiState });
     }
   }
 
@@ -28,12 +26,12 @@ export class DisplayCockpitComponent {
     let newPanelArray = currentPanels.map((p, i) => ({ ...p, order: i + 1 }));
     moveItemInArray(newPanelArray, event.previousIndex, event.currentIndex);
     newPanelArray = newPanelArray.map((p, i) => ({ ...p, order: i + 1 }));
-    this.store.dispatch(UIStateActions.reorder({ panels: newPanelArray }));
+    this.uiStateStore.reorder(newPanelArray);
     this.updateLocalStorage().then();
   }
   clickVisibility($event: MouseEvent, panel: Panel) {
     const newPanel = { ...panel, isVisible: !panel.isVisible };
-    this.store.dispatch(UIStateActions.changeVisibility(newPanel));
+    this.uiStateStore.changeVisibility(newPanel);
     this.updateLocalStorage().then();
   }
   private async updateLocalStorage() {

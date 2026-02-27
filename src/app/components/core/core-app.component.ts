@@ -15,8 +15,7 @@ import { ConsoleComponent } from "../console/console";
 import { RuntimeException } from "../../emulation/runtime-exception";
 import { Panel, UIState } from "../../models/UIState";
 import { Observable } from "rxjs";
-import { Store } from "@ngrx/store";
-import { MemoryDisplay } from "../../models/MemoryDisplay";
+import { UiStateStoreService } from "../../services/ui-state-store.service";
 import { MemoryComponent } from "../memory/memory";
 import { UserDataService } from "../../services/user-data.service";
 import { TypeOfCodeInEditor } from "../../models/TypeOfCodeInEditor";
@@ -92,14 +91,10 @@ export class CoreAppComponent implements AfterViewInit, AfterContentInit {
   private memorySize: number = 256;
 
   constructor(
-    private store: Store<{
-      count: number;
-      uiState: UIState;
-      memoryDisplay: MemoryDisplay;
-    }>,
+    private uiStateStore: UiStateStoreService,
     private codeEditorService: UserDataService
   ) {
-    this.uiState$ = store.select("uiState");
+    this.uiState$ = uiStateStore.state$;
   }
 
   ngAfterContentInit(): void {

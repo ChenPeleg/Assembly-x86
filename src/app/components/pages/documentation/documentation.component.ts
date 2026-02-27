@@ -32,13 +32,10 @@ import {
   transition,
   trigger,
 } from "@angular/animations";
-import { Store } from "@ngrx/store";
 import { Panel, UIState } from "../../../models/UIState";
 import { MemoryDisplay, MemoryValueType } from "../../../models/MemoryDisplay";
-import { UIStateInitialState } from "../../../stores/reducers/ui.state.reducer";
-import { MemoryDisplayInitialState } from "../../../stores/reducers/memory-display.reducer";
-import { UIStateActions } from "../../../stores/actions/ui.state.actions";
-import { MemoryDisplayActions } from "../../../stores/actions/memory-display.actions";
+import { UIStateInitialState, UiStateStoreService } from "../../../services/ui-state-store.service";
+import { MemoryDisplayInitialState, MemoryDisplayStoreService } from "../../../services/memory-display-store.service";
 import { extractNumberFromFileName } from "../../../util/extractNumberFromFileName";
 import { sleep } from "../../../util/sleep";
 import { MarkdownCodes } from "../../../util/markdown/markdownCodes";
@@ -121,11 +118,8 @@ export class DocumentationComponent implements AfterViewInit, OnDestroy {
     private readonly router: Router,
     private renderer: Renderer2,
     private codeEditorService: UserDataService,
-    private store: Store<{
-      count: number;
-      uiState: UIState;
-      memoryDisplay: MemoryDisplay;
-    }>
+    private uiStateStore: UiStateStoreService,
+    private memoryDisplayStore: MemoryDisplayStoreService
   ) {
     this.getPagesList().then();
     this.activeRoute.queryParams.subscribe((params) => {
@@ -370,14 +364,8 @@ ${n.join(" ")}
       codeExample.optionsString
     );
 
-    this.store.dispatch(
-      UIStateActions.updateUIState({ ...displayState.uiState })
-    );
-    this.store.dispatch(
-      MemoryDisplayActions.updateMemoryDisplay({
-        ...displayState.memoryDisplay,
-      })
-    );
+    this.uiStateStore.updateUIState({ ...displayState.uiState });
+    this.memoryDisplayStore.updateMemoryDisplay({ ...displayState.memoryDisplay });
   }
 
   private clearCodeEditorButtons() {
