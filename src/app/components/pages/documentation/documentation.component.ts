@@ -341,7 +341,8 @@ ${n.join(" ")}
         return;
       }
       this.content = newContent;
-      await sleep(300);
+      this.isLoadingContent = false;
+      await sleep(0);
       await this.setupCodeExamples(docId);
     } finally {
       this.isLoadingContent = false;
@@ -415,8 +416,9 @@ ${n.join(" ")}
   }
 
   private async tryItButtonClicked($event: MouseEvent) {
-    const path = $event.composedPath();
-    const codeBlock = path[1] as HTMLDivElement;
+    const codeBlock = ($event.target as HTMLElement).closest(
+      ".code-block"
+    ) as HTMLDivElement;
     const route = await observableToPromise(this.$docsParams);
     await this.router.navigate(["docs", route?.docId], {
       queryParams: {
