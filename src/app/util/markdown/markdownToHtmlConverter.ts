@@ -160,6 +160,7 @@ export class MarkdownToHtmlConverter {
       const code = match[1]
         .replace(/^\n/, "")
         .replace(/\n$/, "")
+        .replace(/\r/g, "")
         .replace("shell", "");
       const optionsString = match[2]?.trim() || "";
       const codeId = `${
