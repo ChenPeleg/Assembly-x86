@@ -43,7 +43,6 @@ import {
   MemoryDisplayStoreService,
 } from "../../../services/memory-display-store.service";
 import { extractNumberFromFileName } from "../../../util/extractNumberFromFileName";
-import { sleep } from "../../../util/sleep";
 import { MarkdownCodes } from "../../../util/markdown/markdownCodes";
 import { DocElement } from "../content-table/content-table.component";
 
@@ -191,7 +190,7 @@ export class DocumentationComponent implements AfterViewInit, OnDestroy {
     const converter = new MarkdownToHtmlConverter(content, docId || "");
     const rawHtml = converter.html;
     this.codeExamples = converter.codeExamples;
-    console.log(this.codeExamples);
+
     const html = makeExternalLinksOpenInNewTab(rawHtml);
     let runNumber = 1;
 
@@ -355,8 +354,6 @@ ${n.join(" ")}
         return;
       }
       this.content = newContent;
-      await sleep(300);
-      await this.setupCodeExamplesInLoading(docId);
     } finally {
       this.isLoadingContent = false;
     }
@@ -384,11 +381,8 @@ ${n.join(" ")}
   }
 
   private async loadTryItToCodeEditor(docId: string, tryIt: string) {
-    if (this.codeExamples.length < 10) {
-      return;
-    }
     const codeExample = this.codeExamples.find((c) => c.codeId === tryIt);
-
+    console.log(codeExample);
     if (!codeExample?.code) return;
 
     this.codeEditorService.updateCodeEditor({
@@ -409,35 +403,6 @@ ${n.join(" ")}
   private clearCodeEditorButtons() {
     this.codeEditorService.clearRecordSelection();
     this.codeEditorService.hideRecordButtonOnNavBar();
-  }
-
-  /**
-   * Add event listeners to the buttons and saves the code tryIts
-   * This runs during the loading phase to extract code examples
-   * @private
-   */
-  private async setupCodeExamplesInLoading(docId: string) {
-    if (!this.htmlDynamicContent) {
-      return;
-    }
-
-    const buttonWrapperElements: NodeListOf<HTMLDivElement> =
-      this.htmlDynamicContent.nativeElement.querySelectorAll("div.code-block");
-    let runNumber = 1;
-    const codeSamples: CodeExample[] = [];
-    for (const codeWrapper of Array.from(buttonWrapperElements)) {
-      const spanWithData = codeWrapper.nextElementSibling;
-
-      const codeId = `${
-        DocumentationComponent.IdStringForCodeBlocks
-      }${runNumber++}`;
-      const dataComments = spanWithData?.getAttribute("data-comments") || "";
-      const code = codeWrapper.querySelector("code")?.innerText || "";
-      this.renderer.setAttribute(codeWrapper, "data-comments", dataComments);
-      this.renderer.setProperty(codeWrapper, "id", codeId);
-      codeSamples.push({ codeId, code, optionsString: dataComments, docId });
-    }
-    this.codeExamples = codeSamples;
   }
 
   private async tryItButtonClicked($event: MouseEvent) {
