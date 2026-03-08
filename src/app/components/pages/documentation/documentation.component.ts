@@ -406,7 +406,6 @@ ${n.join(" ")}
    * @private
    */
   private async setupCodeExamples(docId: string) {
-
     if (!this.htmlDynamicContent) {
       return;
     }
@@ -431,8 +430,10 @@ ${n.join(" ")}
   }
 
   private async tryItButtonClicked($event: MouseEvent) {
-    const path = $event.composedPath();
-    const codeBlock = path[1] as HTMLDivElement;
+    const button = ($event.target as HTMLElement).closest("button.run-code");
+    if (!button) return;
+
+    const codeBlock = button.closest(".code-block") as HTMLDivElement;
     const route = await observableToPromise(this.$docsParams);
     await this.router.navigate(["docs", route?.docId], {
       queryParams: {
