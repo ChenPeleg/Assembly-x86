@@ -2,15 +2,19 @@ import { findMdTables } from "./findMdTables";
 import { mdTableToHtml } from "./mdTableToHtmlTable";
 import { findMdCodeBlocks, mdCodeBlockToHtml } from "./findMdCodeBlocks";
 import { MarkdownCodes } from "./markdownCodes";
+import { CodeExample } from "../../models/CodeExample";
+import { DocumentationComponent } from "../../components/pages/documentation/documentation.component";
 
 export class MarkdownToHtmlConverter {
   public static readonly ParagraphClass = "paragraph";
   public static readonly InlineCodeClass = "inline-code";
   public static readonly DataCommentClass = "data-comments";
   public readonly html: string;
+  public readonly codeExamples: CodeExample[];
 
-  constructor(markdown: string) {
+  constructor(markdown: string, docId: string) {
     this.html = this.convertHtmlToMarkdown(markdown);
+    this.codeExamples = this.extractCodeExamples(markdown, docId);
   }
 
   static convertLineBreaksToNormalized(markdown: string): string {
@@ -144,6 +148,25 @@ export class MarkdownToHtmlConverter {
   static convertLineBreaksToHtml(markdown: string): string {
     markdown = markdown.replace(/\\\n/gm, `<br>\n`);
     return markdown;
+  }
+
+  private extractCodeExamples(markdown: string, docId: string): CodeExample[] {
+    const codeBlockRegex =
+      /```(?:[^\n`]*)([^`]*)```[ \t]*\n?[ \t]*<!--([^>]*)-->/g;
+    const examples: CodeExample[] = [];
+    let match: RegExpExecArray | null;
+    let runNumber = 1;
+
+    while ((match = codeBlockRegex.exec(markdown)) !== null) {
+      const code = match[1].replace(/^\n/, "").replace(/\n$/, "");
+      const optionsString = match[2].trim();
+      const codeId = `${
+        DocumentationComponent.IdStringForCodeBlocks
+      }${runNumber++}`;
+      examples.push({ docId, code, codeId, optionsString });
+    }
+
+    return examples;
   }
 
   private convertHtmlToMarkdown(markdown: string): string {
