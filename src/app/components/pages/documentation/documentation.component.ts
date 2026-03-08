@@ -191,11 +191,15 @@ export class DocumentationComponent implements AfterViewInit, OnDestroy {
 
     const rawHtml = new MarkdownToHtmlConverter(content).html;
     const html = makeExternalLinksOpenInNewTab(rawHtml);
+    let runNumber = 1;
 
-    const htmlWithButtons = html.replace(
-      /class="code-block">/g,
-      `class="code-block"><button class="run-code"> Try me</button> `
-    );
+    const htmlWithButtons = html.replace(/class="code-block">/g, () => {
+      const codeId = `${
+        DocumentationComponent.IdStringForCodeBlocks
+      }${runNumber++}`;
+      return `class="code-block" id="${codeId}"><button class="run-code"> Try me</button> `;
+    });
+
     const sanitizedHtml: SafeHtml =
       this.sanitizer.bypassSecurityTrustHtml(htmlWithButtons);
     if (sanitizedHtml.toString() === "") {
@@ -350,7 +354,7 @@ ${n.join(" ")}
       }
       this.content = newContent;
       await sleep(300);
-      await this.setupCodeExamples(docId);
+      await this.setupCodeExamplesInLoading(docId);
     } finally {
       this.isLoadingContent = false;
     }
@@ -403,9 +407,10 @@ ${n.join(" ")}
 
   /**
    * Add event listeners to the buttons and saves the code tryIts
+   * This runs during the loading phase to extract code examples
    * @private
    */
-  private async setupCodeExamples(docId: string) {
+  private async setupCodeExamplesInLoading(docId: string) {
     if (!this.htmlDynamicContent) {
       return;
     }
