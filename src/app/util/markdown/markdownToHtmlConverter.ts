@@ -151,15 +151,17 @@ export class MarkdownToHtmlConverter {
   }
 
   private extractCodeExamples(markdown: string, docId: string): CodeExample[] {
-    const codeBlockRegex = /```[^`]```[ \t]*\n?<!--([^>]*)-->/gm;
+    const codeBlockRegex = /```([^`]*)```[^<]*(<!--([^>]*)-->)?/g;
     const examples: CodeExample[] = [];
     let match: RegExpExecArray | null;
     let runNumber = 1;
-    console.log(markdown);
 
     while ((match = codeBlockRegex.exec(markdown)) !== null) {
-      const code = match[1].replace(/^\n/, "").replace(/\n$/, "");
-      const optionsString = match[2].trim();
+      const code = match[1]
+        .replace(/^\n/, "")
+        .replace(/\n$/, "")
+        .replace("shell", "");
+      const optionsString = match[2]?.trim() || "";
       const codeId = `${
         DocumentationComponent.IdStringForCodeBlocks
       }${runNumber++}`;
