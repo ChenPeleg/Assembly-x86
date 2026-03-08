@@ -372,7 +372,7 @@ ${n.join(" ")}
       this.htmlDynamicContent.nativeElement,
       "click",
       (evt) => {
-        console.log(evt);
+        this.tryItButtonClicked(evt).then();
       }
     );
   }
@@ -406,18 +406,11 @@ ${n.join(" ")}
    * @private
    */
   private async setupCodeExamples(docId: string) {
+
     if (!this.htmlDynamicContent) {
       return;
     }
 
-    const buttonElements: NodeListOf<HTMLButtonElement> =
-      this.htmlDynamicContent.nativeElement.querySelectorAll("button.run-code");
-
-    for (const btn of Array.from(buttonElements)) {
-      this.renderer.listen(btn, "click", (evt) => {
-        this.tryItButtonClicked(evt);
-      });
-    }
     const buttonWrapperElements: NodeListOf<HTMLDivElement> =
       this.htmlDynamicContent.nativeElement.querySelectorAll("div.code-block");
     let runNumber = 1;
