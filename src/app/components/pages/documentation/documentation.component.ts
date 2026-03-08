@@ -34,8 +34,14 @@ import {
 } from "@angular/animations";
 import { Panel, UIState } from "../../../models/UIState";
 import { MemoryDisplay, MemoryValueType } from "../../../models/MemoryDisplay";
-import { UIStateInitialState, UiStateStoreService } from "../../../services/ui-state-store.service";
-import { MemoryDisplayInitialState, MemoryDisplayStoreService } from "../../../services/memory-display-store.service";
+import {
+  UIStateInitialState,
+  UiStateStoreService,
+} from "../../../services/ui-state-store.service";
+import {
+  MemoryDisplayInitialState,
+  MemoryDisplayStoreService,
+} from "../../../services/memory-display-store.service";
 import { extractNumberFromFileName } from "../../../util/extractNumberFromFileName";
 import { sleep } from "../../../util/sleep";
 import { MarkdownCodes } from "../../../util/markdown/markdownCodes";
@@ -198,7 +204,9 @@ export class DocumentationComponent implements AfterViewInit, OnDestroy {
     return sanitizedHtml;
   }
 
-  ngAfterViewInit() {}
+  ngAfterViewInit() {
+    this.listenToDynamicContentButtons();
+  }
 
   ngOnDestroy(): void {
     this.destroy$.complete();
@@ -356,6 +364,18 @@ ${n.join(" ")}
     }
     return null;
   }
+  private listenToDynamicContentButtons() {
+    if (!this.htmlDynamicContent) {
+      return;
+    }
+    this.renderer.listen(
+      this.htmlDynamicContent.nativeElement,
+      "click",
+      (evt) => {
+        console.log(evt);
+      }
+    );
+  }
 
   private async loadTryItToCodeEditor(docId: string, tryIt: string) {
     const codeExample = this.codeExamples.find((c) => c.codeId === tryIt);
@@ -371,7 +391,9 @@ ${n.join(" ")}
     );
 
     this.uiStateStore.updateUIState({ ...displayState.uiState });
-    this.memoryDisplayStore.updateMemoryDisplay({ ...displayState.memoryDisplay });
+    this.memoryDisplayStore.updateMemoryDisplay({
+      ...displayState.memoryDisplay,
+    });
   }
 
   private clearCodeEditorButtons() {
@@ -387,6 +409,7 @@ ${n.join(" ")}
     if (!this.htmlDynamicContent) {
       return;
     }
+
     const buttonElements: NodeListOf<HTMLButtonElement> =
       this.htmlDynamicContent.nativeElement.querySelectorAll("button.run-code");
 
