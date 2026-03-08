@@ -399,7 +399,6 @@ ${n.join(" ")}
       ...displayState.memoryDisplay,
     });
   }
-
   private clearCodeEditorButtons() {
     this.codeEditorService.clearRecordSelection();
     this.codeEditorService.hideRecordButtonOnNavBar();
