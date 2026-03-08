@@ -188,8 +188,10 @@ export class DocumentationComponent implements AfterViewInit, OnDestroy {
 
   async getContent(docId?: string): Promise<SafeHtml> {
     const content = await this.pagesService.getMarkdownText(docId || "");
-
-    const rawHtml = new MarkdownToHtmlConverter(content).html;
+    const converter = new MarkdownToHtmlConverter(content, docId || "");
+    const rawHtml = converter.html;
+    this.codeExamples = converter.codeExamples;
+    console.log(this.codeExamples);
     const html = makeExternalLinksOpenInNewTab(rawHtml);
     let runNumber = 1;
 
@@ -382,7 +384,11 @@ ${n.join(" ")}
   }
 
   private async loadTryItToCodeEditor(docId: string, tryIt: string) {
+    if (this.codeExamples.length < 10) {
+      return;
+    }
     const codeExample = this.codeExamples.find((c) => c.codeId === tryIt);
+
     if (!codeExample?.code) return;
 
     this.codeEditorService.updateCodeEditor({
