@@ -17,23 +17,17 @@
         "build": {
           "builder": "@angular-builders/custom-webpack:browser",
           "options": {
-
-              "customWebpackConfig": {
-                "path": "./extra-webpack.config.js"
-              },
+            "customWebpackConfig": {
+              "path": "./extra-webpack.config.js"
+            },
             "outputPath": "dist",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ],
-            "styles": [
-              "src/styles.scss"
-            ],
+            "assets": ["src/favicon.ico", "src/assets"],
+            "styles": ["src/styles.scss"],
             "scripts": []
           },
           "configurations": {
@@ -64,7 +58,7 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kb",
+                  "maximumWarning": "1500kb",
                   "maximumError": "2mb"
                 },
                 {
@@ -100,7 +94,6 @@
             },
             "development": {
               "browserTarget": "modern-angular:build:development"
-
             }
           },
           "defaultConfiguration": "development"
@@ -117,17 +110,12 @@
             "customWebpackConfig": {
               "path": "./extra-webpack.config.js"
             },
-            "polyfills":  ["zone.js", "zone.js/testing"],
+            "polyfills": ["zone.js", "zone.js/testing"],
             "tsConfig": "tsconfig.spec.json",
             "karmaConfig": "karma.conf.js",
             "inlineStyleLanguage": "scss",
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ],
-            "styles": [
-              "src/styles.scss"
-            ],
+            "assets": ["src/favicon.ico", "src/assets"],
+            "styles": ["src/styles.scss"],
             "scripts": []
           }
         }

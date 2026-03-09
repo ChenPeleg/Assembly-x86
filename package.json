@@ -33,6 +33,7 @@
     "@angular/platform-browser-dynamic": "^15.2.0",
     "@angular/router": "^15.2.0",
     "codemirror": "^6.0.1",
+    "pegjs-loader": "^0.5.6",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"
@@ -54,7 +55,6 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.0.0",
-    "pegjs-loader": "^0.5.6",
     "postcss": "^8.4.21",
     "prettier": "^2.8.4",
     "tailwindcss": "^3.2.7",
