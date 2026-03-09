@@ -382,7 +382,7 @@ ${n.join(" ")}
 
   private async loadTryItToCodeEditor(docId: string, tryIt: string) {
     const codeExample = this.codeExamples.find((c) => c.codeId === tryIt);
-    console.log(codeExample);
+
     if (!codeExample?.code) return;
 
     this.codeEditorService.updateCodeEditor({
