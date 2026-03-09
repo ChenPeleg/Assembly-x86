@@ -1,11 +1,14 @@
-<div   [ngClass]="{'!m-[10px] max-sm:!m-1': isTryIt}" class="core-wrapper flex flex-col md:m-4 mt-2 sm:m-1 overflow-y-hidden" id="core-app-wrapper">
+<div   [ngClass]="{'!m-[10px] max-sm:!m-1': isTryIt}"
+       class=" flex flex-col md:m-4 mt-2  m-0 overflow-hidden"
+       id="core-app-wrapper">
   <div *ngIf="!isTryIt" class="w-[90%] h-[58px] min-h-[64px]"></div>
   <div class="flex flex-row items-center gap-1 md:gap-5 pl-1 md:mb-5 h-full" id="execution-wrapper">
 
     <execution-controls [process]="runtime.process"></execution-controls>
     <div class="flex flex-row relative h-full items-center">
-    <button (click)="requestCompile()" class="md:w-24  w-3 mt-0.5" color="primary" mat-raised-button style="min-width: unset" title="Assemble">
+    <button (click)="requestCompile()" class="md:w-24  w-11 mt-0.5" color="primary" mat-raised-button style="min-width: unset" title="Assemble">
       <span class="hidden md:flex"> Assemble</span>
+      <span class="flex md:hidden  mx-2"> <mat-icon  >construction</mat-icon></span>
     </button>
     <div class="flex-col flex h-full pt-1.5  pl-3" id="async-validator-container">
       <async-validation-indicator [textMessages]="compileMessages "  [validationStatus]="codeStatus"></async-validation-indicator> </div>
@@ -36,7 +39,8 @@
     <div class="md:px-5  px-1  flex flex-col gap-5  max-h-screen " id="core-app-utils-column">
 
 
-      <div *ngIf="(uiState$ | async)?.panels as panels" class="flex flex-col max-h-[calc(100vh-100px)] overflow-y-auto" id="utils-wrapper">
+      <div *ngIf="(uiState$ | async)?.panels as panels"
+           class="flex flex-col max-h-[calc(100vh-100px)] overflow-hidden" id="utils-wrapper">
         <div class="relative md:hidden md:mt-10 mt-3">
           <display-cockpit></display-cockpit>
         </div>
