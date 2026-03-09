@@ -13,15 +13,47 @@ import { getScreenMediaState } from "../../../util/screenMediaSatate";
 import { UserDataService } from "../../../services/user-data.service";
 import { EditorState, Extension } from "@codemirror/state";
 import { BuildBreakPointGutterExtension } from "../addons/gutter-breakpoints";
-import { basicSetup } from "codemirror";
+import {
+  crosshairCursor,
+  drawSelection,
+  dropCursor,
+  EditorView,
+  highlightActiveLine,
+  highlightActiveLineGutter,
+  highlightSpecialChars,
+  keymap,
+  lineNumbers,
+  rectangularSelection,
+  ViewUpdate,
+} from "@codemirror/view";
+import {
+  defaultKeymap,
+  history,
+  historyKeymap,
+  indentWithTab,
+} from "@codemirror/commands";
+import {
+  bracketMatching,
+  defaultHighlightStyle,
+  foldKeymap,
+  foldService,
+  indentOnInput,
+  syntaxHighlighting,
+} from "@codemirror/language";
+import { highlightSelectionMatches, searchKeymap } from "@codemirror/search";
+import {
+  autocompletion,
+  closeBrackets,
+  closeBracketsKeymap,
+  completionKeymap,
+} from "@codemirror/autocomplete";
+import { lintKeymap } from "@codemirror/lint";
 import { customCMTheme } from "../addons/code-mirror-theme";
 import { customFoldGutter } from "../addons/gutter-fold-custom-marker";
-import { foldService } from "@codemirror/language";
 import { getFoldingRangesByIndent } from "../addons/gutter-fold-code";
 import { addMultipleTags } from "../addons/build-tags";
 import { asmTagList } from "../tag-list";
 import { defaultCodeText } from "../../../services/code-editor-store.service";
-import { EditorView, ViewUpdate } from "@codemirror/view";
 import { DOCUMENT } from "@angular/common";
 
 const DEBUG_NO_EVENTS = false;
@@ -98,9 +130,39 @@ export class CodeEditorComponent implements AfterViewInit {
 
   ngAfterViewInit() {
     let myEditorElement = this.myEditor.nativeElement;
+
+    const minimalSetup: Extension = [
+      lineNumbers(),
+      highlightActiveLineGutter(),
+      highlightSpecialChars(),
+      history(),
+      drawSelection(),
+      dropCursor(),
+      EditorState.allowMultipleSelections.of(true),
+      indentOnInput(),
+      syntaxHighlighting(defaultHighlightStyle, { fallback: true }),
+      bracketMatching(),
+      closeBrackets(),
+      autocompletion(),
+      rectangularSelection(),
+      crosshairCursor(),
+      highlightActiveLine(),
+      highlightSelectionMatches(),
+      keymap.of([
+        ...closeBracketsKeymap,
+        ...defaultKeymap,
+        ...searchKeymap,
+        ...historyKeymap,
+        ...foldKeymap,
+        ...completionKeymap,
+        ...lintKeymap,
+        indentWithTab,
+      ]),
+    ];
+
     let myExt: Extension = [
       BuildBreakPointGutterExtension(this._breakpoints),
-      basicSetup,
+      ...minimalSetup,
       customCMTheme,
       customFoldGutter(),
       foldService.of(getFoldingRangesByIndent),
