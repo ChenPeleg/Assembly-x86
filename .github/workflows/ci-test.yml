@@ -29,7 +29,10 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
           cache-dependency-path: './'
-      - run: npm install
+      # --legacy-peer-deps is required because tailwindcss@4 conflicts with
+      # @angular-devkit/build-angular@15 which expects tailwindcss ^2||^3.
+      # Remove this flag when upgrading to Angular 16+.
+      - run: npm install --legacy-peer-deps
 #      - run:
 #      - >
 #          wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - && \
