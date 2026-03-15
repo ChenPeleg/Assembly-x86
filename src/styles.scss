@@ -3,5 +3,7 @@
 @import "src/app/styles/material-icons";
 
 @import "src/app/styles/app-styles";
-
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
