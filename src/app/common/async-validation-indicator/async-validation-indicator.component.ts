@@ -59,7 +59,7 @@ export enum GeneralFieldValidationStatus {
       {{ message }}
     </div>
   </div>`,
-    styleUrls: ["./async-validation-indicator.component.scss"],
+    styleUrls: ["./async-validation-indicator.component.css"],
     standalone: false
 })
 export class AsyncValidationIndicatorComponent {

@@ -8,7 +8,7 @@ import { MemoryDisplayStoreService } from "../../services/memory-display-store.s
 @Component({
     selector: "memory-options",
     templateUrl: "./memory-options.component.html",
-    styleUrls: ["./memory-options.component.scss"],
+    styleUrls: ["./memory-options.component.css"],
     encapsulation: ViewEncapsulation.None,
     standalone: false
 })

@@ -1,0 +1,14 @@
+.nav-bar {
+  position: fixed;
+  top: 0;
+  z-index: 100;
+}
+
+.nav-bar .delete-button {
+  transition: opacity 100ms ease-in-out;
+  opacity: 0;
+}
+
+.nav-bar:hover .delete-button {
+  opacity: 1;
+}

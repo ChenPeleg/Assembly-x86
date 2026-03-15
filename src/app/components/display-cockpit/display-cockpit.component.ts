@@ -8,7 +8,7 @@ import { observableToPromise } from "../../util/obeservableToPromise";
 @Component({
     selector: "display-cockpit",
     templateUrl: "display-cockpit.component.html",
-    styleUrls: ["display-cockpit.component.scss"],
+    styleUrls: ["display-cockpit.component.css"],
     standalone: false
 })
 export class DisplayCockpitComponent {

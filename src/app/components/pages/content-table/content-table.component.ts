@@ -38,7 +38,7 @@ export interface DocElement {
 @Component({
     selector: "content-table",
     templateUrl: "./content-table.component.html",
-    styleUrls: ["./content-table.component.scss"],
+    styleUrls: ["./content-table.component.css"],
     animations: [
         trigger("slideVertical", [
             state("*", style({

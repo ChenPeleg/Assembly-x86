@@ -3,7 +3,7 @@ import { Component, Input, OnInit } from "@angular/core";
 @Component({
     selector: "spinner-with-check-mark",
     templateUrl: "./spinner-with-check-mark.component.html",
-    styleUrls: ["./spinner-with-check-mark.component.scss"],
+    styleUrls: ["./spinner-with-check-mark.component.css"],
     standalone: false
 })
 export class SpinnerWithCheckMarkComponent implements OnInit {

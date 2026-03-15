@@ -4,7 +4,7 @@ import { CPU } from "../../emulation/cpu";
 @Component({
     selector: "cpu",
     templateUrl: "./cpu-panel.component.html",
-    styleUrls: ["./cpu-panel.component.scss"],
+    styleUrls: ["./cpu-panel.component.css"],
     standalone: false
 })
 export class CpuPanelComponent {
