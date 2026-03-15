@@ -1,6 +1,0 @@
-@reference "tailwindcss";
-
-div.flag, div.register {
-  /*todo:fix this*/
-  /*@apply flex flex-row gap-2 p-1 items-center;*/
-}
