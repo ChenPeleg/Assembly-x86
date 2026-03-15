@@ -90,10 +90,10 @@
           "builder": "@angular-builders/custom-webpack:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "modern-angular:build:production"
+              "buildTarget": "modern-angular:build:production"
             },
             "development": {
-              "browserTarget": "modern-angular:build:development"
+              "buildTarget": "modern-angular:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -101,7 +101,7 @@
         "extract-i18n": {
           "builder": "@angular-builders/custom-webpack:extract-i18n",
           "options": {
-            "browserTarget": "modern-angular:build"
+            "buildTarget": "modern-angular:build"
           }
         },
         "test": {
