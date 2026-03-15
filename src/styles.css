@@ -1,9 +1,8 @@
-@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+/*@import "~@angular/material/prebuilt-themes/indigo-pink.css";*/
 /*@import "src/app/styles/custom/custum-theme";*/
-@import "src/app/styles/material-icons.css";
+/*@import "tailwindcss";*/
+/*@import "../src/app/styles/material-icons.css";*/
 
-@import "src/app/styles/app-styles.css";
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/*@import "../src/app/styles/app-styles.css";*/
+
 
