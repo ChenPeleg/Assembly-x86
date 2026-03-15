@@ -90,10 +90,10 @@
           "builder": "@angular-builders/custom-webpack:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "modern-angular:build:production"
+              "buildTarget": "modern-angular:build:production"
             },
             "development": {
-              "browserTarget": "modern-angular:build:development"
+              "buildTarget": "modern-angular:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -101,7 +101,7 @@
         "extract-i18n": {
           "builder": "@angular-builders/custom-webpack:extract-i18n",
           "options": {
-            "browserTarget": "modern-angular:build"
+            "buildTarget": "modern-angular:build"
           }
         },
         "test": {
@@ -124,5 +124,31 @@
   },
   "cli": {
     "analytics": "28d2587a-189e-4afc-b874-948ce3a6c83d"
+  },
+  "schematics": {
+    "@schematics/angular:component": {
+      "type": "component"
+    },
+    "@schematics/angular:directive": {
+      "type": "directive"
+    },
+    "@schematics/angular:service": {
+      "type": "service"
+    },
+    "@schematics/angular:guard": {
+      "typeSeparator": "."
+    },
+    "@schematics/angular:interceptor": {
+      "typeSeparator": "."
+    },
+    "@schematics/angular:module": {
+      "typeSeparator": "."
+    },
+    "@schematics/angular:pipe": {
+      "typeSeparator": "."
+    },
+    "@schematics/angular:resolver": {
+      "typeSeparator": "."
+    }
   }
 }

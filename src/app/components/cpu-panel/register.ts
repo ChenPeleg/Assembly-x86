@@ -2,9 +2,10 @@ import { Component, Input } from "@angular/core";
 import { CPU } from "../../emulation/cpu";
 
 @Component({
-  selector: "register",
-  templateUrl: "./register.html",
-  styleUrls: ["./cpu-panel.component.scss"],
+    selector: "register",
+    templateUrl: "./register.html",
+    styleUrls: ["./cpu-panel.component.scss"],
+    standalone: false
 })
 export class RegisterComponent {
   // @ts-ignore

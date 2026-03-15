@@ -3,9 +3,10 @@ import { NavigationEnd, Router } from "@angular/router";
 import { filter, map, Observable, Subject, takeUntil } from "rxjs";
 
 @Component({
-  selector: "app-layout",
-  templateUrl: "./layout.component.html",
-  styleUrls: ["./layout.component.scss"],
+    selector: "app-layout",
+    templateUrl: "./layout.component.html",
+    styleUrls: ["./layout.component.scss"],
+    standalone: false
 })
 export class LayoutComponent implements OnDestroy, OnInit {
   private readonly urlsWithoutSpacer = ["/"];

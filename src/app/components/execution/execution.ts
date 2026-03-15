@@ -4,8 +4,9 @@ import { Process } from "../../emulation/process";
 export type Button = "start" | "stop" | "pause" | "continue" | "step";
 
 @Component({
-  selector: "execution-controls",
-  templateUrl: "./execution.html",
+    selector: "execution-controls",
+    templateUrl: "./execution.html",
+    standalone: false
 })
 export class ExecutionComponent {
   public readonly buttons: Button[] = [

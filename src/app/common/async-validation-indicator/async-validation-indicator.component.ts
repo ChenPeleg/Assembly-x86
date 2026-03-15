@@ -9,8 +9,8 @@ export enum GeneralFieldValidationStatus {
   Missing = 5,
 }
 @Component({
-  selector: "async-validation-indicator",
-  template: ` <div
+    selector: "async-validation-indicator",
+    template: ` <div
     class="async-validation-indicator-wrapper"
     *ngIf="validationStatus !== AsyncValidationStatus.NoInfo && !_hide"
   >
@@ -59,7 +59,8 @@ export enum GeneralFieldValidationStatus {
       {{ message }}
     </div>
   </div>`,
-  styleUrls: ["./async-validation-indicator.component.scss"],
+    styleUrls: ["./async-validation-indicator.component.scss"],
+    standalone: false
 })
 export class AsyncValidationIndicatorComponent {
   public AsyncValidationStatus = GeneralFieldValidationStatus;

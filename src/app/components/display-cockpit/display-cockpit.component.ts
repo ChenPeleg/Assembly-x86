@@ -6,9 +6,10 @@ import { UiStateStoreService } from "../../services/ui-state-store.service";
 import { observableToPromise } from "../../util/obeservableToPromise";
 
 @Component({
-  selector: "display-cockpit",
-  templateUrl: "display-cockpit.component.html",
-  styleUrls: ["display-cockpit.component.scss"],
+    selector: "display-cockpit",
+    templateUrl: "display-cockpit.component.html",
+    styleUrls: ["display-cockpit.component.scss"],
+    standalone: false
 })
 export class DisplayCockpitComponent {
   static readonly lsKey = "assemblyUIState";

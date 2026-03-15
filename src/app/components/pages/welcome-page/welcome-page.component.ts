@@ -3,10 +3,11 @@ import { PagesService } from "../../../services/pages.service";
 import { DomSanitizer, SafeHtml } from "@angular/platform-browser";
 
 @Component({
-  selector: "app-links",
-  templateUrl: "./welcome-page.component.html",
-  styleUrls: ["./welcome-page.component.scss"],
-  encapsulation: ViewEncapsulation.None,
+    selector: "app-links",
+    templateUrl: "./welcome-page.component.html",
+    styleUrls: ["./welcome-page.component.scss"],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class WelcomePageComponent implements AfterViewInit {
   content: SafeHtml | null = null;

@@ -58,9 +58,10 @@ factorial:
 `;
 
 @Component({
-  selector: "core-app",
-  templateUrl: "./core-app.component.html",
-  styleUrls: ["./core-app.component.scss"],
+    selector: "core-app",
+    templateUrl: "./core-app.component.html",
+    styleUrls: ["./core-app.component.scss"],
+    standalone: false
 })
 export class CoreAppComponent implements AfterViewInit, AfterContentInit {
   public codeStatus: GeneralFieldValidationStatus =

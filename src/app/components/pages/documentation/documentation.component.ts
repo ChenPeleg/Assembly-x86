@@ -52,33 +52,28 @@ interface DocumentationsParams {
 }
 
 @Component({
-  selector: "app-documentation",
-  templateUrl: "./documentation.component.html",
-  styleUrls: ["./documentation.component.scss"],
-  encapsulation: ViewEncapsulation.None,
-  animations: [
-    trigger("openClose", [
-      state(
-        "open",
-        style({
-          width: "100%",
-          maxWidth: "100%",
-          opacity: 1,
-        })
-      ),
-      state(
-        "closed",
-        style({
-          width: "0px",
-          opacity: 0,
-          overflow: "hidden",
-        })
-      ),
-      transition("open => closed", [animate("0.3s")]),
-      transition("* => open", [animate("0.3s")]),
-      transition("closed => open", [animate("0.3s")]),
-    ]),
-  ],
+    selector: "app-documentation",
+    templateUrl: "./documentation.component.html",
+    styleUrls: ["./documentation.component.scss"],
+    encapsulation: ViewEncapsulation.None,
+    animations: [
+        trigger("openClose", [
+            state("open", style({
+                width: "100%",
+                maxWidth: "100%",
+                opacity: 1,
+            })),
+            state("closed", style({
+                width: "0px",
+                opacity: 0,
+                overflow: "hidden",
+            })),
+            transition("open => closed", [animate("0.3s")]),
+            transition("* => open", [animate("0.3s")]),
+            transition("closed => open", [animate("0.3s")]),
+        ]),
+    ],
+    standalone: false
 })
 export class DocumentationComponent implements AfterViewInit, OnDestroy {
   public static readonly IdStringForCodeBlocks = "exm_";

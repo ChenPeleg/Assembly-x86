@@ -6,10 +6,11 @@ import { observableToPromise } from "../../util/obeservableToPromise";
 import { MemoryDisplayStoreService } from "../../services/memory-display-store.service";
 
 @Component({
-  selector: "memory-options",
-  templateUrl: "./memory-options.component.html",
-  styleUrls: ["./memory-options.component.scss"],
-  encapsulation: ViewEncapsulation.None,
+    selector: "memory-options",
+    templateUrl: "./memory-options.component.html",
+    styleUrls: ["./memory-options.component.scss"],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class MemoryOptionsComponent {
   static readonly lsKey = "assemblyMemoryDisplay";

@@ -59,10 +59,11 @@ import { DOCUMENT } from "@angular/common";
 const DEBUG_NO_EVENTS = false;
 
 @Component({
-  selector: "code-editor",
-  templateUrl: "./code-editor.component.html",
-  styleUrls: ["./code-editor.component.scss"],
-  encapsulation: ViewEncapsulation.None,
+    selector: "code-editor",
+    templateUrl: "./code-editor.component.html",
+    styleUrls: ["./code-editor.component.scss"],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class CodeEditorComponent implements AfterViewInit {
   private static ACTIVE_LINE_CLASS: string = "active-line";
