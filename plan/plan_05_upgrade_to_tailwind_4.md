@@ -8,7 +8,7 @@ Upgrade Tailwind CSS from v3 to v4 and remove the PostCSS-based plugin setup tha
 
 Tailwind v4 is a full rewrite with a CSS-first approach:
 
-- **No more `tailwind.config.js`**: theme customisation moves into `@theme {}` blocks in the CSS entry point.
+- **No more `tailwind.config.js`**: theme customization moves into `@theme {}` blocks in the CSS entry point.
 - **No more `@tailwind` directives**: replaced by a single `@import "tailwindcss"` in a plain `.css` file.
 - **No more `autoprefixer`**: vendor prefixing is built into Tailwind v4; remove it.
 - **No more standalone `postcss`**: `@tailwindcss/postcss` bundles its own PostCSS runtime; the explicit `postcss` dev-dependency is no longer required.
