@@ -20,7 +20,7 @@ import { MatIconModule } from "@angular/material/icon";
 import { NavBarComponent } from "./components/navbar/nav-bar.component";
 import { WelcomePageComponent } from "./components/pages/welcome-page/welcome-page.component";
 import { PagesService } from "./services/pages.service";
-import { HttpClientModule } from "@angular/common/http";
+import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 import { DocumentationComponent } from "./components/pages/documentation/documentation.component";
 import { ContentTableComponent } from "./components/pages/content-table/content-table.component";
 import { MatTreeModule } from "@angular/material/tree";
@@ -52,43 +52,35 @@ export const AllMatModules = [
   CdkDrag,
 ];
 
-@NgModule({
-  declarations: [
-    InstructionsComponent,
-    NavBarComponent,
-    LayoutComponent,
-    AppRootComponent,
-    CoreAppComponent,
-    CpuPanelComponent,
-    RegisterComponent,
-    MemoryComponent,
-    ExecutionComponent,
-    CodeEditorComponent,
-    ConsoleComponent,
-    WelcomePageComponent,
-    DocumentationComponent,
-    ContentTableComponent,
-    DisplayCockpitComponent,
-    MemoryOptionsComponent,
-  ],
-  imports: [
-    ...AllMatModules,
-    SharedModule,
-    HttpClientModule,
-    BrowserModule,
-    BrowserAnimationsModule,
-    FormsModule,
-
-    AppRoutingModule,
-    MatSliderModule,
-    MatChipsModule,
-    MatMenuModule,
-    NgOptimizedImage,
-    MatProgressBarModule,
-    MatInputModule,
-    MatProgressSpinnerModule,
-  ],
-  providers: [PagesService, UserDataService],
-  bootstrap: [AppRootComponent],
-})
+@NgModule({ declarations: [
+        InstructionsComponent,
+        NavBarComponent,
+        LayoutComponent,
+        AppRootComponent,
+        CoreAppComponent,
+        CpuPanelComponent,
+        RegisterComponent,
+        MemoryComponent,
+        ExecutionComponent,
+        CodeEditorComponent,
+        ConsoleComponent,
+        WelcomePageComponent,
+        DocumentationComponent,
+        ContentTableComponent,
+        DisplayCockpitComponent,
+        MemoryOptionsComponent,
+    ],
+    bootstrap: [AppRootComponent], imports: [...AllMatModules,
+        SharedModule,
+        BrowserModule,
+        BrowserAnimationsModule,
+        FormsModule,
+        AppRoutingModule,
+        MatSliderModule,
+        MatChipsModule,
+        MatMenuModule,
+        NgOptimizedImage,
+        MatProgressBarModule,
+        MatInputModule,
+        MatProgressSpinnerModule], providers: [PagesService, UserDataService, provideHttpClient(withInterceptorsFromDi())] })
 export class AppModule {}
