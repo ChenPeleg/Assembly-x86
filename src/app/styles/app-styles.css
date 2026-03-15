@@ -1,5 +1,6 @@
 @import "./custom/memory-mat-tool-tip.css";
 
+
 @font-face {
   font-family: 'Poppins';
   font-style: normal;
@@ -34,4 +35,116 @@ ul {
   list-style: initial;
   margin: 4px;
   padding-left: 30px;
+}
+
+/* ── Icon Button (shared utility) ─────────────────────────────────── */
+.icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: background-color 150ms ease;
+}
+
+.icon-btn:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+/* ── Execution control buttons ────────────────────────────────────── */
+.execution-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  transition: background-color 150ms ease, opacity 150ms ease;
+  color: white;
+}
+
+.execution-btn.btn-primary {
+  background-color: #3f51b5;
+}
+
+.execution-btn.btn-primary:hover:not(:disabled) {
+  background-color: #303f9f;
+}
+
+.execution-btn.btn-warn {
+  background-color: #f44336;
+}
+
+.execution-btn.btn-warn:hover:not(:disabled) {
+  background-color: #d32f2f;
+}
+
+.execution-btn:disabled {
+  opacity: 0.38;
+  cursor: default;
+}
+
+/* ── Raised button ────────────────────────────────────────────────── */
+.btn-raised {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 16px;
+  height: 36px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.089em;
+  text-transform: uppercase;
+  background-color: #3f51b5;
+  color: white;
+  box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
+  transition: background-color 150ms ease, box-shadow 150ms ease;
+}
+
+.btn-raised:hover:not(:disabled) {
+  background-color: #303f9f;
+  box-shadow: 0 2px 4px -1px rgba(0,0,0,.2), 0 4px 5px 0 rgba(0,0,0,.14), 0 1px 10px 0 rgba(0,0,0,.12);
+}
+
+.btn-raised:disabled {
+  opacity: 0.38;
+  cursor: default;
+  box-shadow: none;
+}
+
+/* ── Flat/text button ─────────────────────────────────────────────── */
+.btn-flat {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 8px;
+  height: 36px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.089em;
+  text-transform: uppercase;
+  background: transparent;
+  color: #3f51b5;
+  transition: background-color 150ms ease;
+}
+
+.btn-flat:hover:not(:disabled) {
+  background-color: rgba(63, 81, 181, 0.08);
+}
+
+.btn-flat.invisible {
+  visibility: hidden;
 }

@@ -1,5 +1,4 @@
 import { Component, ViewEncapsulation } from "@angular/core";
-import { MatChipListboxChange } from "@angular/material/chips";
 import { MemoryDisplay } from "../../models/MemoryDisplay";
 import { Observable } from "rxjs";
 import { observableToPromise } from "../../util/obeservableToPromise";
@@ -25,21 +24,19 @@ export class MemoryOptionsComponent {
     }
   }
 
-  wordSizeSelected($event: MatChipListboxChange, current: number) {
-    if (!$event.value) {
-      $event.source.value = current;
+  wordSizeSelected(value: number, current: number) {
+    if (!value) {
       return;
     }
-    this.memoryDisplayStore.setWordSize($event.value);
+    this.memoryDisplayStore.setWordSize(value as 1 | 2 | 4);
     this.updateLocalStorage().then();
   }
 
-  valueTypeChanged($event: MatChipListboxChange, current: string) {
-    if (!$event.value) {
-      $event.source.value = current;
+  valueTypeChanged(value: string, current: string) {
+    if (!value) {
       return;
     }
-    this.memoryDisplayStore.setValueType($event.value);
+    this.memoryDisplayStore.setValueType(value as MemoryDisplay["valueType"]);
     this.updateLocalStorage().then();
   }
 

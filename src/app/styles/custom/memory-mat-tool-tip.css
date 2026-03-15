@@ -1,6 +1,1 @@
-
-.mdc-tooltip.mat-mdc-tooltip.memory-cell-mat-tooltip-class .mdc-tooltip__surface {
-  white-space: pre-wrap;
-  background-color: #1a237e;
-}
-
+/* Memory cell tooltip styles - native title tooltips don't need custom CSS */

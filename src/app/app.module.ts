@@ -10,44 +10,24 @@ import { ConsoleComponent } from "./components/console/console";
 import { FormsModule } from "@angular/forms";
 import { AppRootComponent } from "./components/root/app-root.component";
 import { LayoutComponent } from "./layout/layout.component";
-import { MatToolbarModule } from "@angular/material/toolbar";
-import { MatCardModule } from "@angular/material/card";
-import { MatButtonToggleModule } from "@angular/material/button-toggle";
-import { MatButtonModule } from "@angular/material/button";
 import { AppRoutingModule } from "./app.routing.module";
 import { InstructionsComponent } from "./components/pages/instructions/instructions.component";
-import { MatIconModule } from "@angular/material/icon";
 import { NavBarComponent } from "./components/navbar/nav-bar.component";
 import { WelcomePageComponent } from "./components/pages/welcome-page/welcome-page.component";
 import { PagesService } from "./services/pages.service";
 import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 import { DocumentationComponent } from "./components/pages/documentation/documentation.component";
 import { ContentTableComponent } from "./components/pages/content-table/content-table.component";
-import { MatTreeModule } from "@angular/material/tree";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { MatTooltipModule } from "@angular/material/tooltip";
 import { DisplayCockpitComponent } from "./components/display-cockpit/display-cockpit.component";
 import { CdkDrag, CdkDropList } from "@angular/cdk/drag-drop";
 import { SharedModule } from "./common/shared.module";
-import { MatSliderModule } from "@angular/material/slider";
 import { MemoryOptionsComponent } from "./components/memory-options/memory-options.component";
-import { MatChipsModule } from "@angular/material/chips";
 import { UserDataService } from "./services/user-data.service";
-import { MatMenuModule } from "@angular/material/menu";
 import { NgOptimizedImage } from "@angular/common";
-import { MatProgressBarModule } from "@angular/material/progress-bar";
-import { MatInputModule } from "@angular/material/input";
-import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { CodeEditorComponent } from "./components/code/code-editor/code-editor.component";
 
-export const AllMatModules = [
-  MatToolbarModule,
-  MatCardModule,
-  MatButtonToggleModule,
-  MatButtonModule,
-  MatIconModule,
-  MatTreeModule,
-  MatTooltipModule,
+export const AllCdkModules = [
   CdkDropList,
   CdkDrag,
 ];
@@ -70,17 +50,11 @@ export const AllMatModules = [
         DisplayCockpitComponent,
         MemoryOptionsComponent,
     ],
-    bootstrap: [AppRootComponent], imports: [...AllMatModules,
+    bootstrap: [AppRootComponent], imports: [...AllCdkModules,
         SharedModule,
         BrowserModule,
         BrowserAnimationsModule,
         FormsModule,
         AppRoutingModule,
-        MatSliderModule,
-        MatChipsModule,
-        MatMenuModule,
-        NgOptimizedImage,
-        MatProgressBarModule,
-        MatInputModule,
-        MatProgressSpinnerModule], providers: [PagesService, UserDataService, provideHttpClient(withInterceptorsFromDi())] })
+        NgOptimizedImage], providers: [PagesService, UserDataService, provideHttpClient(withInterceptorsFromDi())] })
 export class AppModule {}

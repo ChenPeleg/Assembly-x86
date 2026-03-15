@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, ViewChild } from "@angular/core";
+import { AfterViewInit, Component, ElementRef, HostListener, ViewChild } from "@angular/core";
 import { Router } from "@angular/router";
 import { UserDataService } from "../../services/user-data.service";
 import { BehaviorSubject, Observable } from "rxjs";
@@ -22,6 +22,7 @@ export class NavBarComponent implements AfterViewInit {
   public recordName: string | null = null;
   public isRecordNameInEdit: boolean = false;
   public showSaveButtons: boolean = true;
+  public isMenuOpen: boolean = false;
   @ViewChild("codeRecordRename") private codeRecordRenameInput:
     | ElementRef<HTMLInputElement>
     | undefined;
@@ -48,7 +49,19 @@ export class NavBarComponent implements AfterViewInit {
     }
   }
 
+  @HostListener("document:click", ["$event"])
+  onDocumentClick(event: MouseEvent) {
+    const menuContainer = document.getElementById("folder-menu-container");
+    if (menuContainer && !menuContainer.contains(event.target as Node)) {
+      this.isMenuOpen = false;
+    }
+  }
+
   ngAfterViewInit() {}
+
+  toggleMenu() {
+    this.isMenuOpen = !this.isMenuOpen;
+  }
 
   async clickLinks() {
     await this.router.navigate(["links/"]);
@@ -84,6 +97,7 @@ export class NavBarComponent implements AfterViewInit {
   }
 
   recordClickHandler($event: MouseEvent, record: { name: string; id: string }) {
+    this.isMenuOpen = false;
     this.codeEditorService.choseRecordClicked(record);
   }
 
@@ -92,6 +106,7 @@ export class NavBarComponent implements AfterViewInit {
   }
 
   newRecordClickHandler($event: MouseEvent) {
+    this.isMenuOpen = false;
     this.codeEditorService.createNewCodeClicked();
   }
 }

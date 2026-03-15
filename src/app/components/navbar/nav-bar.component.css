@@ -2,6 +2,7 @@
   position: fixed;
   top: 0;
   z-index: 100;
+  width: 100%;
 }
 
 .nav-bar .delete-button {
@@ -11,4 +12,27 @@
 
 .nav-bar:hover .delete-button {
   opacity: 1;
+}
+
+.icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: inherit;
+  transition: background-color 150ms ease;
+}
+
+.icon-btn:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+.icon-btn:disabled {
+  opacity: 0.4;
+  cursor: default;
 }

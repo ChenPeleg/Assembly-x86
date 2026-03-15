@@ -5,8 +5,6 @@ import {
   Output,
   Renderer2,
 } from "@angular/core";
-import { NestedTreeControl } from "@angular/cdk/tree";
-import { MatTreeNestedDataSource } from "@angular/material/tree";
 import {
   animate,
   state,
@@ -20,11 +18,6 @@ import { sleep } from "../../../util/sleep";
 import { getScreenMediaState } from "../../../util/screenMediaSatate";
 import { extractNumberFromFileName } from "../../../util/extractNumberFromFileName";
 
-/**
- * Food data with nested structure.
- * Each node has a name and an optional list of children.
- */
-
 export interface DocElement {
   type: "file" | "folder";
   name: string;
@@ -35,32 +28,28 @@ export interface DocElement {
   isSelected: boolean;
 }
 
+export interface FlatDocNode extends DocElement {
+  level: number;
+  visible: boolean;
+}
+
 @Component({
     selector: "content-table",
     templateUrl: "./content-table.component.html",
     styleUrls: ["./content-table.component.css"],
     animations: [
         trigger("slideVertical", [
-            state("*", style({
-                height: 0,
-            })),
-            state("show", style({
-                height: "*",
-            })),
-            transition("* => show", [
-                animate("200ms cubic-bezier(0.25, 0.8, 0.25, 1)"),
-            ]),
+            state("*", style({ height: 0 })),
+            state("show", style({ height: "*" })),
+            transition("* => show", [animate("200ms cubic-bezier(0.25, 0.8, 0.25, 1)")]),
         ]),
     ],
     standalone: false
 })
 export class ContentTableComponent {
   @Output()
-  public contentTableItemClicked: EventEmitter<DocElement> =
-    new EventEmitter<DocElement>();
+  public contentTableItemClicked: EventEmitter<DocElement> = new EventEmitter<DocElement>();
   public isMobile: boolean = getScreenMediaState().isMobile;
-  treeControl = new NestedTreeControl<DocElement>((node) => node.children);
-  dataSource = new MatTreeNestedDataSource<DocElement>();
   public readonly docElement: DocElement[] = [
     {
       children: [],
@@ -73,6 +62,8 @@ export class ContentTableComponent {
     },
   ];
   public pagesNames: string[][] | null = null;
+  public flatNodes: FlatDocNode[] = [];
+  private expandedNodes: Set<string> = new Set();
 
   constructor(private router: Router, private renderer: Renderer2) {}
 
@@ -86,8 +77,7 @@ export class ContentTableComponent {
     let allDocElement = ContentTableComponent.buildNestedDocElement(value);
     allDocElement = ContentTableComponent.reorderDocElement(allDocElement);
     this.docElement[0] = allDocElement[0];
-
-    this.dataSource.data = allDocElement[0].children;
+    this.rebuildFlatNodes();
   }
 
   static buildNestedDocElement(value: string[][]): DocElement[] {
@@ -115,7 +105,7 @@ export class ContentTableComponent {
         isSelected: false,
       },
     ];
-    value.forEach((pageWithLevelArray, level) => {
+    value.forEach((pageWithLevelArray) => {
       let lastFatherOfThisDocument: DocElement = docElement[0];
       pageWithLevelArray.forEach((pagePartName, i) => {
         let element = lastFatherOfThisDocument.children.find(
@@ -159,10 +149,7 @@ export class ContentTableComponent {
     const rect = el.getBoundingClientRect();
     const elemTop = rect.top;
     const elemBottom = rect.bottom;
-
-    const isVisible = elemTop >= 0 && elemBottom <= window.innerHeight;
-
-    return isVisible;
+    return elemTop >= 0 && elemBottom <= window.innerHeight;
   }
 
   public calculateNodeName(node: DocElement): string {
@@ -177,8 +164,23 @@ export class ContentTableComponent {
     return `tree_node_${node.fullPath.join("_")}`.replace(/[\s ]/g, "_");
   }
 
-  hasChild = (_: number, node: any) =>
-    !!node.children && node.children.length > 0;
+  hasChildren(node: DocElement): boolean {
+    return !!node.children && node.children.length > 0;
+  }
+
+  isExpanded(node: DocElement): boolean {
+    return this.expandedNodes.has(node.fullPath.join("/"));
+  }
+
+  toggleNode(node: DocElement) {
+    const key = node.fullPath.join("/");
+    if (this.expandedNodes.has(key)) {
+      this.expandedNodes.delete(key);
+    } else {
+      this.expandedNodes.add(key);
+    }
+    this.rebuildFlatNodes();
+  }
 
   setActiveElement = async (value: string | null) => {
     if (!this.docElement[0].children.length) {
@@ -189,14 +191,12 @@ export class ContentTableComponent {
       PagesService.DocIdToNamePage(value || "")
     )[0];
     this.expandParents(PagesService.DocIdToNamePage(value || ""));
+    this.rebuildFlatNodes();
   };
 
   setActiveDocElement(docElement: DocElement[], path: string[]): DocElement[] {
-    const recursiveSetSelectedDocElement = (
-      docElement: DocElement
-    ): DocElement => {
+    const recursiveSetSelectedDocElement = (docElement: DocElement): DocElement => {
       docElement.isSelected = false;
-
       if (docElement.fullPath[0] === path[0]) {
         if (docElement.fullPath.join() === path.join()) {
           docElement.isSelected = true;
@@ -216,21 +216,43 @@ export class ContentTableComponent {
     await this.router.navigate(["docs", docId]);
   }
 
+  private rebuildFlatNodes() {
+    this.flatNodes = [];
+    this.buildFlatNodes(this.docElement[0].children, 0);
+  }
+
+  private buildFlatNodes(nodes: DocElement[], level: number) {
+    for (const node of nodes) {
+      const flatNode: FlatDocNode = { ...node, level, visible: true };
+      this.flatNodes.push(flatNode);
+      if (this.hasChildren(node) && this.isExpanded(node)) {
+        this.buildFlatNodes(node.children, level + 1);
+      }
+    }
+  }
+
   private expandParents(docs: string[]) {
     let currentNode: DocElement | null = this.docElement[0];
     docs.forEach((doc) => {
       currentNode = currentNode?.children.find((c) => c.name === doc) || null;
+      if (currentNode && currentNode.father !== null) {
+        const parentPath = currentNode.fullPath.slice(0, -1).join("/");
+        this.expandedNodes.add(parentPath);
+      }
       if (currentNode) {
-        this.treeControl.expand(currentNode);
+        const key = currentNode.fullPath.slice(0, -1).join("/");
+        if (key) this.expandedNodes.add(key);
       }
     });
+
+    this.rebuildFlatNodes();
+
     if (this.isMobile) {
       return;
     }
-    const nodeID = this.generateNodeID(currentNode);
 
+    const nodeID = this.generateNodeID(currentNode as DocElement);
     const element = this.renderer.selectRootElement(`#${nodeID}`, true);
-
     if (!ContentTableComponent.isScrolledIntoView(element)) {
       element.scrollIntoView({ behavior: "smooth" });
     }

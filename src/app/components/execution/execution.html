@@ -1,14 +1,12 @@
-<div class="flex flex-row sm:ml-[-5px] md:ml-0" >
+<div class="flex flex-row sm:ml-[-5px] md:ml-0">
 
   <button (click)="buttonClicked(button)"  *ngFor="let button of buttons"
-          [color]="getColor(button)"
           [disabled]="getIsDisabled(button)"
-          [matTooltip]="button.toLocaleUpperCase()"  [title]="button.toLocaleUpperCase()"
-          aria-label="Example icon button with a home icon"
-          class="md:ml-0 -ml-0.5"
-          color="primary"
-           mat-icon-button>
-    <mat-icon   >{{getIcon(button)}}</mat-icon>
+          [title]="button.toLocaleUpperCase()"
+          aria-label="execution control button"
+          class="execution-btn md:ml-0 -ml-0.5"
+          [ngClass]="getButtonColorClass(button)">
+    <span class="material-icons">{{getIcon(button)}}</span>
   </button>
 
 </div>

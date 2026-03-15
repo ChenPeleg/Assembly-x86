@@ -9,22 +9,30 @@
        class="pt-4 md:max-w-7xl w-full    max-h-full md:max-h-screen overflow-y-visible md:overflow-y-scroll"
        id="documentation-content-section ">
     <div class="px-4 flex flex-row w-full  justify-between" id="documentation-navigation">
-      <button (click)="navDocuments($event,'previous')" [matTooltip]="previousPage?.description || ''" [ngClass]="{'invisible' : !this.previousPage}" mat-button> <mat-icon>chevron_left</mat-icon> previous</button>
-      <button  (click)="navDocuments($event,'closeTryIt')" [ngClass]="{'invisible' : !dockParams.tryIt}" mat-button><mat-icon>cancel</mat-icon> close assembler</button>
-      <button (click)="navDocuments($event,'next')" [matTooltip]="nextPage?.description || ''" [ngClass]="{'invisible' : !this.nextPage}" mat-button><span class="flex flex-row items-center">next<mat-icon class="relative -right-1 top-[3px]" matIconSuffix style="font-size: 18px">chevron_right</mat-icon>   </span></button>
+      <button (click)="navDocuments($event,'previous')" [title]="previousPage?.description || ''" [ngClass]="{'invisible' : !this.previousPage}" class="btn-flat">
+        <span class="material-icons" style="font-size: 18px">chevron_left</span> previous
+      </button>
+      <button (click)="navDocuments($event,'closeTryIt')" [ngClass]="{'invisible' : !dockParams.tryIt}" class="btn-flat">
+        <span class="material-icons" style="font-size: 18px">cancel</span> close assembler
+      </button>
+      <button (click)="navDocuments($event,'next')" [title]="nextPage?.description || ''" [ngClass]="{'invisible' : !this.nextPage}" class="btn-flat">
+        <span class="flex flex-row items-center">next<span class="material-icons relative -right-1 top-[3px]" style="font-size: 18px">chevron_right</span></span>
+      </button>
     </div>
 
     <h2 class="pl-12  my-4 text-lg">
       {{createDockNameFromDocId(dockParams.docId || null)}}</h2>
     <div #htmlDynamicContent class="html-content">
       <div *ngIf="isLoadingContent" class="loading-container">
-        <mat-spinner diameter="50"></mat-spinner>
+        <div class="css-spinner"></div>
         <p class="loading-text">Loading documentation...</p>
       </div>
       <div *ngIf="!isLoadingContent" [innerHTML]="content"></div>
     </div>
     <div class="px-4 pb-4 flex md:hidden justify-end" id="documentation-navigation-bottom">
-      <button (click)="navDocuments($event,'next')" [matTooltip]="nextPage?.description || ''" [ngClass]="{'invisible' : !this.nextPage}" mat-button><span class="flex flex-row items-center">next<mat-icon class="relative -right-1 top-[3px]" matIconSuffix style="font-size: 18px">chevron_right</mat-icon>   </span></button>
+      <button (click)="navDocuments($event,'next')" [title]="nextPage?.description || ''" [ngClass]="{'invisible' : !this.nextPage}" class="btn-flat">
+        <span class="flex flex-row items-center">next<span class="material-icons relative -right-1 top-[3px]" style="font-size: 18px">chevron_right</span></span>
+      </button>
     </div>
   </div>
   <div  class="ml-6 md:ml-0   sm:overflow-y-visible md:overflow-y-scroll">

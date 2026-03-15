@@ -124,20 +124,20 @@ export class ExecutionComponent {
     }
   }
 
-  getColor(button: Button): "primary" | "accent" | "warn" | undefined {
+  getButtonColorClass(button: Button): string {
     switch (button) {
       case "start":
-        return `primary`; // play+circle
+        return "btn-primary";
       case "stop":
-        return `warn`;
+        return "btn-warn";
       case "pause":
-        return "primary";
+        return "btn-primary";
       case "continue":
-        return `primary`;
+        return "btn-primary";
       case "step":
-        return `primary`;
+        return "btn-primary";
       default:
-        return `primary`;
+        return "btn-primary";
     }
   }
 }
