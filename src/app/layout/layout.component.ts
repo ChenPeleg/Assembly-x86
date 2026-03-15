@@ -5,7 +5,7 @@ import { filter, map, Observable, Subject, takeUntil } from "rxjs";
 @Component({
     selector: "app-layout",
     templateUrl: "./layout.component.html",
-    styleUrls: ["./layout.component.scss"],
+    styleUrls: ["./layout.component.css"],
     standalone: false
 })
 export class LayoutComponent implements OnDestroy, OnInit {

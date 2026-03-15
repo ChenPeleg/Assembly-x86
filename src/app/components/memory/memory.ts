@@ -7,7 +7,7 @@ import { MemoryDisplayStoreService } from "../../services/memory-display-store.s
 @Component({
     selector: "memory",
     templateUrl: "./memory.html",
-    styleUrls: ["./memory.scss"],
+    styleUrls: ["./memory.css"],
     standalone: false
 })
 export class MemoryComponent {

@@ -61,7 +61,7 @@ const DEBUG_NO_EVENTS = false;
 @Component({
     selector: "code-editor",
     templateUrl: "./code-editor.component.html",
-    styleUrls: ["./code-editor.component.scss"],
+    styleUrls: ["./code-editor.component.css"],
     encapsulation: ViewEncapsulation.None,
     standalone: false
 })

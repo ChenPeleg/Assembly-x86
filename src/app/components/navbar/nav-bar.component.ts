@@ -9,7 +9,7 @@ import { PagesService } from "../../services/pages.service";
 @Component({
     selector: "app-navbar",
     templateUrl: "./nav-bar.component.html",
-    styleUrls: ["./nav-bar.component.scss"],
+    styleUrls: ["./nav-bar.component.css"],
     standalone: false
 })
 export class NavBarComponent implements AfterViewInit {

@@ -16,22 +16,21 @@ li {
 
 .html-content {
   padding: 2em;
-
-  li {
-    color: red;
-  }
-
-
-  ::ng-deep ol {
-    margin-top: unset;
-    margin-bottom: unset;
-  }
-
-  ::ng-deep ol, ul, menu {
-    list-style: initial;
-    margin: initial;
-    padding: initial;
-  }
-
 }
 
+.html-content li {
+  color: red;
+}
+
+.html-content ::ng-deep ol {
+  margin-top: unset;
+  margin-bottom: unset;
+}
+
+.html-content ::ng-deep ol,
+.html-content ul,
+.html-content menu {
+  list-style: initial;
+  margin: initial;
+  padding: initial;
+}

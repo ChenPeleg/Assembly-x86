@@ -3,7 +3,7 @@ import {AfterViewInit, Component} from "@angular/core";
 @Component({
     selector: "app-instructions",
     templateUrl: "./instructions.component.html",
-    styleUrls: ["./instructions.component.scss"],
+    styleUrls: ["./instructions.component.css"],
     standalone: false
 })
 export class InstructionsComponent implements AfterViewInit {

@@ -5,7 +5,7 @@ import { DomSanitizer, SafeHtml } from "@angular/platform-browser";
 @Component({
     selector: "app-links",
     templateUrl: "./welcome-page.component.html",
-    styleUrls: ["./welcome-page.component.scss"],
+    styleUrls: ["./welcome-page.component.css"],
     encapsulation: ViewEncapsulation.None,
     standalone: false
 })
