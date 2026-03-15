@@ -60,7 +60,7 @@ factorial:
 @Component({
     selector: "core-app",
     templateUrl: "./core-app.component.html",
-    styleUrls: ["./core-app.component.scss"],
+    styleUrls: ["./core-app.component.css"],
     standalone: false
 })
 export class CoreAppComponent implements AfterViewInit, AfterContentInit {

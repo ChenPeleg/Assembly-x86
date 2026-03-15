@@ -54,7 +54,7 @@ interface DocumentationsParams {
 @Component({
     selector: "app-documentation",
     templateUrl: "./documentation.component.html",
-    styleUrls: ["./documentation.component.scss"],
+    styleUrls: ["./documentation.component.css"],
     encapsulation: ViewEncapsulation.None,
     animations: [
         trigger("openClose", [

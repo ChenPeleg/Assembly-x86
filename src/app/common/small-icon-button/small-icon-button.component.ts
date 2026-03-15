@@ -3,7 +3,7 @@ import { Component, EventEmitter, Input, Output } from "@angular/core";
 @Component({
     selector: "app-small-icon-button",
     templateUrl: "./small-icon-button.component.html",
-    styleUrls: ["./small-icon-button.component.scss"],
+    styleUrls: ["./small-icon-button.component.css"],
     standalone: false
 })
 export class SmallIconButtonComponent {

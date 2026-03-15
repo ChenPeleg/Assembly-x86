@@ -26,13 +26,14 @@
 }
 
 .button-indent-override {
-  //margin-right: -20px;
+  /*margin-right: -20px;*/
 }
 
 .is-selected {
   background-color: #e8e8e8;
+}
 
-  &:hover, &:active {
-    background-color: #e8e8e8;
-  }
+.is-selected:hover,
+.is-selected:active {
+  background-color: #e8e8e8;
 }

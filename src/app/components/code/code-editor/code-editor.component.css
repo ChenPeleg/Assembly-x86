@@ -1,4 +1,4 @@
-@import "src/app/styles/custom/scroll-bar.scss";
+@import "src/app/styles/custom/scroll-bar.css";
 .text {
   height: 300px;
 }
@@ -163,62 +163,37 @@
   min-width: 20px;
 }
 
-.asm-editor .cm-gutter.cm-foldGutter  {
-  span:not(.cm-customFoldMarker) {
-    display: none !important;
-  }
-  span.cm-customFoldMarker {
-    display: inline-block;
-    position: relative;
-    transition: transform 1.3s ease-in-out;
-    transform: rotate(0deg);
-  }
-  min-width: 3px;
-  //padding-right : 3px;
-  span.cm-customFoldMarker.cm-folded {
-    transform: rotate(90deg);
-  }
-
+.asm-editor .cm-gutter.cm-foldGutter span:not(.cm-customFoldMarker) {
+  display: none !important;
 }
 
-//.asm-editor-container {
-//  .asm-editor-element {
-//    .editor {
-//      display: block;
-//      //width: 100%;
-//      //height: 350px;
-//
-//      .active-line {
-//        background-color: #1E90FF !important;
-//      }
-//
-//      .ace_gutter-cell.ace_breakpoint {
-//        background: url("/assets/img/breakpoint.png") 1px 1px no-repeat no-repeat;
-//        background-size: 12px 12px;
-//      }
-//    }
-//
-//
-//  }
-//
-//  .errors {
-//    color: #FF0000;
-//  }
-//}
-//
-//::ng-deep .ace_gutter-cell.ace_breakpoint {
-//  background: url("/assets/img/breakpoint.png") 1px 1px no-repeat no-repeat;
-//  background-size: 12px 12px;
-//}
+.asm-editor .cm-gutter.cm-foldGutter span.cm-customFoldMarker {
+  display: inline-block;
+  position: relative;
+  transition: transform 1.3s ease-in-out;
+  transform: rotate(0deg);
+}
+
+.asm-editor .cm-gutter.cm-foldGutter {
+  min-width: 3px;
+  /*padding-right : 3px;*/
+}
+
+.asm-editor .cm-gutter.cm-foldGutter span.cm-customFoldMarker.cm-folded {
+  transform: rotate(90deg);
+}
 
 div.asm-editor-element-legacy {
-  //height: 75vh;
+  /*height: 75vh;*/
   width: 440px;
-  @media screen and (max-width: 540px) {
+}
+
+@media screen and (max-width: 540px) {
+  div.asm-editor-element-legacy {
     width: 98vw;
   }
+}
 
-  &.isTryIt {
-    width: 370px;
-  }
+div.asm-editor-element-legacy.isTryIt {
+  width: 370px;
 }
