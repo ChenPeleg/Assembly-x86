@@ -88,6 +88,7 @@
         },
         "serve": {
           "builder": "@angular-builders/custom-webpack:dev-server",
+
           "configurations": {
             "production": {
               "buildTarget": "modern-angular:build:production"
