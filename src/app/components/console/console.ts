@@ -2,7 +2,8 @@ import {Component} from "@angular/core";
 
 @Component({
     selector: "console",
-    templateUrl: "./console.html"
+    templateUrl: "./console.html",
+    standalone: false
 })
 export class ConsoleComponent
 {

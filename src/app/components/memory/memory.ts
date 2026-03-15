@@ -5,9 +5,10 @@ import { MemoryDisplay, MemoryValueType } from "../../models/MemoryDisplay";
 import { MemoryDisplayStoreService } from "../../services/memory-display-store.service";
 
 @Component({
-  selector: "memory",
-  templateUrl: "./memory.html",
-  styleUrls: ["./memory.scss"],
+    selector: "memory",
+    templateUrl: "./memory.html",
+    styleUrls: ["./memory.scss"],
+    standalone: false
 })
 export class MemoryComponent {
   // @ts-ignore

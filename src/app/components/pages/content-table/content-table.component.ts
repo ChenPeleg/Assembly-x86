@@ -36,28 +36,23 @@ export interface DocElement {
 }
 
 @Component({
-  selector: "content-table",
-  templateUrl: "./content-table.component.html",
-  styleUrls: ["./content-table.component.scss"],
-  animations: [
-    trigger("slideVertical", [
-      state(
-        "*",
-        style({
-          height: 0,
-        })
-      ),
-      state(
-        "show",
-        style({
-          height: "*",
-        })
-      ),
-      transition("* => show", [
-        animate("200ms cubic-bezier(0.25, 0.8, 0.25, 1)"),
-      ]),
-    ]),
-  ],
+    selector: "content-table",
+    templateUrl: "./content-table.component.html",
+    styleUrls: ["./content-table.component.scss"],
+    animations: [
+        trigger("slideVertical", [
+            state("*", style({
+                height: 0,
+            })),
+            state("show", style({
+                height: "*",
+            })),
+            transition("* => show", [
+                animate("200ms cubic-bezier(0.25, 0.8, 0.25, 1)"),
+            ]),
+        ]),
+    ],
+    standalone: false
 })
 export class ContentTableComponent {
   @Output()
