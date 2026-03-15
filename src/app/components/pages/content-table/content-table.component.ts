@@ -235,23 +235,19 @@ export class ContentTableComponent {
     let currentNode: DocElement | null = this.docElement[0];
     docs.forEach((doc) => {
       currentNode = currentNode?.children.find((c) => c.name === doc) || null;
-      if (currentNode && currentNode.father !== null) {
-        const parentPath = currentNode.fullPath.slice(0, -1).join("/");
-        this.expandedNodes.add(parentPath);
-      }
       if (currentNode) {
-        const key = currentNode.fullPath.slice(0, -1).join("/");
-        if (key) this.expandedNodes.add(key);
+        const parentPath = currentNode.fullPath.slice(0, -1).join("/");
+        if (parentPath) this.expandedNodes.add(parentPath);
       }
     });
 
     this.rebuildFlatNodes();
 
-    if (this.isMobile) {
+    if (this.isMobile || !currentNode) {
       return;
     }
 
-    const nodeID = this.generateNodeID(currentNode as DocElement);
+    const nodeID = this.generateNodeID(currentNode);
     const element = this.renderer.selectRootElement(`#${nodeID}`, true);
     if (!ContentTableComponent.isScrolledIntoView(element)) {
       element.scrollIntoView({ behavior: "smooth" });
