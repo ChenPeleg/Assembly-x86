@@ -6,13 +6,21 @@ Upgrade Angular from v15 to the latest stable version using the Angular CLI `ng 
 ## Steps
 1. Check current state: `ng version`
 2. Upgrade one major version at a time:
-   - `npx ng update @angular/core@16 @angular/cli@16 @angular/material@16 @angular-builders/custom-webpack@16`
-   - `npx ng update @angular/core@17 @angular/cli@17 @angular/material@17 @angular-builders/custom-webpack@17`
-   - `npx ng update @angular/core@18 @angular/cli@18 @angular/material@18 @angular-builders/custom-webpack@18`
-   - `npx ng update @angular/core@19 @angular/cli@19 @angular/material@19 @angular-builders/custom-webpack@19`
+   - ✅ `npx ng update @angular/core@16 @angular/cli@16 @angular/material@16 @angular-builders/custom-webpack@16`
+   - ✅ `npx ng update @angular/core@17 @angular/cli@17 @angular/material@17 @angular-builders/custom-webpack@17`
+   - ✅ `npx ng update @angular/core@18 @angular/cli@18 @angular/material@18 @angular-builders/custom-webpack@18`
+   - ✅ `npx ng update @angular/core@19 @angular/cli@19 @angular/material@19 @angular-builders/custom-webpack@19`
+   - ✅ `npx ng update @angular/core@20 @angular/cli@20 @angular/material@20` + `npm install @angular-builders/custom-webpack@20.0.0 --save-dev`
 3. After each major version: `npm run build` and `npm test`
 4. Update `engines.node` in `package.json` if Angular requires Node 20+
 5. Final production build: `npm run build:prod`
+
+## Current State (Angular 20 ✅)
+- Angular CLI: 20.3.20 | Angular: 20.3.18
+- @angular/material + @angular/cdk: 20.2.14
+- @angular-builders/custom-webpack: 20.0.0
+- TypeScript: 5.8.3 | zone.js: 0.15.1
+- Build: ✅ passing (warnings only) | Tests: ✅ 49/49
 
 ## Notes
 - `ng update` auto-applies schematics — do not skip versions
