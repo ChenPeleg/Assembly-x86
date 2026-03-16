@@ -1,16 +1,29 @@
 <div *ngIf="memoryDisplay$ | async as memoryDisplay">
 
-  <mat-chip-listbox  (change)="wordSizeSelected($event , memoryDisplay.wordSize)" [hideSingleSelectionIndicator] [required]="true"
-    [value]="memoryDisplay.wordSize" aria-label="byte size selection">
-    <mat-chip-option  [value]="1">1 Byte</mat-chip-option>
-    <mat-chip-option [value]="2">2 Bytes</mat-chip-option>
-    <mat-chip-option [value]="4">4 Bytes</mat-chip-option>
-  </mat-chip-listbox>
-  <mat-chip-listbox (change)="valueTypeChanged($event,memoryDisplay.valueType)" [value]="memoryDisplay.valueType"
-                    aria-label="value selection" class="values-type">
-    <mat-chip-option value="number">Decimal</mat-chip-option>
-    <mat-chip-option value="hex">Hex</mat-chip-option>
-    <mat-chip-option value="ascii">Ascii</mat-chip-option>
-    <mat-chip-option value="binary">Binary</mat-chip-option>
-  </mat-chip-listbox>
+  <div class="chip-group" aria-label="byte size selection">
+    <button (click)="wordSizeSelected(1, memoryDisplay.wordSize)"
+            [ngClass]="{'chip-selected': memoryDisplay.wordSize === 1}"
+            class="chip-btn">1 Byte</button>
+    <button (click)="wordSizeSelected(2, memoryDisplay.wordSize)"
+            [ngClass]="{'chip-selected': memoryDisplay.wordSize === 2}"
+            class="chip-btn">2 Bytes</button>
+    <button (click)="wordSizeSelected(4, memoryDisplay.wordSize)"
+            [ngClass]="{'chip-selected': memoryDisplay.wordSize === 4}"
+            class="chip-btn">4 Bytes</button>
+  </div>
+
+  <div class="chip-group values-type" aria-label="value selection">
+    <button (click)="valueTypeChanged('number', memoryDisplay.valueType)"
+            [ngClass]="{'chip-selected chip-selected-teal': memoryDisplay.valueType === 'number'}"
+            class="chip-btn">Decimal</button>
+    <button (click)="valueTypeChanged('hex', memoryDisplay.valueType)"
+            [ngClass]="{'chip-selected chip-selected-teal': memoryDisplay.valueType === 'hex'}"
+            class="chip-btn">Hex</button>
+    <button (click)="valueTypeChanged('ascii', memoryDisplay.valueType)"
+            [ngClass]="{'chip-selected chip-selected-teal': memoryDisplay.valueType === 'ascii'}"
+            class="chip-btn">Ascii</button>
+    <button (click)="valueTypeChanged('binary', memoryDisplay.valueType)"
+            [ngClass]="{'chip-selected chip-selected-teal': memoryDisplay.valueType === 'binary'}"
+            class="chip-btn">Binary</button>
+  </div>
 </div>

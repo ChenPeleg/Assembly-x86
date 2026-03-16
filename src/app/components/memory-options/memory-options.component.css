@@ -1,13 +1,34 @@
-.mdc-evolution-chip__checkmark {
-  display: none;
+.chip-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 4px 0;
 }
 
-.mdc-evolution-chip__graphic {
-  max-width: 0px;
+.chip-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 12px;
+  border-radius: 16px;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  background: transparent;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 150ms ease, color 150ms ease;
   color: #3943a9;
 }
 
+.chip-btn:hover {
+  background-color: rgba(57, 67, 169, 0.08);
+}
 
-.values-type .mat-mdc-chip-selected {
+.chip-selected {
+  background-color: #3943a9 !important;
+  color: white !important;
+}
+
+.chip-selected-teal {
   background-color: #2b9387 !important;
+  color: white !important;
 }

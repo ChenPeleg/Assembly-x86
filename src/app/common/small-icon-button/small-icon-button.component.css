@@ -1,25 +1,30 @@
 
 .small-icon-button {
-  width: 24px !important;
-  height: 24px !important;
-  padding: 0px !important;
-  display: inline-flex !important;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  border-radius: 50%;
+  transition: background-color 150ms ease;
 }
 
-.small-icon-button > *[role=img] {
+.small-icon-button:hover {
+  background-color: rgba(0, 0, 0, 0.08);
+}
+
+.small-icon-button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.small-icon-button .material-icons {
   width: 16px;
   height: 16px;
   font-size: 16px;
-}
-
-.small-icon-button > *[role=img] svg {
-  width: 16px;
-  height: 16px;
-}
-
-.small-icon-button .mat-mdc-button-touch-target {
-  width: 24px !important;
-  height: 24px !important;
+  line-height: 16px;
 }

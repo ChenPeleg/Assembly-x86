@@ -4,9 +4,8 @@
     <span>
     Tick rate: {{ cpu.tickRate }} ms
     </span>
-    <mat-slider max="500" min="100" step="5"   style="max-width: 80%">
-      <input [(ngModel)]="cpu.tickRate" matSliderThumb />
-    </mat-slider>
+    <input type="range" min="100" max="500" step="5" [(ngModel)]="cpu.tickRate"
+           class="tick-rate-slider" style="max-width: 80%" />
   </div>
 
 
