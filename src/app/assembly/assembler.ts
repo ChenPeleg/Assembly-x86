@@ -1,5 +1,6 @@
 import { LineMap, Program } from "./program";
 import { EncodedInstruction } from "./encoding";
+import { arrayEquals } from "../util/arrayEquals";
 import { Move } from "../emulation/instruction/mov";
 import { Instruction } from "../emulation/instruction/instruction";
 import {
@@ -459,7 +460,7 @@ export class Assembler {
     let validMasks: string[][] = instruction.validParameters;
 
     for (let i = 0; i < validMasks.length; i++) {
-      if (JSON.stringify(parameterMask) === JSON.stringify(validMasks[i])) {
+      if (arrayEquals(parameterMask, validMasks[i])) {
         return;
       }
     }
