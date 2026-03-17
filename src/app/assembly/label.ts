@@ -1,4 +1,3 @@
-import * as _ from "lodash";
 import {LabelParameter} from "../emulation/instruction/parameter";
 import {AssemblyException} from "./assembler";
 
@@ -53,8 +52,8 @@ export class LabelResolver
     }
     resolveAddresses()
     {
-        _.each(this.unresolvedParameters, (record: { labelParameter: LabelParameter, line: number }) => {
-            if (!_.has(this.labels, record.labelParameter.label))
+        this.unresolvedParameters.forEach((record: { labelParameter: LabelParameter, line: number }) => {
+            if (!Object.hasOwn(this.labels, record.labelParameter.label))
             {
                 throw new AssemblyException("Unknown label " + record.labelParameter.label, record.line + 1);
             }
@@ -81,10 +80,10 @@ export class LabelResolver
     }
     private hasLabel(label: string): boolean
     {
-        return _.has(this.labels, label);
+        return Object.hasOwn(this.labels, label);
     }
     private findPreviousGlobalLabel(address: number): Label
     {
-        return _.findLast(this.labels, (label: Label) => !label.local && label.address <= address);
+        return Object.values(this.labels).findLast((label: any) => !(label as Label).local && (label as Label).address <= address) as Label;
     }
 }

@@ -1,6 +1,5 @@
 import { Component, Input } from "@angular/core";
 import { MemoryBlock } from "../../emulation/memory-block";
-import * as _ from "lodash";
 import { MemoryDisplay, MemoryValueType } from "../../models/MemoryDisplay";
 import { MemoryDisplayStoreService } from "../../services/memory-display-store.service";
 
@@ -38,7 +37,7 @@ export class MemoryComponent {
     return Math.ceil(this.memory.size / this.width / this.wordSize);
   }
   public createRange(count: number): number[] {
-    return _.range(count);
+    return Array.from({length: count}, (_, i) => i);
   }
   public createAddress(row: number, col: number): number {
     return row * this.width * this.wordSize + col * this.wordSize;
