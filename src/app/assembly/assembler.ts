@@ -1,4 +1,4 @@
-import * as _ from "lodash";
+import { LodashUtils } from "../util/lodash-utils";
 import { LineMap, Program } from "./program";
 import { EncodedInstruction } from "./encoding";
 import { Move } from "../emulation/instruction/mov";
@@ -307,8 +307,8 @@ export class Assembler {
     instruction: { tag: string; type: string; name: string; operands: any[] },
     assemblyData: AssemblyData
   ): EncodedInstruction {
-    if (!_.has(InstructionMapping, instruction.name)) {
-      if (_.has(InstructionMapping, instruction.name.toUpperCase())) {
+    if (!LodashUtils.has(InstructionMapping, instruction.name)) {
+      if (LodashUtils.has(InstructionMapping, instruction.name.toUpperCase())) {
         instruction.name = instruction.name.toUpperCase();
       } else {
         throw new AssemblyException(
@@ -334,7 +334,7 @@ export class Assembler {
 
   private loadParameters(
     instruction: Instruction,
-    operands: any[],
+    operands: any[] | undefined,
     name: string,
     assemblyData: AssemblyData
   ): Parameter[] {
@@ -352,7 +352,7 @@ export class Assembler {
     mapping[Parameter.DerefConstant] = this.parseLabelParameter;
     mapping[Parameter.Memory] = this.parseMemoryParameter;
 
-    return _.map(operands, (operand) => {
+    return LodashUtils.map(operands ?? [], (operand: any) => {
       let innerOperand: any = this.getInnerParameter(operand);
       return mapping[this.getTag(innerOperand)].call(
         this,
@@ -378,7 +378,7 @@ export class Assembler {
     assemblyData: AssemblyData
   ): LabelParameter {
     let labelParameter: LabelParameter;
-    if (_.has(operand, "deref") && operand.deref) {
+    if (LodashUtils.has(operand, "deref") && operand.deref) {
       labelParameter = new DerefLabelParameter(
         size,
         operand.tag === "Label" ? operand.value : "",
@@ -434,7 +434,7 @@ export class Assembler {
   }
   private parseRegisterName(operand: any): string {
     let registerName: string = operand.name;
-    if (!_.has(REGISTER_INDEX, registerName)) {
+    if (!LodashUtils.has(REGISTER_INDEX, registerName)) {
       throw new AssemblyException("Unknown register " + registerName);
     }
 
@@ -443,7 +443,7 @@ export class Assembler {
 
   private checkParameterCompatibility(
     instruction: Instruction,
-    operands: any[],
+    operands: any[] | undefined,
     name: string
   ) {
     if (operands !== undefined && operands.length == 2) {
@@ -454,13 +454,13 @@ export class Assembler {
       }
     }
 
-    let parameterMask = _.map(operands, (operand) =>
+    let parameterMask = LodashUtils.map(operands ?? [], (operand: any) =>
       this.getTag(this.getInnerParameter(operand))
     );
     let validMasks: string[][] = instruction.validParameters;
 
     for (let i = 0; i < validMasks.length; i++) {
-      if (_.isEqual(parameterMask, validMasks[i])) {
+      if (LodashUtils.isEqual(parameterMask, validMasks[i])) {
         return;
       }
     }
@@ -478,10 +478,10 @@ export class Assembler {
 
   private getTag(operand: any): string {
     let tag: string = operand.tag;
-    if (_.includes(["Label", "Number"], tag)) {
+    if (LodashUtils.includes(["Label", "Number"], tag)) {
       tag = Parameter.Constant;
 
-      if (_.has(operand, "deref") && operand.deref) {
+      if (LodashUtils.has(operand, "deref") && operand.deref) {
         tag = Parameter.DerefConstant;
       }
     } else if (tag === "Mem") {

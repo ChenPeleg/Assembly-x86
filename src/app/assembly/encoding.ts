@@ -1,4 +1,4 @@
-import * as _ from "lodash";
+import { LodashUtils } from "../util/lodash-utils";
 import {Instruction} from "../emulation/instruction/instruction";
 import {Parameter} from "../emulation/instruction/parameter";
 import {CPU} from "../emulation/cpu";
@@ -17,7 +17,7 @@ export class EncodedInstruction
 
     public instantiate(cpu: CPU): Instruction
     {
-        let data: MemoryView[] = _.map(this.parameters, (parameter: Parameter) => parameter.fetchData(cpu));
+        let data: MemoryView[] = LodashUtils.map(this.parameters, (parameter: Parameter) => parameter.fetchData(cpu));
         this.instruction.loadParameters.apply(this.instruction, data);
 
         return this.instruction;

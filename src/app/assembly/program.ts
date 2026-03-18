@@ -1,4 +1,4 @@
-import * as _ from "lodash";
+import { LodashUtils } from "../util/lodash-utils";
 import {Instruction} from "../emulation/instruction/instruction";
 import {CPU} from "../emulation/cpu";
 import {EncodedInstruction} from "./encoding";
@@ -14,11 +14,11 @@ export class LineMap
     }
     public getLineByAddress(address: number): number
     {
-        return _.findLast(this.mapping, (line: number, key: number) => key <= address);
+        return LodashUtils.findLast(this.mapping, (_line: number, key: string) => Number(key) <= address) as number;
     }
     public getAddressByLine(row: number): number
     {
-        return Number(_.findKey(this.mapping, (line: number) => line === row));
+        return Number(LodashUtils.findKey(this.mapping, (line: number) => line === row));
     }
 }
 
