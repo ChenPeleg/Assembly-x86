@@ -1,4 +1,4 @@
-import * as _ from "lodash";
+import { LodashUtils } from "../util/lodash-utils";
 import {MemoryBlock} from "./memory-block";
 import {MemoryView, NumericConstant} from "./memory-view";
 import {Instruction} from "./instruction/instruction";
@@ -98,11 +98,11 @@ export class CPU
                 private _memory: MemoryBlock,
                 private _tickRate: number = 500)
     {
-        this.registers = _.map(_.range(10), () => new MemoryBlock(4));
+        this.registers = LodashUtils.map(LodashUtils.range(10), () => new MemoryBlock(4));
         this._alu = new ALU(this);
         this._conditionUnit = new ConditionUnit(this);
 
-        _.keys(REGISTER_INDEX).forEach((key) =>
+        LodashUtils.keys(REGISTER_INDEX).forEach((key) =>
         {
             let reg: RegisterInfo = REGISTER_INDEX[key];
             this._registerMap[key] = new MemoryView(this.registers[reg.bank], reg.byteSize, reg.index);
@@ -168,8 +168,8 @@ export class CPU
     }
     set breakpoints(value: number[])
     {
-        this._breakpoints = _.filter(
-            _.map(value, (row: number) => this.program.lineMap.getAddressByLine(row)),
+        this._breakpoints = LodashUtils.filter(
+            LodashUtils.map(value, (row: number) => this.program.lineMap.getAddressByLine(row)),
             (breakpoint: number) => breakpoint !== null
         );
     }
@@ -307,12 +307,12 @@ export class CPU
     getRegisterByIndex(index: number): MemoryView
     {
         // @ts-ignore
-      return this.getRegisterByName(_.findKey(REGISTER_INDEX, (reg: RegisterInfo) => reg.id === index));
+      return this.getRegisterByName(LodashUtils.findKey(REGISTER_INDEX, (reg: RegisterInfo) => reg.id === index) as string);
     }
 
     private hasBreakpoint(): boolean
     {
-        return _.includes(this._breakpoints, this.eip);
+        return this._breakpoints !== undefined && LodashUtils.includes(this._breakpoints, this.eip);
     }
     private executeOneInstruction()
     {
