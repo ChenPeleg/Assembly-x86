@@ -16,9 +16,14 @@ jobs:
         with:
           github-token: ${{ secrets.MY_PAT }}
           script: |
-            await github.rest.pulls.update({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              pull_number: context.payload.pull_request.number,
-              draft: false
+            await github.graphql(`
+              mutation($pullRequestId: ID!) {
+                markPullRequestReadyForReview(input: { pullRequestId: $pullRequestId }) {
+                  pullRequest {
+                    isDraft
+                  }
+                }
+              }
+            `, {
+              pullRequestId: context.payload.pull_request.node_id
             });
