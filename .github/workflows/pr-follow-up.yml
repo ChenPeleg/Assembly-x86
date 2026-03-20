@@ -1,0 +1,12 @@
+name: pr-follow-up.yml
+on:
+  pull_request:
+    types: [opened, reopened, synchronize]
+
+jobs:
+    pr-follow-up:
+        runs-on: ubuntu-latest
+        steps:
+        - name: PR Follow-Up
+          run: echo "This is a follow-up action for pull requests. You can add your custom logic here to perform actions such as labeling, commenting, or notifying team members based on the pull request events."
+
