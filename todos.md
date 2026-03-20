@@ -6,4 +6,4 @@
 - replace all the material ui with tailwind
 - simplify the codebase & ui
 - add a dark mode
-- Document copilot auto flow workflow.
+- document copilot auto flow workflow.
