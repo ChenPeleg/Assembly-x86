@@ -9,15 +9,15 @@ jobs:
         steps:
         - name: PR Follow-Up
           run: echo "This is a follow-up action for pull requests. You can add your custom logic here to perform actions such as labeling, commenting, or notifying team members based on the pull request events."
-        - name: checkout code with my PAT
-          uses: actions/checkout@v3
-          with:
-            token: ${{ secrets.MY_PAT }}
-        - name: Add a comment to the PR
-          run: |
-            PR_NUMBER=$(echo "${{ github.event.pull_request.number }}")
-            curl -H "Authorization: token ${{ secrets.MY_PAT }}" \
-                    -X POST \
-                    -d "{\"body\": \"Thank you for your contribution! We will review your pull request shortly.\"}" \
-                    "https://api.github.com/repos/${{ github.repository }}/issues/${PR_NUMBER}/comments
-            
+#        - name: checkout code with my PAT
+#          uses: actions/checkout@v3
+#          with:
+#            token: ${{ secrets.MY_PAT }}
+#        - name: Add a comment to the PR
+#          run: |
+#            PR_NUMBER=$(echo "${{ github.event.pull_request.number }}")
+#            curl -H "Authorization: token ${{ secrets.MY_PAT }}" \
+#                    -X POST \
+#                    -d "{\"body\": \"Thank you for your contribution! We will review your pull request shortly.\"}" \
+#                    "https://api.github.com/repos/${{ github.repository }}/issues/${PR_NUMBER}/comments
+#
