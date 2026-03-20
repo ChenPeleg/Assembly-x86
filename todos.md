@@ -6,3 +6,4 @@
 - replace all the material ui with tailwind
 - simplify the codebase & ui
 - add a dark mode
+- add documentation for the Copilot auto flow workflow
