@@ -1,8 +1,8 @@
-name: pr-follow-up.yml
+name: Make PR Ready for Review on Review Requested
 
 on:
   pull_request_target:
-    types: [opened]
+    types: [review_requested]
 
 permissions:
   pull-requests: write
