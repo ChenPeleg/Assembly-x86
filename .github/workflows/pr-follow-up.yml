@@ -1,25 +1,23 @@
 name: pr-follow-up.yml
 
 on:
-  workflow_run:
-    workflows: ["PR Detect"]  # required — must name at least one specific workflow
-    types: [requested]
+  pull_request_target:
+    types: [opened]
+
+permissions:
+  pull-requests: write
 
 jobs:
-    pr-follow-up:
-        runs-on: ubuntu-latest
-        steps:
-        - name: PR Follow-Up
-          run: echo "This is a follow-up action for pull requests. You can add your custom logic here to perform actions such as labeling, commenting, or notifying team members based on the pull request events."
-#        - name: checkout code with my PAT
-#          uses: actions/checkout@v3
-#          with:
-#            token: ${{ secrets.MY_PAT }}
-#        - name: Add a comment to the PR
-#          run: |
-#            PR_NUMBER=$(echo "${{ github.event.pull_request.number }}")
-#            curl -H "Authorization: token ${{ secrets.MY_PAT }}" \
-#                    -X POST \
-#                    -d "{\"body\": \"Thank you for your contribution! We will review your pull request shortly.\"}" \
-#                    "https://api.github.com/repos/${{ github.repository }}/issues/${PR_NUMBER}/comments
-#
+  pr-follow-up:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Mark PR as Ready for Review
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.pulls.update({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.payload.pull_request.number,
+              draft: false
+            });
