@@ -1,7 +1,9 @@
 name: pr-follow-up.yml
+
 on:
-  pull_request_target:
-    types: [opened, reopened, synchronize]
+  workflow_run:
+    workflows: ["PR Detect"]  # required — must name at least one specific workflow
+    types: [requested]
 
 jobs:
     pr-follow-up:
