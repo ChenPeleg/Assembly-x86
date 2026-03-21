@@ -18,10 +18,11 @@ jobs:
           github-token: ${{ secrets.MY_PAT }}
           script: |
             const pullRequestId = context.payload.pull_request.node_id;
-            const retries = 8;
-            const delayMs = 15000;
+            const maxAttempts = 8;
+            const retryDelayMs = 15000;
+            const retryDelaySeconds = 15;
 
-            for (let attempt = 1; attempt <= retries; attempt++) {
+            for (let attempt = 1; attempt <= maxAttempts; attempt++) {
               try {
                 await github.graphql(`
                   mutation($pullRequestId: ID!) {
@@ -39,7 +40,9 @@ jobs:
                 core.info("Auto-merge enabled.");
                 return;
               } catch (error) {
-                const message = String(error?.message || "");
+                const message = typeof error?.message === "string"
+                  ? error.message
+                  : String(error);
                 const isUnstable = message.includes("Pull request is in unstable status");
                 const isAlreadyEnabled = message.includes("Auto merge is already enabled");
 
@@ -48,11 +51,11 @@ jobs:
                   return;
                 }
 
-                if (!isUnstable || attempt === retries) {
+                if (!isUnstable || attempt === maxAttempts) {
                   throw error;
                 }
 
-                core.info(`PR not stable yet (attempt ${attempt}/${retries}), retrying in ${delayMs / 1000}s...`);
-                await new Promise((resolve) => setTimeout(resolve, delayMs));
+                core.info(`PR not stable yet (attempt ${attempt}/${maxAttempts}), retrying in ${retryDelaySeconds}s...`);
+                await new Promise((resolve) => setTimeout(resolve, retryDelayMs));
               }
             }
