@@ -17,16 +17,42 @@ jobs:
         with:
           github-token: ${{ secrets.MY_PAT }}
           script: |
-            await github.graphql(`
-              mutation($pullRequestId: ID!) {
-                enablePullRequestAutoMerge(input: { pullRequestId: $pullRequestId, mergeMethod: SQUASH }) {
-                  pullRequest {
-                    autoMergeRequest {
-                      enabledAt
+            const pullRequestId = context.payload.pull_request.node_id;
+            const retries = 8;
+            const delayMs = 15000;
+
+            for (let attempt = 1; attempt <= retries; attempt++) {
+              try {
+                await github.graphql(`
+                  mutation($pullRequestId: ID!) {
+                    enablePullRequestAutoMerge(input: { pullRequestId: $pullRequestId, mergeMethod: SQUASH }) {
+                      pullRequest {
+                        autoMergeRequest {
+                          enabledAt
+                        }
+                      }
                     }
                   }
+                `, {
+                  pullRequestId
+                });
+                core.info("Auto-merge enabled.");
+                return;
+              } catch (error) {
+                const message = String(error?.message || "");
+                const isUnstable = message.includes("Pull request is in unstable status");
+                const isAlreadyEnabled = message.includes("Auto merge is already enabled");
+
+                if (isAlreadyEnabled) {
+                  core.info("Auto-merge is already enabled.");
+                  return;
                 }
+
+                if (!isUnstable || attempt === retries) {
+                  throw error;
+                }
+
+                core.info(`PR not stable yet (attempt ${attempt}/${retries}), retrying in ${delayMs / 1000}s...`);
+                await new Promise((resolve) => setTimeout(resolve, delayMs));
               }
-            `, {
-              pullRequestId: context.payload.pull_request.node_id
-            });
+            }
