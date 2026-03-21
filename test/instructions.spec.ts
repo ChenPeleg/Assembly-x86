@@ -1,9 +1,9 @@
-import {Assembler} from "../app/assembly/assembler";
-import {Program} from "../app/assembly/program";
-import {CPU} from "../app/emulation/cpu";
-import {MemoryBlock} from "../app/emulation/memory-block";
-import {Process} from "../app/emulation/process";
-import {RuntimeException} from "../app/emulation/runtime-exception";
+import {Assembler} from '../src/app/assembly/assembler';
+import {Program} from '../src/app/assembly/program';
+import {CPU} from '../src/app/emulation/cpu';
+import {MemoryBlock} from '../src/app/emulation/memory-block';
+import {Process} from '../src/app/emulation/process';
+import {RuntimeException} from '../src/app/emulation/runtime-exception';
 
 function runProgram(program: Program): CPU
 {
