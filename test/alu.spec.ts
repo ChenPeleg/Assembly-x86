@@ -1,7 +1,7 @@
-import { CPU } from "../app/emulation/cpu";
-import { ALU } from "../app/emulation/alu";
-import { MemoryBlock } from "../app/emulation/memory-block";
-import { RuntimeException } from "../app/emulation/runtime-exception";
+import { CPU } from "../src/app/emulation/cpu";
+import { ALU } from "../src/app/emulation/alu";
+import { MemoryBlock } from "../src/app/emulation/memory-block";
+import { RuntimeException } from "../src/app/emulation/runtime-exception";
 
 describe("ALU", () => {
   let cpu: CPU;

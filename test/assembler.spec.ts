@@ -2,8 +2,8 @@ import {
   Assembler,
   AssemblyException,
   MemoryDefinition,
-} from "../app/assembly/assembler";
-import { Program } from "../app/assembly/program";
+} from "../src/app/assembly/assembler";
+import { Program } from "../src/app/assembly/program";
 
 describe("Assembler", () => {
   let assembler: Assembler;
