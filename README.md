@@ -50,3 +50,22 @@ Builds the application into `dist` folder.
 ```shell
 npm run build
 ```
+
+## README Improvement Plan
+This issue requests a plan, so the items below are proposed README edits for a follow-up implementation pass.
+
+1. **Fix Markdown formatting issues**
+   - Close the "You can try it online" link correctly.
+   - Add missing spaces in headings (for example, `## Installation`, `### Tests`, `### Build`).
+
+2. **Improve setup command consistency**
+   - Use `npm ci` as the primary install command for reproducible setup.
+   - Keep command examples aligned with scripts in `package.json` (for example, `npm test` for local runs and `npm run test:ci` for CI usage).
+
+3. **Improve wording clarity**
+   - Replace short/unclear phrases like "Opens the site in browser." with clearer usage descriptions.
+   - Normalize capitalization and terminology across sections (CPU, memory, and use **visualizer** consistently).
+
+4. **Refresh project overview**
+   - Add a short "Quick Start" flow (install → start → open browser).
+   - Link to in-app docs under `src/assets/documentation/` for users who want tutorials.
