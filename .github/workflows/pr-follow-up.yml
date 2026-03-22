@@ -11,7 +11,7 @@ jobs:
   pr-follow-up:
     runs-on: ubuntu-latest
     steps:
-      - name: Mark PR as Ready for Review and Enable Auto-Merge
+      - name: Mark PR as Ready for Review
         uses: actions/github-script@v7
         with:
           github-token: ${{ secrets.MY_PAT }}
@@ -26,43 +26,4 @@ jobs:
               }
             `, {
               pullRequestId: context.payload.pull_request.node_id
-            });
-            const repoMergeOptions = await github.graphql(`
-              query($owner: String!, $repo: String!) {
-                repository(owner: $owner, name: $repo) {
-                  mergeCommitAllowed
-                  squashMergeAllowed
-                  rebaseMergeAllowed
-                }
-              }
-            `, {
-              owner: context.repo.owner,
-              repo: context.repo.repo
-            });
-
-            const mergeMethod = repoMergeOptions.repository.squashMergeAllowed
-              ? "SQUASH"
-              : repoMergeOptions.repository.mergeCommitAllowed
-                ? "MERGE"
-                : repoMergeOptions.repository.rebaseMergeAllowed
-                  ? "REBASE"
-                  : null;
-
-            if (!mergeMethod) {
-              throw new Error("No merge method is enabled for this repository. Enable at least one merge method (squash, merge commit, or rebase) in repository settings.");
-            }
-
-            await github.graphql(`
-              mutation($pullRequestId: ID!, $mergeMethod: PullRequestMergeMethod!) {
-                enablePullRequestAutoMerge(input: { pullRequestId: $pullRequestId, mergeMethod: $mergeMethod }) {
-                  pullRequest {
-                    autoMergeRequest {
-                      enabledAt
-                    }
-                  }
-                }
-              }
-            `, {
-              pullRequestId: context.payload.pull_request.node_id,
-              mergeMethod
             });
