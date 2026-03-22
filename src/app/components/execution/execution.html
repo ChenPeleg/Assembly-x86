@@ -1,10 +1,10 @@
-<div class="flex flex-row sm:ml-[-5px] md:ml-0">
+<div class="flex flex-row gap-2">
 
   <button (click)="buttonClicked(button)"  *ngFor="let button of buttons"
           [disabled]="getIsDisabled(button)"
           [title]="button.toLocaleUpperCase()"
           aria-label="execution control button"
-          class="execution-btn md:ml-0 -ml-0.5"
+          class="execution-btn"
           [ngClass]="getButtonColorClass(button)">
     <span class="material-icons">{{getIcon(button)}}</span>
   </button>
