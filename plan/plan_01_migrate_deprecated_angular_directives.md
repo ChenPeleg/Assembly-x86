@@ -1,4 +1,4 @@
-# Plan: Migrate Deprecated Angular Directives
+# Plan 1: Migrate Deprecated Angular Directives
 
 ## Objective
 Identify and replace all deprecated Angular template directives and APIs with their modern equivalents.
@@ -198,4 +198,3 @@ private _onInterrupt = new Subject<Interrupt>();
 6. **Migrate to standalone** → `ng generate @angular/core:standalone` (largest refactor, do last)
 
 After each step: `npm run build` and `npm test` to verify 49/49 tests still pass.
-

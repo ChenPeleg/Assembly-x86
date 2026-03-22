@@ -1,4 +1,4 @@
-# Plan: Restore Original UI Appearance After Material → Vanilla CSS Migration
+# Plan 3: Restore Original UI Appearance After Material → Vanilla CSS Migration
 
 ## Objective
 Reconcile the current vanilla-CSS build with the original Material UI look shown in
