@@ -3,6 +3,8 @@ name: Make PR Ready for Review on Review Requested
 on:
   pull_request_target:
     types: [review_requested]
+  pull_request_review:
+    types: [submitted]
 
 permissions:
   pull-requests: write
@@ -12,6 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Mark PR as Ready for Review
+        if: github.event_name == 'pull_request_target'
         uses: actions/github-script@v7
         with:
           github-token: ${{ secrets.MY_PAT }}
@@ -21,6 +24,26 @@ jobs:
                 markPullRequestReadyForReview(input: { pullRequestId: $pullRequestId }) {
                   pullRequest {
                     isDraft
+                  }
+                }
+              }
+            `, {
+              pullRequestId: context.payload.pull_request.node_id
+            });
+
+      - name: Enable PR Auto-Merge After Approval
+        if: github.event_name == 'pull_request_review' && github.event.review.state == 'approved'
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.MY_PAT }}
+          script: |
+            await github.graphql(`
+              mutation($pullRequestId: ID!) {
+                enablePullRequestAutoMerge(input: { pullRequestId: $pullRequestId }) {
+                  pullRequest {
+                    autoMergeRequest {
+                      enabledAt
+                    }
                   }
                 }
               }
