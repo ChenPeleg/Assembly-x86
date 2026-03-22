@@ -37,9 +37,34 @@ jobs:
         with:
           github-token: ${{ secrets.MY_PAT }}
           script: |
+            const repoMergeOptions = await github.graphql(`
+              query($owner: String!, $repo: String!) {
+                repository(owner: $owner, name: $repo) {
+                  mergeCommitAllowed
+                  squashMergeAllowed
+                  rebaseMergeAllowed
+                }
+              }
+            `, {
+              owner: context.repo.owner,
+              repo: context.repo.repo
+            });
+
+            const mergeMethod = repoMergeOptions.repository.squashMergeAllowed
+              ? "SQUASH"
+              : repoMergeOptions.repository.mergeCommitAllowed
+                ? "MERGE"
+                : repoMergeOptions.repository.rebaseMergeAllowed
+                  ? "REBASE"
+                  : null;
+
+            if (!mergeMethod) {
+              throw new Error("No merge method is enabled for this repository. Enable at least one merge method (squash, merge commit, or rebase) in repository settings.");
+            }
+
             await github.graphql(`
-              mutation($pullRequestId: ID!) {
-                enablePullRequestAutoMerge(input: { pullRequestId: $pullRequestId }) {
+              mutation($pullRequestId: ID!, $mergeMethod: PullRequestMergeMethod!) {
+                enablePullRequestAutoMerge(input: { pullRequestId: $pullRequestId, mergeMethod: $mergeMethod }) {
                   pullRequest {
                     autoMergeRequest {
                       enabledAt
@@ -48,5 +73,6 @@ jobs:
                 }
               }
             `, {
-              pullRequestId: context.payload.pull_request.node_id
+              pullRequestId: context.payload.pull_request.node_id,
+              mergeMethod
             });
