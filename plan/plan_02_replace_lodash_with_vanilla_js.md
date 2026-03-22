@@ -1,4 +1,4 @@
-# Plan: Replace Lodash with Vanilla JS
+# Plan 2: Replace Lodash with Vanilla JS
 
 ## Objective
 Remove the `lodash` and `@types/lodash` dependencies and replace every lodash call with an equivalent vanilla JS expression. Lodash is used in five files across the assembly, emulation, and component layers.
