@@ -3,10 +3,10 @@ import { SmallIconButtonComponent } from "./small-icon-button/small-icon-button.
 import { AllCdkModules } from "../app.module";
 import { AsyncValidationIndicatorComponent } from "./async-validation-indicator/async-validation-indicator.component";
 import { SpinnerWithCheckMarkComponent } from "./spinner-with-check-mark/spinner-with-check-mark.component";
-import { NgClass, NgIf, NgOptimizedImage, NgStyle } from "@angular/common";
+import { NgClass, NgOptimizedImage, NgStyle } from "@angular/common";
 
 @NgModule({
-  imports: [...AllCdkModules, NgClass, NgStyle, NgIf, NgOptimizedImage],
+  imports: [...AllCdkModules, NgClass, NgStyle, NgOptimizedImage],
   declarations: [
     SmallIconButtonComponent,
     AsyncValidationIndicatorComponent,
