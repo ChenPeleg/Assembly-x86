@@ -18,6 +18,7 @@ export class ExecutionComponent {
   ];
   // @ts-ignore
   @Input() process: Process = null;
+  @Input() isAssembled: boolean = false;
 
   @Output() start: EventEmitter<Process> = new EventEmitter<Process>();
   @Output() stop: EventEmitter<Process> = new EventEmitter<Process>();

@@ -7,6 +7,8 @@
           class="execution-btn"
           [ngClass]="getButtonColorClass(button)">
     <span class="material-icons">{{getIcon(button)}}</span>
+    <span *ngIf="button === 'start' && !isAssembled"
+          class="material-icons execution-build-indicator">construction</span>
   </button>
 
 </div>
