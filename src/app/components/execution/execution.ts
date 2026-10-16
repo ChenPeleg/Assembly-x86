@@ -55,7 +55,8 @@ export class ExecutionComponent {
   buttonClicked(button: Button): void {
     switch (button) {
       case "start":
-        this.onStart();
+        if (!this.isAssembled)
+          this.onStart();
         break;
       case "stop":
         this.onStop();
