@@ -1,6 +1,7 @@
 import { LodashUtils } from "../util/lodash-utils";
 import {LabelParameter} from "../emulation/instruction/parameter";
-import {AssemblyException} from "./assembler";
+
+import { AssemblyException } from "./assembler-exception";
 
 class Label
 {

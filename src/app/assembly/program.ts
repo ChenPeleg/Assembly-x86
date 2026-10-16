@@ -2,7 +2,8 @@ import { LodashUtils } from "../util/lodash-utils";
 import {Instruction} from "../emulation/instruction/instruction";
 import {CPU} from "../emulation/cpu";
 import {EncodedInstruction} from "./encoding";
-import {MemoryDefinition} from "./assembler";
+
+import { MemoryDefinition } from "./assembler-memory-definition";
 
 export class LineMap
 {

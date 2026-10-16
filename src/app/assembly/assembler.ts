@@ -63,6 +63,8 @@ import { Halt } from "../emulation/instruction/halt";
 
 // @ts-ignore
 import parser from "./asm-parser.pegjs";
+import { AssemblyException } from "./assembler-exception";
+import { MemoryDefinition } from "./assembler-memory-definition";
 
 const InstructionMapping = {
   MOV: Move,
@@ -129,35 +131,6 @@ const InstructionMapping = {
   STC: SetCarry,
   CLC: ClearCarry,
 };
-
-export class AssemblyException extends Error {
-  constructor(
-    public override message: string = "",
-    public line: number = 0,
-    public data: any = {}
-  ) {
-    super(message);
-    Object.setPrototypeOf(this, AssemblyException.prototype);
-  }
-}
-
-export class MemoryDefinition {
-  constructor(
-    private _address: number,
-    private _size: number,
-    private _value: any
-  ) {}
-
-  get address(): number {
-    return this._address;
-  }
-  get size(): number {
-    return this._size;
-  }
-  get value(): any {
-    return this._value;
-  }
-}
 
 export class Assembler {
   assemble(program: string): Program {

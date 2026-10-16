@@ -1,6 +1,6 @@
 import {CPU} from "./cpu";
-import {MemoryDefinition} from "../assembly/assembler";
 import {MemoryBlock} from "./memory-block";
+import { MemoryDefinition } from "../assembly/assembler-memory-definition";
 
 export class Process
 {
