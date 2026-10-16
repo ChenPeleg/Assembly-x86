@@ -109,7 +109,7 @@ li {
 
 .html-content li {
   line-height: 200%;
-  /*color: red;*/
+  list-style-position: inside;
 }
 
 .html-content menu {
