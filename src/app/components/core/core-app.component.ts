@@ -135,10 +135,12 @@ export class CoreAppComponent implements AfterViewInit, AfterContentInit {
 
       this.compileErrors = "";
       sleep(400).then(() => {
-        this.runAfterCompile = false;
         this.codeStatus = GeneralFieldValidationStatus.Valid;
+        if (this.runAfterCompile){
+          this.runtime.process.start();
+          this.runAfterCompile = false;
+        }
       });
-
     } catch (e) {
       this.runAfterCompile = false;
       if (e instanceof AssemblyException) {
@@ -226,6 +228,8 @@ export class CoreAppComponent implements AfterViewInit, AfterContentInit {
   }
 
   protected compileAndRun() {
+    this.runAfterCompile = true;
+    this.requestCompile()
 
   }
 }
