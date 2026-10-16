@@ -1,5 +1,7 @@
 <app-navbar></app-navbar>
-<div *ngIf=" includeSpacer (urlPath | async ) " class="w-[90%] h-[64px] min-h-[64px]"></div>
+@if ( includeSpacer (urlPath | async ) ) {
+  <div class="w-[90%] h-[64px] min-h-[64px]"></div>
+}
 <div class="router-outlet-wrapper">
   <router-outlet></router-outlet>
 </div>

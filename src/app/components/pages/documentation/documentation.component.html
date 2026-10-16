@@ -1,43 +1,52 @@
-<div #coreAppComponent *ngIf="($docsParams | async) as dockParams"
-     class="flex flex-col md:flex-row  verflow-y-visible md:overflow-y-hidden custom-scroll-margins"
-     id="documentation-component-wrapper">
-  <div  [@openClose]="dockParams.tryIt ? 'open' : 'closed'" id="core-app-container">
-    <core-app  [isTryIt]="true"></core-app>
-  </div>
-  <div *ngIf="dockParams.tryIt" class="md:hidden w-full h-2  pt-2 border-b border-slate-300 shadow-sm"></div>
-  <div #documentationSection
-       class="pt-4 md:max-w-7xl w-full    max-h-full md:max-h-screen overflow-y-visible md:overflow-y-scroll"
-       id="documentation-content-section ">
-    <div class="px-4 flex flex-row w-full  justify-between" id="documentation-navigation">
-      <button (click)="navDocuments($event,'previous')" [title]="previousPage?.description || ''" [ngClass]="{'invisible' : !this.previousPage}" class="btn-flat">
-        <span class="material-icons" style="font-size: 18px">chevron_left</span> previous
-      </button>
-      <button (click)="navDocuments($event,'closeTryIt')" [ngClass]="{'invisible' : !dockParams.tryIt}" class="btn-flat">
-        <span class="material-icons" style="font-size: 18px">cancel</span> close assembler
-      </button>
-      <button (click)="navDocuments($event,'next')" [title]="nextPage?.description || ''" [ngClass]="{'invisible' : !this.nextPage}" class="btn-flat">
-        <span class="flex flex-row items-center">next<span class="material-icons relative -right-1 top-[3px]" style="font-size: 18px">chevron_right</span></span>
-      </button>
+@if (($docsParams | async); as dockParams) {
+  <div #coreAppComponent
+    class="flex flex-col md:flex-row  verflow-y-visible md:overflow-y-hidden custom-scroll-margins"
+    id="documentation-component-wrapper">
+    <div  [@openClose]="dockParams.tryIt ? 'open' : 'closed'" id="core-app-container">
+      <core-app  [isTryIt]="true"></core-app>
     </div>
-
-    <h2 class="pl-12  my-4 text-lg">
-      {{createDockNameFromDocId(dockParams.docId || null)}}</h2>
-    <div #htmlDynamicContent class="html-content">
-      <div *ngIf="isLoadingContent" class="loading-container">
-        <div class="css-spinner"></div>
-        <p class="loading-text">Loading documentation...</p>
+    @if (dockParams.tryIt) {
+      <div class="md:hidden w-full h-2  pt-2 border-b border-slate-300 shadow-sm"></div>
+    }
+    <div #documentationSection
+      class="pt-4 md:max-w-7xl w-full    max-h-full md:max-h-screen overflow-y-visible md:overflow-y-scroll"
+      id="documentation-content-section ">
+      <div class="px-4 flex flex-row w-full  justify-between" id="documentation-navigation">
+        <button (click)="navDocuments($event,'previous')" [title]="previousPage?.description || ''" [ngClass]="{'invisible' : !this.previousPage}" class="btn-flat">
+          <span class="material-icons" style="font-size: 18px">chevron_left</span> previous
+        </button>
+        <button (click)="navDocuments($event,'closeTryIt')" [ngClass]="{'invisible' : !dockParams.tryIt}" class="btn-flat">
+          <span class="material-icons" style="font-size: 18px">cancel</span> close assembler
+        </button>
+        <button (click)="navDocuments($event,'next')" [title]="nextPage?.description || ''" [ngClass]="{'invisible' : !this.nextPage}" class="btn-flat">
+          <span class="flex flex-row items-center">next<span class="material-icons relative -right-1 top-[3px]" style="font-size: 18px">chevron_right</span></span>
+        </button>
       </div>
-      <div *ngIf="!isLoadingContent" [innerHTML]="content"></div>
+      <h2 class="pl-12  my-4 text-lg">
+      {{createDockNameFromDocId(dockParams.docId || null)}}</h2>
+      <div #htmlDynamicContent class="html-content">
+        @if (isLoadingContent) {
+          <div class="loading-container">
+            <div class="css-spinner"></div>
+            <p class="loading-text">Loading documentation...</p>
+          </div>
+        }
+        @if (!isLoadingContent) {
+          <div [innerHTML]="content"></div>
+        }
+      </div>
+      <div class="px-4 pb-4 flex md:hidden justify-end" id="documentation-navigation-bottom">
+        <button (click)="navDocuments($event,'next')" [title]="nextPage?.description || ''" [ngClass]="{'invisible' : !this.nextPage}" class="btn-flat">
+          <span class="flex flex-row items-center">next<span class="material-icons relative -right-1 top-[3px]" style="font-size: 18px">chevron_right</span></span>
+        </button>
+      </div>
     </div>
-    <div class="px-4 pb-4 flex md:hidden justify-end" id="documentation-navigation-bottom">
-      <button (click)="navDocuments($event,'next')" [title]="nextPage?.description || ''" [ngClass]="{'invisible' : !this.nextPage}" class="btn-flat">
-        <span class="flex flex-row items-center">next<span class="material-icons relative -right-1 top-[3px]" style="font-size: 18px">chevron_right</span></span>
-      </button>
+    <div  class="ml-6 md:ml-0   sm:overflow-y-visible md:overflow-y-scroll">
+      @if (pagesNames.length) {
+        <div [@openClose]="dockParams.tryIt ? 'closed':  'open' " id="content-table-wrapper">
+          <content-table (contentTableItemClicked)="contentTableItemClicked($event)" [currentDoc]="dockParams.docId || null " [pages]="pagesNames"></content-table>
+        </div>
+      }
     </div>
   </div>
-  <div  class="ml-6 md:ml-0   sm:overflow-y-visible md:overflow-y-scroll">
-    <div *ngIf="pagesNames.length" [@openClose]="dockParams.tryIt ? 'closed':  'open' " id="content-table-wrapper">
-      <content-table (contentTableItemClicked)="contentTableItemClicked($event)" [currentDoc]="dockParams.docId || null " [pages]="pagesNames"></content-table>
-    </div>
-  </div>
-</div>
+}

@@ -4,27 +4,30 @@
   </div>
   <div>
     <ul class="tree-list">
-      <ng-container *ngFor="let node of flatNodes">
+      @for (node of flatNodes; track node) {
         <li class="tree-node" [style.paddingLeft.px]="node.level * 20 + 20">
           <div class="tree-node-inner flex items-center">
-            <button *ngIf="hasChildren(node)"
-                    (click)="toggleNode(node)"
-                    class="tree-toggle-btn"
-                    [attr.aria-label]="'toggle ' + node.name">
-              <span class="material-icons transition-transform duration-200 ease-in-out"
-                    [ngClass]="{'rotate-90': isExpanded(node)}">chevron_right</span>
-            </button>
-            <span *ngIf="!hasChildren(node)" class="tree-toggle-placeholder"></span>
-
+            @if (hasChildren(node)) {
+              <button
+                (click)="toggleNode(node)"
+                class="tree-toggle-btn"
+                [attr.aria-label]="'toggle ' + node.name">
+                <span class="material-icons transition-transform duration-200 ease-in-out"
+                [ngClass]="{'rotate-90': isExpanded(node)}">chevron_right</span>
+              </button>
+            }
+            @if (!hasChildren(node)) {
+              <span class="tree-toggle-placeholder"></span>
+            }
             <div (click)="clickLink(node)"
-                 [id]="generateNodeID(node)"
-                 [ngClass]="{'is-selected': node.isSelected}"
-                 class="rounded-[40px] transition-colors duration-200 ease-in-out px-5 py-2.5 cursor-pointer hover:bg-gray-100/55 flex-1">
+              [id]="generateNodeID(node)"
+              [ngClass]="{'is-selected': node.isSelected}"
+              class="rounded-[40px] transition-colors duration-200 ease-in-out px-5 py-2.5 cursor-pointer hover:bg-gray-100/55 flex-1">
               {{ calculateNodeName(node) }}
             </div>
           </div>
         </li>
-      </ng-container>
+      }
     </ul>
   </div>
 </div>

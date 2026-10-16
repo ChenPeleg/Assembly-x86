@@ -10,55 +10,58 @@ export enum GeneralFieldValidationStatus {
 }
 @Component({
     selector: "async-validation-indicator",
-    template: ` <div
+    template: ` @if (validationStatus !== AsyncValidationStatus.NoInfo && !_hide) {
+  <div
     class="async-validation-indicator-wrapper"
-    *ngIf="validationStatus !== AsyncValidationStatus.NoInfo && !_hide"
-  >
-    <div
-      *ngIf="
-        validationStatus === AsyncValidationStatus.Valid ||
-        validationStatus === AsyncValidationStatus.Pending
-      "
-      class="async-validation-icon-wrapper check-spinner"
     >
-      <spinner-with-check-mark
+    @if (
+      validationStatus === AsyncValidationStatus.Valid ||
+      validationStatus === AsyncValidationStatus.Pending
+      ) {
+      <div
+        class="async-validation-icon-wrapper check-spinner"
+        >
+        <spinner-with-check-mark
         [status]="
           validationStatus === AsyncValidationStatus.Pending
             ? 'pending'
             : 'success'
         "
-      ></spinner-with-check-mark>
-    </div>
-
-    <div
-      *ngIf="
-        validationStatus === AsyncValidationStatus.Invalid ||
-        validationStatus === AsyncValidationStatus.Missing
-      "
-      class="async-validation-icon-wrapper"
-    >
-      <div class="async-validation-icon-error">
-        <img
-          ngSrc="../../../assets/svg/form-error-icon.svg"
-          alt="error"
-          height="24"
-          width="24"
-        />
+        ></spinner-with-check-mark>
       </div>
-    </div>
-    <div
-      *ngIf="validationStatus === AsyncValidationStatus.CodeChanged"
-      class="async-validation-icon-wrapper check-spinner"
-    >
-      <spinner-with-check-mark [status]="'changed'"></spinner-with-check-mark>
-    </div>
+    }
+    @if (
+      validationStatus === AsyncValidationStatus.Invalid ||
+      validationStatus === AsyncValidationStatus.Missing
+      ) {
+      <div
+        class="async-validation-icon-wrapper"
+        >
+        <div class="async-validation-icon-error">
+          <img
+            ngSrc="../../../assets/svg/form-error-icon.svg"
+            alt="error"
+            height="24"
+            width="24"
+            />
+        </div>
+      </div>
+    }
+    @if (validationStatus === AsyncValidationStatus.CodeChanged) {
+      <div
+        class="async-validation-icon-wrapper check-spinner"
+        >
+        <spinner-with-check-mark [status]="'changed'"></spinner-with-check-mark>
+      </div>
+    }
     <div
       class="async-validation-message "
       [ngClass]="AsyncValidationStatus[validationStatus]"
-    >
+      >
       {{ message }}
     </div>
-  </div>`,
+  </div>
+}`,
     styleUrls: ["./async-validation-indicator.component.css"],
     standalone: false
 })
