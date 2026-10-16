@@ -221,4 +221,8 @@ export class CoreAppComponent implements AfterViewInit, AfterContentInit {
   private print(value: string) {
     this.console?.print(value);
   }
+
+  protected compileAndRun() {
+
+  }
 }

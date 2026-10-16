@@ -4,9 +4,9 @@ import { Process } from "../../emulation/process";
 export type Button = "start" | "stop" | "pause" | "continue" | "step";
 
 @Component({
-    selector: "execution-controls",
-    templateUrl: "./execution.html",
-    standalone: false
+  selector: "execution-controls",
+  templateUrl: "./execution.html",
+  standalone: false,
 })
 export class ExecutionComponent {
   public readonly buttons: Button[] = [
@@ -19,6 +19,7 @@ export class ExecutionComponent {
   // @ts-ignore
   @Input() process: Process = null;
   @Input() isAssembled: boolean = false;
+  @Output() compileAndRun: EventEmitter<null> = new EventEmitter<null>();
 
   // @Output() start: EventEmitter<Process> = new EventEmitter<Process>();
   // @Output() stop: EventEmitter<Process> = new EventEmitter<Process>();
@@ -55,8 +56,11 @@ export class ExecutionComponent {
   buttonClicked(button: Button): void {
     switch (button) {
       case "start":
-        if (!this.isAssembled)
-          this.onStart();
+        if (!this.isAssembled) {
+          this.compileAndRun.emit();
+          return;
+        }
+        this.onStart();
         break;
       case "stop":
         this.onStop();
