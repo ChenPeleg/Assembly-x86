@@ -1,72 +1,82 @@
 <div   [ngClass]="{'m-2.5! max-sm:m-1!': isTryIt}"
-       class=" flex flex-col md:m-4 mt-2  m-0  "
-       id="core-app-wrapper">
-  <div *ngIf="!isTryIt" class="w-[90%] h-14.5 min-h-16"></div>
+  class=" flex flex-col md:m-4 mt-2  m-0  "
+  id="core-app-wrapper">
+  @if (!isTryIt) {
+    <div class="w-[90%] h-14.5 min-h-16"></div>
+  }
   <div class="flex flex-row items-center gap-1 md:gap-5 pl-1 md:mb-5 h-full" id="execution-wrapper">
 
     <execution-controls (compileAndRun)="compileAndRun()" [process]="runtime.process"
-                        [isAssembled]="codeStatus === GeneralFieldValidationStatus.Valid"></execution-controls>
+    [isAssembled]="codeStatus === GeneralFieldValidationStatus.Valid"></execution-controls>
     <div class="flex flex-row relative h-full items-center">
-    <button (click)="requestCompile()" class="btn-raised md:w-24 w-11 mt-0.5" style="min-width: unset" title="Assemble">
-      <span class="hidden md:flex">Assemble</span>
-      <span class="flex md:hidden mx-2"><span class="material-icons">construction</span></span>
-    </button>
-    <div class="flex-col flex h-full pt-1.5  pl-3" id="async-validator-container">
-      <async-validation-indicator [textMessages]="compileMessages "  [validationStatus]="codeStatus"></async-validation-indicator> </div>
-    </div>
+      <button (click)="requestCompile()" class="btn-raised md:w-24 w-11 mt-0.5" style="min-width: unset" title="Assemble">
+        <span class="hidden md:flex">Assemble</span>
+        <span class="flex md:hidden mx-2"><span class="material-icons">construction</span></span>
+      </button>
+      <div class="flex-col flex h-full pt-1.5  pl-3" id="async-validator-container">
+        <async-validation-indicator [textMessages]="compileMessages "  [validationStatus]="codeStatus"></async-validation-indicator> </div>
+      </div>
 
       <div class="hidden sm:block">
-      <display-cockpit></display-cockpit>
-    </div>
-  </div>
-  <div class="sm:flex  sm:flex-col md:flex-row" id="main-columns-wrapper">
-
-    <div class="flex flex-col gap-5  md:max-h-screen " id="core-app-code-column">
-
-      <div class="editor-wrapper">
-        <div class=" mb-2">
-          <span class="errors">{{ compileErrors }}</span>
-          <span *ngIf="compileSuccess" class="text-green-900 "> {{ compileSuccess }}</span>
-
-        </div>
-        <code-editor (breakpointChange)="onBreakpointChanged($event)" (compile)="compileSource($event)"
-                    (editorDocChanged)="editorDocChanged($event)"
-                    [activeLine]="getActiveLine()" [isTryIt]="isTryIt"></code-editor>
-
-
+        <display-cockpit></display-cockpit>
       </div>
     </div>
+    <div class="sm:flex  sm:flex-col md:flex-row" id="main-columns-wrapper">
 
-    <div class="md:px-5  px-1  flex flex-col gap-5  max-h-screen " id="core-app-utils-column">
+      <div class="flex flex-col gap-5  md:max-h-screen " id="core-app-code-column">
 
+        <div class="editor-wrapper">
+          <div class=" mb-2">
+            <span class="errors">{{ compileErrors }}</span>
+            @if (compileSuccess) {
+              <span class="text-green-900 "> {{ compileSuccess }}</span>
+            }
 
-      <div *ngIf="(uiState$ | async)?.panels as panels"
-           class="flex flex-col max-h-[calc(100vh-100px)] overflow-hidden" id="utils-wrapper">
-        <div class="relative md:hidden md:mt-10 mt-3">
-          <display-cockpit></display-cockpit>
-        </div>
-        <div [ngStyle]="{'display'  : getDisplayProps('console',panels).visibility ? '' : 'none' ,  order: getDisplayProps('console',panels).order }"
-          class="console-wrapper md:pb-10 pb-1"
-          id="console-wrapper">
-          <h3 class="mt-[5px] text-[18px] px-[10px] inline-block">Console</h3>
-          <console></console>
-        </div>
-        <div [ngStyle]="{'display'  : getDisplayProps('cpu',panels).visibility ? '' : 'none' ,order: getDisplayProps('cpu',panels).order }"
-          class="cpu-wrapper pb-10"
-          id="cpu-wrapper">
-          <h3 class="mt-[5px] text-[18px] px-[10px] inline-block">CPU</h3>
-          <cpu *ngIf="runtime.process?.cpu" [cpu]="runtime.process .cpu"></cpu>
-        </div>
-        <div
-          [ngStyle]="{'display'  : getDisplayProps('memory',panels).visibility ? '' : 'none' ,order: getDisplayProps('memory',panels).order }"
-          class="memory-wrapper pb-10">
-          <h3 class="mt-[5px] text-[18px] px-[10px] inline-block">Memory</h3>
-          <memory-options></memory-options>
-          <div *ngIf="runtime.hasProcess()" class="inner">
-           <memory #memory [memory]="runtime.process.cpu.memory || undefined"></memory>
           </div>
+          <code-editor (breakpointChange)="onBreakpointChanged($event)" (compile)="compileSource($event)"
+            (editorDocChanged)="editorDocChanged($event)"
+          [activeLine]="getActiveLine()" [isTryIt]="isTryIt"></code-editor>
+
+
         </div>
+      </div>
+
+      <div class="md:px-5  px-1  flex flex-col gap-5  max-h-screen " id="core-app-utils-column">
+
+
+        @if ((uiState$ | async)?.panels; as panels) {
+          <div
+            class="flex flex-col max-h-[calc(100vh-100px)] overflow-hidden" id="utils-wrapper">
+            <div class="relative md:hidden md:mt-10 mt-3">
+              <display-cockpit></display-cockpit>
+            </div>
+            <div [ngStyle]="{'display'  : getDisplayProps('console',panels).visibility ? '' : 'none' ,  order: getDisplayProps('console',panels).order }"
+              class="console-wrapper md:pb-10 pb-1"
+              id="console-wrapper">
+              <h3 class="mt-[5px] text-[18px] px-[10px] inline-block">Console</h3>
+              <console></console>
+            </div>
+            <div [ngStyle]="{'display'  : getDisplayProps('cpu',panels).visibility ? '' : 'none' ,order: getDisplayProps('cpu',panels).order }"
+              class="cpu-wrapper pb-10"
+              id="cpu-wrapper">
+              <h3 class="mt-[5px] text-[18px] px-[10px] inline-block">CPU</h3>
+              @if (runtime.process?.cpu) {
+                <cpu [cpu]="runtime.process .cpu"></cpu>
+              }
+            </div>
+            <div
+              [ngStyle]="{'display'  : getDisplayProps('memory',panels).visibility ? '' : 'none' ,order: getDisplayProps('memory',panels).order }"
+              class="memory-wrapper pb-10">
+              <h3 class="mt-[5px] text-[18px] px-[10px] inline-block">Memory</h3>
+              <memory-options></memory-options>
+              @if (runtime.hasProcess()) {
+                <div class="inner">
+                  <memory #memory [memory]="runtime.process.cpu.memory || undefined"></memory>
+                </div>
+              }
+            </div>
+          </div>
+        }
       </div>
     </div>
   </div>
-</div>
