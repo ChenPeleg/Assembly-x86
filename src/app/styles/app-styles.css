@@ -58,6 +58,7 @@ ul {
 
 /* ── Execution control buttons ────────────────────────────────────── */
 .execution-btn {
+  position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -68,6 +69,21 @@ ul {
   cursor: pointer;
   transition: background-color 150ms ease, opacity 150ms ease;
   color: white;
+}
+
+.execution-build-indicator {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background-color: #ffc107;
+  color: #263238;
+  font-size: 14px;
 }
 
 .execution-btn.btn-primary {

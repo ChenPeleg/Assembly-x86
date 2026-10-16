@@ -1,10 +1,11 @@
-<div   [ngClass]="{'!m-[10px] max-sm:!m-1': isTryIt}"
-       class=" flex flex-col md:m-4 mt-2  m-0 overflow-hidden"
+<div   [ngClass]="{'m-2.5! max-sm:m-1!': isTryIt}"
+       class=" flex flex-col md:m-4 mt-2  m-0  "
        id="core-app-wrapper">
-  <div *ngIf="!isTryIt" class="w-[90%] h-[58px] min-h-[64px]"></div>
+  <div *ngIf="!isTryIt" class="w-[90%] h-14.5 min-h-16"></div>
   <div class="flex flex-row items-center gap-1 md:gap-5 pl-1 md:mb-5 h-full" id="execution-wrapper">
 
-    <execution-controls [process]="runtime.process"></execution-controls>
+    <execution-controls (compileAndRun)="compileAndRun()" [process]="runtime.process"
+                        [isAssembled]="codeStatus === GeneralFieldValidationStatus.Valid"></execution-controls>
     <div class="flex flex-row relative h-full items-center">
     <button (click)="requestCompile()" class="btn-raised md:w-24 w-11 mt-0.5" style="min-width: unset" title="Assemble">
       <span class="hidden md:flex">Assemble</span>

@@ -91,6 +91,7 @@ export class CoreAppComponent implements AfterViewInit, AfterContentInit {
   private assembler: Assembler = new Assembler();
   private cpu: CPU | undefined;
   private memorySize: number = 256;
+  private runAfterCompile: boolean =false
 
   constructor(
     private uiStateStore: UiStateStoreService,
@@ -135,9 +136,13 @@ export class CoreAppComponent implements AfterViewInit, AfterContentInit {
       this.compileErrors = "";
       sleep(400).then(() => {
         this.codeStatus = GeneralFieldValidationStatus.Valid;
+        if (this.runAfterCompile){
+          this.runtime.process.start();
+          this.runAfterCompile = false;
+        }
       });
-      // this.compileSuccess = "Assembled successfully!";
     } catch (e) {
+      this.runAfterCompile = false;
       if (e instanceof AssemblyException) {
         this.compileErrors = `Error at line ${e.line}: ${e.message}`;
         this.codeStatus = GeneralFieldValidationStatus.Invalid;
@@ -220,5 +225,11 @@ export class CoreAppComponent implements AfterViewInit, AfterContentInit {
 
   private print(value: string) {
     this.console?.print(value);
+  }
+
+  protected compileAndRun() {
+    this.runAfterCompile = true;
+    this.requestCompile()
+
   }
 }

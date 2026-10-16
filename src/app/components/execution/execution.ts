@@ -4,9 +4,9 @@ import { Process } from "../../emulation/process";
 export type Button = "start" | "stop" | "pause" | "continue" | "step";
 
 @Component({
-    selector: "execution-controls",
-    templateUrl: "./execution.html",
-    standalone: false
+  selector: "execution-controls",
+  templateUrl: "./execution.html",
+  standalone: false,
 })
 export class ExecutionComponent {
   public readonly buttons: Button[] = [
@@ -18,15 +18,17 @@ export class ExecutionComponent {
   ];
   // @ts-ignore
   @Input() process: Process = null;
+  @Input() isAssembled: boolean = false;
+  @Output() compileAndRun: EventEmitter<null> = new EventEmitter<null>();
 
-  @Output() start: EventEmitter<Process> = new EventEmitter<Process>();
-  @Output() stop: EventEmitter<Process> = new EventEmitter<Process>();
-  @Output() continueEvent: EventEmitter<Process> = new EventEmitter<Process>();
-  @Output() pause: EventEmitter<Process> = new EventEmitter<Process>();
-  @Output() step: EventEmitter<Process> = new EventEmitter<Process>();
+  // @Output() start: EventEmitter<Process> = new EventEmitter<Process>();
+  // @Output() stop: EventEmitter<Process> = new EventEmitter<Process>();
+  // @Output() continueEvent: EventEmitter<Process> = new EventEmitter<Process>();
+  // @Output() pause: EventEmitter<Process> = new EventEmitter<Process>();
+  // @Output() step: EventEmitter<Process> = new EventEmitter<Process>();
 
   onStart() {
-    this.start.emit(this.process);
+    // this.start.emit(this.process);
     this.process.start();
   }
 
@@ -54,6 +56,10 @@ export class ExecutionComponent {
   buttonClicked(button: Button): void {
     switch (button) {
       case "start":
+        if (!this.isAssembled) {
+          this.compileAndRun.emit();
+          return;
+        }
         this.onStart();
         break;
       case "stop":
@@ -88,22 +94,22 @@ export class ExecutionComponent {
   }
 
   onStop() {
-    this.stop.emit(this.process);
+    // this.stop.emit(this.process);
     this.process.cpu.halt();
   }
 
   public onContinue() {
-    this.continueEvent.emit(this.process);
+    // this.continueEvent.emit(this.process);
     this.process.cpu.run();
   }
 
   onPause() {
-    this.pause.emit(this.process);
+    // this.pause.emit(this.process);
     this.process.cpu.pause();
   }
 
   onStep() {
-    this.step.emit(this.process);
+    // this.step.emit(this.process);
     this.process.cpu.step();
   }
 
