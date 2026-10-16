@@ -7,7 +7,7 @@ import {
 } from "@angular/core";
 import { MemoryBlock } from "../../emulation/memory-block";
 import { CPU, Interrupt } from "../../emulation/cpu";
-import { Assembler, AssemblyException } from "../../assembly/assembler";
+import { Assembler } from "../../assembly/assembler";
 import { Program } from "../../assembly/program";
 import { Runtime } from "../../emulation/runtime";
 import { Process } from "../../emulation/process";
@@ -22,6 +22,7 @@ import { TypeOfCodeInEditor } from "../../models/TypeOfCodeInEditor";
 import { CodeEditorComponent } from "../code/code-editor/code-editor.component";
 import { GeneralFieldValidationStatus } from "../../common/async-validation-indicator/async-validation-indicator.component";
 import { sleep } from "../../util/sleep";
+import { AssemblyException } from "../../assembly/assembler-exception";
 
 const defaultCode = `section .data
 hello:
