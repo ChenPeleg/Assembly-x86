@@ -17,6 +17,11 @@
         <async-validation-indicator [textMessages]="compileMessages "  [validationStatus]="codeStatus"></async-validation-indicator> </div>
       </div>
 
+      @if (isTryIt) {
+        <button (click)="returnToDocs.emit()" class="btn-flat md:hidden! ml-1 flex items-center" title="Return to docs">
+          <span class="material-icons" style="font-size: 18px">menu_book</span> docs
+        </button>
+      }
       <div class="hidden sm:block">
         <display-cockpit></display-cockpit>
       </div>

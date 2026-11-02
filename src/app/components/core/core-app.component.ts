@@ -2,7 +2,9 @@ import {
   AfterContentInit,
   AfterViewInit,
   Component,
+  EventEmitter,
   Input,
+  Output,
   ViewChild,
 } from "@angular/core";
 import { MemoryBlock } from "../../emulation/memory-block";
@@ -82,6 +84,7 @@ export class CoreAppComponent implements AfterViewInit, AfterContentInit {
   @ViewChild(ConsoleComponent) console: ConsoleComponent | undefined;
   @ViewChild(MemoryComponent) memory: MemoryComponent | undefined;
   @Input("isTryIt") isTryIt: boolean = false;
+  @Output() returnToDocs = new EventEmitter<void>();
   runtime: Runtime = new Runtime();
   compileErrors: string = "";
   compileSuccess: string = "";
