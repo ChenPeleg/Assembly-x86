@@ -212,6 +212,13 @@ export class DocumentationComponent implements AfterViewInit, OnDestroy {
     this.destroy$.complete();
   }
 
+  returnToDocs() {
+    this.documentationSection?.nativeElement.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+  }
+
   async navDocuments(event: Event, nav: "previous" | "next" | "closeTryIt") {
     const queryParams = {
       ["tryIt"]: this.tryItState
