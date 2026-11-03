@@ -18,10 +18,23 @@
 /03 registers/flags.md <>
 /03 registers/memory-size.md <>
 /03 registers/registers-cheatsheet.md <>
-/04 registers part 2/cpu-word-size.md <>
-/04 registers part 2/memory-size.md <>
-/04 registers part 2/registers-cheatsheet.md <>
 /05 commands/01 basic-commands.md <>
+/05 commands/02 data-movement.md <>
+/05 commands/03 arithmetic.md <>
+/05 commands/04 multiply-divide.md <>
+/05 commands/05 logic.md <>
+/05 commands/06 compare-and-jump.md <>
+/05 commands/07 loops.md <>
+/06 memory and data/01 data-and-labels.md <>
+/06 memory and data/02 addressing-and-arrays.md <>
+/07 stack and procedures/01 stack.md <>
+/07 stack and procedures/02 procedures.md <>
+/08 input and output/01 output.md <>
+/09 practice programs/01 practice-programs.md <>
+/10 appendix/01 instruction-cheat-sheet.md <>
+/10 appendix/02 emulator-vs-real-x86.md <>
+/10 appendix/03 common-errors.md <>
+/10 appendix/04 glossary.md <>
 /about.md <>
 /history/assembly-development/development-of-assembly-2.md <>
 /history/assembly-development/development-of-assembly.md <>
