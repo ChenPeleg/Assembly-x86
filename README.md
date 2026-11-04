@@ -45,6 +45,15 @@ npm start
 npm test
 ```
 
+###E2E (Playwright)
+Checks that no page (editor, every doc page, with and without "Try me") scrolls horizontally on mobile
+viewports. Starts `npm start` automatically (or reuses a running server on port 4200).
+Screenshots are saved to `test-results/`.
+```shell
+npx playwright install chromium   # first time only
+npm run e2e
+```
+
 ###Build
 Builds the application into `dist` folder.
 ```shell

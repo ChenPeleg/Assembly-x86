@@ -186,6 +186,7 @@
 div.asm-editor-element-legacy {
   /*height: 75vh;*/
   width: 440px;
+  max-width: 100%;
 }
 
 @media screen and (max-width: 540px) {
