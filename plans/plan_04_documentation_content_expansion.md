@@ -1,6 +1,6 @@
 # Plan: Documentation Content Expansion
 
-Plan only — no documentation content is written in this PR.
+Status: implemented in the documentation expansion PR (pages in `src/assets/documentation/`).
 
 ## 1. Current documentation (findings)
 
@@ -23,16 +23,16 @@ Plan only — no documentation content is written in this PR.
 | Area | Supported |
 |---|---|
 | Sections | `section .data` (`db`/`dw`/`dd`, numbers, strings, labels), `section .text`; `;` comments; local labels `.name` |
-| Data move | `MOV`, `MOVSX`, `PUSH`, `POP` |
-| Arithmetic | `ADD ADC SUB SBB INC DEC MUL IMUL DIV IDIV` (single-operand forms use EAX/EDX) |
+| Data move | `MOV`, `PUSH`, `POP` (`MOVSX` parses but has no implementation) |
+| Arithmetic | `ADD ADC SUB SBB INC DEC IMUL IDIV` (single-operand, use EAX/EDX). `MUL`/`DIV` parse but have no implementation |
 | Logic | `AND OR XOR` |
 | Compare | `CMP` |
-| Jumps | `JMP`, all common `Jcc` aliases (E/Z, NE/NZ, B/C, AE/NC, A, BE, L, GE, LE, G, S, NS, O, NO, P/PE, NP/PO), `JCXZ`, `JECXZ`, `LOOP` |
+| Jumps | `JMP`, `Jcc` aliases (E/Z, NE/NZ, B/C/NAE, AE/NC/NB, A, NA, L/NGE, GE/NL, NG, G, S, NS, O, NO, P, NP) and `LOOP`. `JBE`, `JLE`, `JNBE`, `JNLE`, `JPE`, `JPO`, `JCXZ`, `JECXZ` are listed in the grammar but shadowed by shorter prefixes, so they don't assemble |
 | Procedures | `CALL`, `RET`, `ENTER`, `LEAVE` (args via `[EBP + 8]`) |
 | Flags | CF, ZF, OF, SF, PF, DF; `CLC STC CLD STD` |
 | Registers | 32-bit `EAX EBX ECX EDX ESI EDI EBP ESP EIP`; 16-bit `AX BX CX DX SI DI`; 8-bit `AH AL BH BL CH CL DH DL` |
 | Addressing | `[reg]`, `[reg + reg*scale + disp]`, `[label + …]`, `[number]`, size casts (`byte/word/dword`) |
-| Memory | Flat byte array, size chosen in the UI; ESP/EBP start at the top; out-of-range access raises a runtime error |
+| Memory | Flat byte array, size chosen in the UI; plain numbers are 32-bit (`MOV AL, byte 5`), numbers are decimal or `0x` hex, `[label + reg*scale]` needs the scale; ESP/EBP start at the top; out-of-range access raises a runtime error |
 | I/O | `INT 1` prints number in EAX, `INT 2` prints string at address EAX (console panel). No input. |
 | Misc | `HLT`; "Division by zero" runtime exception |
 

@@ -1,38 +1,41 @@
-# Assembly basic commands
+# Program structure
 
-An assembly program can be divided into three sections −
+An emulator program has two sections.
 
-The data section,
+## `section .data`
 
-The bss section, and
+Declares initialized data with `db` (bytes), `dw` (words) and `dd` (double words). Numbers, strings and several values
+separated by commas are allowed. A label names the address of the data.
 
-The text section.
+## `section .text`
 
-The data Section
-The data section is used for declaring initialized data or constants. This data does not change at runtime. You can
-declare various constant values, file names, or buffer size, etc., in this section.
+Contains the instructions. Execution starts at the first one and stops at `HLT` or after the last instruction.
 
-The syntax for declaring data section is −
+```shell
+section .data
+msg: db 'Hi!', 10, 0
+section .text
+    MOV EAX, msg   ; address of the string
+    INT 2          ; print it
+    HLT
+```
+<!-- console memory -cpu word:1 ascii -->
 
-section.data
-The bss Section
-The bss section is used for declaring variables. The syntax for declaring bss section is −
+## Comments and labels
 
-section.bss
-The text section
-The text section is used for keeping the actual code. This section must begin with the declaration global _start, which
-tells the kernel where the program execution begins.
+A comment starts with `;`. Labels end with `:`. A label that starts with `.` is local to the label above it.
 
-The syntax for declaring text section is −
+```shell
+section .text
+    MOV ECX, 3     ; counter
+start:
+    DEC ECX
+    JNZ start      ; repeat
+```
+<!-- -console -memory cpu -->
 
-section.text
-global _start
-_start:
-Comments
-Assembly language comment begins with a semicolon (;). It may contain any printable character including blank. It can
-appear on a line by itself, like −
+<!-- notice -->
+> Differences from NASM: there is no `global _start`, `section .bss`, `equ`, `times` or `resb`, and no system calls.
+> Programs end with `HLT` or by running out of instructions.
 
-; This program displays a message on screen
-or, on the same line along with an instruction, like −
-
-add eax, ebx ; adds ebx to eax
+Next: the instruction reference, starting with *Data movement*.
