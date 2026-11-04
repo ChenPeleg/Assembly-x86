@@ -4,7 +4,7 @@
   @if (!isTryIt) {
     <div class="w-[90%] h-14.5 min-h-16"></div>
   }
-  <div class="flex flex-row items-center gap-1 md:gap-5 pl-1 md:mb-5 h-full" id="execution-wrapper">
+  <div class="flex flex-row flex-wrap md:flex-nowrap items-center gap-1 md:gap-5 pl-1 md:mb-5 h-full" id="execution-wrapper">
 
     <execution-controls (compileAndRun)="compileAndRun()" [process]="runtime.process"
     [isAssembled]="codeStatus === GeneralFieldValidationStatus.Valid"></execution-controls>
@@ -18,7 +18,7 @@
       </div>
 
       @if (isTryIt) {
-        <button (click)="returnToDocs.emit()" class="btn-flat md:hidden! ml-1 flex items-center" title="Return to docs">
+        <button (click)="returnToDocs.emit()" class="btn-flat md:hidden! ml-auto flex items-center" title="Return to docs">
           <span class="material-icons" style="font-size: 18px">menu_book</span> docs
         </button>
       }
