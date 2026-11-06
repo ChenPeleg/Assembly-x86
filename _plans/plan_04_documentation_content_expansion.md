@@ -51,26 +51,26 @@ Status: implemented in the documentation expansion PR (pages in `src/assets/docu
 
 Re-verify each gap against the parser before writing the matching page; if a gap closes, update the page and this table.
 
-## 4. Proposed page structure (existing numbering kept)
+## 4. Delivered page structure (existing numbering kept)
 
 Each page: ≤ ~60 lines, one idea, 1–3 snippets with a layout directive, a "Try it" tweak, link to next page.
 
-1. **Housekeeping**: delete `04 registers part 2/`; fix `doclist.txt`; rewrite `05 commands/01 basic-commands.md`
+1. [x] **Housekeeping**: delete `04 registers part 2/`; fix `doclist.txt`; rewrite `05 commands/01 basic-commands.md`
    for this emulator; trim 64-bit/`movzx` content in `03 registers`; explain `10 hello world advanced`.
-2. **03 registers** (extend): `flags.md` with one snippet per flag (CF, ZF, OF, SF, PF) using `-memory cpu`;
+2. [x] **03 registers** (extend): `flags.md` with one snippet per flag (CF, ZF, OF, SF, PF) using `-memory cpu`;
    `memory-size.md` expanded (byte/word/dword, `db/dw/dd`, little-endian, casts).
-3. **05 commands → Instruction reference** (one page per group, syntax table + snippet):
+3. [x] **05 commands → Instruction reference** (one page per group, syntax table + snippet):
    data movement (`MOV`, `MOVSX`, `PUSH`, `POP`); add/sub/inc/dec then `ADC/SBB`; `MUL/IMUL/DIV/IDIV` with EDX:EAX
    and division-by-zero; logic and masks (`AND/OR/XOR`, zeroing a register); `CMP` and flags; jumps with a
-   signed-vs-unsigned `Jcc` table; loops (`LOOP`, `JCXZ`).
-4. **06 memory & data** (new): `.data` declarations, labels, addressing modes (`[reg+reg*4+disp]`), arrays,
+   signed-vs-unsigned `Jcc` table; loops (`LOOP`) with a note that `JCXZ`/`JECXZ` are unsupported.
+4. [x] **06 memory & data** (new): `.data` declarations, labels, addressing modes (`[reg+reg*4+disp]`), arrays,
    strings with `INT 2`, bounds errors, memory-size selector.
-5. **07 stack & procedures** (new): stack growth via `ESP`, `PUSH/POP`, `CALL/RET`, `ENTER/LEAVE`, args via
+5. [x] **07 stack & procedures** (new): stack growth via `ESP`, `PUSH/POP`, `CALL/RET`, `ENTER/LEAVE`, args via
    `[EBP + 8]`, step-through of the factorial example.
-6. **08 I/O** (new): `INT 1`, `INT 2`, string terminators (`10`, `0`); explicit "no input" note.
-7. **09 practice programs** (new): sum 1..N, max of array, string length, fibonacci, GCD, reverse string — each
+6. [x] **08 I/O** (new): `INT 1`, `INT 2`, string terminators (`10`, `0`); explicit "no input" note.
+7. [x] **09 practice programs** (new): sum 1..N, max of array, string length, fibonacci, GCD, reverse string — each
    with goal, starter snippet, expected console output.
-8. **Appendix**: instruction cheat sheet (from section 2), emulator-vs-real-x86 differences (section 3),
+8. [x] **Appendix**: instruction cheat sheet (from section 2), emulator-vs-real-x86 differences (section 3),
    common errors, glossary. Fold in or retire `tutorials/tutorials.md`.
 
 ## 5. Conventions for new pages
@@ -83,5 +83,5 @@ Each page: ≤ ~60 lines, one idea, 1–3 snippets with a layout directive, a "T
 
 ## 6. Delivery order
 
-Housekeeping → registers/flags → instruction reference → memory → stack/procedures → I/O → practice programs →
+[x] Housekeeping → registers/flags → instruction reference → memory → stack/procedures → I/O → practice programs →
 appendix. One PR each, checked manually with `npm start` (pages render, snippets run).
