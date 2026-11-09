@@ -85,6 +85,7 @@ export class CoreAppComponent implements AfterViewInit, AfterContentInit {
   @ViewChild(MemoryComponent) memory: MemoryComponent | undefined;
   @Input("isTryIt") isTryIt: boolean = false;
   @Output() returnToDocs = new EventEmitter<void>();
+  @Output() closeAssembler = new EventEmitter<MouseEvent>();
   runtime: Runtime = new Runtime();
   compileErrors: string = "";
   compileSuccess: string = "";
