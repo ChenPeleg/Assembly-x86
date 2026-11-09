@@ -18,9 +18,14 @@
       </div>
 
       @if (isTryIt) {
-        <button (click)="returnToDocs.emit()" class="btn-flat md:hidden! ml-auto flex items-center" title="Return to docs">
-          <span class="material-icons" style="font-size: 18px">menu_book</span> docs
-        </button>
+        <div class="ml-auto flex items-center">
+          <button (click)="closeAssembler.emit($event)" class="btn-flat flex items-center" title="Close assembler">
+            <span class="material-icons" style="font-size: 18px">cancel</span> close assembler
+          </button>
+          <button (click)="returnToDocs.emit()" class="btn-flat md:hidden! flex items-center" title="Return to docs">
+            <span class="material-icons" style="font-size: 18px">menu_book</span> docs
+          </button>
+        </div>
       }
       <div class="hidden sm:block">
         <display-cockpit></display-cockpit>

@@ -3,7 +3,7 @@
     class="flex flex-col md:flex-row  verflow-y-visible md:overflow-y-hidden custom-scroll-margins"
     id="documentation-component-wrapper">
     <div  [@openClose]="dockParams.tryIt ? 'open' : 'closed'" id="core-app-container">
-      <core-app  [isTryIt]="true" (returnToDocs)="returnToDocs()"></core-app>
+      <core-app  [isTryIt]="!!dockParams.tryIt" (closeAssembler)="navDocuments($event, 'closeTryIt')" (returnToDocs)="returnToDocs()"></core-app>
     </div>
     @if (dockParams.tryIt) {
       <div class="md:hidden w-full h-2  pt-2 border-b border-slate-300 shadow-sm"></div>
@@ -14,9 +14,6 @@
       <div class="px-4 flex flex-row w-full  justify-between" id="documentation-navigation">
         <button (click)="navDocuments($event,'previous')" [title]="previousPage?.description || ''" [ngClass]="{'invisible' : !this.previousPage}" class="btn-flat">
           <span class="material-icons" style="font-size: 18px">chevron_left</span> previous
-        </button>
-        <button (click)="navDocuments($event,'closeTryIt')" [ngClass]="{'invisible' : !dockParams.tryIt}" class="btn-flat">
-          <span class="material-icons" style="font-size: 18px">cancel</span> close assembler
         </button>
         <button (click)="navDocuments($event,'next')" [title]="nextPage?.description || ''" [ngClass]="{'invisible' : !this.nextPage}" class="btn-flat">
           <span class="flex flex-row items-center">next<span class="material-icons relative -right-1 top-[3px]" style="font-size: 18px">chevron_right</span></span>
