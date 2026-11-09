@@ -3,6 +3,10 @@ import { writeFileSync } from "fs";
 import { readFile } from "node:fs/promises";
 import * as path from "path";
 
+// Translated documentation trees mirror the English pages under these folders.
+// English stays the canonical navigation, so translations are left out of doclist.txt.
+const TRANSLATION_FOLDERS = ["he"];
+
 class ListAllDocsFilesHelper {
   static async readFileAsync(filePath) {
     return await readFile(filePath, "utf8");
@@ -11,6 +15,7 @@ class ListAllDocsFilesHelper {
   static async getDirFiles(baseDir, testFilesNamesPattern) {
     const testFilesNamesRegex = new RegExp(`.*${testFilesNamesPattern}`, "gi");
 
+    const rootDir = path.resolve(baseDir);
     const recursiveGetAllTestFiles = (dir, allFiles) => {
 
       fs.readdirSync(dir)
@@ -18,6 +23,9 @@ class ListAllDocsFilesHelper {
         .forEach((elm, i) => {
           const fullFileName = path.join(dir, elm);
           if (fs.lstatSync(fullFileName).isDirectory()) {
+            if (dir === rootDir && TRANSLATION_FOLDERS.includes(elm)) {
+              return;
+            }
             return recursiveGetAllTestFiles(fullFileName, allFiles);
           }
           if (elm.match(testFilesNamesRegex)) {
@@ -27,7 +35,7 @@ class ListAllDocsFilesHelper {
         });
       return allFiles;
     };
-    return recursiveGetAllTestFiles(path.resolve(baseDir), []).map(f => f.replace(baseDir, ""));
+    return recursiveGetAllTestFiles(rootDir, []).map(f => f.replace(baseDir, ""));
   };
 
   static async getCustomDocIdFromFile(filePath, docsPath) {
