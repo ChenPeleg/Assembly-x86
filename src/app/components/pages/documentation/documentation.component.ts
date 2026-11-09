@@ -213,7 +213,11 @@ export class DocumentationComponent implements AfterViewInit, OnDestroy {
   }
 
   returnToDocs() {
-    this.documentationSection?.nativeElement.scrollIntoView({
+    const tryItElement = this.tryItState
+      ? document.getElementById(this.tryItState)
+      : null;
+    const target = tryItElement || this.documentationSection?.nativeElement;
+    target?.scrollIntoView({
       behavior: "smooth",
       block: "start",
     });
