@@ -2,3 +2,33 @@
 @import "tailwindcss";
 @import "./app/styles/app-styles.css";
 
+/* Hebrew: Poppins has no Hebrew glyphs, so Heebo (self-hosted, OFL) covers the
+   Hebrew documentation. The unicode-range keeps it from loading for English.
+   Declared here because relative url() paths in the imported files do not resolve. */
+@font-face {
+  font-family: 'Heebo';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("./assets/fonts/heebo/heebo-hebrew-400-normal.woff2") format('woff2');
+  unicode-range: U+0590-05FF, U+200C-2010, U+20AA, U+25CC, U+FB1D-FB4F;
+}
+
+@font-face {
+  font-family: 'Heebo';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("./assets/fonts/heebo/heebo-hebrew-500-normal.woff2") format('woff2');
+  unicode-range: U+0590-05FF, U+200C-2010, U+20AA, U+25CC, U+FB1D-FB4F;
+}
+
+@font-face {
+  font-family: 'Heebo';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("./assets/fonts/heebo/heebo-hebrew-700-normal.woff2") format('woff2');
+  unicode-range: U+0590-05FF, U+200C-2010, U+20AA, U+25CC, U+FB1D-FB4F;
+}
+

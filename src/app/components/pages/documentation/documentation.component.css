@@ -1,7 +1,7 @@
 @import "../../../styles/custom/scroll-bar.css";
 
 html {
-  font-family: Poppins, serif;
+  font-family: Poppins, Heebo, serif;
 
 }
 
@@ -55,7 +55,7 @@ li {
 .html-content {
   line-height: 180%;
   padding: 0 3em;
-  font-family: Poppins, serif;
+  font-family: Poppins, Heebo, serif;
   overflow-wrap: break-word;
 }
 
