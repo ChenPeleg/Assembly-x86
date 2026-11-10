@@ -152,3 +152,22 @@ test.describe("no horizontal overflow", () => {
     });
   }
 });
+
+test.describe("no horizontal overflow (Hebrew docs)", () => {
+  test.beforeEach(async ({ page }) => {
+    await page.addInitScript(() => localStorage.setItem("docsLanguage", "he"));
+  });
+
+  for (const docId of docIds) {
+    const safeName = docId.replace(/[^a-z0-9]+/gi, "_");
+    // Same pre-existing rendering issue as the English version of this doc.
+    const docTest = docId === "tutorials+tutorials" ? test.fixme : test;
+
+    docTest(`he doc ${docId}`, async ({ page }) => {
+      await page.goto(`/#/docs/${encodeURIComponent(docId)}`, { waitUntil: "domcontentloaded" });
+      await waitForDocContent(page);
+      await expect(page.locator(".html-content .docs-content")).toHaveAttribute("dir", "rtl");
+      await expectNoHorizontalOverflow(page, `he_doc_${safeName}`);
+    });
+  }
+});

@@ -2,7 +2,9 @@ import { expect, test } from "@playwright/test";
 
 const firstPage = "/#/docs/00%20quickstart%2B01%20getting-started";
 const translatedPage = "/#/docs/01%20basics%2B02%20hello%20world";
+// Every page is translated, so the fallback test makes this page's Hebrew file "missing".
 const untranslatedPage = "/#/docs/01%20basics%2B03%20binary%20numbers";
+const untranslatedHebrewFile = "/documentation/he/01 basics/03 binary numbers.md";
 
 const docsContent = (page: import("@playwright/test").Page) =>
   page.locator(".html-content .docs-content");
@@ -30,6 +32,10 @@ test("language toggle is shown only on the first documentation page", async ({
 test("Hebrew is persisted, rendered RTL with LTR code, and falls back to English", async ({
   page,
 }) => {
+  await page.route(
+    (url) => decodeURIComponent(url.pathname).endsWith(untranslatedHebrewFile),
+    (route) => route.fulfill({ status: 404, body: "Not found" })
+  );
   await page.goto(firstPage, { waitUntil: "domcontentloaded" });
   await page.getByRole("button", { name: "עברית" }).click();
 
