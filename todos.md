@@ -21,7 +21,7 @@
 - a line that starts with `**bold**` becomes a list bullet (the list regex `^\s*\*\s*(.*)$` runs before bold conversion) and the rest of the paragraph turns italic. Several English pages hit this (e.g. "**Try it:**" lines); Hebrew pages work around it with `<strong>`
 - numbered lists (`1.`, `2.`, ...) are not converted and run together into one paragraph (e.g. "Understanding the Code" in the quick start)
 - code blocks lose their indentation: `white-space: pre-line` on `.code-block pre code` collapses leading spaces
-- inline code written with triple backticks (e.g. ```` ```.text``` ```` in the tutorials page) is treated as a code block by `findMdCodeBlocks`, which also shifts the numbering of "Try me" examples; use single backticks instead
+- inline code written with triple backticks (e.g. ```` ```.text``` ```` in the tutorials page) is treated as a code block by `findMdCodeBlocks` and rendered as a separate block with its own "Try me" button; use single backticks instead
 - heading anchors are not generated, so the table of contents links at the top of the tutorials page (`#introduction`, ...) go nowhere
 
 ## Documentation content (English)
