@@ -53,6 +53,9 @@ test("Hebrew is persisted, rendered RTL with LTR code, and falls back to English
     "0.1 התחלה מהירה - צעדים ראשונים"
   );
   await expect(page.locator("#content-table-root")).toContainText("1 יסודות");
+  // The docs view's own labels follow the selected language.
+  await expect(page.locator("#content-table-root h2")).toHaveText("תוכן העניינים");
+  await expect(page.locator("#documentation-navigation")).toContainText("הבא");
   expect(
     await page.evaluate(() => localStorage.getItem("docsLanguage"))
   ).toBe("he");
@@ -69,13 +72,16 @@ test("Hebrew is persisted, rendered RTL with LTR code, and falls back to English
   await expect(docsContent(page)).toHaveAttribute("dir", "rtl");
 
   // Runnable snippets still load into the emulator.
-  await page.getByRole("button", { name: "Try me" }).click();
+  await page.getByRole("button", { name: "נסו אותי" }).click();
   await expect(page).toHaveURL(/tryIt=/);
 
   // Pages without a translation fall back to the English source, LTR.
   await page.goto(untranslatedPage, { waitUntil: "domcontentloaded" });
   await expect(docsContent(page)).toHaveAttribute("dir", "ltr");
   await expect(docsContent(page)).toHaveAttribute("lang", "en");
+  await expect(
+    docsContent(page).getByRole("button", { name: "Try me" }).first()
+  ).toBeVisible();
 
   // Switching back to English restores the default.
   await page.goto(firstPage, { waitUntil: "domcontentloaded" });
@@ -84,4 +90,12 @@ test("Hebrew is persisted, rendered RTL with LTR code, and falls back to English
   await expect(docsContent(page).locator("h1").first()).toHaveText(
     "Quick Start Guide"
   );
+});
+
+test("docs landing page is shown in the selected language", async ({ page }) => {
+  await page.goto("/#/docs", { waitUntil: "domcontentloaded" });
+  await expect(docsContent(page)).toContainText("Welcome to the Assembly x86");
+  await page.getByRole("button", { name: "עברית" }).click();
+  await expect(docsContent(page)).toHaveAttribute("dir", "rtl", { timeout: 15_000 });
+  await expect(docsContent(page)).toContainText("ברוכים הבאים");
 });

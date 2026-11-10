@@ -55,6 +55,7 @@ import {
   DocsLanguage,
   DocsLanguageService,
 } from "../../../services/docs-language.service";
+import { DocsLabels, docsLabels } from "../../../services/docs-labels";
 
 interface LoadedDocument {
   html: SafeHtml;
@@ -162,6 +163,11 @@ export class DocumentationComponent implements AfterViewInit, OnDestroy {
     return this.docsLanguageService.language;
   }
 
+  /** Labels of the docs view, in the selected documentation language. */
+  get labels(): DocsLabels {
+    return docsLabels(this.docsLanguage);
+  }
+
   get isContentRtl(): boolean {
     return DocsLanguageService.isRtl(this.contentLanguage);
   }
@@ -243,12 +249,14 @@ export class DocumentationComponent implements AfterViewInit, OnDestroy {
 
     const html = makeExternalLinksOpenInNewTab(rawHtml);
     let runNumber = 1;
+    // Follows the loaded page, so an English fallback page keeps English buttons.
+    const tryMe = docsLabels(page.language).tryMe;
 
     const htmlWithButtons = html.replace(/class="code-block">/g, () => {
       const codeId = `${
         DocumentationComponent.IdStringForCodeBlocks
       }${runNumber++}`;
-      return `class="code-block" id="${codeId}"><button class="run-code"> Try me</button> `;
+      return `class="code-block" id="${codeId}"><button class="run-code"> ${tryMe}</button> `;
     });
 
     const sanitizedHtml: SafeHtml =
@@ -360,22 +368,8 @@ export class DocumentationComponent implements AfterViewInit, OnDestroy {
 
   private async displayDefaultDocsContent() {
     const addTOC = false;
-    let htmlTableOfContent = `
-<div>
-
-  <div>
-    Welcome to the Assembly x86 emulator and tutorial! <br>
-    This site is based on This project is based on
-    <a href="https://github.com/Kobzol/davis "> https://github.com/Kobzol/davis  </a>.
-    This tool allows writing, running and debugging x86 assembly in the browser.
-
-    You can start with the tutorial in the basics section, learn how to use the emulator, or goto more advanced examples.
-
-  </div>
-
-</div>
-
-`;
+    const language = this.docsLanguageService.language;
+    let htmlTableOfContent = `<div><div>${docsLabels(language).welcomeHtml}</div></div>`;
     if (addTOC) {
       htmlTableOfContent += `<h4>Table of content</h4>`;
       this.pagesNames.forEach((n) => {
@@ -394,7 +388,7 @@ ${n.join(" ")}
     if (sanitizedHtml.toString() === "") {
       throw `no data was received from file ${MDFiles.Links}`;
     }
-    this.contentLanguage = DefaultDocsLanguage;
+    this.contentLanguage = language;
     this.content = sanitizedHtml;
   }
 

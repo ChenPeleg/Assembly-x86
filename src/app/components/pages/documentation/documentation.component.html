@@ -13,16 +13,16 @@
       id="documentation-content-section ">
       <div class="px-4 flex flex-row w-full  justify-between" id="documentation-navigation">
         <button (click)="navDocuments($event,'previous')" [title]="previousPage?.description || ''" [ngClass]="{'invisible' : !this.previousPage}" class="btn-flat">
-          <span class="material-icons" style="font-size: 18px">chevron_left</span> previous
+          <span class="material-icons" style="font-size: 18px">chevron_left</span> {{ labels.previous }}
         </button>
         <button (click)="navDocuments($event,'next')" [title]="nextPage?.description || ''" [ngClass]="{'invisible' : !this.nextPage}" class="btn-flat">
-          <span class="flex flex-row items-center">next<span class="material-icons relative -right-1 top-[3px]" style="font-size: 18px">chevron_right</span></span>
+          <span class="flex flex-row items-center">{{ labels.next }}<span class="material-icons relative -right-1 top-[3px]" style="font-size: 18px">chevron_right</span></span>
         </button>
       </div>
-      <h2 class="ps-5  my-4 text-lg">
+      <h2 class="ps-5  my-4 text-lg" dir="auto">
       {{createDockNameFromDocId(dockParams.docId || null)}}</h2>
       @if (showLanguageToggle(dockParams.docId || null)) {
-        <div class="ps-5 mb-2 flex flex-row items-center gap-2" id="docs-language-toggle" role="group" aria-label="Documentation language">
+        <div class="ps-5 mb-2 flex flex-row items-center gap-2" id="docs-language-toggle" role="group" [attr.aria-label]="labels.languageToggle">
           <span class="material-icons text-slate-500" style="font-size: 18px" aria-hidden="true">translate</span>
           <button type="button" class="docs-language-option" lang="en" [class.active]="docsLanguage === 'en'" [attr.aria-pressed]="docsLanguage === 'en'" (click)="setDocsLanguage('en')">English</button>
           <button type="button" class="docs-language-option" lang="he" dir="rtl" [class.active]="docsLanguage === 'he'" [attr.aria-pressed]="docsLanguage === 'he'" (click)="setDocsLanguage('he')">עברית</button>
@@ -32,7 +32,7 @@
         @if (isLoadingContent) {
           <div class="loading-container">
             <div class="css-spinner"></div>
-            <p class="loading-text">Loading documentation...</p>
+            <p class="loading-text">{{ labels.loading }}</p>
           </div>
         }
         @if (!isLoadingContent) {
@@ -41,14 +41,14 @@
       </div>
       <div class="px-4 pb-4 flex md:hidden justify-end" id="documentation-navigation-bottom">
         <button (click)="navDocuments($event,'next')" [title]="nextPage?.description || ''" [ngClass]="{'invisible' : !this.nextPage}" class="btn-flat">
-          <span class="flex flex-row items-center">next<span class="material-icons relative -right-1 top-[3px]" style="font-size: 18px">chevron_right</span></span>
+          <span class="flex flex-row items-center">{{ labels.next }}<span class="material-icons relative -right-1 top-[3px]" style="font-size: 18px">chevron_right</span></span>
         </button>
       </div>
     </div>
     <div  class="ml-6 md:ml-0   sm:overflow-y-visible md:overflow-y-scroll">
       @if (pagesNames.length) {
         <div [@openClose]="dockParams.tryIt ? 'closed':  'open' " id="content-table-wrapper">
-          <content-table (contentTableItemClicked)="contentTableItemClicked($event)" [currentDoc]="dockParams.docId || null " [pages]="pagesNames" [titles]="docTitles"></content-table>
+          <content-table (contentTableItemClicked)="contentTableItemClicked($event)" [currentDoc]="dockParams.docId || null " [pages]="pagesNames" [titles]="docTitles" [heading]="labels.tableOfContents"></content-table>
         </div>
       }
     </div>
