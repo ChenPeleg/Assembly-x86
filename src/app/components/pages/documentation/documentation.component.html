@@ -48,7 +48,7 @@
     <div  class="ml-6 md:ml-0   sm:overflow-y-visible md:overflow-y-scroll">
       @if (pagesNames.length) {
         <div [@openClose]="dockParams.tryIt ? 'closed':  'open' " id="content-table-wrapper">
-          <content-table (contentTableItemClicked)="contentTableItemClicked($event)" [currentDoc]="dockParams.docId || null " [pages]="pagesNames"></content-table>
+          <content-table (contentTableItemClicked)="contentTableItemClicked($event)" [currentDoc]="dockParams.docId || null " [pages]="pagesNames" [titles]="docTitles"></content-table>
         </div>
       }
     </div>

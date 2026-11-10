@@ -97,4 +97,42 @@ describe("PagesService localized pages", () => {
     http.expectOne(englishUrl).flush("# Hello world");
     expect(await page).toEqual({ text: "# Hello world", language: "en" });
   });
+
+  it("loads Hebrew titles once and caches them", async () => {
+    const first = service.getDocTitles("he");
+    http
+      .expectOne("assets/documentation/he/titles.json")
+      .flush({ "01 basics": "יסודות" });
+    expect(await first).toEqual({ "01 basics": "יסודות" });
+    expect(await service.getDocTitles("he")).toEqual({ "01 basics": "יסודות" });
+  });
+
+  it("uses file names (no titles request) for English", async () => {
+    expect(await service.getDocTitles("en")).toEqual({});
+  });
+
+  it("returns no titles when the titles file is missing", async () => {
+    const titles = service.getDocTitles("he");
+    http
+      .expectOne("assets/documentation/he/titles.json")
+      .flush("Not found", { status: 404, statusText: "Not Found" });
+    expect(await titles).toEqual({});
+  });
+});
+
+describe("PagesService.docTitle", () => {
+  const titles = { "01 basics/02 hello world": "שלום עולם" };
+
+  it("uses the translated title for the full path", () => {
+    expect(PagesService.docTitle(["01 basics", "02 hello world"], titles)).toBe(
+      "שלום עולם"
+    );
+  });
+
+  it("falls back to the file name without its number", () => {
+    expect(PagesService.docTitle(["01 basics", "03 binary numbers"], titles)).toBe(
+      "binary numbers"
+    );
+    expect(PagesService.docTitle(["01 basics"], {})).toBe("basics");
+  });
 });

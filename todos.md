@@ -13,7 +13,6 @@
 - fix Playwright e2e setup: `@playwright/test` (^1.64.1) expects browser builds that aren't installed in the cloud environment (it looks for `chromium_headless_shell-1248` while `/opt/pw-browsers` has `-1243`), so `npm run e2e` fails unless the browser path is overridden. Either pin `@playwright/test` to the version matching the preinstalled browsers, or add an env-driven `launchOptions.executablePath` (e.g. `PW_CHROMIUM_PATH`) to `playwright.config.ts`
 - fix `package-lock.json` being out of sync with `package.json` (`npm ci` fails: missing chokidar@4.0.3 / readdirp@4.1.2)
 - align the Node version: `package.json` requires Node 24 but the cloud environment runs Node 22 (`npm install` warns with `EBADENGINE`)
-- add a check that every Hebrew page in `src/assets/documentation/he/` keeps its code blocks and `<!-- console memory cpu ... -->` options identical to the English page, so "Try me" keeps loading the same programs (this was only checked with a one-off script)
 
 ## Markdown converter (`src/app/util/markdown/markdownToHtmlConverter.ts`)
 
@@ -41,5 +40,4 @@
 ## Hebrew documentation
 
 - the English/Hebrew toggle is only on the first docs page (as plan_07 specifies); consider showing it on every docs page (one-line change in `showLanguageToggle`)
-- the page titles in the header and the table of contents stay English (they come from file names in `doclist.txt`); consider translated titles
 - when an English page changes, its Hebrew page in `src/assets/documentation/he/` must be updated too; consider a check that flags English pages edited after their translation

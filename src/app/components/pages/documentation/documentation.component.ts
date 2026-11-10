@@ -7,7 +7,11 @@ import {
   ViewChild,
   ViewEncapsulation,
 } from "@angular/core";
-import { MDFiles, PagesService } from "../../../services/pages.service";
+import {
+  DocTitles,
+  MDFiles,
+  PagesService,
+} from "../../../services/pages.service";
 import { MarkdownToHtmlConverter } from "../../../util/markdown/markdownToHtmlConverter";
 import { DomSanitizer, SafeHtml } from "@angular/platform-browser";
 import {
@@ -52,6 +56,13 @@ import {
   DocsLanguageService,
 } from "../../../services/docs-language.service";
 
+interface LoadedDocument {
+  html: SafeHtml;
+  /** The language actually loaded; English when a translation is missing. */
+  language: DocsLanguage;
+  codeExamples: CodeExample[];
+}
+
 interface DocumentationsParams {
   docId: string;
   tryIt: string | null;
@@ -93,7 +104,10 @@ export class DocumentationComponent implements AfterViewInit, OnDestroy {
   public isLoadingContent: boolean = false;
   /** Language of the page currently displayed (English when a translation is missing). */
   public contentLanguage: DocsLanguage = DefaultDocsLanguage;
+  /** Translated titles for the header and table of contents ({} for English). */
+  public docTitles: DocTitles = {};
   private currentDocId: string = "";
+  private contentRequestId = 0;
   @ViewChild("htmlDynamicContent") private htmlDynamicContent:
     | ElementRef
     | undefined;
@@ -138,8 +152,9 @@ export class DocumentationComponent implements AfterViewInit, OnDestroy {
     });
     this.docsLanguageService.languageChanges
       .pipe(skip(1), takeUntil(this.destroy$))
-      .subscribe(() => {
-        this.loadDocumentsContent(this.currentDocId).then();
+      .subscribe(async () => {
+        await this.loadDocumentsContent(this.currentDocId);
+        this.setNextAndPrevious(this.currentDocId);
       });
   }
 
@@ -218,15 +233,13 @@ export class DocumentationComponent implements AfterViewInit, OnDestroy {
     this.pagesNames = await this.pagesService.getPagesNames();
   }
 
-  async getContent(docId?: string): Promise<SafeHtml> {
-    const page = await this.pagesService.getMarkdownPage(
-      docId || "",
-      this.docsLanguageService.language
-    );
-    this.contentLanguage = page.language;
-    const converter = new MarkdownToHtmlConverter(page.text, docId || "");
+  async getContent(
+    docId: string,
+    language: DocsLanguage
+  ): Promise<LoadedDocument> {
+    const page = await this.pagesService.getMarkdownPage(docId, language);
+    const converter = new MarkdownToHtmlConverter(page.text, docId);
     const rawHtml = converter.html;
-    this.codeExamples = converter.codeExamples;
 
     const html = makeExternalLinksOpenInNewTab(rawHtml);
     let runNumber = 1;
@@ -243,7 +256,11 @@ export class DocumentationComponent implements AfterViewInit, OnDestroy {
     if (sanitizedHtml.toString() === "") {
       throw `no data was received from file ${MDFiles.Links}`;
     }
-    return sanitizedHtml;
+    return {
+      html: sanitizedHtml,
+      language: page.language,
+      codeExamples: converter.codeExamples,
+    };
   }
 
   ngAfterViewInit() {
@@ -302,9 +319,11 @@ export class DocumentationComponent implements AfterViewInit, OnDestroy {
   createDockNameFromDocId(docId: string | null) {
     const fullPath = docId?.split("+") || [];
     const allNumbers = fullPath.map((n) => extractNumberFromFileName(n).number);
-    const lastNode = fullPath[fullPath.length - 1];
-    const firstNodeName = extractNumberFromFileName(fullPath[0]).text;
-    const nodeNameText = extractNumberFromFileName(lastNode).text;
+    const firstNodeName = PagesService.docTitle(
+      fullPath.slice(0, 1),
+      this.docTitles
+    );
+    const nodeNameText = PagesService.docTitle(fullPath, this.docTitles);
     return `${allNumbers.join(".")} ${firstNodeName} - ${nodeNameText}`;
   }
 
@@ -387,29 +406,45 @@ ${n.join(" ")}
   }
 
   private async loadDocumentsContent(docId: string) {
+    // Loads can overlap (e.g. the language is toggled while a page is loading);
+    // only the most recent one may update the page.
+    const requestId = ++this.contentRequestId;
+    const isStale = () => requestId !== this.contentRequestId;
     this.isLoadingContent = true;
     try {
       if (!this.pagesNames.length) {
         await this.getPagesList();
       }
-      const newContent = await this.loadDocumentContentFindDocument(docId);
-      if (this.content?.toString() === newContent?.toString()) {
+      const language = this.docsLanguageService.language;
+      const titles = await this.pagesService.getDocTitles(language);
+      const loaded = await this.loadDocumentContentFindDocument(docId, language);
+      if (isStale()) {
         return;
       }
-      if (!newContent) {
+      this.docTitles = titles;
+      if (!loaded) {
         await this.displayDefaultDocsContent();
         return;
       }
-      this.content = newContent;
+      this.contentLanguage = loaded.language;
+      this.codeExamples = loaded.codeExamples;
+      if (this.content?.toString() !== loaded.html.toString()) {
+        this.content = loaded.html;
+      }
     } finally {
-      this.isLoadingContent = false;
+      if (!isStale()) {
+        this.isLoadingContent = false;
+      }
     }
   }
 
-  private async loadDocumentContentFindDocument(docId: string) {
+  private async loadDocumentContentFindDocument(
+    docId: string,
+    language: DocsLanguage
+  ) {
     for (const page of this.pagesNames) {
       if (PagesService.NamePageToDocId(page) === docId) {
-        return await this.getContent(docId);
+        return await this.getContent(docId, language);
       }
     }
     return null;
