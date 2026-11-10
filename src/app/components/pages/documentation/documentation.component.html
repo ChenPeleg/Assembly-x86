@@ -21,6 +21,13 @@
       </div>
       <h2 class="ps-5  my-4 text-lg">
       {{createDockNameFromDocId(dockParams.docId || null)}}</h2>
+      @if (showLanguageToggle(dockParams.docId || null)) {
+        <div class="ps-5 mb-2 flex flex-row items-center gap-2" id="docs-language-toggle" role="group" aria-label="Documentation language">
+          <span class="material-icons text-slate-500" style="font-size: 18px" aria-hidden="true">translate</span>
+          <button type="button" class="docs-language-option" lang="en" [class.active]="docsLanguage === 'en'" [attr.aria-pressed]="docsLanguage === 'en'" (click)="setDocsLanguage('en')">English</button>
+          <button type="button" class="docs-language-option" lang="he" dir="rtl" [class.active]="docsLanguage === 'he'" [attr.aria-pressed]="docsLanguage === 'he'" (click)="setDocsLanguage('he')">עברית</button>
+        </div>
+      }
       <div #htmlDynamicContent class="html-content">
         @if (isLoadingContent) {
           <div class="loading-container">
@@ -29,7 +36,7 @@
           </div>
         }
         @if (!isLoadingContent) {
-          <div [innerHTML]="content"></div>
+          <div class="docs-content" [innerHTML]="content" [attr.dir]="isContentRtl ? 'rtl' : 'ltr'" [attr.lang]="contentLanguage"></div>
         }
       </div>
       <div class="px-4 pb-4 flex md:hidden justify-end" id="documentation-navigation-bottom">

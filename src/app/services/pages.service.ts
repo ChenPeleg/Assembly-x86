@@ -1,6 +1,13 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { firstValueFrom } from "rxjs";
+import { DefaultDocsLanguage, DocsLanguage } from "./docs-language.service";
+
+export interface MarkdownPage {
+  text: string;
+  /** The language actually loaded; English when a translation is missing. */
+  language: DocsLanguage;
+}
 
 export enum MDFiles {
   Links = "links",
@@ -58,12 +65,50 @@ export class PagesService {
     return this._pagesNames;
   }
 
+  /**
+   * Relative folder of a translated documentation tree. English pages live at the root
+   * of assets/documentation and remain the canonical source and navigation.
+   */
+  public static languageFolder(language: DocsLanguage): string {
+    return language === DefaultDocsLanguage ? "" : `/${language}`;
+  }
+
   public async getMarkdownText(docId: string): Promise<string> {
+    return (await this.getMarkdownPage(docId, DefaultDocsLanguage)).text;
+  }
+
+  /**
+   * Loads a page in the requested language, falling back to its English counterpart
+   * when the translation does not exist.
+   */
+  public async getMarkdownPage(
+    docId: string,
+    language: DocsLanguage
+  ): Promise<MarkdownPage> {
+    if (language !== DefaultDocsLanguage) {
+      try {
+        const text = await this.fetchMarkdown(docId, language);
+        if (text.trim()) {
+          return { text, language };
+        }
+      } catch {
+        // Missing translation - fall back to English below.
+      }
+    }
+    const text = await this.fetchMarkdown(docId, DefaultDocsLanguage);
+    return { text, language: DefaultDocsLanguage };
+  }
+
+  private async fetchMarkdown(
+    docId: string,
+    language: DocsLanguage
+  ): Promise<string> {
     const link = PagesService.linkFromPageName(
       PagesService.DocIdToNamePage(docId)
     );
+    const folder = PagesService.languageFolder(language);
     return await firstValueFrom(
-      this.httpClient.get(`assets/documentation${link}.md`, {
+      this.httpClient.get(`assets/documentation${folder}${link}.md`, {
         responseType: "text",
       })
     );

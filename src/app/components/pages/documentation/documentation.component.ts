@@ -15,6 +15,7 @@ import {
   distinctUntilChanged,
   map,
   Observable,
+  skip,
   Subject,
   takeUntil,
   tap,
@@ -45,6 +46,11 @@ import {
 import { extractNumberFromFileName } from "../../../util/extractNumberFromFileName";
 import { MarkdownCodes } from "../../../util/markdown/markdownCodes";
 import { DocElement } from "../content-table/content-table.component";
+import {
+  DefaultDocsLanguage,
+  DocsLanguage,
+  DocsLanguageService,
+} from "../../../services/docs-language.service";
 
 interface DocumentationsParams {
   docId: string;
@@ -85,6 +91,9 @@ export class DocumentationComponent implements AfterViewInit, OnDestroy {
   previousPage: { link: string; description: string } | null = null;
   public tryItState: string = "";
   public isLoadingContent: boolean = false;
+  /** Language of the page currently displayed (English when a translation is missing). */
+  public contentLanguage: DocsLanguage = DefaultDocsLanguage;
+  private currentDocId: string = "";
   @ViewChild("htmlDynamicContent") private htmlDynamicContent:
     | ElementRef
     | undefined;
@@ -120,12 +129,41 @@ export class DocumentationComponent implements AfterViewInit, OnDestroy {
     private renderer: Renderer2,
     private codeEditorService: UserDataService,
     private uiStateStore: UiStateStoreService,
-    private memoryDisplayStore: MemoryDisplayStoreService
+    private memoryDisplayStore: MemoryDisplayStoreService,
+    private docsLanguageService: DocsLanguageService
   ) {
     this.getPagesList().then();
     this.activeRoute.queryParams.subscribe((params) => {
       this.tryItState = params["tryIt"] || "";
     });
+    this.docsLanguageService.languageChanges
+      .pipe(skip(1), takeUntil(this.destroy$))
+      .subscribe(() => {
+        this.loadDocumentsContent(this.currentDocId).then();
+      });
+  }
+
+  get docsLanguage(): DocsLanguage {
+    return this.docsLanguageService.language;
+  }
+
+  get isContentRtl(): boolean {
+    return DocsLanguageService.isRtl(this.contentLanguage);
+  }
+
+  setDocsLanguage(language: DocsLanguage) {
+    this.docsLanguageService.setLanguage(language);
+  }
+
+  /** The language toggle lives on the first documentation page (and the docs landing page). */
+  showLanguageToggle(docId: string | null): boolean {
+    if (!this.pagesNames.length) {
+      return false;
+    }
+    const allDocIds = this.pagesNames.map((p) =>
+      PagesService.NamePageToDocId(p)
+    );
+    return !docId || docId === allDocIds[0] || !allDocIds.includes(docId);
   }
 
   static optionStringToAssemblerDisplay(optionsString: string): {
@@ -181,8 +219,12 @@ export class DocumentationComponent implements AfterViewInit, OnDestroy {
   }
 
   async getContent(docId?: string): Promise<SafeHtml> {
-    const content = await this.pagesService.getMarkdownText(docId || "");
-    const converter = new MarkdownToHtmlConverter(content, docId || "");
+    const page = await this.pagesService.getMarkdownPage(
+      docId || "",
+      this.docsLanguageService.language
+    );
+    this.contentLanguage = page.language;
+    const converter = new MarkdownToHtmlConverter(page.text, docId || "");
     const rawHtml = converter.html;
     this.codeExamples = converter.codeExamples;
 
@@ -209,6 +251,7 @@ export class DocumentationComponent implements AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.destroy$.next();
     this.destroy$.complete();
   }
 
@@ -328,11 +371,13 @@ ${n.join(" ")}
     if (sanitizedHtml.toString() === "") {
       throw `no data was received from file ${MDFiles.Links}`;
     }
+    this.contentLanguage = DefaultDocsLanguage;
     this.content = sanitizedHtml;
   }
 
   private async loadDocumentsContentAndTryIt(docId: string, tryIt: string) {
-    await this.loadDocumentsContent(docId, tryIt);
+    this.currentDocId = docId;
+    await this.loadDocumentsContent(docId);
     this.setNextAndPrevious(docId);
     if (tryIt) {
       await this.loadTryItToCodeEditor(docId, tryIt);
@@ -341,7 +386,7 @@ ${n.join(" ")}
     }
   }
 
-  private async loadDocumentsContent(docId: string, tryIt: string) {
+  private async loadDocumentsContent(docId: string) {
     this.isLoadingContent = true;
     try {
       if (!this.pagesNames.length) {
