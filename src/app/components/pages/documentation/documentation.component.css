@@ -305,3 +305,10 @@ li {
   direction: ltr;
   unicode-bidi: isolate;
 }
+
+/* Let each RTL table cell take its direction from its own content, so values
+   such as "-1" or "0x1A" are not reordered (e.g. shown as "1-"). */
+.html-content .docs-content[dir="rtl"] th,
+.html-content .docs-content[dir="rtl"] td {
+  unicode-bidi: plaintext;
+}
