@@ -66,6 +66,7 @@ export class ContentTableComponent {
   private expandedNodes: Set<string> = new Set();
   /** Translated titles keyed by English path; empty for English. */
   @Input() titles: DocTitles = {};
+  @Input() heading: string = "Table of contents";
 
   constructor(private router: Router, private renderer: Renderer2) {}
 
