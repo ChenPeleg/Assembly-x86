@@ -12,7 +12,7 @@ import {
   transition,
   trigger,
 } from "@angular/animations";
-import { PagesService } from "../../../services/pages.service";
+import { DocTitles, PagesService } from "../../../services/pages.service";
 import { Router } from "@angular/router";
 import { sleep } from "../../../util/sleep";
 import { getScreenMediaState } from "../../../util/screenMediaSatate";
@@ -64,6 +64,8 @@ export class ContentTableComponent {
   public pagesNames: string[][] | null = null;
   public flatNodes: FlatDocNode[] = [];
   private expandedNodes: Set<string> = new Set();
+  /** Translated titles keyed by English path; empty for English. */
+  @Input() titles: DocTitles = {};
 
   constructor(private router: Router, private renderer: Renderer2) {}
 
@@ -156,7 +158,7 @@ export class ContentTableComponent {
     const allNumbers = node.fullPath.map(
       (n) => extractNumberFromFileName(n).number
     );
-    const nodeNameText = extractNumberFromFileName(node.name).text;
+    const nodeNameText = PagesService.docTitle(node.fullPath, this.titles);
     return `${allNumbers.join(".")} ${nodeNameText}`;
   }
 

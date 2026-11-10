@@ -19,6 +19,9 @@ test("documentation defaults to English, left-to-right", async ({ page }) => {
   await expect(
     page.getByRole("button", { name: "English" })
   ).toHaveAttribute("aria-pressed", "true");
+  await expect(page.locator("h2.text-lg")).toHaveText(
+    "0.1 quickstart - getting-started"
+  );
 });
 
 test("language toggle is shown only on the first documentation page", async ({
@@ -39,11 +42,17 @@ test("Hebrew is persisted, rendered RTL with LTR code, and falls back to English
   await page.goto(firstPage, { waitUntil: "domcontentloaded" });
   await page.getByRole("button", { name: "עברית" }).click();
 
-  await expect(docsContent(page)).toHaveAttribute("dir", "rtl");
+  // The page reloads in Hebrew; allow extra time when the dev server is busy.
+  await expect(docsContent(page)).toHaveAttribute("dir", "rtl", { timeout: 15_000 });
   await expect(docsContent(page)).toHaveAttribute("lang", "he");
   await expect(docsContent(page).locator("h1").first()).toHaveText(
     "מדריך התחלה מהירה"
   );
+  // The page header and table of contents use the translated titles.
+  await expect(page.locator("h2.text-lg")).toHaveText(
+    "0.1 התחלה מהירה - צעדים ראשונים"
+  );
+  await expect(page.locator("#content-table-root")).toContainText("1 יסודות");
   expect(
     await page.evaluate(() => localStorage.getItem("docsLanguage"))
   ).toBe("he");
