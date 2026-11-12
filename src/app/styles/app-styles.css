@@ -164,3 +164,39 @@ ul {
 .btn-flat.invisible {
   visibility: hidden;
 }
+
+/* ── Tonal button ─────────────────────────────────────────────────── */
+.btn-tonal {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 0 14px 0 10px;
+  height: 34px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  white-space: nowrap;
+  background-color: #e8eaf6;
+  color: #283593;
+  transition: background-color 150ms ease;
+}
+
+.btn-tonal:hover:not(:disabled) {
+  background-color: #d7dbf0;
+}
+
+.btn-tonal .material-icons {
+  font-size: 18px;
+}
+
+.btn-tonal.btn-tonal-danger {
+  background-color: #fdecea;
+  color: #b71c1c;
+}
+
+.btn-tonal.btn-tonal-danger:hover:not(:disabled) {
+  background-color: #f9d6d2;
+}

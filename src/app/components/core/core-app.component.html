@@ -18,12 +18,12 @@
       </div>
 
       @if (isTryIt) {
-        <div class="ml-auto flex items-center">
-          <button (click)="closeAssembler.emit($event)" class="btn-flat flex items-center" title="Close assembler">
-            <span class="material-icons" style="font-size: 18px">cancel</span> close assembler
+        <div class="w-full sm:w-auto sm:ml-auto flex items-center justify-between sm:gap-2 mt-2 sm:mt-0 pr-1">
+          <button (click)="closeAssembler.emit($event)" class="btn-tonal btn-tonal-danger" title="Close assembler">
+            <span class="material-icons">close</span> Close assembler
           </button>
-          <button (click)="returnToDocs.emit()" class="btn-flat md:hidden! flex items-center" title="Return to docs">
-            <span class="material-icons" style="font-size: 18px">menu_book</span> docs
+          <button (click)="returnToDocs.emit()" class="btn-tonal md:hidden!" title="Return to docs">
+            <span class="material-icons">menu_book</span> Docs
           </button>
         </div>
       }
