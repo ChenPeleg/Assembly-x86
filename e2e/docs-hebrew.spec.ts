@@ -56,6 +56,12 @@ test("Hebrew is persisted, rendered RTL with LTR code, and falls back to English
   // The docs view's own labels follow the selected language.
   await expect(page.locator("#content-table-root h2")).toHaveText("תוכן העניינים");
   await expect(page.locator("#documentation-navigation")).toContainText("הבא");
+  // In Hebrew the navigation is mirrored: "previous" on the right, "next" on the left.
+  await expect(page.locator("#documentation-navigation")).toHaveAttribute("dir", "rtl");
+  const navigationButtons = page.locator("#documentation-navigation button");
+  const previousBox = await navigationButtons.first().boundingBox();
+  const nextBox = await navigationButtons.last().boundingBox();
+  expect(nextBox!.x).toBeLessThan(previousBox!.x);
   expect(
     await page.evaluate(() => localStorage.getItem("docsLanguage"))
   ).toBe("he");
