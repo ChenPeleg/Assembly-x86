@@ -1,0 +1,37 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:'Material Icons';src:url(../src/assets/icons/materialIcons.woff2) format('woff2')}
+.mi{text-transform:none;letter-spacing:0;font-weight:400;font-family:'Material Icons';font-size:18px;line-height:1;font-feature-settings:'liga';-webkit-font-smoothing:antialiased}
+body{margin:0;font-family:Roboto,Arial,sans-serif;background:#eceef4;width:412px}
+.card{background:#fff;margin:14px 12px;border-radius:10px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.15)}
+.lbl{font-size:15px;font-weight:700;color:#222;padding:10px 14px 2px}
+.sub{font-size:12px;color:#666;padding:0 14px 6px}
+.bar{display:flex;align-items:center;gap:6px;padding:8px 10px 12px}
+.c{width:42px;height:42px;border-radius:50%;background:#3f51b5;display:flex;align-items:center;justify-content:center;color:#fff}
+.c.r{background:#ef9a9a}.c.l{background:#b3b9e0}
+.sq{width:42px;height:38px;border-radius:4px;background:#3f51b5;color:#fff;display:flex;align-items:center;justify-content:center}
+.row{display:flex;justify-content:flex-end;gap:8px;padding:0 10px 14px}
+.ed{height:40px;margin:0 10px 12px;border-top:1px solid #eee;background:#f5f8fd;font:13px monospace;color:#3f51b5;padding:8px}
+/* current */
+.cur{display:inline-flex;align-items:center;gap:4px;height:36px;padding:0 8px;color:#3f51b5;font-size:14px;font-weight:500;letter-spacing:.089em;text-transform:uppercase;background:none;border:0}
+/* A pill outline */
+.a{display:inline-flex;align-items:center;gap:6px;height:34px;padding:0 14px 0 10px;border-radius:999px;border:1px solid #c5cae9;background:#fff;color:#3949ab;font-size:14px;font-weight:500}
+.a.p{background:#3f51b5;color:#fff;border-color:#3f51b5}
+/* B tonal */
+.b{display:inline-flex;align-items:center;gap:6px;height:34px;padding:0 14px 0 10px;border-radius:8px;border:0;background:#e8eaf6;color:#283593;font-size:13.5px;font-weight:500}
+.b.x{background:#fdecea;color:#b71c1c}
+/* C segmented */
+.seg{display:inline-flex;border:1px solid #c5cae9;border-radius:999px;overflow:hidden}
+.seg button{display:inline-flex;align-items:center;gap:6px;height:34px;padding:0 14px 0 12px;border:0;background:#fff;color:#3949ab;font-size:14px;font-weight:500}
+.seg button+button{border-left:1px solid #c5cae9}
+</style></head><body>
+<script>
+const topBar=`<div class="bar"><div class="c"><span class="mi">play_arrow</span></div><div class="c r"><span class="mi">stop</span></div><div class="c l"><span class="mi">pause</span></div><div class="c l"><span class="mi">play_circle</span></div><div class="c l"><span class="mi">skip_next</span></div><div class="sq"><span class="mi">construction</span></div></div>`;
+const ed=`<div class="ed">section .text<br>&nbsp;&nbsp;mov [0], 72</div>`;
+const cards=[
+ ["Current","Uppercase text links — read as loose labels",`<button class="cur"><span class="mi">cancel</span>close assembler</button><button class="cur"><span class="mi">menu_book</span>docs</button>`],
+ ["Option A — Pill chips","Matches the memory ‘1 Byte / 4 Bytes’ chips; Docs filled as primary",`<button class="a"><span class="mi">close</span>Close</button><button class="a p"><span class="mi">menu_book</span>Docs</button>`],
+ ["Option B — Tonal buttons","Soft tinted fills, sentence case; close tinted red for ‘exit’",`<button class="b x"><span class="mi">close</span>Close assembler</button><button class="b"><span class="mi">menu_book</span>Docs</button>`],
+ ["Option C — Segmented pill","One grouped control, compact; reads as ‘where to go next’",`<div class="seg"><button><span class="mi">menu_book</span>Docs</button><button><span class="mi">close</span>Close</button></div>`],
+];
+document.write(cards.map(([t,s,b])=>`<div class="card"><div class="lbl">${t}</div><div class="sub">${s}</div>${topBar}<div class="row">${b}</div>${ed}</div>`).join(''));
+</script></body></html>
