@@ -2,6 +2,16 @@
 @import "tailwindcss";
 @import "./app/styles/app-styles.css";
 
+/* Height of the fixed nav bar. scroll-padding-top keeps scrollIntoView() and
+   hash jumps from placing their target underneath it. */
+:root {
+  --nav-height: 56px;
+}
+
+html {
+  scroll-padding-top: var(--nav-height);
+}
+
 /* Hebrew: Poppins has no Hebrew glyphs, so Heebo (self-hosted, OFL) covers the
    Hebrew documentation. The unicode-range keeps it from loading for English.
    Declared here because relative url() paths in the imported files do not resolve. */

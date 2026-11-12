@@ -1,6 +1,6 @@
 @if (($docsParams | async); as dockParams) {
   <div #coreAppComponent
-    class="flex flex-col md:flex-row  verflow-y-visible md:overflow-y-hidden custom-scroll-margins"
+    class="flex flex-col md:flex-row  verflow-y-visible md:overflow-y-hidden"
     id="documentation-component-wrapper">
     <div  [@openClose]="dockParams.tryIt ? 'open' : 'closed'" id="core-app-container">
       <core-app  [isTryIt]="!!dockParams.tryIt" (closeAssembler)="navDocuments($event, 'closeTryIt')" (returnToDocs)="returnToDocs()"></core-app>
