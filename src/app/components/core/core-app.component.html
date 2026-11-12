@@ -19,11 +19,11 @@
 
       @if (isTryIt) {
         <div class="w-full sm:w-auto sm:ml-auto flex items-center justify-between sm:gap-2 mt-2 sm:mt-0 pr-1">
-          <button (click)="closeAssembler.emit($event)" class="btn-tonal btn-tonal-danger" title="Close assembler">
-            <span class="material-icons">close</span> Close assembler
+          <button (click)="closeAssembler.emit($event)" class="btn-tonal btn-tonal-danger" [title]="closeAssemblerLabel">
+            <span class="material-icons">close</span> {{ closeAssemblerLabel }}
           </button>
-          <button (click)="returnToDocs.emit()" class="btn-tonal md:hidden!" title="Return to docs">
-            <span class="material-icons">menu_book</span> Docs
+          <button (click)="returnToDocs.emit()" class="btn-tonal md:hidden!" [title]="backToDocsLabel">
+            <span class="material-icons">menu_book</span> {{ backToDocsLabel }}
           </button>
         </div>
       }

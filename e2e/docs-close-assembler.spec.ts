@@ -38,7 +38,7 @@ test("returning from the assembler scrolls to the selected try-it example", asyn
   await examples.nth(1).getByRole("button", { name: "Try me" }).click();
   await expect(page).toHaveURL(/tryIt=exm_2/);
 
-  await page.locator('button[title="Return to docs"]').click();
+  await page.locator('button[title="Back to docs"]').click();
 
   await expect
     .poll(() =>
