@@ -168,6 +168,14 @@ export class DocumentationComponent implements AfterViewInit, OnDestroy {
     return docsLabels(this.docsLanguage);
   }
 
+  /**
+   * The previous/next buttons follow the selected language (like their labels):
+   * in Hebrew "previous" sits on the right and "next" on the left.
+   */
+  get isNavigationRtl(): boolean {
+    return DocsLanguageService.isRtl(this.docsLanguage);
+  }
+
   get isContentRtl(): boolean {
     return DocsLanguageService.isRtl(this.contentLanguage);
   }

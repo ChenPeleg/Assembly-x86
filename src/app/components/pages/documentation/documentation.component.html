@@ -11,12 +11,12 @@
     <div #documentationSection
       class="pt-4 md:max-w-7xl w-full min-w-0    max-h-full md:max-h-screen overflow-y-visible md:overflow-y-scroll"
       id="documentation-content-section ">
-      <div class="px-4 flex flex-row w-full  justify-between" id="documentation-navigation">
+      <div class="px-4 flex flex-row w-full  justify-between" id="documentation-navigation" [attr.dir]="isNavigationRtl ? 'rtl' : 'ltr'">
         <button (click)="navDocuments($event,'previous')" [title]="previousPage?.description || ''" [ngClass]="{'invisible' : !this.previousPage}" class="btn-flat">
-          <span class="material-icons" style="font-size: 18px">chevron_left</span> {{ labels.previous }}
+          <span class="material-icons" style="font-size: 18px">{{ isNavigationRtl ? 'chevron_right' : 'chevron_left' }}</span> {{ labels.previous }}
         </button>
         <button (click)="navDocuments($event,'next')" [title]="nextPage?.description || ''" [ngClass]="{'invisible' : !this.nextPage}" class="btn-flat">
-          <span class="flex flex-row items-center">{{ labels.next }}<span class="material-icons relative -right-1 top-[3px]" style="font-size: 18px">chevron_right</span></span>
+          <span class="flex flex-row items-center">{{ labels.next }}<span class="material-icons relative top-[3px]" [ngClass]="isNavigationRtl ? '-left-1' : '-right-1'" style="font-size: 18px">{{ isNavigationRtl ? 'chevron_left' : 'chevron_right' }}</span></span>
         </button>
       </div>
       <h2 class="ps-5  my-4 text-lg" dir="auto">
@@ -39,9 +39,9 @@
           <div class="docs-content" [innerHTML]="content" [attr.dir]="isContentRtl ? 'rtl' : 'ltr'" [attr.lang]="contentLanguage"></div>
         }
       </div>
-      <div class="px-4 pb-4 flex md:hidden justify-end" id="documentation-navigation-bottom">
+      <div class="px-4 pb-4 flex md:hidden justify-end" id="documentation-navigation-bottom" [attr.dir]="isNavigationRtl ? 'rtl' : 'ltr'">
         <button (click)="navDocuments($event,'next')" [title]="nextPage?.description || ''" [ngClass]="{'invisible' : !this.nextPage}" class="btn-flat">
-          <span class="flex flex-row items-center">{{ labels.next }}<span class="material-icons relative -right-1 top-[3px]" style="font-size: 18px">chevron_right</span></span>
+          <span class="flex flex-row items-center">{{ labels.next }}<span class="material-icons relative top-[3px]" [ngClass]="isNavigationRtl ? '-left-1' : '-right-1'" style="font-size: 18px">{{ isNavigationRtl ? 'chevron_left' : 'chevron_right' }}</span></span>
         </button>
       </div>
     </div>
