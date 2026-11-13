@@ -3,7 +3,7 @@
     class="flex flex-col md:flex-row  verflow-y-visible md:overflow-y-hidden"
     id="documentation-component-wrapper">
     <div  [@openClose]="dockParams.tryIt ? 'open' : 'closed'" id="core-app-container">
-      <core-app  [isTryIt]="!!dockParams.tryIt" (closeAssembler)="navDocuments($event, 'closeTryIt')" (returnToDocs)="returnToDocs()"></core-app>
+      <core-app  [isTryIt]="!!dockParams.tryIt" [closeAssemblerLabel]="labels.closeAssembler" [backToDocsLabel]="labels.backToDocs" (closeAssembler)="navDocuments($event, 'closeTryIt')" (returnToDocs)="returnToDocs()"></core-app>
     </div>
     @if (dockParams.tryIt) {
       <div class="md:hidden w-full h-2  pt-2 border-b border-slate-300 shadow-sm"></div>

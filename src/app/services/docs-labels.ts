@@ -8,6 +8,9 @@ export interface DocsLabels {
   loading: string;
   tryMe: string;
   languageToggle: string;
+  /** Buttons shown above the assembler opened from a "Try me" example. */
+  closeAssembler: string;
+  backToDocs: string;
   /** HTML shown on the docs landing page (no page selected). */
   welcomeHtml: string;
 }
@@ -22,6 +25,8 @@ export const DocsLabelsByLanguage: Record<DocsLanguage, DocsLabels> = {
     loading: "Loading documentation...",
     tryMe: "Try me",
     languageToggle: "Documentation language",
+    closeAssembler: "Close assembler",
+    backToDocs: "Back to docs",
     welcomeHtml: `Welcome to the Assembly x86 emulator and tutorial! <br>
     This project is based on ${davisLink}.
     This tool allows writing, running and debugging x86 assembly in the browser.
@@ -34,6 +39,8 @@ export const DocsLabelsByLanguage: Record<DocsLanguage, DocsLabels> = {
     loading: "טוען את התיעוד...",
     tryMe: "נסו אותי",
     languageToggle: "שפת התיעוד",
+    closeAssembler: "סגירת האסמבלר",
+    backToDocs: "חזרה לתיעוד",
     welcomeHtml: `ברוכים הבאים לאמולטור ולמדריך של Assembly x86! <br>
     הפרויקט מבוסס על ${davisLink}.
     הכלי מאפשר לכתוב, להריץ ולדבג קוד אסמבלי x86 בדפדפן.
