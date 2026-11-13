@@ -83,7 +83,15 @@ export class MarkdownToHtmlConverter {
   }
 
   static convertBlockquotesToHtml(markdown: string): string {
-    markdown = markdown.replace(/^\>(.*)$/gim, "<blockquote>$1</blockquote>");
+    // Consecutive "> " lines form a single blockquote, so a multi-line
+    // callout stays inside one styled box.
+    markdown = markdown.replace(/^>.*(?:\r?\n>.*)*/gm, (block) => {
+      const text = block
+        .split(/\r?\n/)
+        .map((line) => line.replace(/^>\s?/, "").trim())
+        .join(" ");
+      return `<blockquote>${text}</blockquote>`;
+    });
     markdown = markdown.replace(
       /<!-- ([^>]*) -->\n?<blockquote>/gs,
       `<blockquote class="$1">`

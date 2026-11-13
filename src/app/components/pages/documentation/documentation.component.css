@@ -297,6 +297,12 @@ li {
   text-align: left;
 }
 
+/* In RTL the text sits to the left of the icon, so point the finger that way. */
+.html-content .docs-content[dir="rtl"] blockquote.new:before,
+.html-content .docs-content[dir="rtl"] blockquote.info:before {
+  content: ' 👈🏼 ';
+}
+
 .html-content .docs-content[dir="rtl"] code.inline-code {
   direction: ltr;
   unicode-bidi: isolate;
