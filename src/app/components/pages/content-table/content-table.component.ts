@@ -67,6 +67,8 @@ export class ContentTableComponent {
   /** Translated titles keyed by English path; empty for English. */
   @Input() titles: DocTitles = {};
   @Input() heading: string = "Table of contents";
+  /** Lay the tree out right-to-left (arrows and indentation on the right). */
+  @Input() rtl: boolean = false;
 
   constructor(private router: Router, private renderer: Renderer2) {}
 

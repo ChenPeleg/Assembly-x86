@@ -1,11 +1,11 @@
-<div class="lg:w-[450px] w-3/4" id="content-table-root">
+<div class="lg:w-[450px] w-3/4" id="content-table-root" [attr.dir]="rtl ? 'rtl' : 'ltr'">
   <div>
     <h2 class="m-2" dir="auto">{{ heading }}</h2>
   </div>
   <div>
     <ul class="tree-list">
       @for (node of flatNodes; track node) {
-        <li class="tree-node" [style.paddingLeft.px]="node.level * 20 + 20">
+        <li class="tree-node" [style.paddingInlineStart.px]="node.level * 20 + 20">
           <div class="tree-node-inner flex items-center">
             @if (hasChildren(node)) {
               <button
@@ -13,7 +13,7 @@
                 class="tree-toggle-btn"
                 [attr.aria-label]="'toggle ' + node.name">
                 <span class="material-icons transition-transform duration-200 ease-in-out"
-                [ngClass]="{'rotate-90': isExpanded(node)}">chevron_right</span>
+                [ngClass]="isExpanded(node) ? (rtl ? '-rotate-90' : 'rotate-90') : ''">{{ rtl ? 'chevron_left' : 'chevron_right' }}</span>
               </button>
             }
             @if (!hasChildren(node)) {
